@@ -1,0 +1,53 @@
+﻿<ROOT>
+	<ITEM ASCII="s">
+		<UTF>ś</UTF>
+	</ITEM>
+	<ITEM ASCII="a">
+		<UTF>ą</UTF>
+	</ITEM>
+	<ITEM ASCII="e">
+		<UTF>ę</UTF>
+	</ITEM>
+	<ITEM ASCII="z">
+		<UTF>ż</UTF>
+		<UTF>ź</UTF>
+	</ITEM>
+	<ITEM ASCII="c">
+		<UTF>ć</UTF>
+	</ITEM>
+	<ITEM ASCII="o">
+		<UTF>ó</UTF>
+	</ITEM>
+	<ITEM ASCII="l">
+		<UTF>ł</UTF>
+	</ITEM>
+	<ITEM ASCII="n">
+		<UTF>ń</UTF>
+	</ITEM>
+	<!-- DUZE-->
+	<ITEM ASCII="S">
+		<UTF>Ś</UTF>
+	</ITEM>
+	<ITEM ASCII="A">
+		<UTF>Ą</UTF>
+	</ITEM>
+	<ITEM ASCII="E">
+		<UTF>Ę</UTF>
+	</ITEM>
+	<ITEM ASCII="Z">
+		<UTF>Ż</UTF>
+		<UTF>Ź</UTF>
+	</ITEM>
+	<ITEM ASCII="C">
+		<UTF>Ć</UTF>
+	</ITEM>
+	<ITEM ASCII="O">
+		<UTF>Ó</UTF>
+	</ITEM>
+	<ITEM ASCII="L">
+		<UTF>Ł</UTF>
+	</ITEM>
+	<ITEM ASCII="N">
+		<UTF>Ń</UTF>
+	</ITEM>
+</ROOT>
