@@ -1,3 +1,7 @@
-## A New Post
+namespace Wordki.Models.Database{
 
-Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
+  public interface IDatabase {
+  
+  }
+
+}
