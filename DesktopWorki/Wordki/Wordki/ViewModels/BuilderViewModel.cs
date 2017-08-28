@@ -373,7 +373,7 @@ namespace Wordki.ViewModels {
         return;
       SplitGroupDialog lDialog = new SplitGroupDialog();
       lDialog.ViewModel.OnOkClickListener += () => {
-        GroupSplitter lSpliter;
+        GroupSplitterBase lSpliter;
         switch (lDialog.ViewModel.TabSelected) {
           case (int)SplitterEnum.Percentage: {
               lSpliter = new GroupSlitPercentage(lDialog.ViewModel.Percentage, SelectedGroup, Database);

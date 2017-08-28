@@ -4,13 +4,13 @@ using Wordki.Models;
 using Database = Wordki.Models.Database;
 
 namespace Wordki.Helpers.GroupSplitter {
-  public abstract class GroupSplitter {
+  public abstract class GroupSplitterBase {
 
     public int Number { get; set; }
     public Group Group { get; set; }
     private Database Database { get; set; }
 
-    protected GroupSplitter(Database database) {
+    protected GroupSplitterBase(Database database) {
       Database = database;
     }
 

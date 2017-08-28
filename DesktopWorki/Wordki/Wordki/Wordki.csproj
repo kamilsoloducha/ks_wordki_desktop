@@ -153,7 +153,7 @@
     <Compile Include="Helpers\GroupJoiner.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSlitPercentage.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSplitGroupCount.cs" />
-    <Compile Include="Helpers\GroupSplitter\GroupSplitter.cs" />
+    <Compile Include="Helpers\GroupSplitter\GroupSplitterBase.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSplitWordCount.cs" />
     <Compile Include="Helpers\GroupSplitter\SplitterEnum.cs" />
     <Compile Include="Helpers\Helpers.cs" />

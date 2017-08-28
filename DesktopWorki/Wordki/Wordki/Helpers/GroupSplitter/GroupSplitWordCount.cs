@@ -2,7 +2,7 @@
 using Wordki.Models;
 
 namespace Wordki.Helpers.GroupSplitter {
-  public class GroupSplitWordCount : GroupSplitter {
+  public class GroupSplitWordCount : GroupSplitterBase {
 
     public GroupSplitWordCount(int pNumber, Group pGroup, Database database)
       : base(database) {
