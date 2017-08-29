@@ -11,122 +11,122 @@
              Style="{DynamicResource AppPageStyle}"
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance {x:Type viewModels:TeachViewModel}}">
-  <UserControl.Resources>
- 
-    <Style x:Key="WinTextBoxStyle" BasedOn="{StaticResource AppTextBoxStyle}" TargetType="{x:Type TextBox}">
-      <Setter Property="Margin" Value="5"/>
-      <Setter Property="Background" Value="Transparent"/>
-      <Setter Property="FontSize" Value="{Binding Path=Settings.FontSize}"/>
-    </Style>
+    <UserControl.Resources>
 
-    <Style x:Key="WinTextBlockStyle" BasedOn="{StaticResource AppTextBlockStyle}" TargetType="{x:Type TextBlock}">
-      <Setter Property="HorizontalAlignment" Value="Center"/>
-      <Setter Property="VerticalAlignment" Value="Center"/>
-      <Setter Property="FontWeight" Value="Bold"/>
-      <Setter Property="FontSize" Value="{Binding Settings.FontSize}"/>
-    </Style>
+        <Style x:Key="WinTextBoxStyle" BasedOn="{StaticResource AppTextBoxStyle}" TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontSize" Value="{Binding Path=Settings.FontSize}"/>
+        </Style>
 
-    <Style x:Key="WinBorderStyle" BasedOn="{StaticResource AppBorderStyle}" TargetType="{x:Type Border}">
-      <Setter Property="Background" Value="Transparent"/>
-    </Style>
-  </UserControl.Resources>
+        <Style x:Key="WinTextBlockStyle" BasedOn="{StaticResource AppTextBlockStyle}" TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="{Binding Settings.FontSize}"/>
+        </Style>
 
-  <UserControl.InputBindings>
-    <KeyBinding Key="Enter" Command="{Binding OnEnterClickCommand}"/>
-    <KeyBinding Key="Escape" Command="{Binding PauseCommand}"/>
-  </UserControl.InputBindings>
+        <Style x:Key="WinBorderStyle" BasedOn="{StaticResource AppBorderStyle}" TargetType="{x:Type Border}">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </UserControl.Resources>
 
-  <DockPanel>
-    <Grid
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter" Command="{Binding OnEnterClickCommand}"/>
+        <KeyBinding Key="Escape" Command="{Binding PauseCommand}"/>
+    </UserControl.InputBindings>
+
+    <DockPanel>
+        <Grid
 						DockPanel.Dock="Top">
-      <!--Grid definition-->
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="4*"/>
-        <ColumnDefinition Width="Auto"/>
-      </Grid.ColumnDefinitions>
+            <!--Grid definition-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-      <Grid.RowDefinitions>
-        <RowDefinition Height="4*"/>
-        <RowDefinition Height="*"/>
-      </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-      <TabControl 
+            <TabControl 
 							Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
 							Panel.ZIndex="2"
 							Style="{StaticResource AppInnerTabControlStyle}">
-        <TabItem 
+                <TabItem 
 								Header="Plik" Style="{StaticResource AppInnerTabItemStyle}">
-          <ScrollViewer
+                    <ScrollViewer
                   Style="{StaticResource AppScrollViewerStyle}">
-            <StackPanel
+                        <StackPanel
 									  Background="{DynamicResource UsedNormalBrush}">
-              <helpers:ImageButton 
+                            <helpers:ImageButton 
 										  Command="{Binding BackCommand}"
 										  Style="{StaticResource FlatButtonStyle}"
                       Content="Wróć"/>
-              <helpers:ImageButton 
+                            <helpers:ImageButton 
 										  Command="{Binding StartLessonCommand}"
 										  Style="{StaticResource FlatButtonStyle}"
 										  Content="Rozpocznij lekcję"/>
-              <helpers:ImageButton 
+                            <helpers:ImageButton 
 										  Command="{Binding PauseCommand}"
 										  Style="{StaticResource FlatButtonStyle}"
 										  Content="Przerwa"/>
-              <helpers:ImageButton 
+                            <helpers:ImageButton 
 										  Command="{Binding CorrectCommand}"
 										  Style="{StaticResource FlatButtonStyle}"
 										  Content="Popraw słowo"/>
-            </StackPanel>
-          </ScrollViewer>
-        </TabItem>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
 
-      </TabControl>
-      <Grid
+            </TabControl>
+            <Grid
 							Grid.Row="0"
 							Grid.Column="0"
 							Grid.ColumnSpan="2">
-        <Grid.RowDefinitions>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-        <Border
+                <Border
 								Grid.Row="0"
                 Style="{StaticResource WinBorderStyle}">
-          <TextBlock
+                    <TextBlock
 								  Style="{StaticResource WinTextBlockStyle}"
 								  Text="{Binding Path=State.GroupName}"/>
-        </Border>
+                </Border>
 
-        <Border
+                <Border
 					Grid.Row="1"
           Style="{StaticResource WinBorderStyle}">
-          <TextBlock
+                    <TextBlock
 						Style="{StaticResource WinTextBlockStyle}"
 						Text="{Binding Path=State.CommentLanguage}"/>
-        </Border>
+                </Border>
 
-        <Border
+                <Border
 					Grid.Row="2"
           Style="{StaticResource WinBorderStyle}">
-          <TextBlock
+                    <TextBlock
 						Style="{StaticResource WinTextBlockStyle}"
 						Text="{Binding Path=State.CommentTranslation}"/>
-        </Border>
+                </Border>
 
-        <Border
+                <Border
 					Grid.Row="3"
           Style="{StaticResource WinBorderStyle}">
-          <TextBlock
+                    <TextBlock
 						Style="{StaticResource WinTextBlockStyle}"
 						Text="{Binding Path=State.Label}"/>
-        </Border>
+                </Border>
 
-        <!--<Border
+                <!--<Border
 					Grid.Row="4"
           Style="{StaticResource WinBorderStyle}"
           Visibility="{Binding Path=VisibilityDictionary[1]}">
@@ -135,7 +135,7 @@
 						Text="{Binding Path=State.Translation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Border>-->
 
-        <TextBox
+                <TextBox
 					Grid.Row="4"
 					Style="{StaticResource WinTextBoxStyle}"
 					Foreground="{Binding Path=State.TranslationColor, UpdateSourceTrigger=PropertyChanged}"
@@ -144,20 +144,17 @@
 					Focusable="True"
           helpers:InputBindingBehavior.InputBindingsSource="{Binding Path=ShortKeys, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 					helpers:FocusExtension.IsFocused="{Binding Path=State.TranslationIsFocused}">
-          <i:Interaction.Behaviors>
-            <helpers:CursorAtEndBehavior/>
-          </i:Interaction.Behaviors>
-        </TextBox>
+                </TextBox>
 
-        <Grid
+                <Grid
 				  Grid.Row="5">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-          <Button
+                    <Button
 						Grid.Column="0"
 						Style="{StaticResource FlatButtonStyle}"
 						Content="Nie wiem"
@@ -165,14 +162,14 @@
             IsEnabled="{Binding Path=State.WrongButtonEnabled}"
 						helpers:FocusExtension.IsFocused="{Binding Path=State.WrongButtonIsFocused}"
             IsTabStop="true"/>
-          <Button
+                    <Button
 						Grid.Column="1"
 						Style="{StaticResource FlatButtonStyle}"
 						Content="Sprawdź"
             IsEnabled="{Binding Path=State.CheckButtonEnabled}"
 						Command="{Binding CheckCommand}"
             IsTabStop="true"/>
-          <Button
+                    <Button
 						Grid.Column="2"
 						Style="{StaticResource FlatButtonStyle}"
 						Content="Wiem"
@@ -180,41 +177,41 @@
             IsEnabled="{Binding Path=State.CorrectButtonEnabled}"
 						helpers:FocusExtension.IsFocused="{Binding Path=State.CorrectButtonIsFocused}"
             IsTabStop="true"/>
-        </Grid>
-      </Grid>
+                </Grid>
+            </Grid>
 
-      <Border
+            <Border
 				Grid.Row="1" Grid.Column="0"
 				Grid.ColumnSpan="2"
 				Style="{StaticResource WinBorderStyle}">
-        <Grid
+                <Grid
           Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2"
           HorizontalAlignment="Stretch"
           VerticalAlignment="Stretch">
-          
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
 
-          <Grid.Resources>
-            <Style TargetType="{x:Type pieChart:PieChart }">
-              <Setter Property="Margin" Value="40,0"/>
-              <Setter Property="IsAnimate" Value="true"/>
-              <Setter Property="IsEnabled" Value="false"/>
-              <Setter Property="RingBackground" Value="{DynamicResource UsedPressedBrush}"/>
-              <Setter Property="Foreground" Value="{DynamicResource UsedNormalFrontBrush}"/>
-              <Setter Property="RingWidthFactor" Value="0.5"/>
-              <Setter Property="FontFamily" Value="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"/>
-              <Setter Property="FontSize" Value="20"/>
-              <Setter Property="ValueFontSize" Value="20"/>
-            </Style>
-          </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-          <pieChart:PieChart
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type pieChart:PieChart }">
+                            <Setter Property="Margin" Value="40,0"/>
+                            <Setter Property="IsAnimate" Value="true"/>
+                            <Setter Property="IsEnabled" Value="false"/>
+                            <Setter Property="RingBackground" Value="{DynamicResource UsedPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource UsedNormalFrontBrush}"/>
+                            <Setter Property="RingWidthFactor" Value="0.5"/>
+                            <Setter Property="FontFamily" Value="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"/>
+                            <Setter Property="FontSize" Value="20"/>
+                            <Setter Property="ValueFontSize" Value="20"/>
+                        </Style>
+                    </Grid.Resources>
+
+                    <pieChart:PieChart
             Grid.Column="0"
             Title="Szuflady"
             DescriptionText="Value"
@@ -223,7 +220,7 @@
             MaxValue="{Binding Path=State.MaxValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
             Values="{Binding Path=State.DrawerValues, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-          <pieChart:PieChart 
+                    <pieChart:PieChart 
             Grid.Column="1"
             Title="Postęp"
             DescriptionText="Percentage"
@@ -231,23 +228,23 @@
             SelectedPiece="0"
             Values="{Binding Path=State.Progress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-          <UniformGrid
+                    <UniformGrid
             Rows="2"
             Grid.Column="2">
 
-            <Button
+                        <Button
               Style="{StaticResource DialogFlatButtonStyle}"
               Content="{Binding Path=State.StartStopButtonContent}"
               Command="{Binding Path=State.StartStopButtonCommand}"/>
 
-            <TextBlock
+                        <TextBlock
               Style="{StaticResource AppTextBlockStyle}"
 						  HorizontalAlignment="Center"
 						  Text="{Binding Path=Timer}"/>
 
-          </UniformGrid>
+                    </UniformGrid>
 
-          <pieChart:PieChart 
+                    <pieChart:PieChart 
             Grid.Column="3"
             Title="Wyniki"
             DescriptionText="Value"
@@ -255,9 +252,9 @@
             Colors="{StaticResource ResultColors}"
             MaxValue="{Binding Path=State.MaxResult, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
             Values="{Binding Path=State.Results, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
-          </pieChart:PieChart>
+                    </pieChart:PieChart>
 
-          <pieChart:PieChart 
+                    <pieChart:PieChart 
             Grid.Column="4"
             Title="Licznik"
             DescriptionText="Value"
@@ -265,8 +262,8 @@
             SelectedPiece="0"
             MaxValue="{Binding Path=State.MaxValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
             Values="{Binding Path=State.Counter, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+            </Border>
         </Grid>
-      </Border>
-    </Grid>
-  </DockPanel>
+    </DockPanel>
 </UserControl>
