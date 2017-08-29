@@ -163,7 +163,6 @@
     <Compile Include="Helpers\Switcher.cs" />
     <Compile Include="LocalDatabase\SqlDatabaseCreator.cs" />
     <Compile Include="Models\Database.cs" />
-    <Compile Include="Models\Database\IDatabase.cs" />
     <Compile Include="Models\ForeignLetter.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Language.cs" />
@@ -176,13 +175,6 @@
     <Compile Include="Models\Lesson\WordComparer\IWordComparer.cs" />
     <Compile Include="Models\Lesson\WordComparer\WordComparer.cs" />
     <Compile Include="Models\ModelAbs.cs" />
-    <Compile Include="Models\RemoteDatabase\Lesson\BestLesson.cs" />
-    <Compile Include="Models\RemoteDatabase\Lesson\IntensiveLesson.cs" />
-    <Compile Include="Models\RemoteDatabase\Lesson\Lessons.cs" />
-    <Compile Include="Models\RemoteDatabase\Lesson\RandomLesson.cs" />
-    <Compile Include="Models\RemoteDatabase\Lesson\TypingLesson.cs" />
-    <Compile Include="Models\RemoteDatabase\Lesson\WordComparer\IWordComparer.cs" />
-    <Compile Include="Models\RemoteDatabase\Lesson\WordComparer\WordComparer.cs" />
     <Compile Include="Models\RemoteDatabase\RemoteDatabase.cs" />
     <Compile Include="Models\RemoteDatabase\RemoteDatabaseAbs.cs" />
     <Compile Include="Models\RemoteDatabase\RemoteDatabaseFake.cs" />
