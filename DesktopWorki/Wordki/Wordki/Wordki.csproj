@@ -126,6 +126,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\BindingProxy.cs" />
+    <Compile Include="Helpers\Command\CommandApiRequest.cs" />
+    <Compile Include="Helpers\Command\CommandQueue.cs" />
+    <Compile Include="Helpers\Command\ICommand.cs" />
+    <Compile Include="Helpers\Command\SimpleCommand.cs" />
+    <Compile Include="Helpers\Command\SimpleCommandAsync.cs" />
     <Compile Include="Helpers\Converters\LanguageToImageConverter.cs" />
     <Compile Include="Helpers\Converters\LanguageToStringConverter.cs" />
     <Compile Include="Helpers\CursorAtEndBehavior.cs" />
@@ -144,7 +149,6 @@
     <Compile Include="Helpers\Util.cs" />
     <Compile Include="Helpers\BuilderCommand.cs" />
     <Compile Include="Helpers\ClipboardHelper.cs" />
-    <Compile Include="Helpers\Command.cs" />
     <Compile Include="Helpers\Connector.cs" />
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\Converters.cs" />
@@ -153,7 +157,7 @@
     <Compile Include="Helpers\GroupJoiner.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSlitPercentage.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSplitGroupCount.cs" />
-    <Compile Include="Helpers\GroupSplitter\GroupSplitterBase.cs" />
+    <Compile Include="Helpers\GroupSplitter\GroupSplitter.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSplitWordCount.cs" />
     <Compile Include="Helpers\GroupSplitter\SplitterEnum.cs" />
     <Compile Include="Helpers\Helpers.cs" />

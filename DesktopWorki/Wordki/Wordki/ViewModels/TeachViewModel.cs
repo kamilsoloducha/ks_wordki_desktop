@@ -13,7 +13,7 @@ using Wordki.Models;
 using Wordki.Models.Lesson;
 using Wordki.Models.RemoteDatabase;
 using Wordki.Views.Dialogs;
-using ICommand = Wordki.Helpers.ICommand;
+using Wordki.Helpers.Command;
 
 namespace Wordki.ViewModels {
   public class TeachViewModel : INotifyPropertyChanged, ITimerListener, IViewModel {
@@ -983,7 +983,7 @@ namespace Wordki.ViewModels {
         Lesson.FinishLesson();
         Lesson.Timer.StopTimer();
         IList<Group> lGroupList = Lesson.ResultList.Select(lResult => Database.GetDatabase().GetGroupById(lResult.GroupId)).ToList();
-        CommandQueue<ICommand> lQueue = RemoteDatabaseAbs.GetRemoteDatabase(Database.GetDatabase().User).GetUploadQueue();
+        CommandQueue<Helpers.Command.ICommand> lQueue = RemoteDatabaseAbs.GetRemoteDatabase(Database.GetDatabase().User).GetUploadQueue();
         lQueue.MainQueue.AddFirst(new SimpleCommandAsync(async () => {
           Database lDatabase = Database.GetDatabase();
           foreach (Result lItem in Lesson.ResultList) {
