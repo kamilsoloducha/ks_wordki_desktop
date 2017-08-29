@@ -133,13 +133,13 @@
     <Compile Include="Helpers\Command\SimpleCommandAsync.cs" />
     <Compile Include="Helpers\Converters\LanguageToImageConverter.cs" />
     <Compile Include="Helpers\Converters\LanguageToStringConverter.cs" />
-    <Compile Include="Helpers\CursorAtEndBehavior.cs" />
-    <Compile Include="Helpers\InputBindingBehavior.cs" />
+    <Compile Include="Helpers\Behaviour\CursorAtEndBehavior.cs" />
+    <Compile Include="Helpers\GroupSplitter\GroupSplitterBase.cs" />
+    <Compile Include="Helpers\Behaviour\InputBindingBehavior.cs" />
     <Compile Include="Helpers\JsonConverters\StringToBoolConverter.cs" />
     <Compile Include="Helpers\JsonConverters\StringToIntConverter.cs" />
     <Compile Include="Helpers\ObjectSerializer.cs" />
-    <Compile Include="Helpers\Pair.cs" />
-    <Compile Include="Helpers\ScrollIntoViewBehavior.cs" />
+    <Compile Include="Helpers\Behaviour\ScrollIntoViewBehavior.cs" />
     <Compile Include="LocalDatabase\SqliteConnection.cs" />
     <Compile Include="Models\CommonGroup.cs" />
     <Compile Include="Models\Connector\ApiConnector.cs" />
@@ -157,7 +157,6 @@
     <Compile Include="Helpers\GroupJoiner.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSlitPercentage.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSplitGroupCount.cs" />
-    <Compile Include="Helpers\GroupSplitter\GroupSplitter.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSplitWordCount.cs" />
     <Compile Include="Helpers\GroupSplitter\SplitterEnum.cs" />
     <Compile Include="Helpers\Helpers.cs" />
