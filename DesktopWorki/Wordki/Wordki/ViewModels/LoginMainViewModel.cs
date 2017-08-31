@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Controls.Notification;
 using Newtonsoft.Json;
 using Wordki.Helpers;
 using Wordki.Models;
 using Wordki.Models.Connector;
 using Wordki.Helpers.Command;
+using Wordki.Helpers.Notification;
 
 namespace Wordki.ViewModels
 {
@@ -22,7 +22,6 @@ namespace Wordki.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
         }
         #endregion
-
 
         #region Properties
         private string _userName;
@@ -150,7 +149,7 @@ namespace Wordki.ViewModels
             Logger.LogInfo("Loguje użytkownika: {0}", Database.GetDatabase().User.GetStringFromObject());
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Toaster.NewToast(new ToastProperties { Message = "Zalogowoano" });
+                Application.Current.Dispatcher.Invoke(() => NotificationFactory.Create().Show("Zalogowano"));
                 Switcher.GetSwitcher().Switch(Switcher.State.Menu);
             });
         }

@@ -31,7 +31,6 @@ namespace Wordki.ViewModels
 
         #endregion
 
-
         public LoginViewModel()
         {
             LoginCommand = new BuilderCommand(Loging);

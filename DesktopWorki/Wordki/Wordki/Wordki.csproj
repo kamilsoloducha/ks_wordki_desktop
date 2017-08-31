@@ -138,6 +138,9 @@
     <Compile Include="Helpers\Behaviour\InputBindingBehavior.cs" />
     <Compile Include="Helpers\JsonConverters\StringToBoolConverter.cs" />
     <Compile Include="Helpers\JsonConverters\StringToIntConverter.cs" />
+    <Compile Include="Helpers\Notification\INotification.cs" />
+    <Compile Include="Helpers\Notification\NotificationFactory.cs" />
+    <Compile Include="Helpers\Notification\ToastNotification.cs" />
     <Compile Include="Helpers\ObjectSerializer.cs" />
     <Compile Include="Helpers\Behaviour\ScrollIntoViewBehavior.cs" />
     <Compile Include="LocalDatabase\SqliteConnection.cs" />
@@ -193,6 +196,7 @@
     <Compile Include="ViewModels\BuildFromFileViewModel.cs" />
     <Compile Include="ViewModels\ChartViewModel.cs" />
     <Compile Include="ViewModels\GroupManagerViewModel.cs" />
+    <Compile Include="ViewModels\IViewModel.cs" />
     <Compile Include="ViewModels\LoginMainViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
@@ -200,6 +204,7 @@
     <Compile Include="ViewModels\SameWordsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\TeachViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\WordManageViewModel.cs" />
     <Compile Include="Views\BuilderPage.xaml.cs">
       <DependentUpon>BuilderPage.xaml</DependentUpon>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Wordki.ViewModels;
 using Wordki.Views;
 
 namespace Wordki.Helpers {
@@ -114,9 +115,6 @@ namespace Wordki.Helpers {
     IViewModel ViewModel { get; }
   }
 
-  public interface IViewModel {
-    void InitViewModel();
-    void Back();
-  }
+  
 
 }
