@@ -12,37 +12,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              Style="{DynamicResource AppPageStyle}"
+             KeyboardNavigation.IsTabStop="False"
              d:DataContext="{d:DesignInstance {x:Type viewModels:LoginViewModel}}">
-  
+
   <UserControl.Resources>
     <Style x:Key="UserListViewItemStyle" TargetType="{x:Type ListBoxItem}">
       <Setter Property="Template">
         <Setter.Value>
           <ControlTemplate TargetType="{x:Type ListBoxItem}">
             <Border BorderBrush="{StaticResource UsedHoverBrush}" BorderThickness="0,0,0,0.5" Margin="5,0" Background="Transparent" HorizontalAlignment="Stretch">
-              <UniformGrid Columns="2">
-                <TextBlock d:DataContext="{d:DesignInstance models:User}" Name="Text" Background="Transparent" HorizontalAlignment="Center" FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular" FontSize="15" Margin="5" Text="{Binding Path=Name}" />
-                <Button x:Name="RemoveButton" Opacity="0" Content="Usuń" Command="{Binding ElementName=UsersListView, Path=DataContext.RemoveUserCommand}" CommandParameter="{Binding}"/>
-              </UniformGrid>
+              <TextBlock d:DataContext="{d:DesignInstance models:User}" Name="Text" Background="Transparent" HorizontalAlignment="Center" FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular" FontSize="15" Margin="5" Text="{Binding Path=Name}" />
             </Border>
             <ControlTemplate.Triggers>
               <Trigger Property="IsSelected" Value="true">
                 <Setter TargetName="Text" Property="Foreground" Value="Red" />
               </Trigger>
-              <EventTrigger RoutedEvent="MouseEnter">
-                <BeginStoryboard>
-                  <Storyboard>
-                    <DoubleAnimation From="0" To="1" Duration="0:0:0.25" Storyboard.TargetName="RemoveButton" Storyboard.TargetProperty="Opacity" />
-                  </Storyboard>
-                </BeginStoryboard>
-              </EventTrigger>
-              <EventTrigger RoutedEvent="MouseLeave">
-                <BeginStoryboard>
-                  <Storyboard>
-                    <DoubleAnimation From="1" To="0" Duration="0:0:0.25" Storyboard.TargetName="RemoveButton" Storyboard.TargetProperty="Opacity" />
-                  </Storyboard>
-                </BeginStoryboard>
-              </EventTrigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
         </Setter.Value>
@@ -80,10 +64,10 @@
     </Grid.RowDefinitions>
 
     <TextBlock
-			Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"
-			HorizontalAlignment="Center"
-			Style="{StaticResource AppTextBlockStyle}"
-			Text="Logowanie"/>
+      Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"
+      HorizontalAlignment="Center"
+      Style="{StaticResource AppTextBlockStyle}"
+      Text="Logowanie"/>
 
     <hintTextBox:HintTextBox
       x:Name="UserName"
@@ -128,14 +112,14 @@
       Columns="2" Margin="20, 10">
 
       <Button
-				Style="{StaticResource FlatButtonStyle}"
-				Content="Zaloguj"
-				Command="{Binding LoginCommand}"
+        Style="{StaticResource FlatButtonStyle}"
+        Content="Zaloguj"
+        Command="{Binding LoginCommand}"
         Padding="20"/>
       <Button
-				Style="{StaticResource FlatButtonStyle}"
-				Content="Wyjdź"
-				Command="{Binding ExitCommand}"
+        Style="{StaticResource FlatButtonStyle}"
+        Content="Wyjdź"
+        Command="{Binding ExitCommand}"
         Padding="20"/>
 
     </UniformGrid>

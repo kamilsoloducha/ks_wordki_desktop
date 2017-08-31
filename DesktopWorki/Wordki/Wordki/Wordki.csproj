@@ -220,6 +220,9 @@
       <DependentUpon>ListDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\ListDialogs\LanguageListDialog.cs" />
+    <Compile Include="Views\Dialogs\Progress\IProgressNotification.cs" />
+    <Compile Include="Views\Dialogs\Progress\ProgressNotificationFactory.cs" />
+    <Compile Include="Views\Dialogs\Progress\ProgressNotificationType.cs" />
     <Compile Include="Views\Dialogs\TextBoxDialog.xaml.cs">
       <DependentUpon>TextBoxDialog.xaml</DependentUpon>
     </Compile>
@@ -232,7 +235,7 @@
     <Compile Include="Views\Dialogs\NumberChooserDialog.xaml.cs">
       <DependentUpon>NumberChooserDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\ProcessDialog.xaml.cs">
+    <Compile Include="Views\Dialogs\Progress\ProcessDialog.xaml.cs">
       <DependentUpon>ProcessDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\SplitGroupDialog.xaml.cs">
@@ -309,7 +312,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\ProcessDialog.xaml">
+    <Page Include="Views\Dialogs\Progress\ProcessDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

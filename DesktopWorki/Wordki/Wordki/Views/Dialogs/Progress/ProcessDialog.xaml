@@ -1,9 +1,9 @@
-﻿<Window x:Class="Wordki.Views.Dialogs.ProcessDialog"
+﻿<Window x:Class="Wordki.Views.Dialogs.Progress.ProcessDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:dialogs="clr-namespace:Wordki.Views.Dialogs"
+        xmlns:dialogs="clr-namespace:Wordki.Views.Dialogs.Progress"
         xmlns:helpers="clr-namespace:Wordki.Helpers"
         xmlns:animatedProgressBar="clr-namespace:Controls.AnimatedProgressBar;assembly=Controls"
         mc:Ignorable="d"
@@ -50,7 +50,7 @@
         Grid.Row="2"
         helpers:FocusExtension.IsFocused="True"
         Style="{StaticResource DialogFlatButtonStyle}"
-        Content="{Binding Path=CancelLabel, UpdateSourceTrigger=PropertyChanged}"
+        Content="{Binding Path=ButtonLabel, UpdateSourceTrigger=PropertyChanged}"
         Command="{Binding Path=CancelCommand}"/>
     </Grid>
   </Border>

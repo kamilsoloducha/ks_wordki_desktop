@@ -4,14 +4,13 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
-using System.Windows.Input;
 using Wordki.Helpers;
 using Wordki.Models;
 using Wordki.Models.Connector;
 using Wordki.Models.RemoteDatabase;
 using Wordki.Views.Dialogs;
 using Controls.Notification;
-using ICommand = Wordki.Helpers.ICommand;
+using Wordki.Helpers.Command;
 
 namespace Wordki.ViewModels {
   public class SettingsViewModel : INotifyPropertyChanged, IViewModel {
@@ -117,8 +116,8 @@ namespace Wordki.ViewModels {
       }
     }
 
-    private ObservableCollection<KeyBinding> _shortKeys;
-    public ObservableCollection<KeyBinding> ShortKeys {
+    private ObservableCollection<System.Windows.Input.KeyBinding> _shortKeys;
+    public ObservableCollection<System.Windows.Input.KeyBinding> ShortKeys {
       get { return _shortKeys; }
       set {
         if (_shortKeys == value) return;

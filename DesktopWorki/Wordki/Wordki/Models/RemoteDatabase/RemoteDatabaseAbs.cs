@@ -1,4 +1,5 @@
 ﻿using Wordki.Helpers;
+using Wordki.Helpers.Command;
 
 namespace Wordki.Models.RemoteDatabase {
   abstract public class RemoteDatabaseAbs {

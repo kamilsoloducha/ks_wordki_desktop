@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using Wordki.Views.Dialogs;
+using Wordki.Views.Dialogs.Progress;
 
 namespace Wordki.Helpers.Command
 {
@@ -13,7 +13,7 @@ namespace Wordki.Helpers.Command
         public bool CreateDialog { get; set; }
 
         private Thread Thread { get; set; }
-        private ProcessDialog ProcessDialog { get; set; }
+        private IProgressNotification ProcessDialog { get; set; }
         private volatile bool _isRunning;
 
         public CommandQueue()
@@ -24,7 +24,8 @@ namespace Wordki.Helpers.Command
 
         public void Execute()
         {
-            Thread = new Thread(() => {
+            Thread = new Thread(() =>
+            {
                 while (MainQueue.Count != 0)
                 {
                     T lCommandToExecute = MainQueue.First.Value;
@@ -56,27 +57,16 @@ namespace Wordki.Helpers.Command
         {
             if (CreateDialog)
             {
-                ProcessDialog = new ProcessDialog();
-                ProcessDialog.DialogTitle = "Uwaga";
+                ProcessDialog = ProgressNotificationFactory.CreateProgresNotification(ProgressNotificationType.ProgressDialog);
+                ProcessDialog.Title = "Uwaga";
                 ProcessDialog.Message = "Trwa przetwarzanie...";
-                ProcessDialog.CancelLabel = "Anuluj";
-                ProcessDialog.CancelCommand = new BuilderCommand(delegate {
-                    _isRunning = false;
-                    Thread.Abort();
-                    if (ProcessDialog.IsVisible)
-                    {
-                        ProcessDialog.Close();
-                    }
-                    if (OnQueueComplete != null)
-                    {
-                        OnQueueComplete(false);
-                    }
-                });
+                ProcessDialog.ButtonLabel = "Anuluj";
+                ProcessDialog.OnCanceled += Cancel;
                 try
                 {
                     if (_isRunning)
                     {
-                        ProcessDialog.ShowDialog();
+                        ProcessDialog.Show();
                     }
                 }
                 catch (Exception e)
@@ -98,6 +88,16 @@ namespace Wordki.Helpers.Command
                 {
                     Console.WriteLine(e.Message);
                 }
+            }
+        }
+
+        private void Cancel()
+        {
+            _isRunning = false;
+            Thread.Abort();
+            if (OnQueueComplete != null)
+            {
+                OnQueueComplete(false);
             }
         }
     }

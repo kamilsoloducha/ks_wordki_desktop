@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Windows.Input;
-
-namespace Wordki.Helpers {
+namespace Wordki.Helpers
+{
     public class BuilderCommand : System.Windows.Input.ICommand
     {
-        public event EventHandler CanExecuteChanged;
-
         private Action<object> _action { get; }
         private Predicate<object> _canExecute { get; }
 
@@ -17,6 +14,12 @@ namespace Wordki.Helpers {
 
         public BuilderCommand(Action<object> action) : this(action, DefaultCanExecute)
         {
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { System.Windows.Input.CommandManager.RequerySuggested += value; }
+            remove { System.Windows.Input.CommandManager.RequerySuggested -= value; }
         }
 
         public bool CanExecute(object parameter)

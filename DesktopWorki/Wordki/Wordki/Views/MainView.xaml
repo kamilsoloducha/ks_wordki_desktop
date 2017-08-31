@@ -20,8 +20,14 @@
   </Window.InputBindings>
 
   <Grid>
-    <ContentControl x:Name="Page"/>
-    <notification:ToastList x:Name="ToastList" ToastBackground="{DynamicResource UsedPressedBrush}" ToastFontSize="30" ToastForeground="{DynamicResource UsedNormalFrontBrush}"/>
+    <ContentControl x:Name="Page"
+                    KeyboardNavigation.IsTabStop="False"/>
+    <notification:ToastList 
+      x:Name="ToastList"
+      ToastBackground="{DynamicResource UsedPressedBrush}" 
+      ToastFontSize="30"
+      ToastForeground="{DynamicResource UsedNormalFrontBrush}"
+      KeyboardNavigation.IsTabStop="False"/>
   </Grid>
 
 </Window>

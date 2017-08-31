@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 using Wordki.Helpers;
+using Wordki.Helpers.Command;
 
 namespace Wordki.Models.Connector {
   public class ApiConnector {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Wordki.Helpers;
+using Wordki.Helpers.Command;
 using Wordki.Models;
 using Wordki.Models.Connector;
 

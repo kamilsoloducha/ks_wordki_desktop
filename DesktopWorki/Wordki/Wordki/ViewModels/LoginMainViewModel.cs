@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Wordki.Helpers;
 using Wordki.Models;
 using Wordki.Models.Connector;
+using Wordki.Helpers.Command;
 
 namespace Wordki.ViewModels
 {
