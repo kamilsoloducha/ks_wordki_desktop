@@ -28,20 +28,8 @@ namespace Wordki.ViewModels
         Language2Comment,
     }
 
-    public class BuilderViewModel : INotifyPropertyChanged, IViewModel
+    public class BuilderViewModel : ViewModelBase
     {
-
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-        #endregion
 
         private readonly object _groupsLock = new object();
         private string _nextGroupLabel;
@@ -231,7 +219,7 @@ namespace Wordki.ViewModels
             Settings = Settings.GetSettings();
         }
 
-        public void InitViewModel()
+        public override void InitViewModel()
         {
             Group lGroup = PackageStore.Get(0) as Group;
             if (lGroup != null)
@@ -246,7 +234,7 @@ namespace Wordki.ViewModels
             RefreshView();
         }
 
-        public void Back()
+        public override void Back()
         {
             Database.SaveDatabase();
             var queue = RemoteDatabaseAbs.GetRemoteDatabase(Database.User).GetUploadQueue();

@@ -14,7 +14,7 @@ using Wordki.Helpers.Notification;
 
 namespace Wordki.ViewModels
 {
-    public class SettingsViewModel : INotifyPropertyChanged, IViewModel
+    public class SettingsViewModel : ViewModelBase
     {
         public Settings Settings { get; set; }
         public Database Database { get; set; }
@@ -154,7 +154,7 @@ namespace Wordki.ViewModels
             Database = Database.GetDatabase();
         }
 
-        public void InitViewModel()
+        public override void InitViewModel()
         {
             ThemeSelectedIndex = Settings.ApplicationStyle == ApplicationStyleEnum.Dark ? 1 : 0;
             FontSizeSelectedIndex = Settings.FontSize.ToString("D");
@@ -167,7 +167,7 @@ namespace Wordki.ViewModels
             ShortKeys = ShortCutsBindings.GetBindings(Settings.ShortCuts, new BuilderCommand(InsertKey));
         }
 
-        public void Back()
+        public override void Back()
         {
             Settings.ShortCuts.CollectionChanged -= ShortCutsOnCollectionChanged;
         }
@@ -357,20 +357,5 @@ namespace Wordki.ViewModels
             lDialog.DialogTitle = "Jakis tytuł";
             lDialog.ShowDialog();
         }
-
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string pPropertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(pPropertyName));
-            }
-        }
-        #endregion
-
-
-
     }
 }

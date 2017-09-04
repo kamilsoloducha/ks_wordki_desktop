@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using Wordki.Helpers;
@@ -13,20 +11,8 @@ using Wordki.Models;
 namespace Wordki.ViewModels
 {
 
-    public class BuildFromFileViewModel : INotifyPropertyChanged, IViewModel
+    public class BuildFromFileViewModel : ViewModelBase
     {
-
-        #region NotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName] string pPropertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(pPropertyName));
-            }
-        }
-        #endregion
 
         #region Properties
 
@@ -125,7 +111,7 @@ namespace Wordki.ViewModels
             Pairs = new ObservableCollection<KeyValuePair<string, string>>();
         }
 
-        public void InitViewModel()
+        public override void InitViewModel()
         {
             FileContent = "";
             FilePath = "";
@@ -135,7 +121,7 @@ namespace Wordki.ViewModels
             BindingOperations.EnableCollectionSynchronization(Pairs, _pairsLock);
         }
 
-        public void Back()
+        public override void Back()
         {
             BindingOperations.DisableCollectionSynchronization(Pairs);
         }

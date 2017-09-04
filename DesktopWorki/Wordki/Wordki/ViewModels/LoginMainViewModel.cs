@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows;
+﻿using System.Windows;
 using Newtonsoft.Json;
 using Wordki.Helpers;
 using Wordki.Models;
@@ -10,19 +8,9 @@ using Wordki.Helpers.Notification;
 
 namespace Wordki.ViewModels
 {
-    public abstract class LoginMainViewModel : INotifyPropertyChanged, IViewModel
+    public abstract class LoginMainViewModel : ViewModelBase
     {
-
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName] string property = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-        }
-        #endregion
-
+        
         #region Properties
         private string _userName;
         public string UserName
@@ -69,13 +57,13 @@ namespace Wordki.ViewModels
 
         #endregion
 
-        public virtual void InitViewModel()
+        public override void InitViewModel()
         {
             UserName = "";
             Password = "";
         }
 
-        public void Back()
+        public override void Back()
         {
         }
 

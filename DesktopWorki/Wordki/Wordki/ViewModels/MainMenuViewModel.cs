@@ -13,21 +13,9 @@ using Wordki.Helpers.Command;
 
 namespace Wordki.ViewModels
 {
-    public class MainMenuViewModel : INotifyPropertyChanged, IViewModel
+    public class MainMenuViewModel : ViewModelBase
     {
-
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string property = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
-        #endregion
-
+        
         private string _statusBarText;
         private string _login;
         private ObservableCollection<double> _values;
@@ -153,13 +141,13 @@ namespace Wordki.ViewModels
             ValueDescription l = new ValueDescription();
         }
 
-        public void InitViewModel()
+        public override void InitViewModel()
         {
             Login = Database.GetDatabase().User.Name;
             ReadDatabaseFromServer();
         }
 
-        public void Back()
+        public override void Back()
         {
         }
 

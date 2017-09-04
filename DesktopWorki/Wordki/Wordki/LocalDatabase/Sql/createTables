@@ -3,7 +3,7 @@
     userName              VARCHAR (32) NOT NULL,
     password              VARDCHAR(32) NOT NULL,
     downloadDate          DATETIME     NULL,
-    transationDirection   INT          NULL,
+    translationDirection   INT          NULL,
     allWords              BOOLEAN      NULL,
     timeOut               INT          NULL,
     apiKey                VARCHAR(32)  NULL,

@@ -18,21 +18,8 @@ using Wordki.Models.Lesson.WordComparer;
 
 namespace Wordki.ViewModels
 {
-    public class GroupManagerViewModel : INotifyPropertyChanged, IViewModel
+    public class GroupManagerViewModel : ViewModelBase
     {
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string pPropertyname = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(pPropertyname));
-            }
-        }
-
-        #endregion
 
         private static readonly object GroupsLock = new object();
         private GroupItem _selectedItem;
@@ -42,6 +29,7 @@ namespace Wordki.ViewModels
         private ObservableCollection<GroupItem> _itemList;
         private ObservableCollection<double> _values;
         private double _maxValue;
+
         #region Properties
 
         public BuilderCommand StartTypingLessonCommand { get; set; }
@@ -299,7 +287,7 @@ namespace Wordki.ViewModels
         }
         #endregion
 
-        public void InitViewModel()
+        public override void InitViewModel()
         {
             Task.Run(() =>
             {
@@ -317,7 +305,7 @@ namespace Wordki.ViewModels
             SetEndLessonButton();
         }
 
-        public void Back()
+        public override void Back()
         {
 
         }
