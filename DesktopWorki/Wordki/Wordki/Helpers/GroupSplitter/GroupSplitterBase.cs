@@ -14,7 +14,7 @@ namespace Wordki.Helpers.GroupSplitter {
       Database = database;
     }
 
-    public abstract List<Group> Split();
+    public abstract IEnumerable<Group> Split();
 
 
     protected Group CreateGroup(int pCounter) {

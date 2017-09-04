@@ -156,7 +156,6 @@
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\FocusExtension.cs" />
     <Compile Include="Helpers\GlosbeHelper.cs" />
-    <Compile Include="Helpers\GroupJoiner.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSlitPercentage.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSplitGroupCount.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSplitWordCount.cs" />
@@ -167,9 +166,10 @@
     <Compile Include="Helpers\ObservableDirectory.cs" />
     <Compile Include="Helpers\Switcher.cs" />
     <Compile Include="LocalDatabase\SqlDatabaseCreator.cs" />
-    <Compile Include="Models\Database.cs" />
+    <Compile Include="Models\Database\Database.cs" />
     <Compile Include="Models\ForeignLetter.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\Database\IDatabase.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Lesson\BestLesson.cs" />
     <Compile Include="Models\GroupItem.cs" />

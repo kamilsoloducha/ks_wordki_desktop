@@ -435,7 +435,7 @@ namespace Wordki.ViewModels
                     default:
                         return;
                 }
-                List<Group> lGroups = lSpliter.Split();
+                IEnumerable<Group> lGroups = lSpliter.Split();
                 if (lGroups == null)
                     return;
                 foreach (Group lGroup in lGroups)

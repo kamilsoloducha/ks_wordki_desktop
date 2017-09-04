@@ -12,9 +12,9 @@ using Wordki.Models.Connector;
 
 namespace Wordki.Models
 {
-    public class Database
+    public class Database : IDatabase
     {
-        private static Database _database;
+        private static IDatabase _database;
 
         public ObservableCollection<Group> GroupsList { get; set; }
         public User User { get; set; }
@@ -27,7 +27,7 @@ namespace Wordki.Models
             Db.OpenConnection();
         }
 
-        public static Database GetDatabase()
+        public static IDatabase GetDatabase()
         {
             return _database ?? (_database = new Database());
         }
