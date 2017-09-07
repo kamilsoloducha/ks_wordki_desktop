@@ -555,10 +555,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\oazachaosu\vesper-oazachaosu\Oazachaosu\Repository\Repository.csproj">
-      <Project>{90d846a5-5cb3-4926-8719-88ec170a61aa}</Project>
-      <Name>Repository</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WordkiRepository\WordkiRepository.csproj">
       <Project>{9b83bb1b-d287-49a1-b1b6-1afa4ebdc4e6}</Project>
       <Name>WordkiRepository</Name>
