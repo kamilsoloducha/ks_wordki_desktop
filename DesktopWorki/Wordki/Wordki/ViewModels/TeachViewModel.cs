@@ -1158,10 +1158,10 @@ namespace Wordki.ViewModels
                 Lesson.FinishLesson();
                 Lesson.Timer.StopTimer();
                 IList<Group> lGroupList = Lesson.ResultList.Select(lResult => Database.GetDatabase().GetGroupById(lResult.GroupId)).ToList();
-                CommandQueue<Helpers.Command.ICommand> lQueue = RemoteDatabaseAbs.GetRemoteDatabase(Database.GetDatabase().User).GetUploadQueue();
+                CommandQueue<Helpers.Command.ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(Database.GetDatabase().User).GetUploadQueue();
                 lQueue.MainQueue.AddFirst(new SimpleCommandAsync(async () =>
                 {
-                    Database lDatabase = Database.GetDatabase();
+                    IDatabase lDatabase = Models.Database.GetDatabase();
                     foreach (Result lItem in Lesson.ResultList)
                     {
                         await Database.GetDatabase().AddResultAsync(lItem);
@@ -1176,7 +1176,7 @@ namespace Wordki.ViewModels
                         });
                         lDialog.ShowDialog();
                     });
-                    Database database = Database.GetDatabase();
+                    IDatabase database = Models.Database.GetDatabase();
                     foreach (Word lItem in Lesson.BeginWordsList)
                     {
                         Word word = database.GetGroupById(lItem.GroupId).WordsList.FirstOrDefault(x => x.Id == lItem.Id);

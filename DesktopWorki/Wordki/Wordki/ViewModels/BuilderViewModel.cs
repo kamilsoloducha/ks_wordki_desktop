@@ -181,7 +181,7 @@ namespace Wordki.ViewModels
         public System.Windows.Input.ICommand GroupSelectionChangedCommand { get; set; }
         public System.Windows.Input.ICommand AddGroupFromFileCommand { get; set; }
 
-        public Database Database { get; set; }
+        public IDatabase Database { get; set; }
         public ObservableDictionary<string, bool> EnableElementDirectory { get; set; }
         //private ClipboardHelper ClipboardHelper { get; set; }
         //private NotifyIcon NotifyIcon { get; set; }
@@ -192,7 +192,7 @@ namespace Wordki.ViewModels
         public BuilderViewModel()
         {
             ActivateCommands();
-            Database = Database.GetDatabase();
+            Database = Models.Database.GetDatabase();
             EnableElementDirectory = new ObservableDictionary<string, bool> {
                 { EnableElementBuilder.Previous.ToString(), true },
                 { EnableElementBuilder.Next.ToString(), true },
@@ -237,7 +237,7 @@ namespace Wordki.ViewModels
         public override void Back()
         {
             Database.SaveDatabase();
-            var queue = RemoteDatabaseAbs.GetRemoteDatabase(Database.User).GetUploadQueue();
+            var queue = RemoteDatabaseBase.GetRemoteDatabase(Database.User).GetUploadQueue();
             queue.CreateDialog = false;
             queue.Execute();
         }

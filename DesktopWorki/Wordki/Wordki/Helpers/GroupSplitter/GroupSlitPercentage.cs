@@ -6,7 +6,7 @@ namespace Wordki.Helpers.GroupSplitter
     public class GroupSlitPercentage : GroupSplitterBase
     {
 
-        public GroupSlitPercentage(int pNumber, Group pGroup, Database database)
+        public GroupSlitPercentage(int pNumber, Group pGroup, IDatabase database)
           : base(database)
         {
             Number = pNumber;

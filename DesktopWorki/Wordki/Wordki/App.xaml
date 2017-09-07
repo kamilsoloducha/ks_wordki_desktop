@@ -139,7 +139,7 @@
             </Border>
             <ControlTemplate.Triggers>
               <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Background" TargetName="ButtonBorder" Value="{DynamicResource UsedNormalBack}" />
+                <Setter Property="Background" TargetName="ButtonBorder" Value="{DynamicResource UsedNormalBrush}" />
                 <Setter Property="Foreground" Value="{DynamicResource UsedUnableFrontBrush}" />
               </Trigger>
               <Trigger Property="IsEnabled" Value="True">
@@ -577,7 +577,7 @@
       <Setter Property="Width" Value="280" />
       <Setter Property="Margin" Value="{StaticResource MenuMarginBegin}" />
       <Setter Property="HorizontalAlignment" Value="Left" />
-      <Setter Property="Background" Value="{DynamicResource UsedHoverBrush}" /> 
+      <Setter Property="Background" Value="{DynamicResource UsedHoverBrush}" />
       <Style.Triggers>
         <EventTrigger RoutedEvent="TabControl.MouseEnter">
           <BeginStoryboard Storyboard="{StaticResource ShowMenuStoryboard}" />

@@ -2,9 +2,9 @@
 using Wordki.Helpers.Command;
 
 namespace Wordki.Models.RemoteDatabase {
-  abstract public class RemoteDatabaseAbs {
+  abstract public class RemoteDatabaseBase {
 
-    public static RemoteDatabaseAbs GetRemoteDatabase(User user) {
+    public static RemoteDatabaseBase GetRemoteDatabase(User user) {
       Logger.LogInfo("Wybór RemoteDatabase: {0}", user.IsRegister ? "Remote" : "Fake");
       if (user.IsRegister) {
         return new RemoteDatabase();
