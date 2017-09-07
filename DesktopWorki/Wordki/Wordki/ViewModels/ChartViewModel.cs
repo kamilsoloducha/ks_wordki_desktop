@@ -168,7 +168,7 @@ namespace Wordki.ViewModels
 
         public override void InitViewModel()
         {
-            Database lDatabase = Database.GetDatabase();
+            IDatabase lDatabase = Database.GetDatabase();
             SelectedLabel = 1;
             GroupId = (long)PackageStore.Get(0);
 

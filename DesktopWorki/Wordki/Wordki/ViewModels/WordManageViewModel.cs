@@ -35,7 +35,7 @@ namespace Wordki.ViewModels
             }
         }
 
-        public Database Database { get; set; }
+        public IDatabase Database { get; set; }
         public BuilderCommand BackCommand { get; set; }
         public BuilderCommand DeleteItemsCommand { get; set; }
         public BuilderCommand VisibilityChangeCommnad { get; set; }
@@ -43,7 +43,7 @@ namespace Wordki.ViewModels
 
         public WordManageViewModel()
         {
-            Database = Database.GetDatabase();
+            Database = Models.Database.GetDatabase();
             ActivateCommand();
 
         }

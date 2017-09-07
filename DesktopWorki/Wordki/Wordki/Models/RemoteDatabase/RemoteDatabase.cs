@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Globalization;
-using Wordki.Helpers;
 using Wordki.Helpers.Command;
 using Wordki.Models.Connector;
 
 namespace Wordki.Models.RemoteDatabase
 {
-    public class RemoteDatabase : RemoteDatabaseAbs
+    public class RemoteDatabase : RemoteDatabaseBase
     {
 
         public override CommandQueue<ICommand> GetDownloadQueue()

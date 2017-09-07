@@ -1,7 +1,7 @@
 ﻿using Wordki.Helpers.Command;
 
 namespace Wordki.Models.RemoteDatabase {
-  public class RemoteDatabaseFake : RemoteDatabaseAbs {
+  public class RemoteDatabaseFake : RemoteDatabaseBase {
     public override CommandQueue<ICommand> GetDownloadQueue() {
       return new CommandQueue<ICommand>();
     }

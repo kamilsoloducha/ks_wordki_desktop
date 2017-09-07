@@ -17,7 +17,7 @@ namespace Wordki.ViewModels
     public class SettingsViewModel : ViewModelBase
     {
         public Settings Settings { get; set; }
-        public Database Database { get; set; }
+        public IDatabase Database { get; set; }
 
         public BuilderCommand BackCommand { get; set; }
         public BuilderCommand DefaultCommand { get; set; }
@@ -151,7 +151,7 @@ namespace Wordki.ViewModels
         {
             ActivateCommand();
             Settings = Settings.GetSettings();
-            Database = Database.GetDatabase();
+            Database = Models.Database.GetDatabase();
         }
 
         public override void InitViewModel()
@@ -285,16 +285,16 @@ namespace Wordki.ViewModels
 
         private void Synchronize(object obj)
         {
-            Database lDatabase = Database.GetDatabase();
+            IDatabase lDatabase = Models.Database.GetDatabase();
             lDatabase.User.DownloadTime = new DateTime(1991, 5, 20);
             CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-            CommandQueue<ICommand> downloadQueue = RemoteDatabaseAbs.GetRemoteDatabase(lDatabase.User).GetDownloadQueue();
+            CommandQueue<ICommand> downloadQueue = RemoteDatabaseBase.GetRemoteDatabase(lDatabase.User).GetDownloadQueue();
             foreach (ICommand command in downloadQueue.MainQueue)
             {
                 lQueue.MainQueue.AddLast(command);
             }
             lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetDateTime(lDatabase.User)) { OnCompleteCommand = lDatabase.OnReadDateTime });
-            CommandQueue<ICommand> uploadQueue = RemoteDatabaseAbs.GetRemoteDatabase(lDatabase.User).GetUploadQueue();
+            CommandQueue<ICommand> uploadQueue = RemoteDatabaseBase.GetRemoteDatabase(lDatabase.User).GetUploadQueue();
             foreach (ICommand command in uploadQueue.MainQueue)
             {
                 lQueue.MainQueue.AddLast(command);
@@ -309,16 +309,16 @@ namespace Wordki.ViewModels
 
         private void Logout(object obj)
         {
-            Database.GetDatabase().SaveDatabase();
-            Database.ClearDatabase();
+            Models.Database.GetDatabase().SaveDatabase();
+            Models.Database.ClearDatabase();
             Settings.ResetSettings();
             Switcher.GetSwitcher().Reset();
         }
 
         private void ClearDatabase(object obj)
         {
-            Database.GetDatabase().GroupsList.Clear();
-            Database.ClearDatabase();
+            Models.Database.GetDatabase().GroupsList.Clear();
+            Models.Database.ClearDatabase();
             Logout(null);
         }
 

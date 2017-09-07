@@ -8,9 +8,9 @@ namespace Wordki.Helpers.GroupSplitter {
 
     public int Number { get; set; }
     public Group Group { get; set; }
-    private Database Database { get; set; }
+    private IDatabase Database { get; set; }
 
-    protected GroupSplitterBase(Database database) {
+    protected GroupSplitterBase(IDatabase database) {
       Database = database;
     }
 

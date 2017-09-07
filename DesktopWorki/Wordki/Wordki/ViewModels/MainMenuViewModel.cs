@@ -175,7 +175,7 @@ namespace Wordki.ViewModels
         private void Exit(object obj)
         {
             Database.GetDatabase().SaveDatabase();
-            CommandQueue<ICommand> lQueue = RemoteDatabaseAbs.GetRemoteDatabase(Database.GetDatabase().User).GetUploadQueue();
+            CommandQueue<ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(Database.GetDatabase().User).GetUploadQueue();
             lQueue.OnQueueComplete += success => Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown());
             lQueue.Execute();
         }
@@ -183,7 +183,7 @@ namespace Wordki.ViewModels
 
         private void RefreshInfo()
         {
-            Database lDatabase = Database.GetDatabase();
+            IDatabase lDatabase = Database.GetDatabase();
             ObservableCollection<double> lList = new ObservableCollection<double>(lDatabase.GetCountWordsByDrawer());
             string lTeachTimeToday = Util.GetAproximatedTimeFromSeconds(lDatabase.GroupsList.Sum(x => x.GetLessonTime(DateTime.Now)));
             string lTeachTime = Util.GetAproximatedTimeFromSeconds(lDatabase.GroupsList.Sum(x => x.ResultsList.Sum(y => y.TimeCount)));
@@ -210,7 +210,7 @@ namespace Wordki.ViewModels
                 Task.Run(() => RefreshInfo());
                 return;
             }
-            CommandQueue<ICommand> lQueue = RemoteDatabaseAbs.GetRemoteDatabase(Database.GetDatabase().User).GetDownloadQueue();
+            CommandQueue<ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(Database.GetDatabase().User).GetDownloadQueue();
             lQueue.OnQueueComplete += success => RefreshInfo();
             lQueue.Execute();
             _needRead = false;

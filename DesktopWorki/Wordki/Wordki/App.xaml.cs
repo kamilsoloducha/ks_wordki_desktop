@@ -1,7 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Text;
+using System.Windows;
 using Wordki.Helpers;
 using Wordki.LocalDatabase;
-using WordkiRepository;
 
 namespace Wordki
 {
@@ -17,9 +18,6 @@ namespace Wordki
             SqliteConnection lConnection = new SqliteConnection();
             lConnection.CreateDatabase();
             lConnection.CreateTables();
-
-            Test test = new Test();
-            test.Testing();
         }
 
         protected override void OnStartup(StartupEventArgs e)

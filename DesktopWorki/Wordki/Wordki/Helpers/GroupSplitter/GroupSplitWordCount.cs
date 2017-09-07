@@ -6,7 +6,7 @@ namespace Wordki.Helpers.GroupSplitter
     public class GroupSplitWordCount : GroupSplitterBase
     {
 
-        public GroupSplitWordCount(int pNumber, Group pGroup, Database database)
+        public GroupSplitWordCount(int pNumber, Group pGroup, IDatabase database)
           : base(database)
         {
             Number = pNumber;

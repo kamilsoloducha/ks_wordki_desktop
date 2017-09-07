@@ -86,7 +86,7 @@ namespace Wordki.ViewModels
             CommandQueue<ICommand> queue = new CommandQueue<ICommand> { CreateDialog = true };
             queue.MainQueue.AddFirst(new SimpleCommand(() =>
             {
-                Database database = Database.GetDatabase();
+                IDatabase database = Database.GetDatabase();
                 database.User = lUser;
                 return database.LoadDatabase();
             }));
@@ -121,7 +121,7 @@ namespace Wordki.ViewModels
             User lUser = JsonConvert.DeserializeObject<User>(response.Message);
             lUser.IsLogin = true;
             lUser.IsRegister = true;
-            Database database = Database.GetDatabase();
+            IDatabase database = Database.GetDatabase();
             User dbUser = database.GetUser(lUser.UserId);
             if (dbUser == null)
             {

@@ -78,8 +78,8 @@ namespace Wordki.Models.Connector {
   }
 
   public class ApiRequestPutGroups : ApiRequest {
-    private Database Database { get; set; }
-    public ApiRequestPutGroups(Database database) {
+    private IDatabase Database { get; set; }
+    public ApiRequestPutGroups(IDatabase database) {
       Url = Host + "group";
       Method = "PUT";
       Database = database;
@@ -93,8 +93,8 @@ namespace Wordki.Models.Connector {
   }
 
   public class ApiRequestPutWords : ApiRequest {
-    private Database Database { get; set; }
-    public ApiRequestPutWords(Database database) {
+    private IDatabase Database { get; set; }
+    public ApiRequestPutWords(IDatabase database) {
       Url = Host + "word";
       Method = "PUT";
       Headers = new Dictionary<string, string> { { "authorization", database.User.ApiKey } };
@@ -108,8 +108,8 @@ namespace Wordki.Models.Connector {
   }
 
   public class ApiRequestPutResults : ApiRequest {
-    private Database Database { get; set; }
-    public ApiRequestPutResults(Database database) {
+    private IDatabase Database { get; set; }
+    public ApiRequestPutResults(IDatabase database) {
       Url = Host + "result";
       Method = "PUT";
       Headers = new Dictionary<string, string> { { "authorization", database.User.ApiKey } };

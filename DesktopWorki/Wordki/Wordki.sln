@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordki", "Wordki\Wordki.csproj", "{47F92EFB-3ACB-4C6F-A80C-53C50A111EE2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "..\..\..\..\oazachaosu\vesper-oazachaosu\Oazachaosu\Repository\Repository.csproj", "{90D846A5-5CB3-4926-8719-88EC170A61AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordkiRepository", "WordkiRepository\WordkiRepository.csproj", "{9B83BB1B-D287-49A1-B1B6-1AFA4EBDC4E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordki.Test", "Wordki.Test\Wordki.Test.csproj", "{68D53406-FF9A-4BAB-815E-CBB410739B34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{90D846A5-5CB3-4926-8719-88EC170A61AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90D846A5-5CB3-4926-8719-88EC170A61AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90D846A5-5CB3-4926-8719-88EC170A61AA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B83BB1B-D287-49A1-B1B6-1AFA4EBDC4E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B83BB1B-D287-49A1-B1B6-1AFA4EBDC4E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B83BB1B-D287-49A1-B1B6-1AFA4EBDC4E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B83BB1B-D287-49A1-B1B6-1AFA4EBDC4E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68D53406-FF9A-4BAB-815E-CBB410739B34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68D53406-FF9A-4BAB-815E-CBB410739B34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68D53406-FF9A-4BAB-815E-CBB410739B34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68D53406-FF9A-4BAB-815E-CBB410739B34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -134,7 +134,7 @@ namespace Wordki.ViewModels
 
         private async void SaveGroup(object obj)
         {
-            Database database = Database.GetDatabase();
+            IDatabase database = Database.GetDatabase();
             Group newGroup = new Group
             {
                 Name = Path.GetFileName(FilePath),

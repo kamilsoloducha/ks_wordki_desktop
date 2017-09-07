@@ -15,7 +15,7 @@ namespace Wordki.ViewModels
     public class SameWordsViewModel : ViewModelBase
     {
 
-        private Database Database { get; set; }
+        private IDatabase Database { get; set; }
         public ObservableCollection<Word> DataGridCollection { get; set; }
         public BuilderCommand BackCommand { get; set; }
         public BuilderCommand ConnectWordsCommand { get; set; }
@@ -74,7 +74,7 @@ namespace Wordki.ViewModels
 
         public override void InitViewModel()
         {
-            Database = Database.GetDatabase();
+            Database = Models.Database.GetDatabase();
         }
 
         public override void Back()
