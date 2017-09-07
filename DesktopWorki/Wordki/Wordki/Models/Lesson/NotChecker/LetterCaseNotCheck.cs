@@ -9,13 +9,9 @@ namespace Wordki.Models.Lesson.WordComparer
 {
     public class LetterCaseNotCheck : INotCheck
     {
-        public StringBuilder Convert(StringBuilder builder)
+        public string Convert(string text)
         {
-            for (int i = 0; i < builder.Length; i++)
-            {
-                builder[i] = char.ToLower(builder[i]);
-            }
-            return builder;
+            return text.ToLower();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Wordki.Test.Helpers
             string textBefore = "someText.asdf";
             string textAfter = "someText.asdf";
             INotCheck notChecker = new SpaceNotCheck();
-            string textConverted = notChecker.Convert(new StringBuilder(textBefore)).ToString();
+            string textConverted = notChecker.Convert(textBefore);
             Assert.IsTrue(textAfter.Equals(textConverted));
         }
 
@@ -27,7 +27,7 @@ namespace Wordki.Test.Helpers
             string textBefore = "s om eT ext. as df ";
             string textAfter = "someText.asdf";
             INotCheck notChecker = new SpaceNotCheck();
-            string textConverted = notChecker.Convert(new StringBuilder(textBefore)).ToString();
+            string textConverted = notChecker.Convert(textBefore);
             Assert.IsTrue(textAfter.Equals(textConverted));
         }
     }

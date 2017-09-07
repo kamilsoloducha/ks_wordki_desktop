@@ -9,7 +9,7 @@ namespace Wordki.Models.Lesson.WordComparer
     public interface INotCheck
     {
 
-        StringBuilder Convert(StringBuilder text);
+        string Convert(string text);
 
     }
 }

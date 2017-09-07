@@ -18,7 +18,8 @@ namespace Wordki.Test.Helpers
             string textBefore = "so metextasdf";
             string textAfter = "so metextasdf";
             INotCheck notChecker = new PunctuationNotCheck();
-            string textConverted = notChecker.Convert(new StringBuilder(textBefore)).ToString();
+            string textConverted = notChecker.Convert(textBefore);
+
             Assert.IsTrue(textAfter.Equals(textConverted));
         }
 
@@ -28,7 +29,8 @@ namespace Wordki.Test.Helpers
             string textBefore = "s ome12te#xt.asdf^%$";
             string textAfter = "s ometextasdf";
             INotCheck notChecker = new PunctuationNotCheck();
-            string textConverted = notChecker.Convert(new StringBuilder(textBefore)).ToString();
+            string textConverted = notChecker.Convert(textBefore);
+
             Assert.IsTrue(textAfter.Equals(textConverted));
         }
 
@@ -39,7 +41,8 @@ namespace Wordki.Test.Helpers
             string textBefore = "(&*@(*&^$#>}>";
             string textAfter = "";
             INotCheck notChecker = new PunctuationNotCheck();
-            string textConverted = notChecker.Convert(new StringBuilder(textBefore)).ToString();
+            string textConverted = notChecker.Convert(textBefore);
+
             Assert.IsTrue(textAfter.Equals(textConverted));
         }
     }

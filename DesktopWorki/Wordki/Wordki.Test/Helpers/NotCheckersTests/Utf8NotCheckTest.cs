@@ -18,7 +18,7 @@ namespace Wordki.Test.Helpers
             string textBefore = "qwertyuiopasdfghjklzxcvbnm1234567890`~!@#$%^&*()-=_+[]{}\\|;':\",./<>?";
             string textAfter = "qwertyuiopasdfghjklzxcvbnm1234567890`~!@#$%^&*()-=_+[]{}\\|;':\",./<>?";
             Utf8NotCheck converter = new Utf8NotCheck();
-            Assert.IsTrue(textAfter.Equals(converter.Convert(new StringBuilder(textBefore)).ToString()));
+            Assert.IsTrue(textAfter.Equals(converter.Convert(textBefore)));
         }
 
         [TestMethod]
@@ -27,7 +27,7 @@ namespace Wordki.Test.Helpers
             string textBefore = "ąśżźćńęłóĄŚŻŹĆŁÓŃĘ";
             string textAfter = "aszzcneloASZZCLONE";
             Utf8NotCheck converter = new Utf8NotCheck();
-            string convertedText = converter.Convert(new StringBuilder(textBefore)).ToString();
+            string convertedText = converter.Convert(textBefore).ToString();
             Assert.IsTrue(textAfter.Equals(convertedText));
         }
 

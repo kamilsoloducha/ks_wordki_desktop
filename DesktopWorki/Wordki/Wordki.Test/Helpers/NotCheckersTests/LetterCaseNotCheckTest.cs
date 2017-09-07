@@ -18,7 +18,7 @@ namespace Wordki.Test.Helpers
             string textBefore = "sometext.asdf";
             string textAfter = "sometext.asdf";
             INotCheck notChecker = new LetterCaseNotCheck();
-            string textConverted = notChecker.Convert(new StringBuilder(textBefore)).ToString();
+            string textConverted = notChecker.Convert(textBefore);
             Assert.IsTrue(textAfter.Equals(textConverted));
         }
 
@@ -28,7 +28,7 @@ namespace Wordki.Test.Helpers
             string textBefore = "sOmeTexT.aSdf";
             string textAfter = "sometext.asdf";
             INotCheck notChecker = new LetterCaseNotCheck();
-            string textConverted = notChecker.Convert(new StringBuilder(textBefore)).ToString();
+            string textConverted = notChecker.Convert(textBefore);
             Assert.IsTrue(textAfter.Equals(textConverted));
         }
 

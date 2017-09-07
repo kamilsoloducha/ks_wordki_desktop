@@ -561,12 +561,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\oazachaosu\vesper-oazachaosu\Oazachaosu\Repository\Repository.csproj">
+    <ProjectReference Include="..\..\..\..\oazachaosu\Oazachaosu\Repository\Repository.csproj">
       <Project>{90d846a5-5cb3-4926-8719-88ec170a61aa}</Project>
       <Name>Repository</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.103\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net45\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

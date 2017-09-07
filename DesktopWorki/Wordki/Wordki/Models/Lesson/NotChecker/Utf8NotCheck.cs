@@ -7,6 +7,7 @@ namespace Wordki.Models.Lesson.WordComparer
     {
 
         private static Dictionary<char, char> _dictionary = new Dictionary<char, char>();
+        private static StringBuilder _builder = new StringBuilder();
 
         static Utf8NotCheck()
         {
@@ -31,16 +32,17 @@ namespace Wordki.Models.Lesson.WordComparer
             _dictionary.Add('Ń', 'N');
         }
 
-        public StringBuilder Convert(StringBuilder text)
+        public string Convert(string text)
         {
-            for (int i = 0; i < text.Length; i++)
+            _builder.Clear().Append(text);
+            foreach (char c in text.ToCharArray())
             {
-                if (text[i] > 128)
+                if (c > 128)
                 {
-                    text.Replace(text[i], _dictionary[text[i]]);
+                    _builder.Replace(c, _dictionary[c]);
                 }
             }
-            return text;
+            return _builder.ToString();
         }
 
     }

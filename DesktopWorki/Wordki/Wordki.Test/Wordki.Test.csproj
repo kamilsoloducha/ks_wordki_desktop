@@ -48,10 +48,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\LetterCaseNotCheckTest.cs" />
-    <Compile Include="Helpers\PunctuationNotCheckTest.cs" />
-    <Compile Include="Helpers\SpaceNotCheckTest.cs" />
-    <Compile Include="Helpers\Utf8NotCheckTest.cs" />
+    <Compile Include="Helpers\NotCheckersTests\LetterCaseNotCheckTest.cs" />
+    <Compile Include="Helpers\NotCheckersTests\PunctuationNotCheckTest.cs" />
+    <Compile Include="Helpers\NotCheckersTests\SpaceNotCheckTest.cs" />
+    <Compile Include="Helpers\NotCheckersTests\Utf8NotCheckTest.cs" />
+    <Compile Include="Helpers\WordComparerTest.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,10 +60,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\oazachaosu\vesper-oazachaosu\Oazachaosu\Repository\Repository.csproj">
-      <Project>{90d846a5-5cb3-4926-8719-88ec170a61aa}</Project>
-      <Name>Repository</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Wordki\Wordki.csproj">
       <Project>{47f92efb-3acb-4c6f-a80c-53c50a111ee2}</Project>
       <Name>Wordki</Name>

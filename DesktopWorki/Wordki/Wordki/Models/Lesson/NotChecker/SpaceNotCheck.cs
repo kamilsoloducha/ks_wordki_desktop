@@ -8,7 +8,7 @@ namespace Wordki.Models.Lesson.WordComparer
 {
     public class SpaceNotCheck : INotCheck
     {
-        public StringBuilder Convert(StringBuilder text)
+        public string Convert(string text)
         {
             return text.Replace(" ", "");
         }

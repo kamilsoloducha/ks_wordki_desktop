@@ -8,19 +8,20 @@ namespace Wordki.Models.Lesson.WordComparer
 {
     public class PunctuationNotCheck : INotCheck
     {
-        public StringBuilder Convert(StringBuilder text)
-        {
+        private static StringBuilder _builder = new StringBuilder();
 
-            for (int i = text.Length - 1; i >= 0; i--)
+        public string Convert(string text)
+        {
+            _builder.Clear();
+            foreach (char c in text.ToCharArray())
             {
-                char c = text[i];
                 if (c == ' ' || c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' || c >= 128)
                 {
-                    continue;
+                    _builder.Append(c);
                 }
-                text.Remove(i, 1);
+
             }
-            return text;
+            return _builder.ToString();
         }
     }
 }
