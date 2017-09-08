@@ -52,7 +52,11 @@
     <Compile Include="Helpers\NotCheckersTests\PunctuationNotCheckTest.cs" />
     <Compile Include="Helpers\NotCheckersTests\SpaceNotCheckTest.cs" />
     <Compile Include="Helpers\NotCheckersTests\Utf8NotCheckTest.cs" />
-    <Compile Include="Helpers\WordComparerTest.cs" />
+    <Compile Include="Helpers\WordComparerTests\WordComparerTest.cs" />
+    <Compile Include="Helpers\WordComparerTests\WordComparerWithLetterCaseNotCheckTest.cs" />
+    <Compile Include="Helpers\WordComparerTests\WordComparerWithPunctuationNotCheckTest.cs" />
+    <Compile Include="Helpers\WordComparerTests\WordComparerWithSpaceNotCheckTest.cs" />
+    <Compile Include="Helpers\WordComparerTests\WordComparerWithUtf8NotCheckTest.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

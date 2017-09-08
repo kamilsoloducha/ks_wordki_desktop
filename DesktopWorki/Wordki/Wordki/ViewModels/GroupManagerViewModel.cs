@@ -476,10 +476,11 @@ namespace Wordki.ViewModels
                             return;
                         }
                 }
-                lLesson.WordComparer = new WordComparer
-                {
-                    FontSizeSensitive = Settings.FontSizeSensitive
-                };
+                lLesson.WordComparer = new WordComparer();
+                lLesson.WordComparer.NotCheckers.Add(new LetterCaseNotCheck());
+                lLesson.WordComparer.NotCheckers.Add(new SpaceNotCheck());
+                lLesson.WordComparer.NotCheckers.Add(new Utf8NotCheck());
+
                 lLesson.InitLesson();
                 PackageStore.Put(0, lLesson);
                 Switcher.GetSwitcher().Switch(Switcher.State.Teach);

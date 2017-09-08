@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace Wordki.Models.Lesson.WordComparer
 {
-    public class WordComparer2 : IWordComparer
+    public class WordComparer : IWordComparer
     {
 
-        public ICollection<INotCheck> NotCheckers { get; set; }
+        public ICollection<INotCheck> NotCheckers { get; private set; }
+
+        public WordComparer()
+        {
+            NotCheckers = new List<INotCheck>();
+        }
 
         public bool Compare(string word1, string word2)
         {
