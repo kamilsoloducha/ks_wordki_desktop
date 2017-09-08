@@ -48,6 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\LessonSchedulerTests\LessonSchedulerWithSimpleInitializerTest.cs" />
     <Compile Include="Helpers\NotCheckersTests\LetterCaseNotCheckTest.cs" />
     <Compile Include="Helpers\NotCheckersTests\PunctuationNotCheckTest.cs" />
     <Compile Include="Helpers\NotCheckersTests\SpaceNotCheckTest.cs" />
@@ -64,6 +65,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\oazachaosu\Oazachaosu\Repository\Repository.csproj">
+      <Project>{90d846a5-5cb3-4926-8719-88ec170a61aa}</Project>
+      <Name>Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wordki\Wordki.csproj">
       <Project>{47f92efb-3acb-4c6f-a80c-53c50a111ee2}</Project>
       <Name>Wordki</Name>

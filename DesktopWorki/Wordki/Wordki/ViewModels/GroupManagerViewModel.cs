@@ -15,6 +15,8 @@ using Wordki.Helpers;
 using Wordki.Models;
 using Wordki.Models.Lesson;
 using Wordki.Models.Lesson.WordComparer;
+using Wordki.Models.LessonScheduler;
+using Wordki.Models.LessonScheduler.LessonScheduleInitializer;
 
 namespace Wordki.ViewModels
 {
@@ -292,10 +294,11 @@ namespace Wordki.ViewModels
             Task.Run(() =>
             {
                 ItemsList.Clear();
+                ILessonScheduler scheduler = new LessonScheduler(new SimpleLessonScheduleInitializer());
                 foreach (GroupItem groupItem in Database.GetDatabase().GroupsList.Select(group => new GroupItem(group)))
                 {
-                    groupItem.Color = LessonScheduler.GetColor(groupItem.Group.GetLastResult());
-                    groupItem.NextRepeat = LessonScheduler.TimeToLearn(groupItem.Group.ResultsList);
+                    groupItem.Color = scheduler.GetColor(groupItem.Group.GetLastResult());
+                    groupItem.NextRepeat = scheduler.GetTimeToLearn(groupItem.Group.ResultsList);
                     ItemsList.Add(groupItem);
                 }
             });

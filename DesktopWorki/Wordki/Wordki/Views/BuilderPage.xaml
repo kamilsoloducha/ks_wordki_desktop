@@ -4,6 +4,8 @@
 						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 						 xmlns:helpers="clr-namespace:Wordki.Helpers"
+             xmlns:converters="clr-namespace:Wordki.Helpers.Converters"
+             
 						 xmlns:viewModels="clr-namespace:Wordki.ViewModels"
 						 xmlns:models="clr-namespace:Wordki.Models"
 						 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -22,7 +24,7 @@
       <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
 
-		<helpers:DrawerToColorConverter x:Key="DrawerToColorConverter"/>
+        <converters:DrawerToColorConverter x:Key="DrawerToColorConverter"/>
 
 	</UserControl.Resources>
 
