@@ -6,38 +6,31 @@ namespace Wordki.Helpers.GroupSplitter
     public class GroupSplitWordCount : GroupSplitterBase
     {
 
-        public GroupSplitWordCount(int pNumber, Group pGroup, IDatabase database)
-          : base(database)
+        public override IEnumerable<Group> Split(Group group, int factor)
         {
-            Number = pNumber;
-            Group = pGroup;
-        }
-
-        public override IEnumerable<Group> Split()
-        {
-            if (Group == null || Group.WordsList.Count == 0)
+            if (group == null || group.WordsList.Count == 0)
             {
                 Logger.LogError("Bład pozialu grupy - nie ma nic do podzielenia");
                 yield break;
             }
-            if (Number >= Group.WordsList.Count || Number <= 0)
+            if (factor >= group.WordsList.Count || factor <= 0)
             {
-                Logger.LogError("Blad podzialu grupy - Number = {0}", Number);
+                Logger.LogError($"Blad podzialu grupy - {factor}");
                 yield break;
             }
-            List<Word> lWords = new List<Word>(Group.WordsList);
-            int lNewGroupCount = lWords.Count / Number;
+            List<Word> lWords = new List<Word>(group.WordsList);
+            int lNewGroupCount = lWords.Count / factor;
             for (int i = 0; i <= lNewGroupCount; i++)
             {
-                Group lNewGroup = CreateGroup(i + 1);
-                int j = Group.WordsList.Count - 1;
-                while (lNewGroup.WordsList.Count < Number)
+                Group lNewGroup = CreateGroup(group, i + 1);
+                int j = group.WordsList.Count - 1;
+                while (lNewGroup.WordsList.Count < factor)
                 {
-                    TransferWord(Group.WordsList[j], lNewGroup);
+                    TransferWord(group.WordsList[j], lNewGroup);
                     j--;
                 }
                 yield return lNewGroup;
-                if (Group.WordsList.Count <= Number)
+                if (group.WordsList.Count <= factor)
                 {
                     break;
                 }

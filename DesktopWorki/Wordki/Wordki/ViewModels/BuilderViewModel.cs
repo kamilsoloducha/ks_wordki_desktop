@@ -415,30 +415,31 @@ namespace Wordki.ViewModels
             lDialog.ViewModel.OnOkClickListener += () =>
             {
                 GroupSplitterBase lSpliter;
+                int factor;
                 switch (lDialog.ViewModel.TabSelected)
                 {
                     case (int)SplitterEnum.Percentage:
                         {
-                            lSpliter = new GroupSlitPercentage(lDialog.ViewModel.Percentage, SelectedGroup, Database);
+                            lSpliter = new GroupSlitPercentage();
+                            factor = lDialog.ViewModel.Percentage;
                         }
                         break;
                     case (int)SplitterEnum.GroupCount:
                         {
-                            lSpliter = new GroupSplitGroupCount(Int32.Parse(lDialog.ViewModel.GroupCount), SelectedGroup, Database);
+                            lSpliter = new GroupSplitGroupCount();
+                            factor = Int32.Parse(lDialog.ViewModel.GroupCount);
                         }
                         break;
                     case (int)SplitterEnum.WordCount:
                         {
-                            lSpliter = new GroupSplitWordCount(Int32.Parse(lDialog.ViewModel.WordCount), SelectedGroup, Database);
+                            lSpliter = new GroupSplitWordCount();
+                            factor = Int32.Parse(lDialog.ViewModel.WordCount);
                         }
                         break;
                     default:
                         return;
                 }
-                IEnumerable<Group> lGroups = lSpliter.Split();
-                if (lGroups == null)
-                    return;
-                foreach (Group lGroup in lGroups)
+                foreach (Group lGroup in lSpliter.Split(SelectedGroup, factor))
                 {
                     AddGroup(lGroup);
                 }

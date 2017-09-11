@@ -5,29 +5,21 @@ namespace Wordki.Helpers.GroupSplitter
 {
     public class GroupSlitPercentage : GroupSplitterBase
     {
-
-        public GroupSlitPercentage(int pNumber, Group pGroup, IDatabase database)
-          : base(database)
+        public override IEnumerable<Group> Split(Group group, int factor)
         {
-            Number = pNumber;
-            Group = pGroup;
-        }
-
-        public override IEnumerable<Group> Split()
-        {
-            if (Number >= 100 || Number <= 0)
+            if (factor >= 100 || factor <= 0)
             {
-                Logger.LogError("Blad podzialu grupy - Number = {0}", Number);
+                Logger.LogError($"Blad podzialu grupy - {factor}");
                 yield break;
             }
-            if (Group == null || Group.WordsList.Count == 0)
+            if (group == null || group.WordsList.Count == 0)
             {
                 Logger.LogError("Bład pozialu grupy - nie ma nic do podzielenia");
                 yield break;
             }
-            Group lNewGroup = CreateGroup(1);
-            List<Word> lWords = new List<Word>(Group.WordsList);
-            int lWordsCount1 = (Group.WordsList.Count * Number / 100);
+            Group lNewGroup = CreateGroup(group, 1);
+            List<Word> lWords = new List<Word>(group.WordsList);
+            int lWordsCount1 = (group.WordsList.Count * factor / 100);
             for (int i = lWordsCount1; i < lWords.Count; ++i)
             {
                 TransferWord(lWords[i], lNewGroup);

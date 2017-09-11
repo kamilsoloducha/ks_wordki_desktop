@@ -1,43 +1,37 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using Wordki.Models;
-using Database = Wordki.Models.Database;
 
-namespace Wordki.Helpers.GroupSplitter {
-  public abstract class GroupSplitterBase {
+namespace Wordki.Helpers.GroupSplitter
+{
+    public abstract class GroupSplitterBase
+    {
+        public abstract IEnumerable<Group> Split(Group group, int factor);
 
-    public int Number { get; set; }
-    public Group Group { get; set; }
-    private IDatabase Database { get; set; }
 
-    protected GroupSplitterBase(IDatabase database) {
-      Database = database;
+        protected Group CreateGroup(Group group, int counter)
+        {
+            Group lNewGroup = new Group();
+            lNewGroup.Name = group.Name + " " + new string('*', counter);
+            lNewGroup.Language1 = group.Language1;
+            lNewGroup.Language2 = group.Language2;
+            Thread.Sleep(1);
+            return lNewGroup;
+        }
+
+        protected void TransferWord(Word oldWord, Group newGroup)
+        {
+            Word newWord = new Word
+            {
+                GroupId = newGroup.Id,
+                Language1 = oldWord.Language1,
+                Language2 = oldWord.Language2,
+                Drawer = oldWord.Drawer,
+                Language1Comment = oldWord.Language1Comment,
+                Language2Comment = oldWord.Language2Comment,
+                Visible = oldWord.Visible,
+            };
+            newGroup.WordsList.Add(newWord);
+        }
     }
-
-    public abstract IEnumerable<Group> Split();
-
-
-    protected Group CreateGroup(int pCounter) {
-      Group lNewGroup = new Group();
-      lNewGroup.Name = Group.Name + " " + new string('*', pCounter);
-      lNewGroup.Language1 = Group.Language1;
-      lNewGroup.Language2 = Group.Language2;
-      Thread.Sleep(1);
-      return lNewGroup;
-    }
-
-    protected async void TransferWord(Word oldWord, Group newGroup) {
-      Word newWord = new Word{
-        GroupId = newGroup.Id,
-        Language1 = oldWord.Language1,
-        Language2 = oldWord.Language2,
-        Drawer = oldWord.Drawer,
-        Language1Comment = oldWord.Language1Comment,
-        Language2Comment = oldWord.Language2Comment,
-        Visible = oldWord.Visible,
-      };
-      await Database.DeleteWordAsync(Group, oldWord);
-      await Database.AddWordAsync(newGroup, newWord);
-    }
-  }
 }
