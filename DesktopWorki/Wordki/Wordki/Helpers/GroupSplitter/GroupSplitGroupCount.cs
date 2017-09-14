@@ -12,7 +12,7 @@ namespace Wordki.Helpers.GroupSplitter
                 Logger.LogError("Bład pozialu grupy - nie ma nic do podzielenia");
                 yield break;
             }
-            if (factor > group.WordsList.Count || factor <= 0)
+            if (factor > group.WordsList.Count || factor < 2)
             {
                 Logger.LogError($"Blad podzialu grupy - {factor}");
                 yield break;

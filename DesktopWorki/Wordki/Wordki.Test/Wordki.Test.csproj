@@ -48,6 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\GroupSplitterTests\GroupSplitterGroupCountTest.cs" />
     <Compile Include="Helpers\GroupSplitterTests\GroupSplitterPercentageTest.cs" />
     <Compile Include="Helpers\LessonSchedulerTests\LessonSchedulerWithSimpleInitializerTest.cs" />
     <Compile Include="Helpers\NotCheckersTests\LetterCaseNotCheckTest.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
