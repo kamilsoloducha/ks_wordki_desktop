@@ -20,7 +20,7 @@ namespace Wordki.Helpers.GroupSplitter
             }
             List<Word> lWords = new List<Word>(group.WordsList);
             int lNewGroupCount = lWords.Count / factor;
-            for (int i = 0; i <= lNewGroupCount; i++)
+            for (int i = 0; i < lNewGroupCount - 1; i++)
             {
                 Group lNewGroup = CreateGroup(group, i + 1);
                 int j = group.WordsList.Count - 1;
