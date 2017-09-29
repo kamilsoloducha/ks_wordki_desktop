@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -86,6 +87,10 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="nunit.framework, Version=3.8.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.8.1\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\System.ComponentModel.DataAnnotations.dll</HintPath>
@@ -135,6 +140,12 @@
     <Compile Include="Helpers\Converters\LanguageToStringConverter.cs" />
     <Compile Include="Helpers\Behaviour\CursorAtEndBehavior.cs" />
     <Compile Include="Helpers\Converters\TranslationDirectionToIntConverter.cs" />
+    <Compile Include="Helpers\GroupCreator\FileLoader.cs" />
+    <Compile Include="Helpers\GroupCreator\GroupCreatorFromFile.cs" />
+    <Compile Include="Helpers\GroupCreator\GroupCreatorSettings.cs" />
+    <Compile Include="Helpers\GroupCreator\GroupNameCreatorFromFile.cs" />
+    <Compile Include="Helpers\GroupCreator\IGroupCreator.cs" />
+    <Compile Include="Helpers\GroupCreator\IGroupNameCreator.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSplitterBase.cs" />
     <Compile Include="Helpers\Behaviour\InputBindingBehavior.cs" />
     <Compile Include="Helpers\JsonConverters\StringToBoolConverter.cs" />
@@ -150,6 +161,8 @@
     <Compile Include="Models\Connector\ApiConnector.cs" />
     <Compile Include="Models\Connector\ApiRequest.cs" />
     <Compile Include="Models\Connector\ApiResponse.cs" />
+    <Compile Include="Models\LanguageSwaper\ILanguageSwaper.cs" />
+    <Compile Include="Models\LanguageSwaper\LanguageSwaper.cs" />
     <Compile Include="Models\LessonScheduler\IntervalTimeCalculator.cs" />
     <Compile Include="Models\LessonScheduler\LessonScheduleInitializer\ILessonScheduleInitizer.cs" />
     <Compile Include="Models\LessonScheduler\LessonScheduleInitializer\SimpleLessonScheduleInitializer.cs" />
@@ -578,6 +591,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.105.2\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.105.2\build\net451\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

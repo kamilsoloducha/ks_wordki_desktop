@@ -14,6 +14,7 @@ using Wordki.Models;
 using Wordki.Models.RemoteDatabase;
 using Wordki.Views.Dialogs;
 using Wordki.Views.Dialogs.ListDialogs;
+using Wordki.Models.LanguageSwaper;
 
 namespace Wordki.ViewModels
 {
@@ -357,19 +358,8 @@ namespace Wordki.ViewModels
         {
             if (Database.GroupsList.Count == 0)
                 return;
-            Group lGroup = SelectedGroup;
-            lGroup.SwapLanguage();
-            Database.UpdateGroupAsync(lGroup).ConfigureAwait(false);
-            foreach (Word lWord in lGroup.WordsList)
-            {
-                lWord.SwapLanguages();
-                Database.UpdateWordAsync(lWord).ConfigureAwait(false);
-            }
-            foreach (Result result in lGroup.ResultsList)
-            {
-                result.SwapDirection();
-                Database.UpdateResultAsync(result).ConfigureAwait(false);
-            }
+            ILanguageSwaper swaper = new LanguageSwaper();
+            swaper.Swap(SelectedGroup);
             SetWordLabels();
         }
 
