@@ -25,6 +25,7 @@ namespace Wordki.Helpers.GroupCreator
         public Group Create()
         {
             Group group = new Group();
+            group.Name = GroupNameCreator.CreateName(_filePath);
             string fileContent = string.Empty;
             try
             {

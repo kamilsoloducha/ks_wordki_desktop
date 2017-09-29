@@ -1,11 +1,9 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using Wordki.Helpers;
+using Wordki.Helpers.FileChooser;
+using Wordki.Helpers.GroupCreator;
 using Wordki.Models;
 
 namespace Wordki.ViewModels
@@ -81,6 +79,22 @@ namespace Wordki.ViewModels
             }
         }
 
+        private Group _group;
+
+        public Group Group
+        {
+            get { return _group; }
+            set
+            {
+                {
+                    if (_group == value)
+                        return;
+                    _group = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private ObservableCollection<KeyValuePair<string, string>> _pairs;
         public ObservableCollection<KeyValuePair<string, string>> Pairs
         {
@@ -135,90 +149,36 @@ namespace Wordki.ViewModels
         private async void SaveGroup(object obj)
         {
             IDatabase database = Database.GetDatabase();
-            Group newGroup = new Group
-            {
-                Name = Path.GetFileName(FilePath),
-            };
-            if (!(await database.AddGroupAsync(newGroup)))
-            {
-                Logger.LogError("Błąd dodania grupy");
-                return;
-            }
-            foreach (var pair in Pairs)
-            {
-                Word newWord = new Word
-                {
-                    GroupId = newGroup.Id,
-                    Language1 = pair.Key,
-                    Language2 = pair.Value,
-                };
-                newGroup.WordsList.Add(newWord);
-                await database.AddWordAsync(newGroup, newWord);
-            }
+            await database.AddGroupAsync(Group);
             BackCommand.Execute(null);
         }
 
         private void CreateGroup(object obj)
         {
-            Task.Run(() =>
+            if (string.IsNullOrEmpty(FilePath))
             {
-                char? lineSeparator = GetSeparator(LineSeparator);
-                if (!lineSeparator.HasValue)
-                {
-                    return;
-                }
-                char? wordSeparator = GetSeparator(WordSeparator);
-                if (!wordSeparator.HasValue)
-                {
-                    return;
-                }
-                if (!FileContent.Contains(LineSeparator))
-                {
-                    return;
-                }
-                string[] lines = FileContent.Split(lineSeparator.Value);
-                foreach (string line in lines)
-                {
-                    if (string.IsNullOrWhiteSpace(line))
-                    {
-                        continue;
-                    }
-                    if (!line.Contains(WordSeparator))
-                    {
-                        continue;
-                    }
-                    string[] word = line.Split(wordSeparator.Value);
-                    KeyValuePair<string, string> pair = new KeyValuePair<string, string>(word[0].Trim(' ', '\r', '\n'), word[1].Trim(' ', '\r', '\n'));
-                    Pairs.Add(pair);
-                }
-            });
+                return;
+            }
+            GroupCreatorSettings settings = new GroupCreatorSettings()
+            {
+                ElementSeparator = ';',
+                WordSeparator = '|'
+
+            };
+            IGroupCreator groupCreator = new GroupCreatorFromFile(FilePath)
+            {
+                Settings = settings,
+                GroupNameCreator = new GroupNameCreatorFromFile()
+            };
+
+            Group = groupCreator.Create();
         }
 
         private void ChooseFile(object obj)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Multiselect = false;
-            fileDialog.Title = "Wybierz plik";
-            bool? isOpen = fileDialog.ShowDialog();
-            if (isOpen.HasValue && isOpen.Value)
-            {
-                FilePath = fileDialog.FileName;
-                FileContent = File.ReadAllText(FilePath);
-            }
+            IFileChooser fileChooser = new FileChooser();
+            FilePath = fileChooser.Choose();
         }
-
-
-        private char? GetSeparator(string pSeparator)
-        {
-            char separator;
-            if (!Char.TryParse(pSeparator, out separator))
-            {
-                return null;
-            }
-            return separator;
-        }
-
-
 
     }
 }

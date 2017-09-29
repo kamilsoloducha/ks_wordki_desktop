@@ -140,6 +140,8 @@
     <Compile Include="Helpers\Converters\LanguageToStringConverter.cs" />
     <Compile Include="Helpers\Behaviour\CursorAtEndBehavior.cs" />
     <Compile Include="Helpers\Converters\TranslationDirectionToIntConverter.cs" />
+    <Compile Include="Helpers\FileChooser\FileChooser.cs" />
+    <Compile Include="Helpers\FileChooser\IFileChooser.cs" />
     <Compile Include="Helpers\GroupCreator\FileLoader.cs" />
     <Compile Include="Helpers\GroupCreator\GroupCreatorFromFile.cs" />
     <Compile Include="Helpers\GroupCreator\GroupCreatorSettings.cs" />
