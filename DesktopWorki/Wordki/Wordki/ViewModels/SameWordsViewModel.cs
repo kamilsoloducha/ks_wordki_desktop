@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using Wordki.Helpers;
+using Wordki.Helpers.WordComparer;
+using Wordki.Helpers.WordConnector;
+using Wordki.Helpers.WordFinder;
 using Wordki.Models;
 using Wordki.Views.Dialogs;
 
@@ -83,61 +86,16 @@ namespace Wordki.ViewModels
         }
 
 
-        private async void ConnectWord(object obj)
+        private void ConnectWord(object obj)
         {
             if (obj == null)
                 return;
             IList lList = (obj as IList);
             if (lList == null)
                 return;
-            List<Word> lSameWordListSelected = lList.Cast<Word>().ToList();
-            if (lSameWordListSelected.Count < 2)
-            {
-                return;
-            }
-            Word lSameWordDataGridItem = lSameWordListSelected[0];
-            StringBuilder lLanguage1 = new StringBuilder();
-            StringBuilder lLanguage2 = new StringBuilder();
-            StringBuilder lLanguage1Comment = new StringBuilder();
-            StringBuilder lLanguage2Comment = new StringBuilder();
-            foreach (Word lItem in lSameWordListSelected)
-            {
-                if (!lLanguage1.ToString().Contains(lItem.Language1))
-                {
-                    lLanguage1.Append(lItem.Language1);
-                    lLanguage1.Append(", ");
-                }
-                if (!lLanguage2.ToString().Contains(lItem.Language2))
-                {
-                    lLanguage2.Append(lItem.Language2);
-                    lLanguage2.Append(", ");
-                }
-                if (!lLanguage1Comment.ToString().Contains(lItem.Language1Comment))
-                {
-                    lLanguage1Comment.Append(lItem.Language1Comment);
-                    lLanguage1Comment.Append(". ");
-                }
-                if (!lLanguage2Comment.ToString().Contains(lItem.Language2Comment))
-                {
-                    lLanguage2Comment.Append(lItem.Language2Comment);
-                    lLanguage2Comment.Append(". ");
-                }
-            }
-            lLanguage1.Remove(lLanguage1.Length - 2, 2);
-            lLanguage2.Remove(lLanguage2.Length - 2, 2);
-
-            lSameWordDataGridItem.Language1 = lLanguage1.ToString();
-            lSameWordDataGridItem.Language2 = lLanguage2.ToString();
-            lSameWordDataGridItem.Language1Comment = lLanguage1Comment.ToString();
-            lSameWordDataGridItem.Language2Comment = lLanguage2Comment.ToString();
-            lSameWordDataGridItem.Visible = true;
-            lSameWordDataGridItem.Drawer = 0;
-            await Database.UpdateWordAsync(lSameWordDataGridItem);
-            for (int i = 1; i < lSameWordListSelected.Count; i++)
-            {
-                lSameWordListSelected[i].State = -1;
-                await Database.UpdateWordAsync(lSameWordListSelected[i]);
-            }
+            IWordConnector connector = new WordConnector();
+            connector.Connect(lList.Cast<Word>());
+            Database.SaveDatabase();
         }
 
         private void Back(object obj)
@@ -151,7 +109,7 @@ namespace Wordki.ViewModels
             await Task.Run(() =>
             {
                 DataGridCollection.Clear();
-                List<Word> lSameWordsList = FindSameWords();
+                IEnumerable<Word> lSameWordsList = FindSameWords();
                 foreach (Word lWord in lSameWordsList)
                 {
                     Group lGroup = Database.GroupsList.FirstOrDefault(x => x.Id == lWord.GroupId);
@@ -163,79 +121,20 @@ namespace Wordki.ViewModels
             BindingOperations.DisableCollectionSynchronization(Database.GroupsList);
         }
 
-        private List<Word> FindSameWords()
+        private IEnumerable<Word> FindSameWords()
         {
-            List<Word> lSameWordsList = new List<Word>();
-            List<Word> lAllWords = new List<Word>();
             try
             {
-                foreach (Group lGroup in Database.GroupsList)
-                {
-                    lAllWords.AddRange(lGroup.WordsList);
-                }
-                int lIsSame;
-                foreach (Word lWord1 in lAllWords)
-                {
-                    foreach (Word lWord2 in lAllWords)
-                    {
-                        lIsSame = 0;
-                        if (lWord1.Id == lWord2.Id)
-                            continue;
-                        if (lIsSame == 0 && lWord1.Language1.Equals(lWord2.Language1))
-                            lIsSame++;
-                        if (lIsSame == 0 && lWord1.Language2.Equals(lWord2.Language2))
-                            lIsSame++;
-                        if (lIsSame == 0 && IsPartialSame(lWord1.Language1, lWord2.Language1))
-                            lIsSame++;
-                        if (lIsSame == 0 && IsPartialSame(lWord1.Language2, lWord2.Language2))
-                            lIsSame++;
-
-                        if (lIsSame <= 0) continue;
-                        if (lSameWordsList.FirstOrDefault(x => x.Id == lWord2.Id) != null)
-                            continue;
-                        lSameWordsList.Add(lWord2);
-                        lSameWordsList.Add(lWord1);
-                    }
-                }
+                IEnumerable<Word> words = Database.GroupsList.SelectMany(x => x.WordsList);
+                IWordComparer wordComparer = new WordComparer();
+                IWordFinder wordFinder = new WordFinder(words, wordComparer);
+                return wordFinder.FindWords();
             }
             catch (Exception lException)
             {
                 Logger.LogError("{0} - {1}", "BuilderViewModel.FindSame", lException.Message);
+                return Enumerable.Empty<Word>();
             }
-            return lSameWordsList;
         }
-
-        private bool IsPartialSame(string lWord1, string lWord2)
-        {
-            try
-            {
-                string[] lWord1Array = lWord1.Split(' ');
-                string[] lWord2Array = lWord2.Split(' ');
-                if (lWord1Array.Count() == 1 || lWord2Array.Count() == 1)
-                {
-                    return false;
-                }
-                for (int i = 0; i < lWord1Array.Count(); i++)
-                {
-                    lWord1Array[i] = lWord1Array[i].Trim(',', '.', '-', '\\', '/');
-                }
-                for (int i = 0; i < lWord2Array.Count(); i++)
-                {
-                    lWord2Array[i] = lWord2Array[i].Trim(',', '.', '-', '\\', '/');
-                }
-                if (lWord1Array.Where(lItem1 => lItem1.Length >= 4).Any(lItem1 => lWord2Array.Where(lItem2 => lItem2.Length >= 4).Any(lItem1.Equals)))
-                {
-                    return true;
-                }
-            }
-            catch (Exception lException)
-            {
-                Logger.LogError("{0} - {1}", "BuilderViewModel.IsPartialSame", lException.Message);
-            }
-            return false;
-        }
-
-
-
     }
 }

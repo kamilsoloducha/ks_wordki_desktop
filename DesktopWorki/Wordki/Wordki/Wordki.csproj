@@ -158,6 +158,12 @@
     <Compile Include="Helpers\Notification\ToastNotification.cs" />
     <Compile Include="Helpers\ObjectSerializer.cs" />
     <Compile Include="Helpers\Behaviour\ScrollIntoViewBehavior.cs" />
+    <Compile Include="Helpers\WordComparer\IWordComparer.cs" />
+    <Compile Include="Helpers\WordComparer\WordComparer.cs" />
+    <Compile Include="Helpers\WordConnector\IWordConnector.cs" />
+    <Compile Include="Helpers\WordConnector\WordConnector.cs" />
+    <Compile Include="Helpers\WordFinder\IWordFinder.cs" />
+    <Compile Include="Helpers\WordFinder\WordFinder.cs" />
     <Compile Include="LocalDatabase\SqliteConnection.cs" />
     <Compile Include="Models\CommonGroup.cs" />
     <Compile Include="Models\Connector\ApiConnector.cs" />
