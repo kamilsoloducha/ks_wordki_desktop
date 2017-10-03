@@ -83,7 +83,7 @@ namespace Wordki.Models.Connector {
       Url = Host + "group";
       Method = "PUT";
       Database = database;
-      Headers = new Dictionary<string, string> { { "authorization", database.User.ApiKey } };
+      Headers = new Dictionary<string, string> { { "authorization", UserManager.GetInstance().User.ApiKey } };
     }
 
     public override void PrepareMessage() {
@@ -97,7 +97,7 @@ namespace Wordki.Models.Connector {
     public ApiRequestPutWords(IDatabase database) {
       Url = Host + "word";
       Method = "PUT";
-      Headers = new Dictionary<string, string> { { "authorization", database.User.ApiKey } };
+      Headers = new Dictionary<string, string> { { "authorization", UserManager.GetInstance().User.ApiKey } };
       Database = database;
     }
 
@@ -112,7 +112,7 @@ namespace Wordki.Models.Connector {
     public ApiRequestPutResults(IDatabase database) {
       Url = Host + "result";
       Method = "PUT";
-      Headers = new Dictionary<string, string> { { "authorization", database.User.ApiKey } };
+      Headers = new Dictionary<string, string> { { "authorization", UserManager.GetInstance().User.ApiKey } };
       Database = database;
     }
 

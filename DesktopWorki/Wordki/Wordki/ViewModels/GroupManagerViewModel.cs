@@ -202,8 +202,8 @@ namespace Wordki.ViewModels
 
         private void AllWords(object obj)
         {
-            Database.GetDatabase().User.AllWords = !Database.GetDatabase().User.AllWords;
-            Database.GetDatabase().UpdateUser(Database.GetDatabase().User);
+            UserManager.GetInstance().User.AllWords = !UserManager.GetInstance().User.AllWords;
+            Database.GetDatabase().UpdateUser(UserManager.GetInstance().User);
             SetAllWordsLabel();
         }
 
@@ -215,18 +215,18 @@ namespace Wordki.ViewModels
 
         private void TranslationDirectionChanged(object obj)
         {
-            switch (Database.GetDatabase().User.TranslationDirection)
+            switch (UserManager.GetInstance().User.TranslationDirection)
             {
                 case TranslationDirection.FromFirst:
-                    Database.GetDatabase().User.TranslationDirection = TranslationDirection.FromSecond;
+                    UserManager.GetInstance().User.TranslationDirection = TranslationDirection.FromSecond;
                     break;
                 case TranslationDirection.FromSecond:
-                    Database.GetDatabase().User.TranslationDirection = TranslationDirection.FromFirst;
+                    UserManager.GetInstance().User.TranslationDirection = TranslationDirection.FromFirst;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            Database.GetDatabase().UpdateUser(Database.GetDatabase().User);
+            Database.GetDatabase().UpdateUser(UserManager.GetInstance().User);
             SetTranslationDirectionLabel();
         }
 
@@ -365,12 +365,12 @@ namespace Wordki.ViewModels
 
         private void SetTimeOutLabel()
         {
-            TimeOutLabel = Database.GetDatabase().User.Timeout > 0 ? String.Format("Odliczanie {0} sekund", Database.GetDatabase().User.Timeout) : "Odliczanie wyłączone";
+            TimeOutLabel = UserManager.GetInstance().User.Timeout > 0 ? String.Format("Odliczanie {0} sekund", UserManager.GetInstance().User.Timeout) : "Odliczanie wyłączone";
         }
 
         private void SetTranslationDirectionLabel()
         {
-            switch (Database.GetDatabase().User.TranslationDirection)
+            switch (UserManager.GetInstance().User.TranslationDirection)
             {
                 case TranslationDirection.FromSecond:
                     {
@@ -387,7 +387,7 @@ namespace Wordki.ViewModels
 
         private void SetAllWordsLabel()
         {
-            AllWordsLabel = Database.GetDatabase().User.AllWords ? "Wszystkie słowa" : "Tylko widoczne";
+            AllWordsLabel = UserManager.GetInstance().User.AllWords ? "Wszystkie słowa" : "Tylko widoczne";
         }
 
         private void SetEndLessonButton()

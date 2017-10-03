@@ -10,8 +10,6 @@ namespace Wordki.Models
     {
         SqliteConnection Db { get; }
         ObservableCollection<Group> GroupsList { get; set; }
-        User User { get; set; }
-
         Task<bool> AddGroupAsync(Group pGroup);
         Task<bool> AddResultAsync(Result pResult);
         Task<bool> AddResultAsync(Group pGroup, Result pResult);

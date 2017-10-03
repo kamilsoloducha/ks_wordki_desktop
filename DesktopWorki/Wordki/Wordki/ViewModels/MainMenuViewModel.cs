@@ -143,7 +143,7 @@ namespace Wordki.ViewModels
 
         public override void InitViewModel()
         {
-            Login = Database.GetDatabase().User.Name;
+            Login = UserManager.GetInstance().User.Name;
             ReadDatabaseFromServer();
         }
 
@@ -175,7 +175,7 @@ namespace Wordki.ViewModels
         private void Exit(object obj)
         {
             Database.GetDatabase().SaveDatabase();
-            CommandQueue<ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(Database.GetDatabase().User).GetUploadQueue();
+            CommandQueue<ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManager.GetInstance().User).GetUploadQueue();
             lQueue.OnQueueComplete += success => Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown());
             lQueue.Execute();
         }
@@ -210,7 +210,7 @@ namespace Wordki.ViewModels
                 Task.Run(() => RefreshInfo());
                 return;
             }
-            CommandQueue<ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(Database.GetDatabase().User).GetDownloadQueue();
+            CommandQueue<ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManager.GetInstance().User).GetDownloadQueue();
             lQueue.OnQueueComplete += success => RefreshInfo();
             lQueue.Execute();
             _needRead = false;

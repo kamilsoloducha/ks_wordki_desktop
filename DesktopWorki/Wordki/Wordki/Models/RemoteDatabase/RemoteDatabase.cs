@@ -12,7 +12,7 @@ namespace Wordki.Models.RemoteDatabase
         {
             DateTime downloadDateTime = new DateTime();
             CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetDateTime(Database.GetDatabase().User))
+            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetDateTime(UserManager.GetInstance().User))
             {
                 OnCompleteCommand = response =>
                 {
@@ -45,14 +45,14 @@ namespace Wordki.Models.RemoteDatabase
                     }
                 }
             });
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetGroups(Database.GetDatabase().User)) { OnCompleteCommand = Database.GetDatabase().OnReadGroups });
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetWords(Database.GetDatabase().User)) { OnCompleteCommand = Database.GetDatabase().OnReadWords });
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetResults(Database.GetDatabase().User)) { OnCompleteCommand = Database.GetDatabase().OnReadResults });
+            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetGroups(UserManager.GetInstance().User)) { OnCompleteCommand = Database.GetDatabase().OnReadGroups });
+            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetWords(UserManager.GetInstance().User)) { OnCompleteCommand = Database.GetDatabase().OnReadWords });
+            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetResults(UserManager.GetInstance().User)) { OnCompleteCommand = Database.GetDatabase().OnReadResults });
             lQueue.OnQueueComplete += success =>
             {
                 if (success)
                 {
-                    User user = Database.GetDatabase().User;
+                    User user = UserManager.GetInstance().User;
                     user.DownloadTime = downloadDateTime;
                     Database.GetDatabase().UpdateUser(user);
                     Database.GetDatabase().LoadDatabase();

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -238,7 +234,7 @@ namespace Wordki.ViewModels
         public override void Back()
         {
             Database.SaveDatabase();
-            var queue = RemoteDatabaseBase.GetRemoteDatabase(Database.User).GetUploadQueue();
+            var queue = RemoteDatabaseBase.GetRemoteDatabase(UserManager.GetInstance().User).GetUploadQueue();
             queue.CreateDialog = false;
             queue.Execute();
         }

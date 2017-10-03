@@ -47,7 +47,7 @@ namespace Wordki.Models.Lesson
         {
             IsCorrect = false;
             IsChecked = true;
-            switch (Database.GetDatabase().User.TranslationDirection)
+            switch (UserManager.GetInstance().User.TranslationDirection)
             {
                 case TranslationDirection.FromSecond:
                     if (CheckTranslation(Translation, SelectedWord.Language1))
@@ -62,7 +62,7 @@ namespace Wordki.Models.Lesson
 
         protected override void CreateWordList()
         {
-            bool allWords = Database.GetDatabase().User.AllWords;
+            bool allWords = UserManager.GetInstance().User.AllWords;
             foreach (Word word in AllWordList.Where(word => word.Visible || allWords))
             {
                 BeginWordsList.Add((Word)word.Clone());
@@ -88,7 +88,7 @@ namespace Wordki.Models.Lesson
                   0,
                   (short)lGroup.WordsList.Count(x => !x.Visible),
                   0,
-                  Database.GetDatabase().User.TranslationDirection,
+                  UserManager.GetInstance().User.TranslationDirection,
                   (LessonType)Enum.Parse(typeof(LessonType), GetType().Name),
                   DateTime.Now,
                   int.MaxValue));

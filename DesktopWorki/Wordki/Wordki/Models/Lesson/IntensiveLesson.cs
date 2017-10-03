@@ -44,7 +44,7 @@ namespace Wordki.Models.Lesson {
 
     public override void Check() {
       IsChecked = true;
-      switch (Database.GetDatabase().User.TranslationDirection) {
+      switch (UserManager.GetInstance().User.TranslationDirection) {
         case TranslationDirection.FromSecond: IsCorrect = Translation.Trim().Equals(SelectedWord.Language1); break;
         case TranslationDirection.FromFirst: IsCorrect = Translation.Trim().Equals(SelectedWord.Language2); break;
       }

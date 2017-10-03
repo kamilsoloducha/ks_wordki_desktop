@@ -89,7 +89,7 @@ namespace Wordki.ViewModels
                 return;
             if (UserName == null)
                 return;
-            User lUser = UserManager.FindLoginedUser(UserName.Trim(), Password.Trim());
+            User lUser = UserManager.GetInstance().FindLoginedUser(UserName.Trim(), Password.Trim());
             if (lUser != null)
             {
                 StartWithUser(lUser);

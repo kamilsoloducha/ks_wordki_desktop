@@ -146,6 +146,7 @@
     <Compile Include="Helpers\GroupCreator\GroupCreatorFromFile.cs" />
     <Compile Include="Helpers\GroupCreator\GroupCreatorSettings.cs" />
     <Compile Include="Helpers\GroupCreator\GroupNameCreatorFromFile.cs" />
+    <Compile Include="Helpers\GroupCreator\IFileLoader.cs" />
     <Compile Include="Helpers\GroupCreator\IGroupCreator.cs" />
     <Compile Include="Helpers\GroupCreator\IGroupNameCreator.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSplitterBase.cs" />

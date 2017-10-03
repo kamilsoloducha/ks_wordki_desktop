@@ -10,16 +10,16 @@ namespace Wordki.Helpers.GroupCreator
 {
     public class GroupCreatorFromFile : IGroupCreator
     {
-        private FileLoader _fileLoader;
         private string _filePath;
         public IGroupNameCreator GroupNameCreator { get; set; }
         public GroupCreatorSettings Settings { get; set; }
+        public IFileLoader FileLoader { get; set; }
 
 
         public GroupCreatorFromFile(string path)
         {
             _filePath = path;
-            _fileLoader = new FileLoader();
+            FileLoader = new FileLoader();
         }
 
         public Group Create()
@@ -29,7 +29,7 @@ namespace Wordki.Helpers.GroupCreator
             string fileContent = string.Empty;
             try
             {
-                fileContent = _fileLoader.LoadFile(_filePath);
+                fileContent = FileLoader.LoadFile(_filePath);
             }
             catch (Exception)
             {

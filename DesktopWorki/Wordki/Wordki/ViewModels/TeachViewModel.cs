@@ -368,14 +368,14 @@ namespace Wordki.ViewModels
 
         private void CheckTimeOut()
         {
-            if (Database.GetDatabase().User.Timeout == 0)
+            if (UserManager.GetInstance().User.Timeout == 0)
                 return;
             if (!TimeOutChecking)
             {
                 return;
             }
             TimeOutTicks++;
-            if (TimeOutTicks < Database.GetDatabase().User.Timeout)
+            if (TimeOutTicks < UserManager.GetInstance().User.Timeout)
                 return;
             TimeOutTicks = 0;
             Check(null);
@@ -398,7 +398,7 @@ namespace Wordki.ViewModels
 
         public abstract class LessonState : INotifyPropertyChanged, IDisposable
         {
-
+            protected TranslationDirection _translationDirection;
             protected Lesson Lesson { get; set; }
             public LessonStateEnum StateEnum { get; set; }
 
@@ -675,6 +675,7 @@ namespace Wordki.ViewModels
             protected LessonState(Lesson pLesson, LessonState pLastState)
             {
                 Lesson = pLesson;
+                _translationDirection = UserManager.GetInstance().User.TranslationDirection;
                 if (pLastState != null)
                 {
                     _drawerValues = pLastState._drawerValues;
@@ -770,7 +771,7 @@ namespace Wordki.ViewModels
 
             protected string GetNewLabel()
             {
-                switch (Database.GetDatabase().User.TranslationDirection)
+                switch (_translationDirection)
                 {
                     case TranslationDirection.FromFirst:
                         return Lesson.SelectedWord.Language1;
@@ -782,7 +783,7 @@ namespace Wordki.ViewModels
 
             protected string GetTransaltion()
             {
-                switch (Database.GetDatabase().User.TranslationDirection)
+                switch (_translationDirection)
                 {
                     case TranslationDirection.FromFirst:
                         return Lesson.SelectedWord.Language2;
@@ -794,7 +795,7 @@ namespace Wordki.ViewModels
 
             protected string GetComment()
             {
-                switch (Database.GetDatabase().User.TranslationDirection)
+                switch (_translationDirection)
                 {
                     case TranslationDirection.FromFirst:
                         return Lesson.SelectedWord.Language1Comment;
@@ -806,7 +807,7 @@ namespace Wordki.ViewModels
 
             protected string GetCommentTranslation()
             {
-                switch (Database.GetDatabase().User.TranslationDirection)
+                switch (_translationDirection)
                 {
                     case TranslationDirection.FromFirst:
                         return Lesson.SelectedWord.Language2Comment;
@@ -1068,7 +1069,7 @@ namespace Wordki.ViewModels
 
             protected override void RefreshTranslation()
             {
-                switch (Database.GetDatabase().User.TranslationDirection)
+                switch (_translationDirection)
                 {
                     case TranslationDirection.FromFirst:
                         Translation = string.Format("{0} / {1}", Lesson.Translation, Lesson.SelectedWord.Language2);
@@ -1158,7 +1159,7 @@ namespace Wordki.ViewModels
                 Lesson.FinishLesson();
                 Lesson.Timer.StopTimer();
                 IList<Group> lGroupList = Lesson.ResultList.Select(lResult => Database.GetDatabase().GetGroupById(lResult.GroupId)).ToList();
-                CommandQueue<Helpers.Command.ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(Database.GetDatabase().User).GetUploadQueue();
+                CommandQueue<Helpers.Command.ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManager.GetInstance().User).GetUploadQueue();
                 lQueue.MainQueue.AddFirst(new SimpleCommandAsync(async () =>
                 {
                     IDatabase lDatabase = Models.Database.GetDatabase();

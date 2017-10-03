@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Wordki.Helpers.GroupCreator
 {
-    public class FileLoader
+    public class FileLoader : IFileLoader
     {
 
         public string LoadFile(string path)
