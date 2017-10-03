@@ -17,6 +17,8 @@ using Wordki.Models.Lesson;
 using Wordki.Models.Lesson.WordComparer;
 using Wordki.Models.LessonScheduler;
 using Wordki.Models.LessonScheduler.LessonScheduleInitializer;
+using Repository.Models.Language;
+using Util.Serializers;
 
 namespace Wordki.ViewModels
 {
@@ -179,10 +181,18 @@ namespace Wordki.ViewModels
 
         private void FinishLesson(object obj)
         {
+            ISerializer<Lesson> serializer = new BinarySerializer<Lesson>
+            {
+                Settings = new BinarySerializerSettings
+                {
+                    Path = "lesson",
+                    RemoveAfterRead = true,
+                }
+            };
             Lesson lesson;
             try
             {
-                lesson = ObjectSerializer.ReadFromBinaryFile<Lesson>("lesson", true);
+                lesson = serializer.Read();
             }
             catch (Exception e)
             {
@@ -332,8 +342,8 @@ namespace Wordki.ViewModels
                 foreach (GroupItem lGroupItem in SelectionList)
                 {
                     Group lGroup = Database.GetDatabase().GetGroupById(lGroupItem.Group.Id);
-                    lLanguage1Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathRectFlag(lGroup.Language1)));
-                    lLanguage2Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathRectFlag(lGroup.Language2)));
+                    lLanguage1Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathRectFlag(LanguageFactory.GetLanguage(lGroup.Language1))));
+                    lLanguage2Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathRectFlag(LanguageFactory.GetLanguage(lGroup.Language2))));
                     lGroupNameBuilder.Append(lGroup.Name).Append(" ");
                     lWordsCount += lGroup.WordsList.Count;
                     lRepeatsCount += Database.GetDatabase().GetResultsList(lGroupItem.Group.Id).Count;
@@ -392,7 +402,15 @@ namespace Wordki.ViewModels
 
         private void SetEndLessonButton()
         {
-            Lesson serializedLesson = ObjectSerializer.ReadFromBinaryFile<Lesson>("lesson", false);
+            ISerializer<Lesson> serializer = new BinarySerializer<Lesson>
+            {
+                Settings = new BinarySerializerSettings
+                {
+                    Path = "lesson",
+                    RemoveAfterRead = false,
+                }
+            };
+            Lesson serializedLesson = serializer.Read();
             if (serializedLesson == null)
             {
                 EndLessonButtonVisibility = Visibility.Collapsed;
@@ -424,14 +442,12 @@ namespace Wordki.ViewModels
         private IEnumerable<Word> GetWordListRandom(int pCount)
         {
             var groupList = Database.GetDatabase().GroupsList;
-            List<Word> wordList = new List<Word>();
             Random random = new Random();
             for (int i = 0; i < pCount; i++)
             {
                 Group group = groupList[random.Next(groupList.Count - 1)];
-                wordList.Add(group.WordsList[random.Next(group.WordsList.Count - 1)]);
+                yield return group.WordsList[random.Next(group.WordsList.Count - 1)];
             }
-            return wordList;
         }
 
         private IEnumerable<Word> GetWordListBest(int pCount)
@@ -442,7 +458,7 @@ namespace Wordki.ViewModels
                 temp.AddRange(group.WordsList);
             }
             IEnumerable<Word> result = temp.Where(x => x.Drawer == 4);
-            result = ListShuffle.Shuffle(result.ToList());
+            result = Util.Collections.Utils.Shuffle(result.ToList());
             return result.Take(pCount);
         }
 

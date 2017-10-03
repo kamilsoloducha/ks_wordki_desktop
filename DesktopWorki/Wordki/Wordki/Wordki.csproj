@@ -157,7 +157,6 @@
     <Compile Include="Helpers\Notification\INotification.cs" />
     <Compile Include="Helpers\Notification\NotificationFactory.cs" />
     <Compile Include="Helpers\Notification\ToastNotification.cs" />
-    <Compile Include="Helpers\ObjectSerializer.cs" />
     <Compile Include="Helpers\Behaviour\ScrollIntoViewBehavior.cs" />
     <Compile Include="Helpers\WordComparer\IWordComparer.cs" />
     <Compile Include="Helpers\WordComparer\WordComparer.cs" />
@@ -177,9 +176,7 @@
     <Compile Include="Models\LessonScheduler\LessonScheduleInitializer\SimpleLessonScheduleInitializer.cs" />
     <Compile Include="Models\LessonScheduler\LessonScheduler.cs" />
     <Compile Include="Helpers\Util.cs" />
-    <Compile Include="Helpers\BuilderCommand.cs" />
     <Compile Include="Helpers\ClipboardHelper.cs" />
-    <Compile Include="Helpers\Connector.cs" />
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\FocusExtension.cs" />
     <Compile Include="Helpers\GlosbeHelper.cs" />
@@ -188,9 +185,7 @@
     <Compile Include="Helpers\GroupSplitter\GroupSplitWordCount.cs" />
     <Compile Include="Helpers\GroupSplitter\SplitterEnum.cs" />
     <Compile Include="Helpers\Helpers.cs" />
-    <Compile Include="Helpers\InOutHelper.cs" />
     <Compile Include="Helpers\Logger.cs" />
-    <Compile Include="Helpers\ObservableDirectory.cs" />
     <Compile Include="Helpers\Switcher.cs" />
     <Compile Include="LocalDatabase\SqlDatabaseCreator.cs" />
     <Compile Include="Models\Database\Database.cs" />
@@ -591,6 +586,10 @@
     <ProjectReference Include="..\..\..\..\oazachaosu\Oazachaosu\Repository\Repository.csproj">
       <Project>{90d846a5-5cb3-4926-8719-88ec170a61aa}</Project>
       <Name>Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\util\Util\Util\Util.csproj">
+      <Project>{877ccd05-baa6-430a-a317-e1e9da0bbaf2}</Project>
+      <Name>Util</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -93,7 +93,7 @@ namespace Wordki.LocalDatabase
             {
                 lCreateQuery = lReader.ReadToEnd();
             }
-            lCreateQuery = string.Format(lCreateQuery, Util.GetExeFilePath());
+            lCreateQuery = string.Format(lCreateQuery, Wordki.Helpers.Util.GetExeFilePath());
             SQLiteCommand lCommand = new SQLiteCommand(lCreateQuery, _connection);
             _connection.Open();
             lCommand.ExecuteNonQuery();
@@ -207,8 +207,8 @@ namespace Wordki.LocalDatabase
                         Group lGroup = new Group();
                         lGroup.Id = lReader.GetInt64(0);
                         lGroup.Name = lReader.GetString(2);
-                        lGroup.Language1 = LanguageFactory.GetLanguage((LanguageType)lReader.GetInt32(3));
-                        lGroup.Language2 = LanguageFactory.GetLanguage((LanguageType)lReader.GetInt32(4));
+                        lGroup.Language1 = (LanguageType)lReader.GetInt32(3);
+                        lGroup.Language2 = (LanguageType)lReader.GetInt32(4);
                         lGroup.State = lReader.GetInt32(5);
                         lGroupList.Add(lGroup);
                     }
@@ -234,8 +234,8 @@ namespace Wordki.LocalDatabase
                         Group lGroup = new Group();
                         lGroup.Id = lReader.GetInt64(0);
                         lGroup.Name = lReader.GetString(2);
-                        lGroup.Language1 = LanguageFactory.GetLanguage((LanguageType)lReader.GetInt32(3));
-                        lGroup.Language2 = LanguageFactory.GetLanguage((LanguageType)lReader.GetInt32(4));
+                        lGroup.Language1 = (LanguageType)lReader.GetInt32(3);
+                        lGroup.Language2 = (LanguageType)lReader.GetInt32(4);
                         lGroup.State = lReader.GetInt32(5);
                         lGroupList.Add(lGroup);
                     }
@@ -603,8 +603,8 @@ namespace Wordki.LocalDatabase
             lCommand.Parameters.Add(new SQLiteParameter(groupId, pGroup.Id));
             lCommand.Parameters.Add(new SQLiteParameter(userId, pUser.UserId));
             lCommand.Parameters.Add(new SQLiteParameter(groupName, pGroup.Name));
-            lCommand.Parameters.Add(new SQLiteParameter(language1Type, (int)pGroup.Language1.Type));
-            lCommand.Parameters.Add(new SQLiteParameter(language2Type, (int)pGroup.Language2.Type));
+            lCommand.Parameters.Add(new SQLiteParameter(language1Type, (int)pGroup.Language1));
+            lCommand.Parameters.Add(new SQLiteParameter(language2Type, (int)pGroup.Language2));
             lCommand.Parameters.Add(new SQLiteParameter(state, pGroup.State));
             return lCommand;
         }
@@ -981,8 +981,8 @@ namespace Wordki.LocalDatabase
             SQLiteCommand lCommand = new SQLiteCommand(lBuilder.ToString(), _connection);
             lCommand.Parameters.Add(new SQLiteParameter(groupId, pGroup.Id));
             lCommand.Parameters.Add(new SQLiteParameter(groupName, pGroup.Name));
-            lCommand.Parameters.Add(new SQLiteParameter(language1Type, (int)pGroup.Language1.Type));
-            lCommand.Parameters.Add(new SQLiteParameter(language2Type, (int)pGroup.Language2.Type));
+            lCommand.Parameters.Add(new SQLiteParameter(language1Type, (int)pGroup.Language1));
+            lCommand.Parameters.Add(new SQLiteParameter(language2Type, (int)pGroup.Language2));
             lCommand.Parameters.Add(new SQLiteParameter(state, pGroup.State));
             return lCommand;
         }

@@ -231,7 +231,7 @@ namespace Wordki.ViewModels
         private void LoginPasswordChangeOk(object obj)
         {
             string oldPassword = obj as string;
-            string hashPassword = Hash.GetMd5Hash(MD5.Create(), oldPassword);
+            string hashPassword = Util.MD5Hash.GetMd5Hash(MD5.Create(), oldPassword);
             var user = new User()
             {
                 Name = UserManager.GetInstance().User.Name,

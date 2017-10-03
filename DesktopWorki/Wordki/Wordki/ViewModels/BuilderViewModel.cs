@@ -605,11 +605,11 @@ namespace Wordki.ViewModels
                 LanguageType lSelectedLanguage = (LanguageType)lDialog.SelectedIndex;
                 if (pLanguageIndex == 1)
                 {
-                    lGroup.Language1 = LanguageFactory.GetLanguage(lSelectedLanguage);
+                    lGroup.Language1 = lSelectedLanguage;
                 }
                 else
                 {
-                    lGroup.Language2 = LanguageFactory.GetLanguage(lSelectedLanguage);
+                    lGroup.Language2 = lSelectedLanguage;
                 }
                 lDialog.Close();
             });

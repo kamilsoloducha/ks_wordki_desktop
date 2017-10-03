@@ -11,8 +11,6 @@ namespace Wordki
     /// </summary>
     public partial class App : Application
     {
-        private SignConverter _signConverter;
-
         public App()
         {
             SqliteConnection lConnection = new SqliteConnection();
@@ -24,8 +22,6 @@ namespace Wordki
         {
             base.OnStartup(e);
             Logger.LogInfo("Start aplikacji", null);
-            _signConverter = new SignConverter();
-            _signConverter.LoadDictionary();
 
         }
     }

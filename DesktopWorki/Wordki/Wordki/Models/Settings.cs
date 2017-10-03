@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using Util.Serializers;
 using Wordki.Helpers;
 
 namespace Wordki.Models
@@ -199,9 +200,11 @@ namespace Wordki.Models
             try
             {
                 string lPath = Path.Combine(Directory.GetCurrentDirectory(), DirectoryPath, FileName);
-                Serializer lSerializer = new Serializer();
-                object lSerializeResult = lSerializer.DeserializeFromXml(lPath, typeof(Settings));
-                _settigns = lSerializeResult != null ? (Settings)lSerializeResult : null;
+                ISerializer<Settings> lSerializer = new XmlSerializer<Settings>()
+                {
+                    Path = lPath,
+                };
+                _settigns = lSerializer.Read();
             }
             catch (Exception lException)
             {
@@ -217,8 +220,11 @@ namespace Wordki.Models
         {
             CheckDirectoryPath();
             string lPath = Path.Combine(Directory.GetCurrentDirectory(), DirectoryPath, FileName);
-            Serializer lSerializer = new Serializer();
-            lSerializer.SerializeToXml(_settigns, lPath);
+            ISerializer<Settings> lSerializer = new XmlSerializer<Settings>()
+            {
+                Path = lPath,
+            };
+            lSerializer.Write(_settigns);
         }
 
         public void ResetSettings()

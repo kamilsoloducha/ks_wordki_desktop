@@ -14,6 +14,7 @@ using Wordki.Models.Lesson;
 using Wordki.Models.RemoteDatabase;
 using Wordki.Views.Dialogs;
 using Wordki.Helpers.Command;
+using Util.Serializers;
 
 namespace Wordki.ViewModels
 {
@@ -267,9 +268,17 @@ namespace Wordki.ViewModels
             {
                 if (Lesson != null)
                 {
+                    ISerializer<Lesson> serializer = new BinarySerializer<Lesson>
+                    {
+                        Settings = new BinarySerializerSettings
+                        {
+                            Path = "lesson",
+                            RemoveAfterRead = true,
+                        }
+                    };
                     try
                     {
-                        ObjectSerializer.WriteToBinaryFile("lesson", Lesson);
+                        serializer.Write(Lesson);
                     }
                     catch (Exception e)
                     {

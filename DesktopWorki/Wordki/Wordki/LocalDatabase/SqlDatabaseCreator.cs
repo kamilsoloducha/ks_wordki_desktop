@@ -6,7 +6,7 @@ namespace Wordki.LocalDatabase {
   
 	public bool createDatabase(string pQuery, SqlConnection pConnection) {
       Logger.LogInfo("Tworzenie bazy danych");
-      SqlCommand command = new SqlCommand(string.Format(pQuery, Util.GetExeFilePath()), pConnection);
+      SqlCommand command = new SqlCommand(string.Format(pQuery, Wordki.Helpers.Util.GetExeFilePath()), pConnection);
       try {
         command.ExecuteNonQuery();
       } catch (SqlException lException) {

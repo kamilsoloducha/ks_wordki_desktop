@@ -32,7 +32,7 @@ namespace Wordki.Test.Helpers.LanguageSwaperTests
             swaper = MakeSwaper();
             LanguageType lang1 = LanguageType.English;
             LanguageType lang2 = LanguageType.Polish;
-            Group group = new Group { Language1 = LanguageFactory.GetLanguage(lang1), Language2 = LanguageFactory.GetLanguage(lang2) };
+            Group group = new Group { Language1 = lang1, Language2 = lang2 };
         }
 
         private ILanguageSwaper MakeSwaper()
