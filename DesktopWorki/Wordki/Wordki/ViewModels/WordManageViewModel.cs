@@ -52,7 +52,7 @@ namespace Wordki.ViewModels
         {
             try
             {
-                long lGroupId = (long)PackageStore.Get(0);
+                long lGroupId = (long)Util.PackageStore.Get(0);
                 Group = Database.GetGroupById(lGroupId);
                 Name = "jakaś nazwa";
             }

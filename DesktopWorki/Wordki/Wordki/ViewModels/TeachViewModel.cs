@@ -128,7 +128,7 @@ namespace Wordki.ViewModels
             Settings = Settings.GetSettings();
             StateFactory = new LessonStateFactory();
 
-            Lesson lLesson = (Lesson)PackageStore.Get(0);
+            Lesson lLesson = (Lesson)Util.PackageStore.Get(0);
             if (lLesson == null)
                 return;
             lLesson.Timer.TimerListeners.Add(this);

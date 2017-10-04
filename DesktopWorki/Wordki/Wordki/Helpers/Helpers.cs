@@ -6,35 +6,6 @@ using System.Timers;
 namespace Wordki.Helpers
 {
     //============================================================
-    public class PackageStore
-    {
-        private static Dictionary<int, object> _storeDictionary = new Dictionary<int, object>();
-        private static object _object = new object();
-        public static bool Put(int pKey, object pObject)
-        {
-            lock (_object)
-            {
-                if (_storeDictionary.ContainsKey(pKey))
-                    return false;
-                _storeDictionary.Add(pKey, pObject);
-            }
-            return true;
-        }
-
-        public static object Get(int pKey)
-        {
-            object lResult;
-            lock (_object)
-            {
-                if (!_storeDictionary.ContainsKey(pKey))
-                    return null;
-                lResult = _storeDictionary[pKey];
-                _storeDictionary.Remove(pKey);
-            }
-            return lResult;
-        }
-    }
-    //============================================================
     public interface ITimerListener
     {
         void OnTimerTick(int lTicks);

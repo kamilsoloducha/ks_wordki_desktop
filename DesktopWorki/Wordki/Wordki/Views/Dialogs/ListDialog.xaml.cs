@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 using Wordki.Helpers;
 
 namespace Wordki.Views.Dialogs {
@@ -72,9 +73,9 @@ namespace Wordki.Views.Dialogs {
       }
     }
     public IList SelectedItems { get; set; }
-    public BuilderCommand Button1Command { get; set; }
-    public BuilderCommand Button2Command { get; set; }
-    public BuilderCommand SelectionChangedCommand { get; set; }
+    public ICommand Button1Command { get; set; }
+    public ICommand Button2Command { get; set; }
+    public ICommand SelectionChangedCommand { get; set; }
 
     public ListDialog() {
       InitializeComponent();

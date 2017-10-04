@@ -11,6 +11,7 @@ using Wordki.Models.RemoteDatabase;
 using Wordki.Views.Dialogs;
 using Wordki.Views.Dialogs.ListDialogs;
 using Wordki.Models.LanguageSwaper;
+using Util;
 
 namespace Wordki.ViewModels
 {
@@ -282,33 +283,33 @@ namespace Wordki.ViewModels
         #region Commands
         private void ActivateCommands()
         {
-            PreviousWordCommand = new BuilderCommand(PreviousWord);
-            NextWordCommand = new BuilderCommand(NextWord);
-            PreviousGroupCommand = new BuilderCommand(PreviuosGroup);
-            NextGroupCommand = new BuilderCommand(NextGroup);
+            PreviousWordCommand = new Util.BuilderCommand(PreviousWord);
+            NextWordCommand = new Util.BuilderCommand(NextWord);
+            PreviousGroupCommand = new Util.BuilderCommand(PreviuosGroup);
+            NextGroupCommand = new Util.BuilderCommand(NextGroup);
 
-            AddWordCommand = new BuilderCommand(AddWord);
-            RemoveWordCommand = new BuilderCommand(DeleteWord);
-            AddGroupCommand = new BuilderCommand(AddGroup);
-            RemoveGroupCommand = new BuilderCommand(RemoveGroup);
+            AddWordCommand = new Util.BuilderCommand(AddWord);
+            RemoveWordCommand = new Util.BuilderCommand(DeleteWord);
+            AddGroupCommand = new Util.BuilderCommand(AddGroup);
+            RemoveGroupCommand = new Util.BuilderCommand(RemoveGroup);
 
-            DownloadGroupsNameCommand = new BuilderCommand(DownloadGroupsName);
-            BackCommand = new BuilderCommand(Back);
+            DownloadGroupsNameCommand = new Util.BuilderCommand(DownloadGroupsName);
+            BackCommand = new Util.BuilderCommand(Back);
 
-            SplitGroupCommand = new BuilderCommand(SplitGroup);
-            ConnectGroupCommand = new BuilderCommand(ConnectGroup);
+            SplitGroupCommand = new Util.BuilderCommand(SplitGroup);
+            ConnectGroupCommand = new Util.BuilderCommand(ConnectGroup);
 
-            FindSameWordCommand = new BuilderCommand(FindSame);
-            ShowWordsCommnad = new BuilderCommand(ShowWords);
-            SwapLanguagesCommand = new BuilderCommand(SwapWords);
-            SwapSingleWordCommand = new BuilderCommand(SwapSingleWord);
+            FindSameWordCommand = new Util.BuilderCommand(FindSame);
+            ShowWordsCommnad = new Util.BuilderCommand(ShowWords);
+            SwapLanguagesCommand = new Util.BuilderCommand(SwapWords);
+            SwapSingleWordCommand = new Util.BuilderCommand(SwapSingleWord);
 
-            ChangeLanguage1Command = new BuilderCommand(ChangeLanguage1);
-            ChangeLanguage2Command = new BuilderCommand(ChangeLanguage2);
-            AddClipboardGroupCommand = new BuilderCommand(AddClipboardGroup);
-            WordSelectionChangedCommand = new BuilderCommand(WordSelectionChanged);
-            GroupSelectionChangedCommand = new BuilderCommand(GroupSelectionChanged);
-            AddGroupFromFileCommand = new BuilderCommand(AddGroupFromFile);
+            ChangeLanguage1Command = new Util.BuilderCommand(ChangeLanguage1);
+            ChangeLanguage2Command = new Util.BuilderCommand(ChangeLanguage2);
+            AddClipboardGroupCommand = new Util.BuilderCommand(AddClipboardGroup);
+            WordSelectionChangedCommand = new Util.BuilderCommand(WordSelectionChanged);
+            GroupSelectionChangedCommand = new Util.BuilderCommand(GroupSelectionChanged);
+            AddGroupFromFileCommand = new Util.BuilderCommand(AddGroupFromFile);
         }
 
         private void AddGroupFromFile(object obj)
@@ -463,7 +464,7 @@ namespace Wordki.ViewModels
                 PositiveLabel = "Tak",
                 NegativeLabel = "Nie",
             };
-            dialog.PositiveCommand = new BuilderCommand(o =>
+            dialog.PositiveCommand = new Util.BuilderCommand(o =>
             {
                 Group groupToDelete = SelectedGroup;
                 int groupIndex = Database.GroupsList.IndexOf(SelectedGroup);
@@ -473,7 +474,7 @@ namespace Wordki.ViewModels
                 dialog.Close();
                 RefreshView();
             });
-            dialog.NegativeCommand = new BuilderCommand(o => dialog.Close());
+            dialog.NegativeCommand = new Util.BuilderCommand(o => dialog.Close());
             dialog.ShowDialog();
         }
 
@@ -599,7 +600,7 @@ namespace Wordki.ViewModels
                 Items = LanguageFactory.GetLanguages(),
                 Button1Label = "Wybierz"
             };
-            lDialog.Button1Command = new BuilderCommand(delegate
+            lDialog.Button1Command = new Util.BuilderCommand(delegate
             {
                 Group lGroup = SelectedGroup;
                 LanguageType lSelectedLanguage = (LanguageType)lDialog.SelectedIndex;
@@ -614,7 +615,7 @@ namespace Wordki.ViewModels
                 lDialog.Close();
             });
             lDialog.Button2Label = "Anuluj";
-            lDialog.Button2Command = new BuilderCommand(delegate
+            lDialog.Button2Command = new Util.BuilderCommand(delegate
             {
                 lDialog.Close();
             });

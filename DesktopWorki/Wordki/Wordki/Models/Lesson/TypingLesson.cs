@@ -67,7 +67,7 @@ namespace Wordki.Models.Lesson
             {
                 BeginWordsList.Add((Word)word.Clone());
             }
-            BeginWordsList = ListShuffle.Shuffle(BeginWordsList);
+            BeginWordsList = Util.Collections.Utils.Shuffle(BeginWordsList);
             foreach (Word word in BeginWordsList)
             {
                 WordList.Enqueue(word);

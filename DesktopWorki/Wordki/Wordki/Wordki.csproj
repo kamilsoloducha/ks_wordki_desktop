@@ -153,7 +153,6 @@
     <Compile Include="Helpers\Behaviour\InputBindingBehavior.cs" />
     <Compile Include="Helpers\JsonConverters\StringToBoolConverter.cs" />
     <Compile Include="Helpers\JsonConverters\StringToIntConverter.cs" />
-    <Compile Include="Helpers\MouseButtonEventArgsToPointConverter.cs" />
     <Compile Include="Helpers\Notification\INotification.cs" />
     <Compile Include="Helpers\Notification\NotificationFactory.cs" />
     <Compile Include="Helpers\Notification\ToastNotification.cs" />
@@ -179,7 +178,6 @@
     <Compile Include="Helpers\ClipboardHelper.cs" />
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\FocusExtension.cs" />
-    <Compile Include="Helpers\GlosbeHelper.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSlitPercentage.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSplitGroupCount.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSplitWordCount.cs" />

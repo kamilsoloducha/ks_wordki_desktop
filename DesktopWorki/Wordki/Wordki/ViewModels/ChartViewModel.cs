@@ -6,8 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Util;
 using Wordki.Helpers;
 using Wordki.Models;
 using Point = System.Windows.Point;
@@ -54,10 +56,10 @@ namespace Wordki.ViewModels
         private Dictionary<ChartElement, Brush> BrushDictionary { get; set; }
         private Dictionary<ChartElement, Pen> PenDictionary { get; set; }
         private Dictionary<Plots, List<Point>> PlotElements { get; set; }
-        public BuilderCommand BackCommand { get; set; }
-        public BuilderCommand RefreshChartCommand { get; set; }
-        public BuilderCommand MouseMoveCommand { get; set; }
-        public BuilderCommand MouseDownCommand { get; set; }
+        public ICommand BackCommand { get; set; }
+        public ICommand RefreshChartCommand { get; set; }
+        public ICommand MouseMoveCommand { get; set; }
+        public ICommand MouseDownCommand { get; set; }
         public ObservableCollection<string> GroupNameList { get; set; }
         public long GroupId { get; set; }
         public int SelectedLabel
@@ -187,11 +189,11 @@ namespace Wordki.ViewModels
 
         private void ActivateCommand()
         {
-            BackCommand = new BuilderCommand(Back);
-            RefreshChartCommand = new BuilderCommand(RefreshChart);
+            BackCommand = new Util.BuilderCommand(Back);
+            RefreshChartCommand = new Util.BuilderCommand(RefreshChart);
 
-            MouseMoveCommand = new BuilderCommand(MouseMove);
-            MouseDownCommand = new BuilderCommand(MouseDown);
+            MouseMoveCommand = new Util.BuilderCommand(MouseMove);
+            MouseDownCommand = new Util.BuilderCommand(MouseDown);
         }
 
 

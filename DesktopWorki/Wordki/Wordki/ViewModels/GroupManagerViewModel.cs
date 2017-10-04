@@ -19,6 +19,8 @@ using Wordki.Models.LessonScheduler;
 using Wordki.Models.LessonScheduler.LessonScheduleInitializer;
 using Repository.Models.Language;
 using Util.Serializers;
+using Util;
+using System.Windows.Input;
 
 namespace Wordki.ViewModels
 {
@@ -36,19 +38,19 @@ namespace Wordki.ViewModels
 
         #region Properties
 
-        public BuilderCommand StartTypingLessonCommand { get; set; }
-        public BuilderCommand StartReapetLessonCommand { get; set; }
-        public BuilderCommand StartRandomLessonCommand { get; set; }
-        public BuilderCommand StartBestLessonCommand { get; set; }
-        public BuilderCommand EditGroupCommand { get; set; }
-        public BuilderCommand BackCommand { get; set; }
-        public BuilderCommand ShowWordsCommand { get; set; }
-        public BuilderCommand SelectionChangedCommand { get; set; }
-        public BuilderCommand DrawerSignClickCommand { get; set; }
-        public BuilderCommand TranslationDirectionChangedCommand { get; set; }
-        public BuilderCommand AllWordsCommand { get; set; }
-        public BuilderCommand ShowPlotCommand { get; set; }
-        public BuilderCommand FinishLessonCommand { get; set; }
+        public ICommand StartTypingLessonCommand { get; set; }
+        public ICommand StartReapetLessonCommand { get; set; }
+        public ICommand StartRandomLessonCommand { get; set; }
+        public ICommand StartBestLessonCommand { get; set; }
+        public ICommand EditGroupCommand { get; set; }
+        public ICommand BackCommand { get; set; }
+        public ICommand ShowWordsCommand { get; set; }
+        public ICommand SelectionChangedCommand { get; set; }
+        public ICommand DrawerSignClickCommand { get; set; }
+        public ICommand TranslationDirectionChangedCommand { get; set; }
+        public ICommand AllWordsCommand { get; set; }
+        public ICommand ShowPlotCommand { get; set; }
+        public ICommand FinishLessonCommand { get; set; }
 
         public double MaxValue
         {
@@ -164,19 +166,19 @@ namespace Wordki.ViewModels
 
         private void ActivateCommond()
         {
-            StartTypingLessonCommand = new BuilderCommand(StartTypingLesson);
-            StartReapetLessonCommand = new BuilderCommand(StartReapetLesson);
-            StartRandomLessonCommand = new BuilderCommand(StartRandomLesson);
-            StartBestLessonCommand = new BuilderCommand(StartBestLesson);
-            EditGroupCommand = new BuilderCommand(EditGroup);
-            BackCommand = new BuilderCommand(Back);
-            ShowWordsCommand = new BuilderCommand(ShowWords);
-            SelectionChangedCommand = new BuilderCommand(SelectionChanged);
-            DrawerSignClickCommand = new BuilderCommand(DrawerSignClick);
-            TranslationDirectionChangedCommand = new BuilderCommand(TranslationDirectionChanged);
-            AllWordsCommand = new BuilderCommand(AllWords);
-            ShowPlotCommand = new BuilderCommand(ShowPlot);
-            FinishLessonCommand = new BuilderCommand(FinishLesson);
+            StartTypingLessonCommand = new Util.BuilderCommand(StartTypingLesson);
+            StartReapetLessonCommand = new Util.BuilderCommand(StartReapetLesson);
+            StartRandomLessonCommand = new Util.BuilderCommand(StartRandomLesson);
+            StartBestLessonCommand = new Util.BuilderCommand(StartBestLesson);
+            EditGroupCommand = new Util.BuilderCommand(EditGroup);
+            BackCommand = new Util.BuilderCommand(Back);
+            ShowWordsCommand = new Util.BuilderCommand(ShowWords);
+            SelectionChangedCommand = new Util.BuilderCommand(SelectionChanged);
+            DrawerSignClickCommand = new Util.BuilderCommand(DrawerSignClick);
+            TranslationDirectionChangedCommand = new Util.BuilderCommand(TranslationDirectionChanged);
+            AllWordsCommand = new Util.BuilderCommand(AllWords);
+            ShowPlotCommand = new Util.BuilderCommand(ShowPlot);
+            FinishLessonCommand = new Util.BuilderCommand(FinishLesson);
         }
 
         private void FinishLesson(object obj)

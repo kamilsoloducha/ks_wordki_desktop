@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 using Wordki.Helpers;
 
 namespace Wordki.Views.Dialogs {
@@ -59,8 +60,8 @@ namespace Wordki.Views.Dialogs {
         }
       }
     }
-    public BuilderCommand PositiveCommand { get; set; }
-    public BuilderCommand NegativeCommand { get; set; }
+    public ICommand PositiveCommand { get; set; }
+    public ICommand NegativeCommand { get; set; }
 
     #endregion
 

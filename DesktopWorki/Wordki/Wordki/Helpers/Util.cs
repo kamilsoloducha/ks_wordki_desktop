@@ -25,18 +25,6 @@ namespace Wordki.Helpers {
       return string.Format("{0}m {1}s", lMinutes, lSeconds);
     }
 
-    public static IList<T> Shuffle<T>(IList<T> list) {
-      Random lRandom = new Random();
-      int n = list.Count;
-      while (n > 1) {
-        n--;
-        int k = lRandom.Next(n + 1);
-        T value = list[k];
-        list[k] = list[n];
-        list[n] = value;
-      }
-      return list;
-    }
     public static string GetExeFilePath() {
       string lExePath = Assembly.GetExecutingAssembly().Location;
       return lExePath.Substring(0, lExePath.LastIndexOf("\\"));
