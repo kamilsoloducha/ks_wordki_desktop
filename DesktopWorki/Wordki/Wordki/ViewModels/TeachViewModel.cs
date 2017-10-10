@@ -18,7 +18,7 @@ using Util.Serializers;
 
 namespace Wordki.ViewModels
 {
-    public class TeachViewModel : ViewModelBase, ITimerListener
+    public class TeachViewModel : ViewModelBase, Util.Timer.ITimerListener
     {
         private LessonState _lessonState;
 
@@ -332,8 +332,7 @@ namespace Wordki.ViewModels
 
         private void Check(object obj)
         {
-            Lesson.Translation = State.Translation;
-            Lesson.Check();
+            Lesson.Check(State.Translation);
 
             if (Lesson.IsCorrect)
             {
@@ -1081,10 +1080,10 @@ namespace Wordki.ViewModels
                 switch (_translationDirection)
                 {
                     case TranslationDirection.FromFirst:
-                        Translation = string.Format("{0} / {1}", Lesson.Translation, Lesson.SelectedWord.Language2);
+                        Translation = $"{Translation} / {Lesson.SelectedWord.Language2}";
                         break;
                     case TranslationDirection.FromSecond:
-                        Translation = string.Format("{0} / {1}", Lesson.Translation, Lesson.SelectedWord.Language1);
+                        Translation = $"{Translation} / {Lesson.SelectedWord.Language1}";
                         break;
                 }
             }

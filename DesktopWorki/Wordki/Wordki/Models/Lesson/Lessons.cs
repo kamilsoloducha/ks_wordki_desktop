@@ -12,25 +12,24 @@ namespace Wordki.Models.Lesson {
     public Queue<Word> WordList { get; protected set; }
     public IList<Word> BeginWordsList { get; protected set; }
     public Word SelectedWord { get; protected set; }
-    public string Translation { get; set; }
     public bool IsCorrect { get; protected set; }
     public bool IsChecked { get; protected set; }
     public int CurrentDrawer { get; protected set; }
-    public Timer Timer { get; private set; }
+    public Util.Timer Timer { get; private set; }
     public int Counter { get; set; }
     public IWordComparer WordComparer { get; set; }
 
     protected Lesson() {
       BeginWordsList = new List<Word>();
       WordList = new Queue<Word>();
-      Timer = new Timer();
+      Timer = new Util.Timer();
       Counter = 1;
     }
 
     protected abstract void CreateWordList();
     protected abstract void CreateResultList();
     public abstract void Known();
-    public abstract void Check();
+    public abstract void Check(string translation);
 
     public virtual void InitLesson() {
       CreateWordList();

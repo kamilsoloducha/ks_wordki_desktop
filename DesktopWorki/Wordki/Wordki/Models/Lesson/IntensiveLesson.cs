@@ -42,11 +42,11 @@ namespace Wordki.Models.Lesson {
       Console.WriteLine("E - Knwon - {0}", stopWatch.ElapsedTicks);
     }
 
-    public override void Check() {
+    public override void Check(string translation) {
       IsChecked = true;
       switch (UserManager.GetInstance().User.TranslationDirection) {
-        case TranslationDirection.FromSecond: IsCorrect = Translation.Trim().Equals(SelectedWord.Language1); break;
-        case TranslationDirection.FromFirst: IsCorrect = Translation.Trim().Equals(SelectedWord.Language2); break;
+        case TranslationDirection.FromSecond: IsCorrect = translation.Trim().Equals(SelectedWord.Language1); break;
+        case TranslationDirection.FromFirst: IsCorrect = translation.Trim().Equals(SelectedWord.Language2); break;
       }
     }
 

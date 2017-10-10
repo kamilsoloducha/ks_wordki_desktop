@@ -9,13 +9,15 @@ namespace Wordki.Models
     {
         private static int _maxWordLength = 256;
 
-        public long Id { get; set; }
+        public virtual long Id { get; set; }
 
         [JsonIgnore]
-        public long UserId { get; set; }
+        public virtual long UserId { get; set; }
+
+        public virtual Group Group { get; set; }
 
         private long _groupId;
-        public long GroupId
+        public virtual long GroupId
         {
             get { return _groupId; }
             set
@@ -28,7 +30,7 @@ namespace Wordki.Models
         }
 
         private string _language1;
-        public string Language1
+        public virtual string Language1
         {
             get { return _language1; }
             set
@@ -45,13 +47,13 @@ namespace Wordki.Models
             }
         }
 
-        public bool ShouldSerializeLanguage1()
+        public virtual bool ShouldSerializeLanguage1()
         {
             return StateManager.GetState(State, "Language1") > 0;
         }
 
         private string _language2;
-        public string Language2
+        public virtual string Language2
         {
             get { return _language2; }
             set
@@ -68,14 +70,14 @@ namespace Wordki.Models
             }
         }
 
-        public bool ShouldSerializeLanguage2()
+        public virtual bool ShouldSerializeLanguage2()
         {
             return StateManager.GetState(State, "Language2") > 0;
         }
 
 
         private byte _drawer;
-        public byte Drawer
+        public virtual byte Drawer
         {
             get { return _drawer; }
             set
@@ -95,13 +97,13 @@ namespace Wordki.Models
             }
         }
 
-        public bool ShouldSerializeDrawer()
+        public virtual bool ShouldSerializeDrawer()
         {
             return StateManager.GetState(State, "Drawer") > 0;
         }
 
         private string _language1Comment;
-        public string Language1Comment
+        public virtual string Language1Comment
         {
             get { return _language1Comment; }
             set
@@ -114,13 +116,13 @@ namespace Wordki.Models
             }
         }
 
-        public bool ShouldSerializeLanguage1Comment()
+        public virtual bool ShouldSerializeLanguage1Comment()
         {
             return StateManager.GetState(State, "Language1Comment") > 0;
         }
 
         private string _language2Comment;
-        public string Language2Comment
+        public virtual string Language2Comment
         {
             get { return _language2Comment; }
             set
@@ -133,13 +135,13 @@ namespace Wordki.Models
             }
         }
 
-        public bool ShouldSerializeLanguage2Comment()
+        public virtual bool ShouldSerializeLanguage2Comment()
         {
             return StateManager.GetState(State, "Language2Comment") > 0;
         }
 
         private bool _visible;
-        public bool Visible
+        public virtual bool Visible
         {
             get { return _visible; }
             set
@@ -152,12 +154,12 @@ namespace Wordki.Models
             }
         }
 
-        public bool ShouldSerializeVisible()
+        public virtual bool ShouldSerializeVisible()
         {
             return StateManager.GetState(State, "Visible") > 0;
         }
 
-        public int State { get; set; }
+        public virtual int State { get; set; }
 
         public Word()
         {
@@ -188,7 +190,7 @@ namespace Wordki.Models
             return false;
         }
 
-        public void SwapLanguages()
+        public virtual void SwapLanguages()
         {
             string temp = Language1;
             Language1 = Language2;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Repository.Models.Enums;
-using Wordki.Helpers;
 
 namespace Wordki.Models.Lesson
 {
@@ -43,18 +42,18 @@ namespace Wordki.Models.Lesson
             NextWord();
         }
 
-        public override void Check()
+        public override void Check(string translation)
         {
             IsCorrect = false;
             IsChecked = true;
             switch (UserManager.GetInstance().User.TranslationDirection)
             {
                 case TranslationDirection.FromSecond:
-                    if (CheckTranslation(Translation, SelectedWord.Language1))
+                    if (CheckTranslation(translation, SelectedWord.Language1))
                         IsCorrect = true; //jesli poprawne
                     break;
                 case TranslationDirection.FromFirst:
-                    if (CheckTranslation(Translation, SelectedWord.Language2))
+                    if (CheckTranslation(translation, SelectedWord.Language2))
                         IsCorrect = true; //jesli poprawne
                     break;
             }

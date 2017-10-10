@@ -11,12 +11,12 @@ namespace Wordki.Models
     public class Group : ModelAbs<IGroup>, IComparable<Group>, IGroup
     {
 
-        public long Id { get; set; }
+        public virtual long Id { get; set; }
 
-        public long UserId { get; set; }
+        public virtual long UserId { get; set; }
 
         private string _name;
-        public string Name
+        public virtual string Name
         {
             get { return _name; }
             set
@@ -29,13 +29,13 @@ namespace Wordki.Models
             }
         }
 
-        public bool ShouldSerializeName()
+        public virtual bool ShouldSerializeName()
         {
             return StateManager.GetState(State, "Name") > 0;
         }
 
         private LanguageType _language1;
-        public LanguageType Language1
+        public virtual LanguageType Language1
         {
             get { return _language1; }
             set
@@ -48,13 +48,13 @@ namespace Wordki.Models
             }
         }
 
-        public bool ShouldSerializeLanguage1()
+        public virtual bool ShouldSerializeLanguage1()
         {
             return StateManager.GetState(State, "Language1") > 0;
         }
 
         private LanguageType _language2;
-        public LanguageType Language2
+        public virtual LanguageType Language2
         {
             get { return _language2; }
             set
@@ -67,17 +67,19 @@ namespace Wordki.Models
             }
         }
 
-        public bool ShouldSerializeLanguage2()
+        public virtual bool ShouldSerializeLanguage2()
         {
             return StateManager.GetState(State, "Language2") > 0;
         }
 
-        public int State { get; set; }
+        public virtual int State { get; set; }
+
+        public virtual IList<Word> Words { get; set; }
 
         [JsonIgnore]
-        public ObservableCollection<Word> WordsList { get; set; }
+        public virtual ObservableCollection<Word> WordsList { get; set; }
         [JsonIgnore]
-        public ObservableCollection<Result> ResultsList { get; set; }
+        public virtual ObservableCollection<Result> ResultsList { get; set; }
 
         public Group()
         {
@@ -90,12 +92,12 @@ namespace Wordki.Models
             ResultsList = new ObservableCollection<Result>();
         }
 
-        public int CompareTo(Group other)
+        public virtual int CompareTo(Group other)
         {
             return String.Compare(Name.ToLower(), other.Name.ToLower(), StringComparison.Ordinal);
         }
 
-        public int GetLessonTime(DateTime pDateTime)
+        public virtual int GetLessonTime(DateTime pDateTime)
         {
             IEnumerable<Result> lDateResult = ResultsList.Where(x => pDateTime - x.DateTime < new TimeSpan(1, 0, 0));
             return lDateResult.Sum(lResult => lResult.TimeCount);
@@ -111,14 +113,14 @@ namespace Wordki.Models
                    group.Language2 == Language2;
         }
 
-        public void SwapLanguage()
+        public virtual void SwapLanguage()
         {
             LanguageType temp = Language1;
             Language1 = Language2;
             Language2 = temp;
         }
 
-        public Result GetLastResult()
+        public virtual Result GetLastResult()
         {
             return ResultsList.OrderBy(x => x.DateTime).FirstOrDefault();
         }

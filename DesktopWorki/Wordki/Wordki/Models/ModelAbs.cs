@@ -4,21 +4,26 @@ using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using Wordki.Models.StateManager;
 
-namespace Wordki.Models {
-  public abstract class ModelAbs<T> : INotifyPropertyChanged, ICloneable{
+namespace Wordki.Models
+{
+    public abstract class ModelAbs<T> : INotifyPropertyChanged, ICloneable
+    {
 
-    [JsonIgnore]
-    protected static readonly IStateManager<T> StateManager = new StateManager<T>();
+        [JsonIgnore]
+        protected static readonly IStateManager<T> StateManager = new StateManager<T>();
 
-    public object Clone() {
-      return MemberwiseClone();
+        public virtual object Clone()
+        {
+            return MemberwiseClone();
+        }
+
+        public virtual event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string name = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
     }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string name = "") {
-      if (PropertyChanged != null) {
-        PropertyChanged(this, new PropertyChangedEventArgs(name));
-      }
-    }
-  }
 }
