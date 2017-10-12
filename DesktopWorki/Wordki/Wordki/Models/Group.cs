@@ -74,7 +74,11 @@ namespace Wordki.Models
 
         public virtual int State { get; set; }
 
+        [JsonIgnore]
         public virtual IList<Word> Words { get; set; }
+
+        [JsonIgnore]
+        public virtual IList<Result> Results { get; set; }
 
         [JsonIgnore]
         public virtual ObservableCollection<Word> WordsList { get; set; }
@@ -90,6 +94,8 @@ namespace Wordki.Models
             State = int.MaxValue;
             WordsList = new ObservableCollection<Word>();
             ResultsList = new ObservableCollection<Result>();
+            Words = new List<Word>();
+            Results = new List<Result>();
         }
 
         public virtual int CompareTo(Group other)

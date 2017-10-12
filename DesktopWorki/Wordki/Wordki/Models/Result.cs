@@ -7,17 +7,17 @@ namespace Wordki.Models {
   [Serializable]
   public class Result : ModelAbs<IResult>, IComparable<Result>, IResult {
     
-    public long Id { get; set; }
-    public long UserId { get; set; }
-    public long GroupId { get; set; }
-    public short Correct { get; set; }
-    public short Accepted { get; set; }
-    public short Wrong { get; set; }
-    public short Invisibilities { get; set; }
-    public short TimeCount { get; set; }
+    public virtual long Id { get; set; }
+    public virtual long UserId { get; set; }
+    public virtual long GroupId { get; set; }
+    public virtual short Correct { get; set; }
+    public virtual short Accepted { get; set; }
+    public virtual short Wrong { get; set; }
+    public virtual short Invisibilities { get; set; }
+    public virtual short TimeCount { get; set; }
 
     private TranslationDirection _translationDirection;
-    public TranslationDirection TranslationDirection {
+    public virtual TranslationDirection TranslationDirection {
       get { return _translationDirection; }
       set {
         if (_translationDirection == value) return;
@@ -26,15 +26,15 @@ namespace Wordki.Models {
       }
     }
 
-    public bool ShouldSerializeTransationDirection() {
+    public virtual bool ShouldSerializeTransationDirection() {
       return StateManager.GetState(State, "TransationDirection") > 0;
     }
 
-    public LessonType LessonType { get; set; }
+    public virtual LessonType LessonType { get; set; }
 
-    public DateTime DateTime { get; set; }
+    public virtual DateTime DateTime { get; set; }
 
-    public int State { get; set; }
+    public virtual int State { get; set; }
 
     public Result() {
       Id = DateTime.Now.Ticks;
@@ -82,7 +82,7 @@ namespace Wordki.Models {
       return true;
     }
 
-    public void SwapDirection() {
+    public virtual void SwapDirection() {
       TranslationDirection = TranslationDirection == TranslationDirection.FromFirst ? TranslationDirection.FromSecond : TranslationDirection.FromFirst;
     }
   }

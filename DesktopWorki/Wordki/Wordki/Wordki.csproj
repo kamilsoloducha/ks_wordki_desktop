@@ -67,6 +67,10 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FluentNHibernate, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19026, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
       <Private>True</Private>
@@ -137,11 +141,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Database\GroupMap.cs" />
-    <Compile Include="Database\NHibernateHelper.cs" />
-    <Compile Include="Database\UserMap.cs" />
-    <Compile Include="Database\UserRepository.cs" />
-    <Compile Include="Database\WordMap.cs" />
+    <Compile Include="Database2\GroupMap.cs" />
+    <Compile Include="Database2\GroupRepository.cs" />
+    <Compile Include="Database2\NHibernateHelper.cs" />
+    <Compile Include="Database2\ResultMap.cs" />
+    <Compile Include="Database2\UserMap.cs" />
+    <Compile Include="Database2\UserRepository.cs" />
+    <Compile Include="Database2\WordMap.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
     <Compile Include="Helpers\Command\CommandApiRequest.cs" />
     <Compile Include="Helpers\Command\CommandQueue.cs" />
@@ -181,6 +187,7 @@
     <Compile Include="Models\Connector\ApiConnector.cs" />
     <Compile Include="Models\Connector\ApiRequest.cs" />
     <Compile Include="Models\Connector\ApiResponse.cs" />
+    <Compile Include="Models\IGroupRepository.cs" />
     <Compile Include="Models\IUserRepository.cs" />
     <Compile Include="Models\LanguageSwaper\ILanguageSwaper.cs" />
     <Compile Include="Models\LanguageSwaper\LanguageSwaper.cs" />

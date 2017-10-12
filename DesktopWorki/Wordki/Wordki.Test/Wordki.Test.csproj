@@ -51,6 +51,10 @@
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FluentNHibernate, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
       <Private>True</Private>
@@ -91,6 +95,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\DatabaseTests.cs" />
+    <Compile Include="Database\GroupTests.cs" />
+    <Compile Include="Database\Helper.cs" />
     <Compile Include="Database\MappingTest.cs" />
     <Compile Include="Database\WordsTest.cs" />
     <Compile Include="Helpers\GroupCreatorTests\GroupCreatorTest.cs" />
@@ -122,6 +128,10 @@
     <ProjectReference Include="..\..\..\..\oazachaosu\Oazachaosu\Repository\Repository.csproj">
       <Project>{90d846a5-5cb3-4926-8719-88ec170a61aa}</Project>
       <Name>Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\util\Util\Util\Util.csproj">
+      <Project>{877ccd05-baa6-430a-a317-e1e9da0bbaf2}</Project>
+      <Name>Util</Name>
     </ProjectReference>
     <ProjectReference Include="..\Wordki\Wordki.csproj">
       <Project>{47f92efb-3acb-4c6f-a80c-53c50a111ee2}</Project>

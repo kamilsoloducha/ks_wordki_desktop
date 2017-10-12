@@ -15,8 +15,6 @@ namespace Wordki.Test.Database
         [Test]
         public void CanGenerateSchema()
         {
-            var schemaUpdate = new SchemaUpdate(NHibernateHelper.Configuration);
-            schemaUpdate.Execute(Console.WriteLine, true);
         }
     }
 }

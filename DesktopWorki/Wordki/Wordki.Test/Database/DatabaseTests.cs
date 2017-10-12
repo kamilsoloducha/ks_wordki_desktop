@@ -1,5 +1,4 @@
-﻿using NHibernate.Tool.hbm2ddl;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,9 +20,6 @@ namespace Wordki.Test.Database
         public void CreateSchema()
         {
             DeleteDatabaseIfExists();
-
-            var schemaUpdate = new SchemaUpdate(NHibernateHelper.Configuration);
-            schemaUpdate.Execute(false, true);
 
             _userRepo = new UserRepository();
         }
