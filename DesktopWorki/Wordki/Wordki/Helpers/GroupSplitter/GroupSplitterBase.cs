@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using Repository.Models;
+using System.Collections.Generic;
 using System.Threading;
 using Wordki.Models;
 
@@ -7,9 +7,9 @@ namespace Wordki.Helpers.GroupSplitter
 {
     public abstract class GroupSplitterBase
     {
-        public abstract IEnumerable<Group> Split(Group group, int factor);
+        public abstract IEnumerable<IGroup> Split(IGroup group, int factor);
 
-        protected Group CreateGroup(Group group, int counter)
+        protected IGroup CreateGroup(IGroup group, int counter)
         {
             Group lNewGroup = new Group();
             lNewGroup.Name = group.Name + " " + new string('*', counter);
@@ -19,38 +19,11 @@ namespace Wordki.Helpers.GroupSplitter
             return lNewGroup;
         }
 
-        protected void TransferWord(Word oldWord, Group newGroup)
+        protected void TransferWord(IWord word, IGroup newGroup)
         {
-            Word newWord = new Word
-            {
-                GroupId = newGroup.Id,
-                Language1 = oldWord.Language1,
-                Language2 = oldWord.Language2,
-                Drawer = oldWord.Drawer,
-                Language1Comment = oldWord.Language1Comment,
-                Language2Comment = oldWord.Language2Comment,
-                Visible = oldWord.Visible,
-            };
-            newGroup.WordsList.Add(newWord);
+            word.Group.Words.Remove(word);
+            word.Group = newGroup;
+            newGroup.Words.Add(word);
         }
-
-        #region TestHelper
-
-#if TEST
-
-        public Group CreateGroupTest(Group group, int counter)
-        {
-            return CreateGroup(group, counter);
-        }
-
-        public void TransferWordTest(Word oldWord, Group newGroup)
-        {
-            TransferWord(oldWord, newGroup);
-        }
-
-#endif
-
-
-        #endregion
     }
 }

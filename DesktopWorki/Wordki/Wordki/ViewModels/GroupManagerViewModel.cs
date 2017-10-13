@@ -21,6 +21,7 @@ using Repository.Models.Language;
 using Util.Serializers;
 using Util;
 using System.Windows.Input;
+using Repository.Models;
 
 namespace Wordki.ViewModels
 {
@@ -207,7 +208,7 @@ namespace Wordki.ViewModels
 
         private void EditGroup(object obj)
         {
-            Group lSelectedGroup = Database.GetDatabase().GetGroupById(SelectedItem.Group.Id);
+            IGroup lSelectedGroup = Database.GetDatabase().GetGroupById(SelectedItem.Group.Id);
             PackageStore.Put(0, lSelectedGroup);
             Switcher.GetSwitcher().Switch(Switcher.State.Builder);
         }
@@ -309,8 +310,8 @@ namespace Wordki.ViewModels
                 ILessonScheduler scheduler = new LessonScheduler(new SimpleLessonScheduleInitializer());
                 foreach (GroupItem groupItem in Database.GetDatabase().GroupsList.Select(group => new GroupItem(group)))
                 {
-                    groupItem.Color = scheduler.GetColor(groupItem.Group.GetLastResult());
-                    groupItem.NextRepeat = scheduler.GetTimeToLearn(groupItem.Group.ResultsList);
+                    //groupItem.Color = scheduler.GetColor(groupItem.Group.GetLastResult());
+                    //groupItem.NextRepeat = scheduler.GetTimeToLearn(groupItem.Group.Results);
                     ItemsList.Add(groupItem);
                 }
             });
@@ -343,13 +344,13 @@ namespace Wordki.ViewModels
                     return;
                 foreach (GroupItem lGroupItem in SelectionList)
                 {
-                    Group lGroup = Database.GetDatabase().GetGroupById(lGroupItem.Group.Id);
+                    IGroup lGroup = Database.GetDatabase().GetGroupById(lGroupItem.Group.Id);
                     lLanguage1Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathRectFlag(LanguageFactory.GetLanguage(lGroup.Language1))));
                     lLanguage2Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathRectFlag(LanguageFactory.GetLanguage(lGroup.Language2))));
                     lGroupNameBuilder.Append(lGroup.Name).Append(" ");
-                    lWordsCount += lGroup.WordsList.Count;
+                    lWordsCount += lGroup.Words.Count;
                     lRepeatsCount += Database.GetDatabase().GetResultsList(lGroupItem.Group.Id).Count;
-                    Result lResult = Database.GetDatabase().GetLastResult(lGroupItem.Group.Id);
+                    IResult lResult = Database.GetDatabase().GetLastResult(lGroupItem.Group.Id);
                     if (lResult != null)
                     {
                         DateTime lGroupLastResult = lResult.DateTime;
@@ -358,7 +359,7 @@ namespace Wordki.ViewModels
                             lLastRepeat = lGroupLastResult;
                         }
                     }
-                    foreach (Word lWord in lGroup.WordsList)
+                    foreach (Word lWord in lGroup.Words)
                     {
                         lDrawersCount[lWord.Drawer]++;
                         if (lWord.Visible)
@@ -423,43 +424,43 @@ namespace Wordki.ViewModels
             }
         }
 
-        private IEnumerable<Word> GetWordListFromSelectedGroups()
+        private IEnumerable<IWord> GetWordListFromSelectedGroups()
         {
-            List<Word> lWordsList = new List<Word>();
+            List<IWord> lWords = new List<IWord>();
             try
             {
                 foreach (GroupItem lItem in SelectionList)
                 {
-                    Group lGroup = Database.GetDatabase().GetGroupById(lItem.Group.Id);
-                    lWordsList.AddRange(lGroup.WordsList);
+                    IGroup lGroup = Database.GetDatabase().GetGroupById(lItem.Group.Id);
+                    lWords.AddRange(lGroup.Words);
                 }
             }
             catch (Exception lException)
             {
                 Logger.LogError("{0} - {1}", "GetWordListFromSelectedGroups", lException.Message);
             }
-            return lWordsList;
+            return lWords;
         }
 
-        private IEnumerable<Word> GetWordListRandom(int pCount)
+        private IEnumerable<IWord> GetWordListRandom(int pCount)
         {
             var groupList = Database.GetDatabase().GroupsList;
             Random random = new Random();
             for (int i = 0; i < pCount; i++)
             {
-                Group group = groupList[random.Next(groupList.Count - 1)];
-                yield return group.WordsList[random.Next(group.WordsList.Count - 1)];
+                IGroup group = groupList[random.Next(groupList.Count - 1)];
+                yield return group.Words[random.Next(group.Words.Count - 1)];
             }
         }
 
-        private IEnumerable<Word> GetWordListBest(int pCount)
+        private IEnumerable<IWord> GetWordListBest(int pCount)
         {
-            List<Word> temp = new List<Word>();
+            List<IWord> temp = new List<IWord>();
             foreach (Group group in Database.GetDatabase().GroupsList)
             {
-                temp.AddRange(group.WordsList);
+                temp.AddRange(group.Words);
             }
-            IEnumerable<Word> result = temp.Where(x => x.Drawer == 4);
+            IEnumerable<IWord> result = temp.Where(x => x.Drawer == 4);
             result = Util.Collections.Utils.Shuffle(result.ToList());
             return result.Take(pCount);
         }

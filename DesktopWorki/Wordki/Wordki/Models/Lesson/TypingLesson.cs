@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Repository.Models.Enums;
+using Repository.Models;
 
 namespace Wordki.Models.Lesson
 {
@@ -9,9 +10,9 @@ namespace Wordki.Models.Lesson
     public class TypingLesson : Lesson
     {
 
-        protected IEnumerable<Word> AllWordList { get; set; }
+        protected IEnumerable<IWord> AllWordList { get; set; }
 
-        public TypingLesson(IEnumerable<Word> pWordsList)
+        public TypingLesson(IEnumerable<IWord> pWordsList)
           : base()
         {
             AllWordList = pWordsList;
@@ -79,13 +80,13 @@ namespace Wordki.Models.Lesson
             foreach (Word lWord in BeginWordsList)
             {
                 if (ResultList.Exists(x => x.GroupId == lWord.GroupId)) continue;
-                Group lGroup = Database.GetDatabase().GetGroupById(lWord.GroupId);
+                IGroup lGroup = Database.GetDatabase().GetGroupById(lWord.GroupId);
                 ResultList.Add(new Result(-1,
                   lWord.GroupId,
                   0,
                   0,
                   0,
-                  (short)lGroup.WordsList.Count(x => !x.Visible),
+                  (short)lGroup.Words.Count(x => !x.Visible),
                   0,
                   UserManager.GetInstance().User.TranslationDirection,
                   (LessonType)Enum.Parse(typeof(LessonType), GetType().Name),

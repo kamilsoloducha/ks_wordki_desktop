@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Wordki.Models.Lesson {
   [Serializable]
   public class RandomLesson : TypingLesson {
-    public RandomLesson(IEnumerable<Word> pWordsList) : base(pWordsList) {
+    public RandomLesson(IEnumerable<IWord> pWordsList) : base(pWordsList) {
     }
 
     protected override void CreateWordList() {

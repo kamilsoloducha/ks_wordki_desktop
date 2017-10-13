@@ -3,12 +3,13 @@ using NHibernate.Linq;
 using System.Linq;
 using System.Collections.Generic;
 using Wordki.Models;
+using Repository.Models;
 
 namespace Wordki.Database2
 {
     public class GroupRepository : IGroupRepository
     {
-        public void Delete(Group group)
+        public void Delete(IGroup group)
         {
             using (ISession session = NHibernateHelper.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
@@ -18,22 +19,22 @@ namespace Wordki.Database2
             }
         }
 
-        public Group Get(long id)
+        public IGroup Get(long id)
         {
             using (ISession session = NHibernateHelper.OpenSession())
             {
-                Group result = session.Get<Group>(id);
-                result.Words.ToList();
-                result.Results.ToList();
-                return result;
+                IGroup group = session.Get<IGroup>(id);
+                group.Words.ToArray();
+                group.Results.ToArray();
+                return group;
             }
         }
 
-        public IEnumerable<Group> GetGroups()
+        public IEnumerable<IGroup> GetGroups()
         {
             using (ISession session = NHibernateHelper.OpenSession())
             {
-                return session.Query<Group>().ToList();
+                return session.Query<IGroup>().ToList();
             }
         }
 
@@ -41,11 +42,11 @@ namespace Wordki.Database2
         {
             using (ISession session = NHibernateHelper.OpenSession())
             {
-                return session.QueryOver<Group>().RowCountInt64();
+                return session.QueryOver<IGroup>().RowCountInt64();
             }
         }
 
-        public void Save(Group group)
+        public void Save(IGroup group)
         {
             using (ISession session = NHibernateHelper.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
@@ -55,12 +56,38 @@ namespace Wordki.Database2
             }
         }
 
-        public void Update(Group group)
+        public void Save(IEnumerable<IGroup> groups)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                foreach(IGroup group in groups)
+                {
+                    session.Save(group);
+                }
+                transaction.Commit();
+            }
+        }
+
+        public void Update(IGroup group)
         {
             using (ISession session = NHibernateHelper.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
             {
                 session.Update(group);
+                transaction.Commit();
+            }
+        }
+
+        public void Update(IEnumerable<IGroup> groups)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                foreach(IGroup group in groups)
+                {
+                    session.Update(group);
+                }
                 transaction.Commit();
             }
         }

@@ -10,8 +10,9 @@ using Wordki.Models;
 using Wordki.Models.RemoteDatabase;
 using Wordki.Views.Dialogs;
 using Wordki.Views.Dialogs.ListDialogs;
-using Wordki.Models.LanguageSwaper;
 using Util;
+using Repository.Helper;
+using Repository.Models;
 
 namespace Wordki.ViewModels
 {
@@ -33,12 +34,12 @@ namespace Wordki.ViewModels
         private string _nextGroupLabel;
         private string _previousGroupLabel;
         private bool _languages1IsFocused;
-        private Group _selectedGroup;
-        private Word _selectedWord;
+        private IGroup _selectedGroup;
+        private IWord _selectedWord;
 
         #region Properies
 
-        public Group SelectedGroup
+        public IGroup SelectedGroup
         {
             get { return _selectedGroup; }
             set
@@ -50,7 +51,7 @@ namespace Wordki.ViewModels
                 OnPropertyChanged();
             }
         }
-        public Word SelectedWord
+        public IWord SelectedWord
         {
             get { return _selectedWord; }
             set
@@ -240,7 +241,7 @@ namespace Wordki.ViewModels
             queue.Execute();
         }
 
-        private async void UpdateWord(Word pWord)
+        private async void UpdateWord(IWord pWord)
         {
             if (!await Database.UpdateWordAsync(pWord))
             {
@@ -248,7 +249,7 @@ namespace Wordki.ViewModels
             }
         }
 
-        private async void AddWord(Group pGroup, Word pWord)
+        private async void AddWord(IGroup pGroup, IWord pWord)
         {
             if (!await Database.AddWordAsync(pGroup, pWord))
             {
@@ -256,7 +257,7 @@ namespace Wordki.ViewModels
             }
         }
 
-        private async void AddGroup(Group pGroup)
+        private async void AddGroup(IGroup pGroup)
         {
             if (!await Database.AddGroupAsync(pGroup))
             {
@@ -264,7 +265,7 @@ namespace Wordki.ViewModels
             }
         }
 
-        private async void UpdateGroup(Group pGroup)
+        private async void UpdateGroup(IGroup pGroup)
         {
             if (!await Database.UpdateGroupAsync(pGroup))
             {
@@ -272,7 +273,7 @@ namespace Wordki.ViewModels
             }
         }
 
-        private async void DeleteGroup(Group pGroup)
+        private async void DeleteGroup(IGroup pGroup)
         {
             if (!await Database.DeleteGroupAsync(pGroup))
             {
@@ -366,7 +367,8 @@ namespace Wordki.ViewModels
             {
                 return;
             }
-            SelectedWord.SwapLanguages();
+            ILanguageSwaper swaper = new LanguageSwaper();
+            swaper.Swap(SelectedWord);
             Database.UpdateWordAsync(SelectedWord).ConfigureAwait(false);
         }
 
@@ -466,10 +468,10 @@ namespace Wordki.ViewModels
             };
             dialog.PositiveCommand = new Util.BuilderCommand(o =>
             {
-                Group groupToDelete = SelectedGroup;
+                IGroup groupToDelete = SelectedGroup;
                 int groupIndex = Database.GroupsList.IndexOf(SelectedGroup);
                 SelectedGroup = Database.GroupsList.Count > groupIndex ? Database.GroupsList[groupIndex] : null;
-                SelectedWord = SelectedGroup != null ? SelectedGroup.WordsList.LastOrDefault() : null;
+                SelectedWord = SelectedGroup != null ? SelectedGroup.Words.LastOrDefault() : null;
                 DeleteGroup(groupToDelete);
                 dialog.Close();
                 RefreshView();
@@ -503,10 +505,10 @@ namespace Wordki.ViewModels
             {
                 return;
             }
-            int wordIndex = SelectedGroup.WordsList.IndexOf(SelectedWord);
-            if (wordIndex < SelectedGroup.WordsList.Count - 1)
+            int wordIndex = SelectedGroup.Words.IndexOf(SelectedWord);
+            if (wordIndex < SelectedGroup.Words.Count - 1)
             {
-                SelectedWord = SelectedGroup.WordsList[++wordIndex];
+                SelectedWord = SelectedGroup.Words[++wordIndex];
                 RefreshView();
             }
         }
@@ -517,10 +519,10 @@ namespace Wordki.ViewModels
             {
                 return;
             }
-            int wordIndex = SelectedGroup.WordsList.IndexOf(SelectedWord);
+            int wordIndex = SelectedGroup.Words.IndexOf(SelectedWord);
             if (wordIndex > 0)
             {
-                SelectedWord = SelectedGroup.WordsList[--wordIndex];
+                SelectedWord = SelectedGroup.Words[--wordIndex];
                 RefreshView();
             }
         }
@@ -582,7 +584,7 @@ namespace Wordki.ViewModels
             }
             if (await Database.DeleteWordAsync(SelectedGroup, SelectedWord))
             {
-                SelectedWord = SelectedGroup.WordsList.LastOrDefault();
+                SelectedWord = SelectedGroup.Words.LastOrDefault();
                 if (SelectedWord == null)
                 {
                     RemoveGroup(null);
@@ -602,7 +604,7 @@ namespace Wordki.ViewModels
             };
             lDialog.Button1Command = new Util.BuilderCommand(delegate
             {
-                Group lGroup = SelectedGroup;
+                IGroup lGroup = SelectedGroup;
                 LanguageType lSelectedLanguage = (LanguageType)lDialog.SelectedIndex;
                 if (pLanguageIndex == 1)
                 {
@@ -743,7 +745,7 @@ namespace Wordki.ViewModels
             }
             if (SelectedGroup != null && SelectedWord != null)
             {
-                WordNumber = SelectedGroup.WordsList.IndexOf(SelectedWord) + 1;
+                WordNumber = SelectedGroup.Words.IndexOf(SelectedWord) + 1;
                 Drawer = SelectedWord.Drawer + 1;
             }
             else
@@ -763,7 +765,7 @@ namespace Wordki.ViewModels
             else
             {
                 //RefreshWordsList();
-                SelectedWord = SelectedGroup.WordsList.LastOrDefault();
+                SelectedWord = SelectedGroup.Words.LastOrDefault();
             }
             RefreshView();
         }
@@ -776,7 +778,7 @@ namespace Wordki.ViewModels
             }
             else
             {
-                SelectedWord = SelectedGroup.WordsList.LastOrDefault();
+                SelectedWord = SelectedGroup.Words.LastOrDefault();
             }
             RefreshView();
         }

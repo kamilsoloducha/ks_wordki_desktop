@@ -58,7 +58,7 @@ namespace Wordki.Helpers.GroupCreator
                 {
                     SetComments(word, elements);
                 }
-                group.WordsList.Add(word);
+                group.Words.Add(word);
 
             }
             return group;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -54,10 +55,10 @@ namespace Wordki.ViewModels
                 {
                     return;
                 }
-                Group lGroup = Database.GroupsList.FirstOrDefault(x => x.Id == lWordItem.GroupId);
+                IGroup lGroup = Database.GroupsList.FirstOrDefault(x => x.Id == lWordItem.GroupId);
                 if (lGroup == null)
                     return;
-                Word lSelectedWord = lGroup.WordsList.FirstOrDefault(x => x.Id == lWordItem.Id);
+                IWord lSelectedWord = lGroup.Words.FirstOrDefault(x => x.Id == lWordItem.Id);
                 if (lSelectedWord == null)
                     return;
 
@@ -109,10 +110,10 @@ namespace Wordki.ViewModels
             await Task.Run(() =>
             {
                 DataGridCollection.Clear();
-                IEnumerable<Word> lSameWordsList = FindSameWords();
-                foreach (Word lWord in lSameWordsList)
+                IEnumerable<Word> lSameWords = FindSameWords();
+                foreach (Word lWord in lSameWords)
                 {
-                    Group lGroup = Database.GroupsList.FirstOrDefault(x => x.Id == lWord.GroupId);
+                    IGroup lGroup = Database.GroupsList.FirstOrDefault(x => x.Id == lWord.GroupId);
                     if (lGroup == null)
                         continue;
                     DataGridCollection.Add(lWord);
@@ -125,7 +126,7 @@ namespace Wordki.ViewModels
         {
             try
             {
-                IEnumerable<Word> words = Database.GroupsList.SelectMany(x => x.WordsList);
+                IEnumerable<IWord> words = Database.GroupsList.SelectMany(x => x.Words);
                 IWordComparer wordComparer = new WordComparer();
                 IWordFinder wordFinder = new WordFinder(words, wordComparer);
                 return wordFinder.FindWords();

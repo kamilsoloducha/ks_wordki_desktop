@@ -1,33 +1,30 @@
-﻿using System.Collections.Generic;
-using Wordki.Models;
+﻿using Repository.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Wordki.Helpers.GroupSplitter
 {
     public class GroupSplitGroupCount : GroupSplitterBase
     {
-        public override IEnumerable<Group> Split(Group group, int factor)
+        public override IEnumerable<IGroup> Split(IGroup group, int factor)
         {
-            if (group == null || group.WordsList.Count == 0)
+            if (group == null || group.Words.Count == 0)
             {
                 Logger.LogError("Bład pozialu grupy - nie ma nic do podzielenia");
                 yield break;
             }
-            if (factor > group.WordsList.Count || factor < 2)
+            if (factor > group.Words.Count || factor < 2)
             {
                 Logger.LogError($"Blad podzialu grupy - {factor}");
                 yield break;
             }
-            List<Word> lWords = new List<Word>(group.WordsList);
-            List<Group> lGroups = new List<Group>();
-            int lWordsCount = lWords.Count / factor;
+            int lWordsCount = group.Words.Count / factor;
             for (int i = 0; i < factor - 1; ++i)
             {
-                Group lNewGroup = CreateGroup(group, i + 1);
-                int j = group.WordsList.Count - 1;
-                while (lNewGroup.WordsList.Count < lWordsCount)
+                IGroup lNewGroup = CreateGroup(group, i + 1);
+                while (lNewGroup.Words.Count < lWordsCount)
                 {
-                    TransferWord(lWords[j], lNewGroup);
-                    j--;
+                    TransferWord(group.Words.Last(), lNewGroup);
                 }
                 yield return lNewGroup;
             }

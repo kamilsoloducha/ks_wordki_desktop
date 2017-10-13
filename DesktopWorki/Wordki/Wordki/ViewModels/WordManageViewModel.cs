@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
 using System.Collections;
 using System.Linq;
 using Wordki.Helpers;
@@ -10,8 +11,8 @@ namespace Wordki.ViewModels
     {
 
 
-        private Group _group;
-        public Group Group
+        private IGroup _group;
+        public IGroup Group
         {
             get { return _group; }
             set
@@ -85,7 +86,7 @@ namespace Wordki.ViewModels
             {
                 return;
             }
-            await Database.ConnectWords(items.OfType<Word>().ToList());
+            await Database.ConnectWords(items.OfType<IWord>().ToList());
         }
 
         private async void VisibilityChange(object obj)

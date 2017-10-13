@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
 using Newtonsoft.Json;
+using Repository.Models;
 
 namespace Wordki.Models.Connector {
   public abstract class ApiRequest {
@@ -87,7 +88,7 @@ namespace Wordki.Models.Connector {
     }
 
     public override void PrepareMessage() {
-      List<Group> groups = Database.GetGroupsToSend();
+      List<IGroup> groups = Database.GetGroupsToSend();
       Message = JsonConvert.SerializeObject(groups);
     }
   }
@@ -102,7 +103,7 @@ namespace Wordki.Models.Connector {
     }
 
     public override void PrepareMessage() {
-      List<Word> words = Database.GetWordsToSend();
+      List<IWord> words = Database.GetWordsToSend();
       Message = JsonConvert.SerializeObject(words);
     }
   }
@@ -117,7 +118,7 @@ namespace Wordki.Models.Connector {
     }
 
     public override void PrepareMessage() {
-      List<Result> results = Database.GetResultsToSend();
+      List<IResult> results = Database.GetResultsToSend();
       Message = JsonConvert.SerializeObject(results);
     }
   }

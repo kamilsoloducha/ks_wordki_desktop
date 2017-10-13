@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,15 +10,19 @@ namespace Wordki.Models
     public interface IGroupRepository
     {
 
-        IEnumerable<Group> GetGroups();
+        IEnumerable<IGroup> GetGroups();
 
-        Group Get(long id);
+        IGroup Get(long id);
 
-        void Save(Group group);
+        void Save(IGroup group);
 
-        void Update(Group update);
+        void Save(IEnumerable<IGroup> groups);
 
-        void Delete(Group group);
+        void Update(IGroup group);
+
+        void Update(IEnumerable<IGroup> groups);
+
+        void Delete(IGroup group);
 
         long RowCount();
 

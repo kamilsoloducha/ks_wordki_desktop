@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Repository.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,12 +17,12 @@ namespace Wordki.Models
     {
         private static IDatabase _database;
 
-        public ObservableCollection<Group> GroupsList { get; set; }
+        public ObservableCollection<IGroup> GroupsList { get; set; }
         public SqliteConnection Db { get; private set; }
 
         private Database()
         {
-            GroupsList = new ObservableCollection<Group>();
+            GroupsList = new ObservableCollection<IGroup>();
             Db = new SqliteConnection();
             Db.OpenConnection();
         }
@@ -80,7 +81,7 @@ namespace Wordki.Models
 
         //OPERACJE NA GRUPACH//
         //-------------------------------------------------------
-        public async Task<bool> AddGroupAsync(Group pGroup)
+        public async Task<bool> AddGroupAsync(IGroup pGroup)
         {
             GroupsList.Add(pGroup);
             if (!(await Db.InsertGroupAsync(pGroup, UserManager.GetInstance().User) > 0))
@@ -90,7 +91,7 @@ namespace Wordki.Models
             return true;
         }
 
-        public async Task<bool> UpdateGroupAsync(Group pGroup)
+        public async Task<bool> UpdateGroupAsync(IGroup pGroup)
         {
             if (pGroup == null || pGroup.State == 0)
             {
@@ -104,18 +105,18 @@ namespace Wordki.Models
             return true;
         }
 
-        public async Task<bool> DeleteGroupAsync(Group pGroup)
+        public async Task<bool> DeleteGroupAsync(IGroup pGroup)
         {
-            while (pGroup.WordsList.Count > 0)
+            while (pGroup.Words.Count > 0)
             {
-                if (!(await DeleteWordAsync(pGroup.WordsList.Last())))
+                if (!(await DeleteWordAsync(pGroup.Words.Last())))
                 {
                     Logger.LogError("Błąd w usuwaniu słowa");
                 }
             }
-            while (pGroup.ResultsList.Count > 0)
+            while (pGroup.Results.Count > 0)
             {
-                if (!(await DeleteResultAsync(pGroup.ResultsList.Last())))
+                if (!(await DeleteResultAsync(pGroup.Results.Last())))
                 {
                     Logger.LogError("Błąd w usuwaniu wyniku");
                 }
@@ -131,10 +132,10 @@ namespace Wordki.Models
 
         //OPERACJE NA SLOWACH//
         //-------------------------------------------------------
-        public async Task<bool> AddWordAsync(Group pGroup, Word pWord)
+        public async Task<bool> AddWordAsync(IGroup pGroup, IWord pWord)
         {
-            pWord.GroupId = pGroup.Id;
-            Application.Current.Dispatcher.Invoke(() => pGroup.WordsList.Add(pWord));
+            pWord.Group = pGroup;
+            Application.Current.Dispatcher.Invoke(() => pGroup.Words.Add(pWord));
             if (!(await Db.InsertWordAsync(pWord, UserManager.GetInstance().User) > 0))
             {
                 return false;
@@ -142,13 +143,13 @@ namespace Wordki.Models
             return true;
         }
 
-        public async Task<bool> AddWordAsync(long pGroupId, Word pWord)
+        public async Task<bool> AddWordAsync(long pGroupId, IWord pWord)
         {
-            Group lGroup = GetGroupById(pGroupId);
+            IGroup lGroup = GetGroupById(pGroupId);
             return await AddWordAsync(lGroup, pWord);
         }
 
-        public async Task<bool> UpdateWordAsync(Word pWord)
+        public async Task<bool> UpdateWordAsync(IWord pWord)
         {
             if (pWord == null || pWord.State == 0)
             {
@@ -161,10 +162,10 @@ namespace Wordki.Models
             return true;
         }
 
-        public async Task<bool> DeleteWordAsync(Group pGroup, Word pWord)
+        public async Task<bool> DeleteWordAsync(IGroup pGroup, IWord pWord)
         {
             pWord.State = int.MinValue;
-            Application.Current.Dispatcher.Invoke(() => pGroup.WordsList.Remove(pWord));
+            Application.Current.Dispatcher.Invoke(() => pGroup.Words.Remove(pWord));
             if (!(await Db.UpdateWordAsync(pWord) > 0))
             {
                 return false;
@@ -172,9 +173,9 @@ namespace Wordki.Models
             return true;
         }
 
-        public async Task<bool> DeleteWordAsync(long pGroupId, Word pWord)
+        public async Task<bool> DeleteWordAsync(long pGroupId, IWord pWord)
         {
-            Group lGroup = GroupsList.FirstOrDefault(x => x.Id == pGroupId);
+            IGroup lGroup = GroupsList.FirstOrDefault(x => x.Id == pGroupId);
             if (lGroup == null)
             {
                 return false;
@@ -182,9 +183,9 @@ namespace Wordki.Models
             return await DeleteWordAsync(lGroup, pWord);
         }
 
-        public async Task<bool> DeleteWordAsync(Word word)
+        public async Task<bool> DeleteWordAsync(IWord word)
         {
-            Group lGroup = GroupsList.FirstOrDefault(x => x.Id == word.GroupId);
+            IGroup lGroup = GroupsList.FirstOrDefault(x => x.Id == word.Group.Id);
             if (lGroup == null)
             {
                 return false;
@@ -195,9 +196,9 @@ namespace Wordki.Models
         //OPERACJE NA WYNIKACH//
         //-------------------------------------------------------
 
-        public async Task<bool> AddResultAsync(Group pGroup, Result pResult)
+        public async Task<bool> AddResultAsync(IGroup pGroup, IResult pResult)
         {
-            Application.Current.Dispatcher.Invoke(() => pGroup.ResultsList.Add(pResult));
+            Application.Current.Dispatcher.Invoke(() => pGroup.Results.Add(pResult));
             if (!(await Db.InsertResultAsync(pResult, UserManager.GetInstance().User) > 0))
             {
                 return false;
@@ -206,13 +207,13 @@ namespace Wordki.Models
             return true;
         }
 
-        public async Task<bool> AddResultAsync(Result pResult)
+        public async Task<bool> AddResultAsync(IResult pResult)
         {
-            Group lGroup = GetGroupById(pResult.GroupId);
+            IGroup lGroup = GetGroupById(pResult.Group.Id);
             return await AddResultAsync(lGroup, pResult);
         }
 
-        public async Task<bool> UpdateResultAsync(Result result)
+        public async Task<bool> UpdateResultAsync(IResult result)
         {
             if (result == null || result.State == 0)
             {
@@ -226,9 +227,9 @@ namespace Wordki.Models
             return true;
         }
 
-        public async Task<bool> DeleteResultAsync(Result result)
+        public async Task<bool> DeleteResultAsync(IResult result)
         {
-            Group group = GroupsList.FirstOrDefault(x => x.Id == result.GroupId);
+            IGroup group = GroupsList.FirstOrDefault(x => x.Id == result.Group.Id);
             if (group == null)
             {
                 return false;
@@ -236,10 +237,10 @@ namespace Wordki.Models
             return await DeleteResultAsync(group, result);
         }
 
-        public async Task<bool> DeleteResultAsync(Group group, Result result)
+        public async Task<bool> DeleteResultAsync(IGroup group, IResult result)
         {
             result.State = int.MinValue;
-            Application.Current.Dispatcher.Invoke(() => group.ResultsList.Remove(result));
+            Application.Current.Dispatcher.Invoke(() => group.Results.Remove(result));
             if (!(await Db.UpdateResultAsync(result) > 0))
             {
                 return false;
@@ -248,25 +249,25 @@ namespace Wordki.Models
         }
 
         //-------------------------------------------------------
-        public Group GetGroupById(long pGroupId)
+        public IGroup GetGroupById(long pGroupId)
         {
             return GroupsList.FirstOrDefault(x => x.Id == pGroupId);
         }
 
         //OPERACJE NA WYNIKACH//
         //-------------------------------------------------------
-        public Result GetLastResult(long pGroupId)
+        public IResult GetLastResult(long pGroupId)
         {
-            ICollection<Result> lResultList = GetResultsList(pGroupId);
+            ICollection<IResult> lResultList = GetResultsList(pGroupId);
             return lResultList.OrderByDescending(x => x.DateTime).FirstOrDefault();
         }
 
-        public ICollection<Result> GetResultsList(long pGroupId)
+        public ICollection<IResult> GetResultsList(long pGroupId)
         {
-            Group lGroup = GroupsList.FirstOrDefault(x => x.Id == pGroupId);
+            IGroup lGroup = GroupsList.FirstOrDefault(x => x.Id == pGroupId);
             if (lGroup == null)
                 return new Result[0];
-            return lGroup.ResultsList;
+            return lGroup.Results;
         }
 
         //==================================================================================
@@ -274,7 +275,7 @@ namespace Wordki.Models
         public IEnumerable<double> GetCountWordsByDrawer()
         {
             double[] result = { 0, 0, 0, 0, 0 };
-            foreach (Word word in GroupsList.SelectMany(group => group.WordsList))
+            foreach (IWord word in GroupsList.SelectMany(group => group.Words))
             {
                 result[word.Drawer]++;
             }
@@ -285,16 +286,16 @@ namespace Wordki.Models
         public async Task<bool> LoadDatabaseAsync()
         {
             GroupsList.Clear();
-            foreach (Group lGroup in await Db.SelectGroupListAsync(UserManager.GetInstance().User.UserId))
+            foreach (IGroup lGroup in await Db.SelectGroupListAsync(UserManager.GetInstance().User.UserId))
             {
                 GroupsList.Add(lGroup);
-                foreach (Word lWord in await Db.SelectWordListByGroupIdAsync(lGroup.Id))
+                foreach (IWord lWord in await Db.SelectWordListByGroupIdAsync(lGroup.Id))
                 {
-                    lGroup.WordsList.Add(lWord);
+                    lGroup.Words.Add(lWord);
                 }
-                foreach (Result lResult in await Db.SelectResultsListByGroupIdAsync(lGroup.Id))
+                foreach (IResult lResult in await Db.SelectResultsListByGroupIdAsync(lGroup.Id))
                 {
-                    lGroup.ResultsList.Add(lResult);
+                    lGroup.Results.Add(lResult);
                 }
             }
             return true;
@@ -303,16 +304,16 @@ namespace Wordki.Models
         public bool LoadDatabase()
         {
             GroupsList.Clear();
-            foreach (Group lGroup in Db.SelectGroupList(UserManager.GetInstance().User.UserId))
+            foreach (IGroup lGroup in Db.SelectGroupList(UserManager.GetInstance().User.UserId))
             {
                 GroupsList.Add(lGroup);
-                foreach (Word lWord in Db.SelectWordListByGroupId(lGroup.Id))
+                foreach (IWord lWord in Db.SelectWordListByGroupId(lGroup.Id))
                 {
-                    lGroup.WordsList.Add(lWord);
+                    lGroup.Words.Add(lWord);
                 }
-                foreach (Result lResult in Db.SelectResultsListByGroupId(lGroup.Id))
+                foreach (IResult lResult in Db.SelectResultsListByGroupId(lGroup.Id))
                 {
-                    lGroup.ResultsList.Add(lResult);
+                    lGroup.Results.Add(lResult);
                 }
             }
             Logger.LogInfo("Ładuje baze danych");
@@ -321,7 +322,7 @@ namespace Wordki.Models
 
         public async void SaveDatabase()
         {
-            foreach (Group lGroup in GroupsList)
+            foreach (IGroup lGroup in GroupsList)
             {
                 int lReturn;
                 if (lGroup.State != 0)
@@ -332,7 +333,7 @@ namespace Wordki.Models
                         Logger.LogInfo("Błąd wprowadzania do bazy grupy o Id {0}", lGroup.Id);
                     }
                 }
-                foreach (Word lWord in lGroup.WordsList)
+                foreach (IWord lWord in lGroup.Words)
                 {
                     if (lWord.State == 0)
                         continue;
@@ -342,7 +343,7 @@ namespace Wordki.Models
                         Logger.LogInfo("Błąd wprowadzania do bazy slowa o Id {0}", lWord.Id);
                     }
                 }
-                foreach (Result lResult in lGroup.ResultsList)
+                foreach (IResult lResult in lGroup.Results)
                 {
                     if (lResult.State == 0)
                         continue;
@@ -356,23 +357,23 @@ namespace Wordki.Models
             Logger.LogInfo("Koniec zapisu");
         }
 
-        public List<Group> GetGroupsToSend()
+        public List<IGroup> GetGroupsToSend()
         {
-            List<Group> lGroups = Db.SelectGroupsToSend(UserManager.GetInstance().User.UserId);
+            List<IGroup> lGroups = Db.SelectGroupsToSend(UserManager.GetInstance().User.UserId);
             Logger.LogInfo("Wysyłam {0} grup", lGroups.Count);
             return lGroups;
         }
 
-        public List<Word> GetWordsToSend()
+        public List<IWord> GetWordsToSend()
         {
-            List<Word> lWords = Db.SelectWordToSend(UserManager.GetInstance().User.UserId);
+            List<IWord> lWords = Db.SelectWordToSend(UserManager.GetInstance().User.UserId);
             Logger.LogInfo("Wysyłam {0} słów", lWords.Count);
             return lWords;
         }
 
-        public List<Result> GetResultsToSend()
+        public List<IResult> GetResultsToSend()
         {
-            List<Result> lResults = Db.SelectResultToSend(UserManager.GetInstance().User.UserId);
+            List<IResult> lResults = Db.SelectResultToSend(UserManager.GetInstance().User.UserId);
             Logger.LogInfo("Wysyłam {0} grup", lResults.Count);
             return lResults;
         }
@@ -393,7 +394,7 @@ namespace Wordki.Models
             {
                 NullValueHandling = NullValueHandling.Ignore,
             };
-            IEnumerable<Group> lList = JsonConvert.DeserializeObject<IEnumerable<Group>>(pResponse.Message, jsonSerializerSettings);
+            IEnumerable<IGroup> lList = JsonConvert.DeserializeObject<IEnumerable<IGroup>>(pResponse.Message, jsonSerializerSettings);
             if (lList == null)
             {
                 return;
@@ -407,7 +408,7 @@ namespace Wordki.Models
                     Db.DeleteGroup(lGroup.Id);
                     continue;
                 }
-                Group group = GroupsList.FirstOrDefault(x => x.Id == lGroup.Id);
+                IGroup group = GroupsList.FirstOrDefault(x => x.Id == lGroup.Id);
                 if (group != null)
                 {
                     if (lGroup.Equals(group))
@@ -449,12 +450,12 @@ namespace Wordki.Models
                     Db.DeleteResult(lResult.Id);
                     continue;
                 }
-                Group group = GroupsList.FirstOrDefault(x => x.Id == lResult.GroupId);
+                IGroup group = GroupsList.FirstOrDefault(x => x.Id == lResult.GroupId);
                 if (group == null)
                 {
                     continue;
                 }
-                Result result = group.ResultsList.FirstOrDefault(x => x.Id == lResult.Id);
+                IResult result = group.Results.FirstOrDefault(x => x.Id == lResult.Id);
                 if (result != null)
                 {
                     if (lResult.Equals(result))
@@ -494,12 +495,12 @@ namespace Wordki.Models
                     Db.DeleteResult(lWord.Id);
                     continue;
                 }
-                Group group = GroupsList.FirstOrDefault(x => x.Id == lWord.GroupId);
+                IGroup group = GroupsList.FirstOrDefault(x => x.Id == lWord.GroupId);
                 if (group == null)
                 {
                     continue;
                 }
-                Word word = group.WordsList.FirstOrDefault(x => x.Id == lWord.Id);
+                IWord word = group.Words.FirstOrDefault(x => x.Id == lWord.Id);
                 if (word != null)
                 {
                     if (lWord.Equals(word))
@@ -537,13 +538,13 @@ namespace Wordki.Models
 
         }
 
-        public async Task<bool> ConnectWords(IList<Word> items)
+        public async Task<bool> ConnectWords(IList<IWord> items)
         {
             if (items == null)
             {
                 return true;
             }
-            Word lSameWordDataGridItem = items[0];
+            IWord lSameWordDataGridItem = items[0];
             StringBuilder lLanguage1 = new StringBuilder();
             StringBuilder lLanguage2 = new StringBuilder();
             StringBuilder lLanguage1Comment = new StringBuilder();

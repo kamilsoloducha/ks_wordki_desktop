@@ -1,95 +1,88 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using NUnit.Framework;
+using Repository.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wordki.Helpers.GroupSplitter;
 using Wordki.Models;
 
 namespace Wordki.Test.Helpers.GroupSplitterTests
 {
-    [TestClass]
+    [TestFixture]
     public class GroupSplitterPercentageTest
     {
-        static GroupSplitterBase splitter;
-        Group group;
-        int wordCount = 100;
+        private GroupSplitterBase splitter;
+        private IGroup group;
+        private int wordCount = 100;
 
-        [ClassInitialize]
-        public static void ClassInit(TestContext context)
-        {
-            splitter = new GroupSlitPercentage();
-        }
-
-        [TestInitialize]
+        [SetUp]
         public void Init()
         {
+            splitter = new GroupSlitPercentage();
             group = new Group();
             for (int i = 0; i < wordCount; i++)
             {
-                group.WordsList.Add(new Word());
+                group.Words.Add(new Word() { Group = group, Id = i });
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Try_split_empty_group_test()
         {
             int factor = 1;
-            Group g = new Group();
-            IEnumerable<Group> result = splitter.Split(g, factor);
+            IGroup g = new Group();
+            IEnumerable<IGroup> result = splitter.Split(g, factor);
             Assert.IsTrue(result.Count() == 0);
         }
 
 
-        [TestMethod]
+        [Test]
         public void Try_split_custom_group_on_half_test()
         {
             int factor = 50;
-            IEnumerable<Group> result = splitter.Split(group, factor);
-            Assert.IsTrue(result.Count() == 1);
-            Group x = result.FirstOrDefault();
-            Assert.IsTrue(x != null);
-            Assert.IsTrue(x.WordsList.Count == 50);
+            IEnumerable<IGroup> result = splitter.Split(group, factor).ToList();
+            Assert.AreEqual(1, result.Count());
+            IGroup x = result.FirstOrDefault();
+            Assert.IsNotNull(x);
+            Assert.AreEqual(wordCount * factor / 100, x.Words.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void Try_split_group_with_100_factor_test()
         {
             int factor = 100;
-            IEnumerable<Group> result = splitter.Split(group, factor);
+            IEnumerable<IGroup> result = splitter.Split(group, factor);
             Assert.IsTrue(result.Count() == 0);
         }
 
-        [TestMethod]
+        [Test]
         public void Try_split_group_with_0_factor_test()
         {
             int factor = 0;
-            IEnumerable<Group> result = splitter.Split(group, factor);
+            IEnumerable<IGroup> result = splitter.Split(group, factor);
             Assert.IsTrue(result.Count() == 0);
         }
 
-        [TestMethod]
+        [Test]
         public void Try_split_group_with_random_factor_test()
         {
-            int factor = new Random().Next(1, 99);
-            IEnumerable<Group> result = splitter.Split(group, factor);
+            int factor = 23;
+            IEnumerable<IGroup> result = splitter.Split(group, factor).ToList();
             Assert.IsTrue(result.Count() == 1);
-            Group x = result.FirstOrDefault();
+            IGroup x = result.FirstOrDefault();
             Assert.IsTrue(x != null);
-            Assert.IsTrue(x.WordsList.Count == 100 - factor);
+            Assert.IsTrue(x.Words.Count == 100 - factor);
         }
 
-        [TestMethod]
+        [Test]
         public void Try_split_group_with_odd_words_count_test()
         {
-            group.WordsList.RemoveAt(0);
+            group.Words.RemoveAt(0);
             int factor = 50;
-            IEnumerable<Group> result = splitter.Split(group, factor);
+            IEnumerable<IGroup> result = splitter.Split(group, factor).ToList();
             Assert.IsTrue(result.Count() == 1);
-            Group x = result.FirstOrDefault();
+            IGroup x = result.FirstOrDefault();
             Assert.IsTrue(x != null);
-            Assert.IsTrue(x.WordsList.Count == 50);
+            Assert.IsTrue(x.Words.Count == 50);
         }
 
     }

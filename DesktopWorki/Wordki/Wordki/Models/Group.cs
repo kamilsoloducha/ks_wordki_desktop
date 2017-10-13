@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Newtonsoft.Json;
 using Repository.Models;
@@ -8,7 +7,7 @@ using Repository.Models.Language;
 
 namespace Wordki.Models
 {
-    public class Group : ModelAbs<IGroup>, IComparable<Group>, IGroup
+    public class Group : ModelAbs<IGroup>, IComparable<IGroup>, IGroup
     {
 
         public virtual long Id { get; set; }
@@ -75,15 +74,11 @@ namespace Wordki.Models
         public virtual int State { get; set; }
 
         [JsonIgnore]
-        public virtual IList<Word> Words { get; set; }
+        public virtual IList<IWord> Words { get; set; }
 
         [JsonIgnore]
-        public virtual IList<Result> Results { get; set; }
+        public virtual IList<IResult> Results { get; set; }
 
-        [JsonIgnore]
-        public virtual ObservableCollection<Word> WordsList { get; set; }
-        [JsonIgnore]
-        public virtual ObservableCollection<Result> ResultsList { get; set; }
 
         public Group()
         {
@@ -92,26 +87,24 @@ namespace Wordki.Models
             _language1 = LanguageType.Default;
             _language2 = LanguageType.Default;
             State = int.MaxValue;
-            WordsList = new ObservableCollection<Word>();
-            ResultsList = new ObservableCollection<Result>();
-            Words = new List<Word>();
-            Results = new List<Result>();
+            Words = new List<IWord>();
+            Results = new List<IResult>();
         }
 
-        public virtual int CompareTo(Group other)
+        public virtual int CompareTo(IGroup other)
         {
             return String.Compare(Name.ToLower(), other.Name.ToLower(), StringComparison.Ordinal);
         }
 
         public virtual int GetLessonTime(DateTime pDateTime)
         {
-            IEnumerable<Result> lDateResult = ResultsList.Where(x => pDateTime - x.DateTime < new TimeSpan(1, 0, 0));
+            IEnumerable<IResult> lDateResult = Results.Where(x => pDateTime - x.DateTime < new TimeSpan(1, 0, 0));
             return lDateResult.Sum(lResult => lResult.TimeCount);
         }
 
         public override bool Equals(object obj)
         {
-            Group group = obj as Group;
+            IGroup group = obj as IGroup;
             return group != null &&
                    group.Id == Id &&
                    group.Name.Equals(Name) &&
@@ -119,16 +112,21 @@ namespace Wordki.Models
                    group.Language2 == Language2;
         }
 
-        public virtual void SwapLanguage()
+        public virtual IResult GetLastResult()
         {
-            LanguageType temp = Language1;
-            Language1 = Language2;
-            Language2 = temp;
+            return Results.OrderBy(x => x.DateTime).FirstOrDefault();
         }
 
-        public virtual Result GetLastResult()
+        public virtual void AddWord(IWord word)
         {
-            return ResultsList.OrderBy(x => x.DateTime).FirstOrDefault();
+            word.Group = this;
+            Words.Add(word);
+        }
+
+        public virtual void AddResult(IResult result)
+        {
+            result.Group = this;
+            Results.Add(result);
         }
     }
 }

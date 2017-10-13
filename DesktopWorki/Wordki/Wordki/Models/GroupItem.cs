@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Repository.Models;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Wordki.Models {
@@ -15,7 +16,7 @@ namespace Wordki.Models {
 
     #endregion
 
-    public Group Group { get; set; }
+    public IGroup Group { get; set; }
 
     private int _color;
     public int Color {
@@ -38,7 +39,7 @@ namespace Wordki.Models {
     }
 
 
-    public GroupItem(Group group) {
+    public GroupItem(IGroup group) {
       Group = group;
     }
   }

@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
+using Repository.Models;
 using Wordki.Models;
 
 namespace Wordki.Database2
@@ -13,7 +14,10 @@ namespace Wordki.Database2
             Map(x => x.Language1);
             Map(x => x.Language2);
             Map(x => x.State);
-            HasMany(x => x.Words)
+            HasMany<Word>(x => x.Words)
+                .Inverse()
+                .Cascade.All();
+            HasMany<Result>(x => x.Results)
                 .Inverse()
                 .Cascade.All();
         }

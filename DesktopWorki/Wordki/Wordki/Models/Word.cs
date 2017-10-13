@@ -14,19 +14,12 @@ namespace Wordki.Models
         [JsonIgnore]
         public virtual long UserId { get; set; }
 
-        public virtual Group Group { get; set; }
+        public virtual IGroup Group { get; set; }
 
-        private long _groupId;
         public virtual long GroupId
         {
-            get { return _groupId; }
-            set
-            {
-                if (_groupId == value)
-                    return;
-                _groupId = value;
-                State = StateManager.NewState(State);
-            }
+            get { return Group == null ? 0 : Group.Id; }
+            set { throw new NotImplementedException(); }
         }
 
         private string _language1;
@@ -37,7 +30,7 @@ namespace Wordki.Models
             {
                 if (_language1 == value)
                     return;
-                if(value.Length > _maxWordLength)
+                if (value.Length > _maxWordLength)
                 {
                     value = value.Remove(_maxWordLength - 1);
                 }
@@ -164,7 +157,6 @@ namespace Wordki.Models
         public Word()
         {
             Id = DateTime.Now.Ticks;
-            _groupId = -1;
             _language1 = "";
             _language2 = "";
             _drawer = 0;
@@ -176,10 +168,9 @@ namespace Wordki.Models
 
         public override bool Equals(object obj)
         {
-            Word word = obj as Word;
+            IWord word = obj as IWord;
             if (word != null &&
               word.Id == Id &&
-              word.GroupId == GroupId &&
               word.Drawer == Drawer &&
               word.Visible == Visible &&
               word.Language1.Equals(Language1) &&
@@ -189,19 +180,6 @@ namespace Wordki.Models
             }
             return false;
         }
-
-        public virtual void SwapLanguages()
-        {
-            string temp = Language1;
-            Language1 = Language2;
-            Language2 = temp;
-
-            temp = Language1Comment;
-            Language1Comment = Language2Comment;
-            Language2Comment = temp;
-        }
-
-
 
     }
 

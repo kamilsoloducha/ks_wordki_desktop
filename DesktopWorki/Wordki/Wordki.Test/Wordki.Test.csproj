@@ -94,17 +94,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\DatabaseTests.cs" />
+    <Compile Include="Database\AdvanceGroupTests.cs" />
     <Compile Include="Database\GroupTests.cs" />
     <Compile Include="Database\Helper.cs" />
-    <Compile Include="Database\MappingTest.cs" />
+    <Compile Include="Database\ResultTests.cs" />
     <Compile Include="Database\WordsTest.cs" />
     <Compile Include="Helpers\GroupCreatorTests\GroupCreatorTest.cs" />
     <Compile Include="Helpers\GroupNameCreatorTests\GroupNameCreatorFromFileTests.cs" />
     <Compile Include="Helpers\GroupSplitterTests\GroupSplitterGroupCountTest.cs" />
     <Compile Include="Helpers\GroupSplitterTests\GroupSplitterPercentageTest.cs" />
     <Compile Include="Helpers\GroupSplitterTests\GroupSplitterWordCountTest.cs" />
-    <Compile Include="Helpers\LanguageSwaperTests\LanguageSwaperTest.cs" />
     <Compile Include="Helpers\LessonSchedulerTests\LessonSchedulerWithSimpleInitializerTest.cs" />
     <Compile Include="Helpers\NotCheckersTests\LetterCaseNotCheckTest.cs" />
     <Compile Include="Helpers\NotCheckersTests\PunctuationNotCheckTest.cs" />
@@ -117,8 +116,10 @@
     <Compile Include="Helpers\WordComparerTests\WordComparerWithUtf8NotCheckTest.cs" />
     <Compile Include="Helpers\WordFinderTests\WordFinderTest.cs" />
     <Compile Include="Lessons\TypingLessonTests.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="RepositoryTest\DirectionSwaperTests.cs" />
+    <Compile Include="RepositoryTest\LanguageSwaperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

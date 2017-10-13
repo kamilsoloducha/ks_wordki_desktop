@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Repository.Models;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using Wordki.Helpers;
@@ -54,10 +55,10 @@ namespace Wordki.Views.Dialogs {
     public BuilderCommand CorrectCommand { get; set; }
     public BuilderCommand DeleteCommand { get; set; }
     public BuilderCommand CancelCommand { get; set; }
-    private Word Word { get; set; }
+    private IWord Word { get; set; }
     #endregion
 
-    public CorrectWordDialog(Word pWord) {
+    public CorrectWordDialog(IWord pWord) {
       InitializeComponent();
       DataContext = this;
       Owner = Application.Current.MainWindow;

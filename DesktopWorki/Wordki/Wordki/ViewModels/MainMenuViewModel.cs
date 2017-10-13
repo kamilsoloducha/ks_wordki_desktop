@@ -185,11 +185,11 @@ namespace Wordki.ViewModels
         {
             IDatabase lDatabase = Database.GetDatabase();
             ObservableCollection<double> lList = new ObservableCollection<double>(lDatabase.GetCountWordsByDrawer());
-            string lTeachTimeToday = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.GroupsList.Sum(x => x.GetLessonTime(DateTime.Now)));
-            string lTeachTime = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.GroupsList.Sum(x => x.ResultsList.Sum(y => y.TimeCount)));
+            string lTeachTimeToday = "to DO";//Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.GroupsList.Sum(x => x.GetLessonTime(DateTime.Now)));
+            string lTeachTime = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.GroupsList.Sum(x => x.Results.Sum(y => y.TimeCount)));
             int lGroupCount = lDatabase.GroupsList.Count;
-            int lWordCount = lDatabase.GroupsList.Sum(x => x.WordsList.Count);
-            int lResultCount = lDatabase.GroupsList.Sum(x => x.ResultsList.Count);
+            int lWordCount = lDatabase.GroupsList.Sum(x => x.Words.Count);
+            int lResultCount = lDatabase.GroupsList.Sum(x => x.Results.Count);
             Application.Current.Dispatcher.Invoke(() =>
             {
                 TeachTimeToday = lTeachTimeToday;

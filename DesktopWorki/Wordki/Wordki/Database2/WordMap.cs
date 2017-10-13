@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
+using Repository.Models;
 using Wordki.Models;
 
 namespace Wordki.Database2
@@ -16,9 +17,7 @@ namespace Wordki.Database2
             Map(x => x.Language2Comment);
             Map(x => x.Drawer);
             Map(x => x.State);
-            References(x => x.Group);
-
+            References(x => x.Group).Not.Nullable().Class(typeof(Group));
         }
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,10 +13,10 @@ namespace Wordki.Helpers.WordFinder
     {
 
         private List<long> returnedWordIds;
-        private IEnumerable<Word> Words { get; set; }
+        private IEnumerable<IWord> Words { get; set; }
         private IWordComparer WordComparer { get; set; }
 
-        public WordFinder(IEnumerable<Word> words, IWordComparer wordComparer)
+        public WordFinder(IEnumerable<IWord> words, IWordComparer wordComparer)
         {
             returnedWordIds = new List<long>();
             Words = words;

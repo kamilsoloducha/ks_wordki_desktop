@@ -145,9 +145,11 @@
     <Compile Include="Database2\GroupRepository.cs" />
     <Compile Include="Database2\NHibernateHelper.cs" />
     <Compile Include="Database2\ResultMap.cs" />
+    <Compile Include="Database2\ResultRepository.cs" />
     <Compile Include="Database2\UserMap.cs" />
     <Compile Include="Database2\UserRepository.cs" />
     <Compile Include="Database2\WordMap.cs" />
+    <Compile Include="Database2\WordRepository.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
     <Compile Include="Helpers\Command\CommandApiRequest.cs" />
     <Compile Include="Helpers\Command\CommandQueue.cs" />
@@ -188,9 +190,9 @@
     <Compile Include="Models\Connector\ApiRequest.cs" />
     <Compile Include="Models\Connector\ApiResponse.cs" />
     <Compile Include="Models\IGroupRepository.cs" />
+    <Compile Include="Models\IResultRepository.cs" />
     <Compile Include="Models\IUserRepository.cs" />
-    <Compile Include="Models\LanguageSwaper\ILanguageSwaper.cs" />
-    <Compile Include="Models\LanguageSwaper\LanguageSwaper.cs" />
+    <Compile Include="Models\IWordRepository.cs" />
     <Compile Include="Models\LessonScheduler\IntervalTimeCalculator.cs" />
     <Compile Include="Models\LessonScheduler\LessonScheduleInitializer\ILessonScheduleInitizer.cs" />
     <Compile Include="Models\LessonScheduler\LessonScheduleInitializer\SimpleLessonScheduleInitializer.cs" />
@@ -423,10 +425,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Content Include="hibernate.cfg.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Resources\Icons\FlagsCircle\de.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

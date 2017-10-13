@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -265,7 +266,7 @@ namespace Wordki.ViewModels
             List<Point> lPointsList = new List<Point>();
             try
             {
-                IList<Result> lResultList = Database.GetDatabase().GetResultsList(pGroupId).ToList();
+                IList<IResult> lResultList = Database.GetDatabase().GetResultsList(pGroupId).ToList();
                 if (lResultList.Count == 0)
                 {
                     return lPointsList;

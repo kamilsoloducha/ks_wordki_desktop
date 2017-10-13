@@ -1,12 +1,7 @@
 ﻿using NHibernate;
-using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.IO;
+using Repository.Models;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wordki.Database2;
 using Wordki.Models;
 
@@ -16,14 +11,17 @@ namespace Wordki.Test.Database
     public class WordTests
     {
 
-        private Word word;
-        private Group group;
+        private IWord word;
+        private IGroup group;
         private IGroupRepository groupRepo;
+        private IWordRepository wordRepo;
 
         [SetUp]
         public void SetUp()
         {
+            NHibernateHelper.ResetSession();
             NHibernateHelper.ClearDatabase();
+
             group = new Group()
             {
                 Id = 1,
@@ -46,17 +44,18 @@ namespace Wordki.Test.Database
             };
 
             groupRepo = new GroupRepository();
+            wordRepo = new WordRepository();
         }
 
         [Test]
-        public void Save_word_to_database_test()
+        public void Save_word_by_groupRepo_test()
         {
             groupRepo.Save(group);
             group.Words.Add(word);
             word.Group = group;
             groupRepo.Update(group);
 
-            Group groupFromDatabase = groupRepo.Get(group.Id);
+            IGroup groupFromDatabase = groupRepo.Get(group.Id);
 
             Assert.AreEqual(1, groupFromDatabase.Words.Count);
         }
@@ -68,69 +67,118 @@ namespace Wordki.Test.Database
             word.Group = group;
             groupRepo.Save(group);
 
-            Group groupFromDatabase = groupRepo.Get(group.Id);
+            IGroup groupFromDatabase = groupRepo.Get(group.Id);
 
             Assert.AreEqual(1, groupFromDatabase.Words.Count);
         }
 
         [Test]
-        public void Get_word_from_database_test()
+        public void Save_word_by_word_repository_test()
         {
-            //repo.Save(word);
-            Group groupFromDatabase = groupRepo.Get(word.Id);
-            Assert.IsTrue(groupFromDatabase.Equals(word));
+            groupRepo.Save(group);
+            word.Group = group;
+            wordRepo.Save(word);
+
+            IGroup groupFromDatabase = groupRepo.Get(group.Id);
+
+            Assert.AreEqual(1, groupFromDatabase.Words.Count, $"Word is not added");
+
+            IWord wordFromDatabase = groupFromDatabase.Words[0];
+            Assert.AreEqual(word.Group.Id, wordFromDatabase.Group.Id, $"Wrong groupId after read from database");
         }
 
         [Test]
-        public void Delete_group_from_database_test()
+        public void Save_word_without_group_test()
         {
-            //repo.Save(word);
-            //repo.Delete(word);
-            Assert.AreEqual(0, groupRepo.RowCount());
+            Assert.Throws<PropertyValueException>(() => wordRepo.Save(word));
         }
 
         [Test]
-        public void Save_more_group_to_database_test()
+        public void Get_word_by_groupRepo_test()
         {
-            int groupCount = 10;
-            for (int i = 0; i < groupCount; i++)
-            {
-                word.Id = i;
-                //repo.Save(word);
-            }
-            Assert.AreEqual(groupCount, groupRepo.RowCount());
+            group.Words.Add(word);
+            word.Group = group;
+            groupRepo.Save(group);
+            IWord wordFromDatabase = groupRepo.Get(group.Id).Words.First();
+            Assert.AreEqual(word, wordFromDatabase);
         }
 
         [Test]
-        public void Get_more_group_from_database_test()
+        public void Get_word_by_wordRepo_test()
         {
-            int groupCount = 10;
-            for (int i = 0; i < groupCount; i++)
-            {
-                word.Id = i;
-                //repo.Save(word);
-            }
-            IEnumerable<Group> groups = groupRepo.GetGroups();
-            Assert.AreEqual(groupCount, groups.Count());
+            group.Words.Add(word);
+            word.Group = group;
+            groupRepo.Save(group);
+            IWord wordFromDatabase = wordRepo.Get(word.Id);
+            CheckWordEquality(word, wordFromDatabase);
         }
 
         [Test]
-        public void Update_group_in_database_test()
+        public void Update_word_by_groupRepo_test()
         {
-            //repo.Save(word);
-            //word.Language1 = Repository.Models.Language.LanguageType.Spanish;
-            //word.Language2 = Repository.Models.Language.LanguageType.Russian;
-            //word.Name = "asdf";
-            //repo.Update(word);
-            Group groupFromDatabase = groupRepo.Get(word.Id);
-            Assert.AreEqual(word, groupFromDatabase);
-
+            group.Words.Add(word);
+            word.Group = group;
+            groupRepo.Save(group);
+            ChangeWord(word);
+            groupRepo.Update(group);
+            IWord wordFromDatabase = wordRepo.Get(word.Id);
+            CheckWordEquality(word, wordFromDatabase);
         }
+
+        [Test]
+        public void Update_word_by_wordRepo_test()
+        {
+            group.Words.Add(word);
+            word.Group = group;
+            groupRepo.Save(group);
+            ChangeWord(word);
+            wordRepo.Update(word);
+            IWord wordFromDatabase = wordRepo.Get(word.Id);
+            CheckWordEquality(word, wordFromDatabase);
+        }
+
+        [Test]
+        public void Delete_word_by_wordRepo_test()
+        {
+            group.Words.Add(word);
+            word.Group = group;
+            groupRepo.Save(group);
+            wordRepo.Delete(word);
+            Assert.AreEqual(0, wordRepo.RowCount());
+        }
+
+        [Test]
+        public void Delete_word_by_groupRepo_test()
+        {
+            group.Words.Add(word);
+            word.Group = group;
+            groupRepo.Save(group);
+            groupRepo.Delete(group);
+            Assert.AreEqual(0, wordRepo.RowCount());
+        }
+
+
 
         [TearDown]
         public void TearDown()
         {
             NHibernateHelper.ClearDatabase();
+        }
+
+        private void ChangeWord(IWord word)
+        {
+            word.Language1 = "fdsa";
+            word.Language2 = "fdsa";
+            word.Language1Comment = "fdsa";
+            word.Language2Comment = "fdsa";
+            word.Drawer = 0;
+        }
+
+        private void CheckWordEquality(IWord wordExpected, IWord wordActual)
+        {
+            Assert.NotNull(wordExpected.Group, "Group in word is null");
+            Assert.NotNull(wordActual.Group, "Group in word is null");
+            Assert.AreEqual(wordExpected, wordActual, $"Words are not equal");
         }
     }
 }

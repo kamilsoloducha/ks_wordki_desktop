@@ -75,11 +75,11 @@ namespace Wordki.Models.RemoteDatabase
                     foreach (Group group in Database.GetDatabase().GroupsList)
                     {
                         group.State = 0;
-                        foreach (Word word in group.WordsList)
+                        foreach (Word word in group.Words)
                         {
                             word.State = 0;
                         }
-                        foreach (Result result in group.ResultsList)
+                        foreach (Result result in group.Results)
                         {
                             result.State = 0;
                         }

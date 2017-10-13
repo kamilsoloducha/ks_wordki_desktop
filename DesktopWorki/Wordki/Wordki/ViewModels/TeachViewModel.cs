@@ -15,6 +15,7 @@ using Wordki.Models.RemoteDatabase;
 using Wordki.Views.Dialogs;
 using Wordki.Helpers.Command;
 using Util.Serializers;
+using Repository.Models;
 
 namespace Wordki.ViewModels
 {
@@ -1166,7 +1167,7 @@ namespace Wordki.ViewModels
                 base.RefreshView();
                 Lesson.FinishLesson();
                 Lesson.Timer.StopTimer();
-                IList<Group> lGroupList = Lesson.ResultList.Select(lResult => Database.GetDatabase().GetGroupById(lResult.GroupId)).ToList();
+                IList<IGroup> lGroupList = Lesson.ResultList.Select(lResult => Database.GetDatabase().GetGroupById(lResult.GroupId)).ToList();
                 CommandQueue<Helpers.Command.ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManager.GetInstance().User).GetUploadQueue();
                 lQueue.MainQueue.AddFirst(new SimpleCommandAsync(async () =>
                 {
@@ -1185,10 +1186,10 @@ namespace Wordki.ViewModels
                         });
                         lDialog.ShowDialog();
                     });
-                    IDatabase database = Models.Database.GetDatabase();
+                    IDatabase database = Database.GetDatabase();
                     foreach (Word lItem in Lesson.BeginWordsList)
                     {
-                        Word word = database.GetGroupById(lItem.GroupId).WordsList.FirstOrDefault(x => x.Id == lItem.Id);
+                        IWord word = database.GetGroupById(lItem.GroupId).Words.FirstOrDefault(x => x.Id == lItem.Id);
                         if (word == null)
                         {
                             continue;

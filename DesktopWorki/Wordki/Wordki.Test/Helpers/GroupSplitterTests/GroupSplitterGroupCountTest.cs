@@ -1,73 +1,66 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using NUnit.Framework;
+using Repository.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wordki.Helpers.GroupSplitter;
 using Wordki.Models;
 
 namespace Wordki.Test.Helpers.GroupSplitterTests
 {
-    [TestClass]
+    [TestFixture]
     public class GroupSplitterGroupCountTest
     {
         static GroupSplitterBase splitter;
-        Group group;
+        IGroup group;
         int wordCount = 100;
 
-        [ClassInitialize]
-        public static void ClassInit(TestContext context)
-        {
-            splitter = new GroupSplitGroupCount();
-        }
-
-        [TestInitialize]
+        [SetUp]
         public void Init()
         {
+            splitter = new GroupSplitGroupCount();
             group = new Group();
             for (int i = 0; i < wordCount; i++)
             {
-                group.WordsList.Add(new Word());
+                group.Words.Add(new Word() { Group = group, Id = i });
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Try_split_empty_group_test()
         {
-            Group g = new Group();
-            IEnumerable<Group> result = splitter.Split(g, 1);
+            IGroup g = new Group();
+            IEnumerable<IGroup> result = splitter.Split(g, 1);
             Assert.IsTrue(result.Count() == 0);
         }
 
-        [TestMethod]
+        [Test]
         public void Try_split_custom_group_test()
         {
             int factor = 10;
-            IEnumerable<Group> result = splitter.Split(group, factor);
-            Assert.IsTrue(result.Count() == factor - 1);
-            foreach (Group g in result)
+            IEnumerable<IGroup> result = splitter.Split(group, factor).ToList();
+            Assert.AreEqual(factor - 1, result.Count());
+            foreach (IGroup g in result)
             {
-                Assert.IsTrue(g.WordsList.Count == wordCount / factor);
+                Assert.AreEqual(wordCount / factor, g.Words.Count);
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Try_split_custom_group_on_not_equal_test()
         {
             int factor = 11;
-            IEnumerable<Group> result = splitter.Split(group, factor);
+            IEnumerable<IGroup> result = splitter.Split(group, factor);
             Assert.IsTrue(result.Count() == factor - 1);
-            foreach (Group g in result)
+            foreach (IGroup g in result)
             {
-                Assert.IsTrue(g.WordsList.Count == wordCount / factor || g.WordsList.Count == wordCount / factor -1);
+                Assert.IsTrue(g.Words.Count == wordCount / factor || g.Words.Count == wordCount / factor - 1);
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Try_split_group_with_exteme_factor_test()
         {
-            IEnumerable<Group> result = splitter.Split(group, 0);
+            IEnumerable<IGroup> result = splitter.Split(group, 0);
             Assert.IsTrue(result.Count() == 0);
 
             result = splitter.Split(group, 1);

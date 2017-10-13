@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Repository.Models;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Wordki.LocalDatabase;
@@ -9,31 +10,31 @@ namespace Wordki.Models
     public interface IDatabase
     {
         SqliteConnection Db { get; }
-        ObservableCollection<Group> GroupsList { get; set; }
-        Task<bool> AddGroupAsync(Group pGroup);
-        Task<bool> AddResultAsync(Result pResult);
-        Task<bool> AddResultAsync(Group pGroup, Result pResult);
+        ObservableCollection<IGroup> GroupsList { get; set; }
+        Task<bool> AddGroupAsync(IGroup pGroup);
+        Task<bool> AddResultAsync(IResult pResult);
+        Task<bool> AddResultAsync(IGroup pGroup, IResult pResult);
         bool AddUser(User pUser);
-        Task<bool> AddWordAsync(long pGroupId, Word pWord);
-        Task<bool> AddWordAsync(Group pGroup, Word pWord);
-        Task<bool> ConnectWords(IList<Word> items);
-        Task<bool> DeleteGroupAsync(Group pGroup);
-        Task<bool> DeleteResultAsync(Result result);
-        Task<bool> DeleteResultAsync(Group group, Result result);
+        Task<bool> AddWordAsync(long pGroupId, IWord pWord);
+        Task<bool> AddWordAsync(IGroup pGroup, IWord pWord);
+        Task<bool> ConnectWords(IList<IWord> items);
+        Task<bool> DeleteGroupAsync(IGroup pGroup);
+        Task<bool> DeleteResultAsync(IResult result);
+        Task<bool> DeleteResultAsync(IGroup group, IResult result);
         bool DeleteUser(User user);
-        Task<bool> DeleteWordAsync(Word word);
-        Task<bool> DeleteWordAsync(long pGroupId, Word pWord);
-        Task<bool> DeleteWordAsync(Group pGroup, Word pWord);
+        Task<bool> DeleteWordAsync(IWord word);
+        Task<bool> DeleteWordAsync(long pGroupId, IWord pWord);
+        Task<bool> DeleteWordAsync(IGroup pGroup, IWord pWord);
         IEnumerable<double> GetCountWordsByDrawer();
-        Group GetGroupById(long pGroupId);
-        List<Group> GetGroupsToSend();
-        Result GetLastResult(long pGroupId);
-        ICollection<Result> GetResultsList(long pGroupId);
-        List<Result> GetResultsToSend();
+        IGroup GetGroupById(long pGroupId);
+        List<IGroup> GetGroupsToSend();
+        IResult GetLastResult(long pGroupId);
+        ICollection<IResult> GetResultsList(long pGroupId);
+        List<IResult> GetResultsToSend();
         User GetUser(long pUserId);
         User GetUser(string name, string password);
         List<User> GetUsers();
-        List<Word> GetWordsToSend();
+        List<IWord> GetWordsToSend();
         bool LoadDatabase();
         Task<bool> LoadDatabaseAsync();
         void OnReadCommonGroup(ApiResponse pResponse);
@@ -43,9 +44,9 @@ namespace Wordki.Models
         void OnReadWords(ApiResponse pResponse);
         void RefreshDatabase();
         void SaveDatabase();
-        Task<bool> UpdateGroupAsync(Group pGroup);
-        Task<bool> UpdateResultAsync(Result result);
+        Task<bool> UpdateGroupAsync(IGroup pGroup);
+        Task<bool> UpdateResultAsync(IResult result);
         bool UpdateUser(User user);
-        Task<bool> UpdateWordAsync(Word pWord);
+        Task<bool> UpdateWordAsync(IWord pWord);
     }
 }

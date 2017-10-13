@@ -10,6 +10,7 @@ using Repository.Models.Enums;
 using Repository.Models.Language;
 using Wordki.Helpers;
 using Wordki.Models;
+using Repository.Models;
 
 namespace Wordki.LocalDatabase
 {
@@ -146,7 +147,7 @@ namespace Wordki.LocalDatabase
             return users;
         }
 
-        public List<Group> SelectGroupsToSend(long pUserId)
+        public List<IGroup> SelectGroupsToSend(long pUserId)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("SELECT * FROM ")
@@ -162,7 +163,7 @@ namespace Wordki.LocalDatabase
             return ExecuteGroupsSelect(lBuilder.ToString());
         }
 
-        public List<Group> SelectGroupList(long pUserId)
+        public List<IGroup> SelectGroupList(long pUserId)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("SELECT * FROM ")
@@ -178,7 +179,7 @@ namespace Wordki.LocalDatabase
             return ExecuteGroupsSelect(lBuilder.ToString());
         }
 
-        public async Task<List<Group>> SelectGroupListAsync(long pUserId)
+        public async Task<List<IGroup>> SelectGroupListAsync(long pUserId)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("SELECT * FROM ")
@@ -194,9 +195,9 @@ namespace Wordki.LocalDatabase
             return await ExecuteGroupsSelectAsync(lBuilder.ToString());
         }
 
-        private async Task<List<Group>> ExecuteGroupsSelectAsync(string pQuery)
+        private async Task<List<IGroup>> ExecuteGroupsSelectAsync(string pQuery)
         {
-            List<Group> lGroupList = new List<Group>();
+            List<IGroup> lGroupList = new List<IGroup>();
             SQLiteCommand lCommand = new SQLiteCommand(pQuery, _connection);
             try
             {
@@ -221,9 +222,9 @@ namespace Wordki.LocalDatabase
             return lGroupList;
         }
 
-        private List<Group> ExecuteGroupsSelect(string pQuery)
+        private List<IGroup> ExecuteGroupsSelect(string pQuery)
         {
-            List<Group> lGroupList = new List<Group>();
+            List<IGroup> lGroupList = new List<IGroup>();
             SQLiteCommand lCommand = new SQLiteCommand(pQuery, _connection);
             try
             {
@@ -248,7 +249,7 @@ namespace Wordki.LocalDatabase
             return lGroupList;
         }
 
-        public List<Word> SelectWordToSend(long pUserId)
+        public List<IWord> SelectWordToSend(long pUserId)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("SELECT * FROM ")
@@ -265,7 +266,7 @@ namespace Wordki.LocalDatabase
             return ExecuteWordsSelect(lCommand);
         }
 
-        public List<Word> SelectWordListByUserId(long pUserId)
+        public List<IWord> SelectWordListByUserId(long pUserId)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("SELECT * FROM ")
@@ -282,7 +283,7 @@ namespace Wordki.LocalDatabase
             return ExecuteWordsSelect(lCommand);
         }
 
-        public List<Word> SelectWordListByGroupId(long pGroupId)
+        public List<IWord> SelectWordListByGroupId(long pGroupId)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("SELECT * FROM ")
@@ -299,7 +300,7 @@ namespace Wordki.LocalDatabase
             return ExecuteWordsSelect(lCommand);
         }
 
-        public async Task<List<Word>> SelectWordListByGroupIdAsync(long pGroupId)
+        public async Task<List<IWord>> SelectWordListByGroupIdAsync(long pGroupId)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("SELECT * FROM ")
@@ -316,9 +317,9 @@ namespace Wordki.LocalDatabase
             return await ExecuteWordsSelectAsync(lCommand);
         }
 
-        private List<Word> ExecuteWordsSelect(SQLiteCommand pCommand)
+        private List<IWord> ExecuteWordsSelect(SQLiteCommand pCommand)
         {
-            List<Word> lWordList = new List<Word>();
+            List<IWord> lWordList = new List<IWord>();
             try
             {
                 using (SQLiteDataReader lReader = pCommand.ExecuteReader())
@@ -350,9 +351,9 @@ namespace Wordki.LocalDatabase
             return lWordList;
         }
 
-        private async Task<List<Word>> ExecuteWordsSelectAsync(SQLiteCommand pCommand)
+        private async Task<List<IWord>> ExecuteWordsSelectAsync(SQLiteCommand pCommand)
         {
-            List<Word> lWordList = new List<Word>();
+            List<IWord> lWordList = new List<IWord>();
             try
             {
                 using (DbDataReader lReader = await pCommand.ExecuteReaderAsync())
@@ -384,7 +385,7 @@ namespace Wordki.LocalDatabase
             return lWordList;
         }
 
-        public List<Result> SelectResultToSend(long pUserId)
+        public List<IResult> SelectResultToSend(long pUserId)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("SELECT * FROM ")
@@ -401,7 +402,7 @@ namespace Wordki.LocalDatabase
             return ExecuteResultSelect(lCommand);
         }
 
-        public List<Result> SelectResultsListByUserId(long pUserId)
+        public List<IResult> SelectResultsListByUserId(long pUserId)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("SELECT * FROM ")
@@ -419,7 +420,7 @@ namespace Wordki.LocalDatabase
         }
 
 
-        public List<Result> SelectResultsListByGroupId(long pGroupId)
+        public List<IResult> SelectResultsListByGroupId(long pGroupId)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("SELECT * FROM ")
@@ -436,7 +437,7 @@ namespace Wordki.LocalDatabase
             return ExecuteResultSelect(lCommand);
         }
 
-        public async Task<List<Result>> SelectResultsListByGroupIdAsync(long pGroupId)
+        public async Task<List<IResult>> SelectResultsListByGroupIdAsync(long pGroupId)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("SELECT * FROM ")
@@ -453,9 +454,9 @@ namespace Wordki.LocalDatabase
             return await ExecuteResultSelectAsync(lCommand);
         }
 
-        private List<Result> ExecuteResultSelect(SQLiteCommand pCommand)
+        private List<IResult> ExecuteResultSelect(SQLiteCommand pCommand)
         {
-            List<Result> lResultList = new List<Result>();
+            List<IResult> lResultList = new List<IResult>();
             try
             {
                 using (SQLiteDataReader lReader = pCommand.ExecuteReader())
@@ -485,9 +486,9 @@ namespace Wordki.LocalDatabase
             return lResultList;
         }
 
-        private async Task<List<Result>> ExecuteResultSelectAsync(SQLiteCommand pCommand)
+        private async Task<List<IResult>> ExecuteResultSelectAsync(SQLiteCommand pCommand)
         {
-            List<Result> lResultList = new List<Result>();
+            List<IResult> lResultList = new List<IResult>();
             try
             {
                 using (DbDataReader lReader = await pCommand.ExecuteReaderAsync())
@@ -586,7 +587,7 @@ namespace Wordki.LocalDatabase
             return lUser;
         }
 
-        private SQLiteCommand GetInsertGroupCommand(Group pGroup, User pUser)
+        private SQLiteCommand GetInsertGroupCommand(IGroup pGroup, User pUser)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("INSERT INTO ")
@@ -609,7 +610,7 @@ namespace Wordki.LocalDatabase
             return lCommand;
         }
 
-        public int InsertGroup(Group pGroup, User pUser)
+        public int InsertGroup(IGroup pGroup, User pUser)
         {
             try
             {
@@ -622,7 +623,7 @@ namespace Wordki.LocalDatabase
             }
         }
 
-        public async Task<int> InsertGroupAsync(Group pGroup, User pUser)
+        public async Task<int> InsertGroupAsync(IGroup pGroup, User pUser)
         {
             try
             {
@@ -636,7 +637,7 @@ namespace Wordki.LocalDatabase
         }
 
 
-        private SQLiteCommand GetInsertWordCommand(Word pWord, User pUser)
+        private SQLiteCommand GetInsertWordCommand(IWord pWord, User pUser)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("INSERT INTO ")
@@ -656,7 +657,7 @@ namespace Wordki.LocalDatabase
             SQLiteCommand lCommand = new SQLiteCommand(lBuilder.ToString(), _connection);
             lCommand.Parameters.Add(new SQLiteParameter(wordId, pWord.Id));
             lCommand.Parameters.Add(new SQLiteParameter(userId, pUser.UserId));
-            lCommand.Parameters.Add(new SQLiteParameter(groupId, pWord.GroupId));
+            lCommand.Parameters.Add(new SQLiteParameter(groupId, pWord.Group.Id));
             lCommand.Parameters.Add(new SQLiteParameter(language1, pWord.Language1));
             lCommand.Parameters.Add(new SQLiteParameter(language2, pWord.Language2));
             lCommand.Parameters.Add(new SQLiteParameter(drawer, pWord.Drawer));
@@ -667,7 +668,7 @@ namespace Wordki.LocalDatabase
             return lCommand;
         }
 
-        public async Task<int> InsertWordAsync(Word pWord, User pUser)
+        public async Task<int> InsertWordAsync(IWord pWord, User pUser)
         {
             try
             {
@@ -680,7 +681,7 @@ namespace Wordki.LocalDatabase
             }
         }
 
-        public int InsertWord(Word pWord, User pUser)
+        public int InsertWord(IWord pWord, User pUser)
         {
             try
             {
@@ -693,7 +694,7 @@ namespace Wordki.LocalDatabase
             }
         }
 
-        private SQLiteCommand GetInsertResultCommand(Result pResult, User pUser)
+        private SQLiteCommand GetInsertResultCommand(IResult pResult, User pUser)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("INSERT INTO ")
@@ -715,7 +716,7 @@ namespace Wordki.LocalDatabase
             SQLiteCommand lCommand = new SQLiteCommand(lBuilder.ToString(), _connection);
             lCommand.Parameters.Add(new SQLiteParameter(resultId, pResult.Id));
             lCommand.Parameters.Add(new SQLiteParameter(userId, pUser.UserId));
-            lCommand.Parameters.Add(new SQLiteParameter(groupId, pResult.GroupId));
+            lCommand.Parameters.Add(new SQLiteParameter(groupId, pResult.Group.Id));
             lCommand.Parameters.Add(new SQLiteParameter(correct, pResult.Correct));
             lCommand.Parameters.Add(new SQLiteParameter(accepted, pResult.Accepted));
             lCommand.Parameters.Add(new SQLiteParameter(wrong, pResult.Wrong));
@@ -728,7 +729,7 @@ namespace Wordki.LocalDatabase
             return lCommand;
         }
 
-        public int InsertResult(Result pResult, User pUser)
+        public int InsertResult(IResult pResult, User pUser)
         {
             try
             {
@@ -741,7 +742,7 @@ namespace Wordki.LocalDatabase
             }
         }
 
-        public async Task<int> InsertResultAsync(Result pResult, User pUser)
+        public async Task<int> InsertResultAsync(IResult pResult, User pUser)
         {
             try
             {
@@ -966,7 +967,7 @@ namespace Wordki.LocalDatabase
             }
         }
 
-        private SQLiteCommand GetUpdateGroupCommand(Group pGroup)
+        private SQLiteCommand GetUpdateGroupCommand(IGroup pGroup)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("UPDATE ")
@@ -987,7 +988,7 @@ namespace Wordki.LocalDatabase
             return lCommand;
         }
 
-        public int UpdateGroup(Group pGroup)
+        public int UpdateGroup(IGroup pGroup)
         {
             try
             {
@@ -1000,7 +1001,7 @@ namespace Wordki.LocalDatabase
             }
         }
 
-        public async Task<int> UpdateGroupAsync(Group pGroup)
+        public async Task<int> UpdateGroupAsync(IGroup pGroup)
         {
             try
             {
@@ -1013,7 +1014,7 @@ namespace Wordki.LocalDatabase
             }
         }
 
-        private SQLiteCommand GetUpdateWordCommand(Word pWord)
+        private SQLiteCommand GetUpdateWordCommand(IWord pWord)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("UPDATE ")
@@ -1031,7 +1032,7 @@ namespace Wordki.LocalDatabase
               .Append(wordId).Append(" = ").Append("@").Append(wordId);
             SQLiteCommand lCommand = new SQLiteCommand(lBuilder.ToString(), _connection);
             lCommand.Parameters.Add(new SQLiteParameter(wordId, pWord.Id));
-            lCommand.Parameters.Add(new SQLiteParameter(groupId, pWord.GroupId));
+            lCommand.Parameters.Add(new SQLiteParameter(groupId, pWord.Group.Id));
             lCommand.Parameters.Add(new SQLiteParameter(language1, pWord.Language1));
             lCommand.Parameters.Add(new SQLiteParameter(language2, pWord.Language2));
             lCommand.Parameters.Add(new SQLiteParameter(drawer, pWord.Drawer));
@@ -1042,7 +1043,7 @@ namespace Wordki.LocalDatabase
             return lCommand;
         }
 
-        public async Task<int> UpdateWordAsync(Word pWord)
+        public async Task<int> UpdateWordAsync(IWord pWord)
         {
             try
             {
@@ -1055,7 +1056,7 @@ namespace Wordki.LocalDatabase
             }
         }
 
-        public int UpdateWord(Word pWord)
+        public int UpdateWord(IWord pWord)
         {
             try
             {
@@ -1068,7 +1069,7 @@ namespace Wordki.LocalDatabase
             }
         }
 
-        private SQLiteCommand GetUpdateResultCommand(Result pResult)
+        private SQLiteCommand GetUpdateResultCommand(IResult pResult)
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder.Append("UPDATE ")
@@ -1083,7 +1084,7 @@ namespace Wordki.LocalDatabase
             return lCommand;
         }
 
-        public int UpdateResult(Result pResult)
+        public int UpdateResult(IResult pResult)
         {
             try
             {
@@ -1096,7 +1097,7 @@ namespace Wordki.LocalDatabase
             }
         }
 
-        public async Task<int> UpdateResultAsync(Result pResult)
+        public async Task<int> UpdateResultAsync(IResult pResult)
         {
             try
             {
@@ -1126,7 +1127,7 @@ namespace Wordki.LocalDatabase
             lCommand.Parameters.Add(new SQLiteParameter(login, pUser.Name));
             lCommand.Parameters.Add(new SQLiteParameter(password, pUser.Password));
             lCommand.Parameters.Add(new SQLiteParameter(downloadDate, pUser.DownloadTime));
-            lCommand.Parameters.Add(new SQLiteParameter(translationDireciton, (int) pUser.TranslationDirection));
+            lCommand.Parameters.Add(new SQLiteParameter(translationDireciton, (int)pUser.TranslationDirection));
             lCommand.Parameters.Add(new SQLiteParameter(allWords, pUser.AllWords));
             lCommand.Parameters.Add(new SQLiteParameter(userId, pUser.UserId));
             try
@@ -1187,7 +1188,7 @@ namespace Wordki.LocalDatabase
             List<long> lIdsList = SelectUserIdsList();
             foreach (long lItem in lIdsList)
             {
-                List<Group> lGroupsList = SelectGroupList(lItem);
+                List<IGroup> lGroupsList = SelectGroupList(lItem);
                 foreach (var lGroup in lGroupsList)
                 {
                     Logger.LogInfo("{0} - {1} - {2} - {3} - {4}", lGroup.Id, lGroup.Name, lGroup.Language1, lGroup.Language2, lGroup.State);
@@ -1202,10 +1203,10 @@ namespace Wordki.LocalDatabase
             List<long> lIdsList = SelectUserIdsList();
             foreach (long lItem in lIdsList)
             {
-                List<Word> lWordsList = SelectWordListByUserId(lItem);
+                List<IWord> lWordsList = SelectWordListByUserId(lItem);
                 foreach (var lWord in lWordsList)
                 {
-                    Logger.LogInfo("{0} - {1} - {2} - {3} - {4} - {5} - {6} - {7}", lWord.GroupId, lWord.Language1, lWord.Language2, lWord.Drawer, lWord.Language1Comment, lWord.Language2Comment, lWord.Visible, lWord.State);
+                    Logger.LogInfo("{0} - {1} - {2} - {3} - {4} - {5} - {6} - {7}", lWord.Group.Id, lWord.Language1, lWord.Language2, lWord.Drawer, lWord.Language1Comment, lWord.Language2Comment, lWord.Visible, lWord.State);
                 }
             }
         }
@@ -1217,10 +1218,10 @@ namespace Wordki.LocalDatabase
             List<long> lIdsList = SelectUserIdsList();
             foreach (long lItem in lIdsList)
             {
-                List<Result> lResultsList = SelectResultsListByUserId(lItem);
+                List<IResult> lResultsList = SelectResultsListByUserId(lItem);
                 foreach (var lResults in lResultsList)
                 {
-                    Logger.LogInfo("{0} - {1} - {2} - {3} - {4} - {5} - {6} - {7} - {8} - {9}", lResults.GroupId, lResults.Correct, lResults.Accepted, lResults.Wrong, lResults.Invisibilities, lResults.TimeCount, lResults.TranslationDirection, lResults.LessonType, lResults.DateTime, lResults.State);
+                    Logger.LogInfo("{0} - {1} - {2} - {3} - {4} - {5} - {6} - {7} - {8} - {9}", lResults.Group.Id, lResults.Correct, lResults.Accepted, lResults.Wrong, lResults.Invisibilities, lResults.TimeCount, lResults.TranslationDirection, lResults.LessonType, lResults.DateTime, lResults.State);
                 }
             }
         }

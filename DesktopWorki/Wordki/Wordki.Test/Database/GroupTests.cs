@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Repository.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Wordki.Database2;
@@ -10,22 +11,16 @@ namespace Wordki.Test.Database
     public class GroupTests
     {
 
-        private Group group;
+        private IGroup group;
         private IGroupRepository repo;
+        private Utility util = new Utility() { ResultCount = 0, WordCount = 0, };
 
         [SetUp]
         public void SetUp()
         {
+            NHibernateHelper.ResetSession();
             NHibernateHelper.ClearDatabase();
-            group = new Group()
-            {
-                Id = 1,
-                Name = "test",
-                Language1 = Repository.Models.Language.LanguageType.English,
-                Language2 = Repository.Models.Language.LanguageType.Germany,
-                State = 1,
-                UserId = 1,
-            };
+            group = util.GetGroup();
 
             repo = new GroupRepository();
         }
@@ -42,7 +37,7 @@ namespace Wordki.Test.Database
         public void Get_group_from_database_test()
         {
             repo.Save(group);
-            Group groupFromDatabase = repo.Get(group.Id);
+            IGroup groupFromDatabase = repo.Get(group.Id);
             Assert.IsTrue(groupFromDatabase.Equals(group));
         }
 
@@ -75,7 +70,7 @@ namespace Wordki.Test.Database
                 group.Id = i;
                 repo.Save(group);
             }
-            IEnumerable<Group> groups = repo.GetGroups();
+            IEnumerable<IGroup> groups = repo.GetGroups();
             Assert.AreEqual(groupCount, groups.Count());
         }
 
@@ -87,9 +82,15 @@ namespace Wordki.Test.Database
             group.Language2 = Repository.Models.Language.LanguageType.Russian;
             group.Name = "asdf";
             repo.Update(group);
-            Group groupFromDatabase = repo.Get(group.Id);
+            IGroup groupFromDatabase = repo.Get(group.Id);
             Assert.AreEqual(group, groupFromDatabase);
+        }
 
+        [Test]
+        public void Update_the_same_group_test()
+        {
+            repo.Save(group);
+            repo.Update(group);
         }
 
         [TearDown]
