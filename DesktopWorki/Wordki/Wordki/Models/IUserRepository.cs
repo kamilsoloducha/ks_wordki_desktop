@@ -1,23 +1,16 @@
-﻿using System;
+﻿using Repository.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Wordki.Models
 {
     public interface IUserRepository
     {
 
-        IEnumerable<User> GetUsers();
+        IUser Get(string name, string password);
 
-        User Get(long id);
+        void Save(IUser user);
 
-        void Save(User user);
-
-        void Update(User user);
-
-        void Delete(User user);
+        void Update(IUser user);
 
         long RowCount();
 

@@ -48,6 +48,15 @@ namespace Wordki.Test.Database
         }
 
         [Test]
+        public void Save_word_by_save_group_test()
+        {
+            groupRepo.Save(group);
+            group.Words.Add(word);
+            word.Group = group;
+            Assert.Throws<NHibernate.Exceptions.GenericADOException>(() => groupRepo.Save(group));
+        }
+
+        [Test]
         public void Save_word_by_groupRepo_test()
         {
             groupRepo.Save(group);

@@ -6,11 +6,12 @@ using Newtonsoft.Json;
 using Repository.Models.Enums;
 using Wordki.Helpers;
 using Wordki.Helpers.JsonConverters;
+using Repository.Models;
 
 namespace Wordki.Models
 {
     [Serializable]
-    public class User
+    public class User : IUser
     {
 
         #region Properties
@@ -19,14 +20,14 @@ namespace Wordki.Models
         public virtual string Password { get; set; }
 
         [JsonProperty("LocalId")]
-        public virtual long UserId { get; set; }
+        public virtual long LocalId { get; set; }
 
         public virtual bool IsLogin { get; set; }
 
         public virtual bool IsRegister { get; set; }
 
         [JsonProperty("lastLoginDate", NullValueHandling = NullValueHandling.Ignore)]
-        public virtual DateTime LastLoginTime { get; set; }
+        public virtual DateTime LastLoginDateTime { get; set; }
 
         public virtual DateTime DownloadTime { get; set; }
 
@@ -43,6 +44,8 @@ namespace Wordki.Models
         public virtual int Timeout { get; set; }
 
         public virtual string ApiKey { get; set; }
+        public virtual DateTime CreateDateTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public virtual bool IsAdmin { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         #endregion
 
@@ -51,12 +54,12 @@ namespace Wordki.Models
         /// </summary>
         public User()
         {
-            UserId = 0;
+            LocalId = 0;
             Name = "";
             Password = "";
             IsLogin = false;
             IsRegister = false;
-            LastLoginTime = new DateTime();
+            LastLoginDateTime = new DateTime();
             DownloadTime = new DateTime(1990, 9, 24);
             TranslationDirection = TranslationDirection.FromSecond;
             AllWords = false;
@@ -82,7 +85,7 @@ namespace Wordki.Models
         {
             StringBuilder lBuilder = new StringBuilder();
             lBuilder
-              .Append("UserId: ").Append(UserId).Append(";")
+              .Append("UserId: ").Append(LocalId).Append(";")
               .Append("Name: ").Append(Name).Append(";")
               .Append("Password: ").Append(Password).Append(";")
               .Append("IsRegister: ").Append(IsRegister);

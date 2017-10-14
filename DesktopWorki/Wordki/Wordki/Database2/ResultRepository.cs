@@ -27,7 +27,7 @@ namespace Wordki.Database2
             }
         }
 
-        public IEnumerable<IResult> GetWords()
+        public IEnumerable<IResult> GetResults()
         {
             using (ISession session = NHibernateHelper.OpenSession())
             {

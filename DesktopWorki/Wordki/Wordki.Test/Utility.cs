@@ -105,5 +105,23 @@ namespace Wordki.Test
             return group;
         }
 
+        public IUser GetUser()
+        {
+            return new User()
+            {
+                LocalId = 1,
+                AllWords = true,
+                ApiKey = "asdffdsaasdffdsa",
+                DownloadTime = new DateTime(1990, 9, 24, 12, 0, 0),
+                IsLogin = true,
+                IsRegister = true,
+                LastLoginDateTime = new DateTime(1990, 9, 24, 12, 0, 0),
+                Name = "Name",
+                Password = "Password",
+                Timeout = 10,
+                TranslationDirection = TranslationDirection.FromSecond,
+            };
+        }
+
     }
 }

@@ -15,10 +15,10 @@ namespace Wordki.Database2
             Map(x => x.DateTime);
             Map(x => x.Invisibilities);
             Map(x => x.LessonType);
-            Map(x => x.State);
             Map(x => x.TimeCount);
             Map(x => x.TranslationDirection);
             Map(x => x.UserId);
+            Map(x => x.State);
             References(x => x.Group).Not.Nullable().Class(typeof(Group));
         }
 

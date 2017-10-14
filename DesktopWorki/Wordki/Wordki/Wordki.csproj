@@ -141,9 +141,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Database2\DatabaseSingleton.cs" />
     <Compile Include="Database2\GroupMap.cs" />
     <Compile Include="Database2\GroupRepository.cs" />
+    <Compile Include="Database2\INHibernateDatabase.cs" />
+    <Compile Include="Database2\ModelSender\IModelSender.cs" />
+    <Compile Include="Database2\ModelSender\GroupsSender.cs" />
+    <Compile Include="Database2\ModelSender\ResultsSender.cs" />
+    <Compile Include="Database2\ModelSender\WordsSender.cs" />
+    <Compile Include="Database2\NHibernateDatabase.cs" />
     <Compile Include="Database2\NHibernateHelper.cs" />
+    <Compile Include="Database2\Organizer\DatabaseOrganizer.cs" />
+    <Compile Include="Database2\Organizer\IDatabaseOrganizer.cs" />
     <Compile Include="Database2\ResultMap.cs" />
     <Compile Include="Database2\ResultRepository.cs" />
     <Compile Include="Database2\UserMap.cs" />
@@ -614,6 +623,7 @@
       <Name>Util</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.103\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net45\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

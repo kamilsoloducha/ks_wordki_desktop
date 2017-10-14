@@ -7,7 +7,9 @@ namespace Wordki.Database2
     public static class NHibernateHelper
     {
         public static string DirectoryPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "Wordki");
-        public static string DatabasePath = Path.Combine(DirectoryPath, "database2.db");
+        private static string DatabaseName = "database";
+        public static string DatabasePath = Path.Combine(DirectoryPath, $"{DatabaseName}.db");
+
         private static ISessionFactory _sessionFactory;
 
         public static ISession OpenSession()
@@ -50,10 +52,6 @@ namespace Wordki.Database2
                   m.FluentMappings.AddFromAssemblyOf<GroupMap>();
                   m.FluentMappings.AddFromAssemblyOf<WordMap>();
                   m.FluentMappings.AddFromAssemblyOf<ResultMap>();
-                  //m.FluentMappings.AddFromAssemblyOf<GroupMap>();
-                  //m.FluentMappings.AddFromAssemblyOf<WordMap>();
-                  //m.FluentMappings.AddFromAssemblyOf<ResultMap>();
-
               })
               .ExposeConfiguration(cfg => new NHibernate.Tool.hbm2ddl.SchemaExport(cfg).Execute(true, true, false))
               .BuildSessionFactory();
@@ -61,22 +59,29 @@ namespace Wordki.Database2
 
         public static void ClearDatabase()
         {
+            ExecuteSQL("DELETE FROM 'Result'");
+            ExecuteSQL("DELETE FROM 'Word'");
+            ExecuteSQL("DELETE FROM 'Group'");
+            ExecuteSQL("DELETE FROM 'User'");
+        }
+
+        public static void RefreshDatabase()
+        {
+            ExecuteSQL("DELETE FROM 'Result' WHERE State < 0");
+            ExecuteSQL("DELETE FROM 'Word' WHERE State < 0");
+            ExecuteSQL("DELETE FROM 'Group' WHERE State < 0");
+
+            ExecuteSQL("UPDATE 'Result' SET State = 0");
+            ExecuteSQL("UPDATE 'Word' SET State = 0");
+            ExecuteSQL("UPDATE 'Group' SET State = 0");
+        }
+
+        private static void ExecuteSQL(string query)
+        {
             using (ISession session = OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
             {
-                session.CreateSQLQuery("DELETE FROM 'Result'").ExecuteUpdate();
-                transaction.Commit();
-            }
-            using (ISession session = OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
-            {
-                session.CreateSQLQuery("DELETE FROM 'Word'").ExecuteUpdate();
-                transaction.Commit();
-            }
-            using (ISession session = OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
-            {
-                session.CreateSQLQuery("DELETE FROM 'Group'").ExecuteUpdate();
+                session.CreateSQLQuery(query).ExecuteUpdate();
                 transaction.Commit();
             }
         }

@@ -6,7 +6,7 @@ namespace Wordki.Models
     public interface IResultRepository
     {
 
-        IEnumerable<IResult> GetWords();
+        IEnumerable<IResult> GetResults();
 
         IResult Get(long id);
 

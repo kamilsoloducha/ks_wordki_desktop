@@ -76,7 +76,7 @@ namespace Wordki.Models
 
         public bool DeleteUser(User user)
         {
-            return Db.DeleteUser(user.UserId) > 0;
+            return Db.DeleteUser(user.LocalId) > 0;
         }
 
         //OPERACJE NA GRUPACH//
@@ -286,7 +286,7 @@ namespace Wordki.Models
         public async Task<bool> LoadDatabaseAsync()
         {
             GroupsList.Clear();
-            foreach (IGroup lGroup in await Db.SelectGroupListAsync(UserManager.GetInstance().User.UserId))
+            foreach (IGroup lGroup in await Db.SelectGroupListAsync(UserManager.GetInstance().User.LocalId))
             {
                 GroupsList.Add(lGroup);
                 foreach (IWord lWord in await Db.SelectWordListByGroupIdAsync(lGroup.Id))
@@ -304,7 +304,7 @@ namespace Wordki.Models
         public bool LoadDatabase()
         {
             GroupsList.Clear();
-            foreach (IGroup lGroup in Db.SelectGroupList(UserManager.GetInstance().User.UserId))
+            foreach (IGroup lGroup in Db.SelectGroupList(UserManager.GetInstance().User.LocalId))
             {
                 GroupsList.Add(lGroup);
                 foreach (IWord lWord in Db.SelectWordListByGroupId(lGroup.Id))
@@ -359,21 +359,21 @@ namespace Wordki.Models
 
         public List<IGroup> GetGroupsToSend()
         {
-            List<IGroup> lGroups = Db.SelectGroupsToSend(UserManager.GetInstance().User.UserId);
+            List<IGroup> lGroups = Db.SelectGroupsToSend(UserManager.GetInstance().User.LocalId);
             Logger.LogInfo("Wysyłam {0} grup", lGroups.Count);
             return lGroups;
         }
 
         public List<IWord> GetWordsToSend()
         {
-            List<IWord> lWords = Db.SelectWordToSend(UserManager.GetInstance().User.UserId);
+            List<IWord> lWords = Db.SelectWordToSend(UserManager.GetInstance().User.LocalId);
             Logger.LogInfo("Wysyłam {0} słów", lWords.Count);
             return lWords;
         }
 
         public List<IResult> GetResultsToSend()
         {
-            List<IResult> lResults = Db.SelectResultToSend(UserManager.GetInstance().User.UserId);
+            List<IResult> lResults = Db.SelectResultToSend(UserManager.GetInstance().User.LocalId);
             Logger.LogInfo("Wysyłam {0} grup", lResults.Count);
             return lResults;
         }

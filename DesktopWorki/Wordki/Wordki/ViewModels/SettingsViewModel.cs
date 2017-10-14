@@ -159,7 +159,7 @@ namespace Wordki.ViewModels
             ThemeSelectedIndex = Settings.ApplicationStyle == ApplicationStyleEnum.Dark ? 1 : 0;
             FontSizeSelectedIndex = Settings.FontSize.ToString("D");
             UserName = UserManager.GetInstance().User.Name;
-            LoginDateTime = UserManager.GetInstance().User.LastLoginTime.ToString("HH:mm:ss dd/MM/yyyy");
+            LoginDateTime = UserManager.GetInstance().User.LastLoginDateTime.ToString("HH:mm:ss dd/MM/yyyy");
             DownloadDateTime = UserManager.GetInstance().User.DownloadTime.ToString("HH:mm:ss dd/MM/yyyy");
             Password = "***";
             TestString = "Napis";

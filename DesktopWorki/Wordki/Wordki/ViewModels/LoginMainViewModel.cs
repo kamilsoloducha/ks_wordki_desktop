@@ -122,7 +122,7 @@ namespace Wordki.ViewModels
             lUser.IsLogin = true;
             lUser.IsRegister = true;
             IDatabase database = Database.GetDatabase();
-            User dbUser = database.GetUser(lUser.UserId);
+            User dbUser = database.GetUser(lUser.LocalId);
             if (dbUser == null)
             {
                 database.AddUser(lUser);

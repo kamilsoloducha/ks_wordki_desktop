@@ -34,7 +34,13 @@ namespace Wordki.Database2
         {
             using (ISession session = NHibernateHelper.OpenSession())
             {
-                return session.Query<IGroup>().ToList();
+                IEnumerable<IGroup> groups = session.Query<IGroup>().ToArray();
+                foreach(IGroup group in groups)
+                {
+                    group.Words.ToArray();
+                    group.Results.ToArray();
+                }
+                return groups;
             }
         }
 

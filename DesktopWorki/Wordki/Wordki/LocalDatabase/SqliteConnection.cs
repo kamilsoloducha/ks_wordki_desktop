@@ -132,7 +132,7 @@ namespace Wordki.LocalDatabase
                         int index = 0;
                         User user = new User
                         {
-                            UserId = reader.GetInt64(index++),
+                            LocalId = reader.GetInt64(index++),
                             Name = reader.GetString(index++),
                             Password = reader.GetString(index),
                         };
@@ -573,7 +573,7 @@ namespace Wordki.LocalDatabase
                 {
                     lUser = new User();
                     int index = 0;
-                    lUser.UserId = lReader.GetInt64(index++);
+                    lUser.LocalId = lReader.GetInt64(index++);
                     lUser.Name = lReader.GetString(index++);
                     lUser.Password = lReader.GetString(index++);
                     lUser.DownloadTime = lReader.GetDateTime(index++);
@@ -602,7 +602,7 @@ namespace Wordki.LocalDatabase
               .Append(" ) ");
             SQLiteCommand lCommand = new SQLiteCommand(lBuilder.ToString(), _connection);
             lCommand.Parameters.Add(new SQLiteParameter(groupId, pGroup.Id));
-            lCommand.Parameters.Add(new SQLiteParameter(userId, pUser.UserId));
+            lCommand.Parameters.Add(new SQLiteParameter(userId, pUser.LocalId));
             lCommand.Parameters.Add(new SQLiteParameter(groupName, pGroup.Name));
             lCommand.Parameters.Add(new SQLiteParameter(language1Type, (int)pGroup.Language1));
             lCommand.Parameters.Add(new SQLiteParameter(language2Type, (int)pGroup.Language2));
@@ -656,7 +656,7 @@ namespace Wordki.LocalDatabase
               .Append(" ) ");
             SQLiteCommand lCommand = new SQLiteCommand(lBuilder.ToString(), _connection);
             lCommand.Parameters.Add(new SQLiteParameter(wordId, pWord.Id));
-            lCommand.Parameters.Add(new SQLiteParameter(userId, pUser.UserId));
+            lCommand.Parameters.Add(new SQLiteParameter(userId, pUser.LocalId));
             lCommand.Parameters.Add(new SQLiteParameter(groupId, pWord.Group.Id));
             lCommand.Parameters.Add(new SQLiteParameter(language1, pWord.Language1));
             lCommand.Parameters.Add(new SQLiteParameter(language2, pWord.Language2));
@@ -715,7 +715,7 @@ namespace Wordki.LocalDatabase
               .Append(" ) ");
             SQLiteCommand lCommand = new SQLiteCommand(lBuilder.ToString(), _connection);
             lCommand.Parameters.Add(new SQLiteParameter(resultId, pResult.Id));
-            lCommand.Parameters.Add(new SQLiteParameter(userId, pUser.UserId));
+            lCommand.Parameters.Add(new SQLiteParameter(userId, pUser.LocalId));
             lCommand.Parameters.Add(new SQLiteParameter(groupId, pResult.Group.Id));
             lCommand.Parameters.Add(new SQLiteParameter(correct, pResult.Correct));
             lCommand.Parameters.Add(new SQLiteParameter(accepted, pResult.Accepted));
@@ -772,7 +772,7 @@ namespace Wordki.LocalDatabase
               .Append("@").Append(isRegister)
               .Append(" ) ");
             SQLiteCommand lCommand = new SQLiteCommand(lBuilder.ToString(), _connection);
-            lCommand.Parameters.Add(new SQLiteParameter(userId, pUser.UserId));
+            lCommand.Parameters.Add(new SQLiteParameter(userId, pUser.LocalId));
             lCommand.Parameters.Add(new SQLiteParameter(login, pUser.Name));
             lCommand.Parameters.Add(new SQLiteParameter(password, pUser.Password));
             lCommand.Parameters.Add(new SQLiteParameter(downloadDate, pUser.DownloadTime));
@@ -1129,7 +1129,7 @@ namespace Wordki.LocalDatabase
             lCommand.Parameters.Add(new SQLiteParameter(downloadDate, pUser.DownloadTime));
             lCommand.Parameters.Add(new SQLiteParameter(translationDireciton, (int)pUser.TranslationDirection));
             lCommand.Parameters.Add(new SQLiteParameter(allWords, pUser.AllWords));
-            lCommand.Parameters.Add(new SQLiteParameter(userId, pUser.UserId));
+            lCommand.Parameters.Add(new SQLiteParameter(userId, pUser.LocalId));
             try
             {
                 return lCommand.ExecuteNonQuery();
@@ -1144,19 +1144,19 @@ namespace Wordki.LocalDatabase
         public void RefreshDatabase(User pUser)
         {
             string lPreQuery = "UPDATE {0} SET {1} = {2} WHERE {3} > {4} AND {5} = {6}";
-            SQLiteCommand lRefreshResultsCommand = new SQLiteCommand(string.Format(lPreQuery, resultsTab, state, 0, state, 0, userId, pUser.UserId), _connection);
+            SQLiteCommand lRefreshResultsCommand = new SQLiteCommand(string.Format(lPreQuery, resultsTab, state, 0, state, 0, userId, pUser.LocalId), _connection);
             lRefreshResultsCommand.ExecuteNonQuery();
-            SQLiteCommand lRefreshGroupsCommand = new SQLiteCommand(string.Format(lPreQuery, groupsTab, state, 0, state, 0, userId, pUser.UserId), _connection);
+            SQLiteCommand lRefreshGroupsCommand = new SQLiteCommand(string.Format(lPreQuery, groupsTab, state, 0, state, 0, userId, pUser.LocalId), _connection);
             lRefreshGroupsCommand.ExecuteNonQuery();
-            SQLiteCommand lRefreshWordsCommand = new SQLiteCommand(string.Format(lPreQuery, wordsTab, state, 0, state, 0, userId, pUser.UserId), _connection);
+            SQLiteCommand lRefreshWordsCommand = new SQLiteCommand(string.Format(lPreQuery, wordsTab, state, 0, state, 0, userId, pUser.LocalId), _connection);
             lRefreshWordsCommand.ExecuteNonQuery();
 
             lPreQuery = "DELETE FROM {0} WHERE {1} < {2} AND {3} = {4}";
-            SQLiteCommand lDeleteResultsCommand = new SQLiteCommand(string.Format(lPreQuery, resultsTab, state, 0, userId, pUser.UserId), _connection);
+            SQLiteCommand lDeleteResultsCommand = new SQLiteCommand(string.Format(lPreQuery, resultsTab, state, 0, userId, pUser.LocalId), _connection);
             lDeleteResultsCommand.ExecuteNonQuery();
-            SQLiteCommand lDeleteGroupsCommand = new SQLiteCommand(string.Format(lPreQuery, groupsTab, state, 0, userId, pUser.UserId), _connection);
+            SQLiteCommand lDeleteGroupsCommand = new SQLiteCommand(string.Format(lPreQuery, groupsTab, state, 0, userId, pUser.LocalId), _connection);
             lDeleteGroupsCommand.ExecuteNonQuery();
-            SQLiteCommand lDeleteWordsCommand = new SQLiteCommand(string.Format(lPreQuery, wordsTab, state, 0, userId, pUser.UserId), _connection);
+            SQLiteCommand lDeleteWordsCommand = new SQLiteCommand(string.Format(lPreQuery, wordsTab, state, 0, userId, pUser.LocalId), _connection);
             lDeleteWordsCommand.ExecuteNonQuery();
         }
 

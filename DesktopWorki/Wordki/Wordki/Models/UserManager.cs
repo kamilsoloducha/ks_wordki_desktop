@@ -35,7 +35,7 @@
 
         public void LoginUser(User pUser)
         {
-            Settings.GetSettings().LastUserId = pUser.UserId;
+            Settings.GetSettings().LastUserId = pUser.LocalId;
             Settings.GetSettings().SaveSettings();
         }
 

@@ -1,31 +1,17 @@
 ﻿using NHibernate;
-using NHibernate.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Repository.Models;
 using Wordki.Models;
 
 namespace Wordki.Database2
 {
     public class UserRepository : IUserRepository
     {
-        public void Delete(User user)
-        {
-            throw new NotImplementedException();
-        }
 
-        public User Get(long id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<User> GetUsers()
+        public IUser Get(string name, string password)
         {
             using (ISession session = NHibernateHelper.OpenSession())
             {
-                return session.Query<User>();
+                return session.QueryOver<IUser>().Where(x => x.Name == name && x.Password == password).SingleOrDefault();
             }
         }
 
@@ -33,11 +19,11 @@ namespace Wordki.Database2
         {
             using (ISession session = NHibernateHelper.OpenSession())
             {
-                return session.QueryOver<User>().RowCountInt64();
+                return session.QueryOver<IUser>().RowCountInt64();
             }
         }
 
-        public void Save(User user)
+        public void Save(IUser user)
         {
             using (ISession session = NHibernateHelper.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
@@ -47,9 +33,14 @@ namespace Wordki.Database2
             }
         }
 
-        public void Update(User user)
+        public void Update(IUser user)
         {
-            throw new NotImplementedException();
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                session.Update(user);
+                transaction.Commit();
+            }
         }
     }
 }
