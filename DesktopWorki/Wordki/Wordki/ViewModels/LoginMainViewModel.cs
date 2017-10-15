@@ -3,8 +3,8 @@ using Newtonsoft.Json;
 using Wordki.Helpers;
 using Wordki.Models;
 using Wordki.Models.Connector;
-using Wordki.Helpers.Command;
 using Wordki.Helpers.Notification;
+using System.Windows.Input;
 
 namespace Wordki.ViewModels
 {
@@ -40,9 +40,9 @@ namespace Wordki.ViewModels
             }
         }
 
-        public System.Windows.Input.ICommand ExitCommand { get; set; }
-        public System.Windows.Input.ICommand ChangeStateCommand { get; set; }
-        public System.Windows.Input.ICommand LoadedWindowCommand { get; set; }
+        public ICommand ExitCommand { get; set; }
+        public ICommand ChangeStateCommand { get; set; }
+        public ICommand LoadedWindowCommand { get; set; }
 
         #endregion
 
@@ -51,7 +51,7 @@ namespace Wordki.ViewModels
         protected LoginMainViewModel()
         {
             ExitCommand = new BuilderCommand(Exit);
-            LoadedWindowCommand = new BuilderCommand(LoadedWindow);
+            //LoadedWindowCommand = new BuilderCommand(LoadedWindow);
             ChangeStateCommand = new BuilderCommand(ChangeState);
         }
 
@@ -76,29 +76,29 @@ namespace Wordki.ViewModels
             Application.Current.Shutdown();
         }
 
-        private void LoadedWindow(object obj)
-        {
-            User lUser = UserManager.GetInstance().FindLoginedUser();
-            if (lUser == null)
-            {
-                return;
-            }
-            CommandQueue<ICommand> queue = new CommandQueue<ICommand> { CreateDialog = true };
-            queue.MainQueue.AddFirst(new SimpleCommand(() =>
-            {
-                IDatabase database = Database.GetDatabase();
-                UserManager.GetInstance().User = lUser;
-                return database.LoadDatabase();
-            }));
-            queue.OnQueueComplete += success =>
-            {
-                if (success)
-                {
-                    StartWithUser(lUser);
-                }
-            };
-            queue.Execute();
-        }
+        //private void LoadedWindow(object obj)
+        //{
+        //    User lUser = UserManager.GetInstance().FindLoginedUser();
+        //    if (lUser == null)
+        //    {
+        //        return;
+        //    }
+        //    CommandQueue<ICommand> queue = new CommandQueue<ICommand> { CreateDialog = true };
+        //    queue.MainQueue.AddFirst(new SimpleCommand(() =>
+        //    {
+        //        IDatabase database = Database.GetDatabase();
+        //        UserManager.GetInstance().User = lUser;
+        //        return database.LoadDatabase();
+        //    }));
+        //    queue.OnQueueComplete += success =>
+        //    {
+        //        if (success)
+        //        {
+        //            StartWithUser(lUser);
+        //        }
+        //    };
+        //    queue.Execute();
+        //}
 
         #endregion
 

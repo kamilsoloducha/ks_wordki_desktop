@@ -1,4 +1,5 @@
-﻿using Repository.Models;
+﻿using NUnit.Framework;
+using Repository.Models;
 using Repository.Models.Enums;
 using Repository.Models.Language;
 using System;
@@ -121,6 +122,18 @@ namespace Wordki.Test
                 Timeout = 10,
                 TranslationDirection = TranslationDirection.FromSecond,
             };
+        }
+
+        public void CheckUser(IUser expected, IUser actual)
+        {
+            Assert.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.Password, actual.Password);
+            Assert.AreEqual(expected.ApiKey, actual.ApiKey);
+            Assert.AreEqual(expected.AllWords, actual.AllWords);
+            Assert.AreEqual(expected.TranslationDirection, actual.TranslationDirection);
+            Assert.AreEqual(expected.Timeout, actual.Timeout);
+            Assert.AreEqual(expected.LastLoginDateTime, actual.LastLoginDateTime);
+
         }
 
     }

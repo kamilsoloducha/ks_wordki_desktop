@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Wordki.Database2;
+using Wordki.Database2.Organizer;
 using Wordki.Helpers;
 using Wordki.Helpers.Command;
 using Wordki.Models;
@@ -11,8 +14,8 @@ namespace Wordki.ViewModels
     {
 
         #region Properties
-        private ObservableCollection<User> _users;
-        public ObservableCollection<User> Users
+        private IList<string> _users;
+        public IList<string> Users
         {
             get { return _users; }
             set
@@ -35,8 +38,7 @@ namespace Wordki.ViewModels
         {
             LoginCommand = new BuilderCommand(Loging);
             ListViewSelectedChangedCommand = new BuilderCommand(ListViewSelectedChanged);
-            RemoveUserCommand = new BuilderCommand(RemoveUser);
-            Users = new ObservableCollection<User>();
+            Users = new ObservableCollection<string>();
         }
 
 
@@ -48,39 +50,23 @@ namespace Wordki.ViewModels
 
         private void InitUsers()
         {
+            IDatabaseOrganizer organizer = new DatabaseOrganizer(NHibernateHelper.DirectoryPath);
             Users.Clear();
-            foreach (var user in Database.GetDatabase().GetUsers())
+            foreach (var user in organizer.GetDatabases())
             {
                 Users.Add(user);
             }
         }
 
         #region Commands
-        private void RemoveUser(object obj)
-        {
-            User user = obj as User;
-            if (user == null)
-            {
-                return;
-            }
-            if (Database.GetDatabase().DeleteUser(user))
-            {
-                Users.Remove(user);
-            }
-            else
-            {
-                Console.WriteLine("Błąd usuwania");
-            }
-        }
-
         private void ListViewSelectedChanged(object obj)
         {
-            User user = obj as User;
+            string user = obj as string;
             if (user == null)
             {
                 return;
             }
-            UserName = user.Name;
+            UserName = user;
         }
 
         public void Loging(object obj)

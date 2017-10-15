@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Wordki.Database2.Organizer
 {
@@ -24,7 +19,7 @@ namespace Wordki.Database2.Organizer
             foreach(string file in files)
             {
                 string fileName = Path.GetFileName(file);
-                if (Path.GetExtension(fileName).Equals("db"))
+                if (Path.GetExtension(file).Equals(".db"))
                 {
                     yield return fileName.Replace(".db", "");
                 }

@@ -5,10 +5,10 @@ namespace Wordki.Database2
     public class DatabaseSingleton
     {
 
-        private IDatabase _instance;
-        private object obj = new object();
+        private static IDatabase _instance;
+        private static object obj = new object();
 
-        public IDatabase GetDatabase()
+        public static IDatabase GetDatabase()
         {
             lock (obj)
             {

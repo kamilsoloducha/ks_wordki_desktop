@@ -36,7 +36,7 @@ namespace Wordki.Test.Database
         {
             userRepo.Save(user);
             IUser userFromDatabase = userRepo.Get(user.Name, user.Password);
-            CheckUser(user, userFromDatabase);
+            util.CheckUser(user, userFromDatabase);
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace Wordki.Test.Database
             user.TranslationDirection = Repository.Models.Enums.TranslationDirection.FromFirst;
             userRepo.Update(user);
             IUser userFromDatabase = userRepo.Get(user.Name, user.Password);
-            CheckUser(user, userFromDatabase);
+            util.CheckUser(user, userFromDatabase);
         }
 
         [TearDown]
@@ -59,17 +59,7 @@ namespace Wordki.Test.Database
             NHibernateHelper.ClearDatabase();
         }
 
-        private void CheckUser(IUser expected, IUser actual)
-        {
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.Password, actual.Password);
-            Assert.AreEqual(expected.ApiKey, actual.ApiKey);
-            Assert.AreEqual(expected.AllWords, actual.AllWords);
-            Assert.AreEqual(expected.TranslationDirection, actual.TranslationDirection);
-            Assert.AreEqual(expected.Timeout, actual.Timeout);
-            Assert.AreEqual(expected.LastLoginDateTime, actual.LastLoginDateTime);
-
-        }
+        
 
     }
 }

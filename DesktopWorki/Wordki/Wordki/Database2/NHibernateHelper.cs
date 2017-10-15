@@ -7,8 +7,8 @@ namespace Wordki.Database2
     public static class NHibernateHelper
     {
         public static string DirectoryPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "Wordki");
-        private static string DatabaseName = "database";
-        public static string DatabasePath = Path.Combine(DirectoryPath, $"{DatabaseName}.db");
+        public static string DatabaseName = "database";
+        public static string DatabasePath { get { return Path.Combine(DirectoryPath, $"{DatabaseName}.db"); } }
 
         private static ISessionFactory _sessionFactory;
 
@@ -19,7 +19,7 @@ namespace Wordki.Database2
 
         public static void ResetSession()
         {
-            if(_sessionFactory != null)
+            if (_sessionFactory != null)
             {
                 _sessionFactory.Close();
             }
@@ -53,7 +53,7 @@ namespace Wordki.Database2
                   m.FluentMappings.AddFromAssemblyOf<WordMap>();
                   m.FluentMappings.AddFromAssemblyOf<ResultMap>();
               })
-              .ExposeConfiguration(cfg => new NHibernate.Tool.hbm2ddl.SchemaExport(cfg).Execute(true, true, false))
+              .ExposeConfiguration(cfg => new NHibernate.Tool.hbm2ddl.SchemaUpdate(cfg).Execute(true, true))
               .BuildSessionFactory();
         }
 

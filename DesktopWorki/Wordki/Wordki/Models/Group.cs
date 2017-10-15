@@ -4,6 +4,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Repository.Models;
 using Repository.Models.Language;
+using System.Collections.ObjectModel;
 
 namespace Wordki.Models
 {
@@ -87,8 +88,8 @@ namespace Wordki.Models
             _language1 = LanguageType.Default;
             _language2 = LanguageType.Default;
             State = int.MaxValue;
-            Words = new List<IWord>();
-            Results = new List<IResult>();
+            Words = new ObservableCollection<IWord>();
+            Results = new ObservableCollection<IResult>();
         }
 
         public virtual int CompareTo(IGroup other)
