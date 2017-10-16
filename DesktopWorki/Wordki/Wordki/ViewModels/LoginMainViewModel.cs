@@ -106,8 +106,6 @@ namespace Wordki.ViewModels
 
         protected void StartWithUser(User pUser)
         {
-            UserManager.GetInstance().LoginUser(pUser);
-            UserManager.GetInstance().User = pUser;
             Database.GetDatabase().UpdateUser(pUser);
             Start();
         }
@@ -127,14 +125,14 @@ namespace Wordki.ViewModels
             {
                 database.AddUser(lUser);
             }
-            UserManager.GetInstance().User = lUser;
+            //UserManager.GetInstance().User = lUser;
             database.LoadDatabase();
             StartWithUser(lUser);
         }
 
         private void Start()
         {
-            Logger.LogInfo("Loguje użytkownika: {0}", UserManager.GetInstance().User.GetStringFromObject());
+            //Logger.LogInfo("Loguje użytkownika: {0}", UserManager.GetInstance().User.GetStringFromObject());
             Application.Current.Dispatcher.Invoke(() =>
             {
                 Application.Current.Dispatcher.Invoke(() => NotificationFactory.Create().Show("Zalogowano"));

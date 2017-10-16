@@ -1,23 +1,33 @@
-﻿namespace Wordki.Database2
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Wordki.Database2
 {
-    public class UserOrganizerSingleton
+    public class UserManagerSingleton
     {
 
-        private static IUserOrganizer _instance;
+        private static IUserManager _instance;
         private static object _lock = new object();
 
-        public static IUserOrganizer Get()
+        private UserManagerSingleton()
+        {
+
+        }
+
+        public static IUserManager Get()
         {
             lock (_lock)
             {
                 if (_instance == null)
                 {
-                    _instance = new UserOrganizer();
+                    _instance = new UserManager();
                 }
             }
             return _instance;
         }
-
 
     }
 }

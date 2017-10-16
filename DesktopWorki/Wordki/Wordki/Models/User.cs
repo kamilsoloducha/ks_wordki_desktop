@@ -44,8 +44,8 @@ namespace Wordki.Models
         public virtual int Timeout { get; set; }
 
         public virtual string ApiKey { get; set; }
-        public virtual DateTime CreateDateTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public virtual bool IsAdmin { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public virtual DateTime CreateDateTime { get { throw new NotImplementedException(); } set { throw new NotImplementedException(); } }
+        public virtual bool IsAdmin { get { throw new NotImplementedException(); } set { throw new NotImplementedException(); } }
 
         #endregion
 

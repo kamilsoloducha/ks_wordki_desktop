@@ -9,7 +9,7 @@ namespace Wordki.Test.Database.UserOrganizerTests
     public class UserOrganizerTests
     {
 
-        IUserOrganizer userOrganizer;
+        IDatabaseOrganizer userOrganizer;
         IUser user;
         IDatabase database;
         Utility util = new Utility();
@@ -17,7 +17,7 @@ namespace Wordki.Test.Database.UserOrganizerTests
         [SetUp]
         public void SetUp()
         {
-            userOrganizer = new UserOrganizer();
+            userOrganizer = new DatabaseOrganizer("");
             user = util.GetUser();
             database = DatabaseSingleton.GetDatabase();
         }

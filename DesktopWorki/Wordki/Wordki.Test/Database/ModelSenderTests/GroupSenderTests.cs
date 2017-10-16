@@ -27,14 +27,14 @@ namespace Wordki.Test.Database.ModelSenderTests
         [Test]
         public void Get_group_to_send_all_groups_not_to_send_test()
         {
-            foreach(IGroup group in groups)
+            foreach (IGroup group in groups)
             {
                 group.State = 0;
             }
             mock.Setup(m => m.GetGroups()).Returns(groups);
             modelSender = new GroupsSender() { GroupRepo = mock.Object };
 
-            Assert.AreEqual(0, modelSender.GetModelToSend().Count());
+            Assert.AreEqual(groups.Count(x => x.State != 0), modelSender.GetModelToSend().Count());
 
         }
 
@@ -48,18 +48,22 @@ namespace Wordki.Test.Database.ModelSenderTests
             mock.Setup(m => m.GetGroups()).Returns(groups);
             modelSender = new GroupsSender() { GroupRepo = mock.Object };
 
-            Assert.AreEqual(groups.Count(), modelSender.GetModelToSend().Count());
+            Assert.AreEqual(groups.Count(x => x.State != 0), modelSender.GetModelToSend().Count());
         }
 
         [Test]
         public void Get_group_to_send_two_groups_to_send_test()
         {
+            foreach (IGroup group in groups)
+            {
+                group.State = 0;
+            }
             groups.First().State = 1;
             groups.Last().State = 1;
             mock.Setup(m => m.GetGroups()).Returns(groups);
             modelSender = new GroupsSender() { GroupRepo = mock.Object };
 
-            Assert.AreEqual(groups.Count(), modelSender.GetModelToSend().Count());
+            Assert.AreEqual(groups.Count(x => x.State != 0), modelSender.GetModelToSend().Count());
         }
 
     }

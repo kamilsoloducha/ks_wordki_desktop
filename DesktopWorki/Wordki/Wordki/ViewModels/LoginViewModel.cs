@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Wordki.Database2;
-using Wordki.Database2.Organizer;
 using Wordki.Helpers;
 using Wordki.Helpers.Command;
 using Wordki.Models;
@@ -75,20 +75,22 @@ namespace Wordki.ViewModels
                 return;
             if (UserName == null)
                 return;
-            User lUser = UserManager.GetInstance().FindLoginedUser(UserName.Trim(), Password.Trim());
-            if (lUser != null)
+            IUser user = DatabaseSingleton.GetDatabase().GetUserAsync(UserName, Password).Result;
+            if (user != null)
             {
-                StartWithUser(lUser);
+                IUserManager userManager = UserManagerSingleton.Get();
+                userManager.Set(user);
+                user.LastLoginDateTime = DateTime.Now;
+                userManager.Update();
+                StartWithUser();
                 return;
+                CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
+                lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestLogin(user as User)) { OnCompleteCommand = OnLogin });
+                lQueue.Execute();
             }
-            User user = new User
-            {
-                Name = UserName,
-                Password = Password
-            };
-            CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestLogin(user)) { OnCompleteCommand = OnLogin });
-            lQueue.Execute();
+            //inforamcja o zlym logowaniu
+            Console.WriteLine("Błąd logowania");
+            
         }
 
         protected override void ChangeState(object obj)

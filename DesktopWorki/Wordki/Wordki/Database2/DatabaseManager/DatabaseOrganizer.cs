@@ -1,17 +1,20 @@
 ﻿using System;
 using Repository.Models;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Wordki.Database2
 {
-    public class UserOrganizer : IUserOrganizer
+    public class DatabaseOrganizer : IDatabaseOrganizer
     {
 
         public IDatabase Database { get; set; }
+        private string _mainPath;
 
-        public UserOrganizer()
+        public DatabaseOrganizer(string mainPath)
         {
             Database = DatabaseSingleton.GetDatabase();
+            _mainPath = mainPath;
         }
 
         public bool AddDatabase(IUser user)
@@ -69,6 +72,19 @@ namespace Wordki.Database2
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        public IEnumerable<string> GetDatabases()
+        {
+            string[] files = Directory.GetFiles(_mainPath);
+            foreach (string file in files)
+            {
+                string fileName = Path.GetFileName(file);
+                if (Path.GetExtension(file).Equals(".db"))
+                {
+                    yield return fileName.Replace(".db", "");
+                }
             }
         }
     }
