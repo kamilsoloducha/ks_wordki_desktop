@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Wordki.Database2;
 using Wordki.Helpers;
 using Wordki.LocalDatabase;
 using Wordki.Models.Connector;
@@ -84,7 +85,7 @@ namespace Wordki.Models
         public async Task<bool> AddGroupAsync(IGroup pGroup)
         {
             GroupsList.Add(pGroup);
-            if (!(await Db.InsertGroupAsync(pGroup, UserManager.GetInstance().User) > 0))
+            if (!(await Db.InsertGroupAsync(pGroup, UserManagerSingleton.Get().User as User) > 0))
             {
                 return false;
             }
@@ -136,7 +137,7 @@ namespace Wordki.Models
         {
             pWord.Group = pGroup;
             Application.Current.Dispatcher.Invoke(() => pGroup.Words.Add(pWord));
-            if (!(await Db.InsertWordAsync(pWord, UserManager.GetInstance().User) > 0))
+            if (!(await Db.InsertWordAsync(pWord, UserManagerSingleton.Get().User as User) > 0))
             {
                 return false;
             }
@@ -199,7 +200,7 @@ namespace Wordki.Models
         public async Task<bool> AddResultAsync(IGroup pGroup, IResult pResult)
         {
             Application.Current.Dispatcher.Invoke(() => pGroup.Results.Add(pResult));
-            if (!(await Db.InsertResultAsync(pResult, UserManager.GetInstance().User) > 0))
+            if (!(await Db.InsertResultAsync(pResult, UserManagerSingleton.Get().User as User) > 0))
             {
                 return false;
             }
@@ -286,7 +287,7 @@ namespace Wordki.Models
         public async Task<bool> LoadDatabaseAsync()
         {
             GroupsList.Clear();
-            foreach (IGroup lGroup in await Db.SelectGroupListAsync(UserManager.GetInstance().User.LocalId))
+            foreach (IGroup lGroup in await Db.SelectGroupListAsync(UserManagerSingleton.Get().User.LocalId))
             {
                 GroupsList.Add(lGroup);
                 foreach (IWord lWord in await Db.SelectWordListByGroupIdAsync(lGroup.Id))
@@ -304,7 +305,7 @@ namespace Wordki.Models
         public bool LoadDatabase()
         {
             GroupsList.Clear();
-            foreach (IGroup lGroup in Db.SelectGroupList(UserManager.GetInstance().User.LocalId))
+            foreach (IGroup lGroup in Db.SelectGroupList(UserManagerSingleton.Get().User.LocalId))
             {
                 GroupsList.Add(lGroup);
                 foreach (IWord lWord in Db.SelectWordListByGroupId(lGroup.Id))
@@ -359,21 +360,21 @@ namespace Wordki.Models
 
         public List<IGroup> GetGroupsToSend()
         {
-            List<IGroup> lGroups = Db.SelectGroupsToSend(UserManager.GetInstance().User.LocalId);
+            List<IGroup> lGroups = Db.SelectGroupsToSend(UserManagerSingleton.Get().User.LocalId);
             Logger.LogInfo("Wysyłam {0} grup", lGroups.Count);
             return lGroups;
         }
 
         public List<IWord> GetWordsToSend()
         {
-            List<IWord> lWords = Db.SelectWordToSend(UserManager.GetInstance().User.LocalId);
+            List<IWord> lWords = Db.SelectWordToSend(UserManagerSingleton.Get().User.LocalId);
             Logger.LogInfo("Wysyłam {0} słów", lWords.Count);
             return lWords;
         }
 
         public List<IResult> GetResultsToSend()
         {
-            List<IResult> lResults = Db.SelectResultToSend(UserManager.GetInstance().User.LocalId);
+            List<IResult> lResults = Db.SelectResultToSend(UserManagerSingleton.Get().User.LocalId);
             Logger.LogInfo("Wysyłam {0} grup", lResults.Count);
             return lResults;
         }
@@ -381,7 +382,7 @@ namespace Wordki.Models
         public void RefreshDatabase()
         {
             Logger.LogInfo("odświeżam baze danych");
-            Db.RefreshDatabase(UserManager.GetInstance().User);
+            Db.RefreshDatabase(UserManagerSingleton.Get().User as User);
         }
 
         public async void OnReadGroups(ApiResponse pResponse)
@@ -529,8 +530,8 @@ namespace Wordki.Models
                 return;
             }
             string lDateTime = pResponse.Message;
-            UserManager.GetInstance().User.DownloadTime = DateTime.Parse(lDateTime);
-            UpdateUser(UserManager.GetInstance().User);
+            UserManagerSingleton.Get().User.DownloadTime = DateTime.Parse(lDateTime);
+            UpdateUser(UserManagerSingleton.Get().User as User);
         }
 
         public void OnReadCommonGroup(ApiResponse pResponse)

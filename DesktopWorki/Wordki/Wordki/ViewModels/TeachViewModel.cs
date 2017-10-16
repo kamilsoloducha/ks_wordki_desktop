@@ -16,6 +16,7 @@ using Wordki.Views.Dialogs;
 using Wordki.Helpers.Command;
 using Util.Serializers;
 using Repository.Models;
+using Wordki.Database2;
 
 namespace Wordki.ViewModels
 {
@@ -377,14 +378,14 @@ namespace Wordki.ViewModels
 
         private void CheckTimeOut()
         {
-            if (UserManager.GetInstance().User.Timeout == 0)
+            if (UserManagerSingleton.Get().User.Timeout == 0)
                 return;
             if (!TimeOutChecking)
             {
                 return;
             }
             TimeOutTicks++;
-            if (TimeOutTicks < UserManager.GetInstance().User.Timeout)
+            if (TimeOutTicks < UserManagerSingleton.Get().User.Timeout)
                 return;
             TimeOutTicks = 0;
             Check(null);
@@ -684,7 +685,7 @@ namespace Wordki.ViewModels
             protected LessonState(Lesson pLesson, LessonState pLastState)
             {
                 Lesson = pLesson;
-                _translationDirection = UserManager.GetInstance().User.TranslationDirection;
+                _translationDirection = UserManagerSingleton.Get().User.TranslationDirection;
                 if (pLastState != null)
                 {
                     _drawerValues = pLastState._drawerValues;
@@ -1168,10 +1169,10 @@ namespace Wordki.ViewModels
                 Lesson.FinishLesson();
                 Lesson.Timer.StopTimer();
                 IList<IGroup> lGroupList = Lesson.ResultList.Select(lResult => Database.GetDatabase().GetGroupById(lResult.GroupId)).ToList();
-                CommandQueue<Helpers.Command.ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManager.GetInstance().User).GetUploadQueue();
+                CommandQueue<Helpers.Command.ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetUploadQueue();
                 lQueue.MainQueue.AddFirst(new SimpleCommandAsync(async () =>
                 {
-                    IDatabase lDatabase = Models.Database.GetDatabase();
+                    Models.IDatabase lDatabase = Models.Database.GetDatabase();
                     foreach (Result lItem in Lesson.ResultList)
                     {
                         await Database.GetDatabase().AddResultAsync(lItem);
@@ -1186,7 +1187,7 @@ namespace Wordki.ViewModels
                         });
                         lDialog.ShowDialog();
                     });
-                    IDatabase database = Database.GetDatabase();
+                    Models.IDatabase database = Database.GetDatabase();
                     foreach (Word lItem in Lesson.BeginWordsList)
                     {
                         IWord word = database.GetGroupById(lItem.GroupId).Words.FirstOrDefault(x => x.Id == lItem.Id);

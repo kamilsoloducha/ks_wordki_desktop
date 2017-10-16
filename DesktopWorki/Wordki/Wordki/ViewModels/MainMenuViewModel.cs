@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using Controls.ValueDescription;
 using Wordki.Helpers;
@@ -10,6 +8,7 @@ using Wordki.Models;
 using Wordki.Models.RemoteDatabase;
 using System.Threading.Tasks;
 using Wordki.Helpers.Command;
+using Wordki.Database2;
 
 namespace Wordki.ViewModels
 {
@@ -143,7 +142,7 @@ namespace Wordki.ViewModels
 
         public override void InitViewModel()
         {
-            Login = UserManager.GetInstance().User.Name;
+            Login = UserManagerSingleton.Get().User.Name;
             ReadDatabaseFromServer();
         }
 
@@ -175,7 +174,7 @@ namespace Wordki.ViewModels
         private void Exit(object obj)
         {
             Database.GetDatabase().SaveDatabase();
-            CommandQueue<ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManager.GetInstance().User).GetUploadQueue();
+            CommandQueue<ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetUploadQueue();
             lQueue.OnQueueComplete += success => Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown());
             lQueue.Execute();
         }
@@ -183,7 +182,7 @@ namespace Wordki.ViewModels
 
         private void RefreshInfo()
         {
-            IDatabase lDatabase = Database.GetDatabase();
+            Models.IDatabase lDatabase = Database.GetDatabase();
             ObservableCollection<double> lList = new ObservableCollection<double>(lDatabase.GetCountWordsByDrawer());
             string lTeachTimeToday = "to DO";//Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.GroupsList.Sum(x => x.GetLessonTime(DateTime.Now)));
             string lTeachTime = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.GroupsList.Sum(x => x.Results.Sum(y => y.TimeCount)));
@@ -210,7 +209,7 @@ namespace Wordki.ViewModels
                 Task.Run(() => RefreshInfo());
                 return;
             }
-            CommandQueue<ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManager.GetInstance().User).GetDownloadQueue();
+            CommandQueue<ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetDownloadQueue();
             lQueue.OnQueueComplete += success => RefreshInfo();
             lQueue.Execute();
             _needRead = false;

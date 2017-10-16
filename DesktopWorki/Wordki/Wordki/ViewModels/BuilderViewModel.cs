@@ -13,6 +13,7 @@ using Wordki.Views.Dialogs.ListDialogs;
 using Util;
 using Repository.Helper;
 using Repository.Models;
+using Wordki.Database2;
 
 namespace Wordki.ViewModels
 {
@@ -180,7 +181,7 @@ namespace Wordki.ViewModels
         public System.Windows.Input.ICommand GroupSelectionChangedCommand { get; set; }
         public System.Windows.Input.ICommand AddGroupFromFileCommand { get; set; }
 
-        public IDatabase Database { get; set; }
+        public Models.IDatabase Database { get; set; }
         public ObservableDictionary<string, bool> EnableElementDirectory { get; set; }
         //private ClipboardHelper ClipboardHelper { get; set; }
         //private NotifyIcon NotifyIcon { get; set; }
@@ -236,7 +237,7 @@ namespace Wordki.ViewModels
         public override void Back()
         {
             Database.SaveDatabase();
-            var queue = RemoteDatabaseBase.GetRemoteDatabase(UserManager.GetInstance().User).GetUploadQueue();
+            var queue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetUploadQueue();
             queue.CreateDialog = false;
             queue.Execute();
         }

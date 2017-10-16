@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Repository.Models.Enums;
 using Repository.Models;
+using Wordki.Database2;
 
 namespace Wordki.Models.Lesson
 {
@@ -47,7 +48,7 @@ namespace Wordki.Models.Lesson
         {
             IsCorrect = false;
             IsChecked = true;
-            switch (UserManager.GetInstance().User.TranslationDirection)
+            switch (UserManagerSingleton.Get().User.TranslationDirection)
             {
                 case TranslationDirection.FromSecond:
                     if (CheckTranslation(translation, SelectedWord.Language1))
@@ -62,7 +63,7 @@ namespace Wordki.Models.Lesson
 
         protected override void CreateWordList()
         {
-            bool allWords = UserManager.GetInstance().User.AllWords;
+            bool allWords = UserManagerSingleton.Get().User.AllWords;
             foreach (Word word in AllWordList.Where(word => word.Visible || allWords))
             {
                 BeginWordsList.Add((Word)word.Clone());
@@ -88,7 +89,7 @@ namespace Wordki.Models.Lesson
                   0,
                   (short)lGroup.Words.Count(x => !x.Visible),
                   0,
-                  UserManager.GetInstance().User.TranslationDirection,
+                  UserManagerSingleton.Get().User.TranslationDirection,
                   (LessonType)Enum.Parse(typeof(LessonType), GetType().Name),
                   DateTime.Now,
                   int.MaxValue));

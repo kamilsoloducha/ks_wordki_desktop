@@ -82,7 +82,7 @@ namespace Wordki.ViewModels
                 userManager.Set(user);
                 user.LastLoginDateTime = DateTime.Now;
                 userManager.Update();
-                StartWithUser();
+                StartWithUser(user as User);
                 return;
                 CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
                 lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestLogin(user as User)) { OnCompleteCommand = OnLogin });

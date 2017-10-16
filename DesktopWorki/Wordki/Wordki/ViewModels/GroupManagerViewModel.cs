@@ -22,6 +22,7 @@ using Util.Serializers;
 using Util;
 using System.Windows.Input;
 using Repository.Models;
+using Wordki.Database2;
 
 namespace Wordki.ViewModels
 {
@@ -215,8 +216,8 @@ namespace Wordki.ViewModels
 
         private void AllWords(object obj)
         {
-            UserManager.GetInstance().User.AllWords = !UserManager.GetInstance().User.AllWords;
-            Database.GetDatabase().UpdateUser(UserManager.GetInstance().User);
+            UserManagerSingleton.Get().User.AllWords = !UserManagerSingleton.Get().User.AllWords;
+            Database.GetDatabase().UpdateUser(UserManagerSingleton.Get().User as User);
             SetAllWordsLabel();
         }
 
@@ -228,18 +229,18 @@ namespace Wordki.ViewModels
 
         private void TranslationDirectionChanged(object obj)
         {
-            switch (UserManager.GetInstance().User.TranslationDirection)
+            switch (UserManagerSingleton.Get().User.TranslationDirection)
             {
                 case TranslationDirection.FromFirst:
-                    UserManager.GetInstance().User.TranslationDirection = TranslationDirection.FromSecond;
+                    UserManagerSingleton.Get().User.TranslationDirection = TranslationDirection.FromSecond;
                     break;
                 case TranslationDirection.FromSecond:
-                    UserManager.GetInstance().User.TranslationDirection = TranslationDirection.FromFirst;
+                    UserManagerSingleton.Get().User.TranslationDirection = TranslationDirection.FromFirst;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            Database.GetDatabase().UpdateUser(UserManager.GetInstance().User);
+            Database.GetDatabase().UpdateUser(UserManagerSingleton.Get().User as User);
             SetTranslationDirectionLabel();
         }
 
@@ -378,12 +379,12 @@ namespace Wordki.ViewModels
 
         private void SetTimeOutLabel()
         {
-            TimeOutLabel = UserManager.GetInstance().User.Timeout > 0 ? String.Format("Odliczanie {0} sekund", UserManager.GetInstance().User.Timeout) : "Odliczanie wyłączone";
+            TimeOutLabel = UserManagerSingleton.Get().User.Timeout > 0 ? String.Format("Odliczanie {0} sekund", UserManagerSingleton.Get().User.Timeout) : "Odliczanie wyłączone";
         }
 
         private void SetTranslationDirectionLabel()
         {
-            switch (UserManager.GetInstance().User.TranslationDirection)
+            switch (UserManagerSingleton.Get().User.TranslationDirection)
             {
                 case TranslationDirection.FromSecond:
                     {
@@ -400,7 +401,7 @@ namespace Wordki.ViewModels
 
         private void SetAllWordsLabel()
         {
-            AllWordsLabel = UserManager.GetInstance().User.AllWords ? "Wszystkie słowa" : "Tylko widoczne";
+            AllWordsLabel = UserManagerSingleton.Get().User.AllWords ? "Wszystkie słowa" : "Tylko widoczne";
         }
 
         private void SetEndLessonButton()

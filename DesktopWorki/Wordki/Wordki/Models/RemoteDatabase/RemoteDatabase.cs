@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using Wordki.Database2;
 using Wordki.Helpers.Command;
 using Wordki.Models.Connector;
 
@@ -12,7 +13,7 @@ namespace Wordki.Models.RemoteDatabase
         {
             DateTime downloadDateTime = new DateTime();
             CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetDateTime(UserManager.GetInstance().User))
+            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetDateTime(UserManagerSingleton.Get().User as User))
             {
                 OnCompleteCommand = response =>
                 {
@@ -45,14 +46,14 @@ namespace Wordki.Models.RemoteDatabase
                     }
                 }
             });
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetGroups(UserManager.GetInstance().User)) { OnCompleteCommand = Database.GetDatabase().OnReadGroups });
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetWords(UserManager.GetInstance().User)) { OnCompleteCommand = Database.GetDatabase().OnReadWords });
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetResults(UserManager.GetInstance().User)) { OnCompleteCommand = Database.GetDatabase().OnReadResults });
+            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetGroups(UserManagerSingleton.Get().User)) { OnCompleteCommand = Database.GetDatabase().OnReadGroups });
+            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetWords(UserManagerSingleton.Get().User)) { OnCompleteCommand = Database.GetDatabase().OnReadWords });
+            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetResults(UserManagerSingleton.Get().User)) { OnCompleteCommand = Database.GetDatabase().OnReadResults });
             lQueue.OnQueueComplete += success =>
             {
                 if (success)
                 {
-                    User user = UserManager.GetInstance().User;
+                    User user = UserManagerSingleton.Get().User as User;
                     user.DownloadTime = downloadDateTime;
                     Database.GetDatabase().UpdateUser(user);
                     Database.GetDatabase().LoadDatabase();

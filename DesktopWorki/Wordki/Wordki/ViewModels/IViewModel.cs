@@ -10,5 +10,8 @@ namespace Wordki.ViewModels
     {
         void InitViewModel();
         void Back();
+
+        void Loaded();
+        void Unloaded();
     }
 }

@@ -24,5 +24,15 @@ namespace Wordki.ViewModels
         public abstract void Back();
 
         public abstract void InitViewModel();
+
+        public void Loaded()
+        {
+            Console.WriteLine("Loaded");
+        }
+
+        public void Unloaded()
+        {
+            Console.WriteLine("Unloaded");
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using Repository.Models.Enums;
 using Wordki.Helpers;
 using Repository.Models;
+using Wordki.Database2;
 
 namespace Wordki.Models.Lesson
 {
@@ -52,7 +53,7 @@ namespace Wordki.Models.Lesson
         public override void Check(string translation)
         {
             IsChecked = true;
-            switch (UserManager.GetInstance().User.TranslationDirection)
+            switch (UserManagerSingleton.Get().User.TranslationDirection)
             {
                 case TranslationDirection.FromSecond: IsCorrect = translation.Trim().Equals(SelectedWord.Language1); break;
                 case TranslationDirection.FromFirst: IsCorrect = translation.Trim().Equals(SelectedWord.Language2); break;
