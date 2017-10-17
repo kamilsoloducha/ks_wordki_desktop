@@ -1,15 +1,16 @@
 ﻿using NUnit.Framework;
 using Repository.Models;
+using System;
 using System.IO;
 using Wordki.Database2;
 
 namespace Wordki.Test.Database.UserOrganizerTests
 {
     [TestFixture]
-    public class UserOrganizerTests
+    public class DatabaseOrganizerTests
     {
 
-        IDatabaseOrganizer userOrganizer;
+        IDatabaseOrganizer databaseOrganizer;
         IUser user;
         IDatabase database;
         Utility util = new Utility();
@@ -17,7 +18,7 @@ namespace Wordki.Test.Database.UserOrganizerTests
         [SetUp]
         public void SetUp()
         {
-            userOrganizer = new DatabaseOrganizer("");
+            databaseOrganizer = new DatabaseOrganizer("");
             user = util.GetUser();
             database = DatabaseSingleton.GetDatabase();
         }
@@ -25,7 +26,7 @@ namespace Wordki.Test.Database.UserOrganizerTests
         [Test]
         public void Create_database_with_user_test()
         {
-            userOrganizer.AddDatabase(user);
+            databaseOrganizer.AddDatabase(user);
             Assert.IsTrue(File.Exists(NHibernateHelper.DatabasePath), "Error in create Database file");
 
             IUser userFromDatabase = database.GetUserAsync(user.Name, user.Password).Result;
@@ -37,25 +38,37 @@ namespace Wordki.Test.Database.UserOrganizerTests
         [Test]
         public void Delete_database_with_correct_user_test()
         {
-            userOrganizer.AddDatabase(user);
-            userOrganizer.RemoveDatabase(user);
+            databaseOrganizer.AddDatabase(user);
+            databaseOrganizer.RemoveDatabase(user);
             Assert.IsTrue(!File.Exists(NHibernateHelper.DatabasePath), "Error in delete Database file");
         }
 
         [Test]
         public void Delete_database_with_wrong_user_test()
         {
-            userOrganizer.AddDatabase(user);
+            databaseOrganizer.AddDatabase(user);
             user.Password = "fdsa";
-            userOrganizer.RemoveDatabase(user);
+            databaseOrganizer.RemoveDatabase(user);
             Assert.IsTrue(File.Exists(NHibernateHelper.DatabasePath), "Error in delete Database file");
+        }
+
+        [Test]
+        public void Try_to_get_databases_names_test()
+        {
+            databaseOrganizer.GetDatabases();
         }
 
 
         [TearDown]
         public void TearDown()
         {
-            Directory.Delete(NHibernateHelper.DirectoryPath, true);
+            try
+            {
+                Directory.Delete(NHibernateHelper.DirectoryPath, true);
+            }catch(Exception e)
+            {
+
+            }
         }
     }
 }

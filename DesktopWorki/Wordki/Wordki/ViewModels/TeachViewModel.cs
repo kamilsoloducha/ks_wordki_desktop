@@ -235,11 +235,11 @@ namespace Wordki.ViewModels
                 bool? lResult = lDialog.DialogResult;
                 if (lResult.HasValue && lResult.Value)
                 {//delete
-                    await Database.GetDatabase().DeleteWordAsync(Lesson.SelectedWord.GroupId, Lesson.SelectedWord);
+                    await DatabaseSingleton.GetDatabase().DeleteWordAsync(Lesson.SelectedWord);
                     //usunięcie śladu po słowie w wynikach
                     if (Lesson.Counter > Lesson.BeginWordsList.Count)
                     {
-                        Lesson.ResultList.First(x => x.GroupId == Lesson.SelectedWord.GroupId).Wrong--;
+                        Lesson.ResultList.First(x => x.Group.Id == Lesson.SelectedWord.Group.Id).Wrong--;
                     }
                     Lesson.BeginWordsList.Remove(Lesson.SelectedWord);
                     Lesson.NextWord();
@@ -943,7 +943,7 @@ namespace Wordki.ViewModels
 
             protected override void RefreshGroupName()
             {
-                GroupName = Database.GetDatabase().GetGroupById(Lesson.SelectedWord.GroupId).Name;
+                GroupName = Lesson.SelectedWord.Group.Name;
             }
 
             protected override void RefreshTranslation()
@@ -1009,7 +1009,7 @@ namespace Wordki.ViewModels
 
             protected override void RefreshGroupName()
             {
-                GroupName = Database.GetDatabase().GetGroupById(Lesson.SelectedWord.GroupId).Name;//todo trzeba to przyspieszyc bo nie oplaca sie szukac cały czas tego
+                GroupName = Lesson.SelectedWord.Group.Name;
             }
 
             protected override void RefreshTranslation()
@@ -1074,7 +1074,7 @@ namespace Wordki.ViewModels
 
             protected override void RefreshGroupName()
             {
-                GroupName = Database.GetDatabase().GetGroupById(Lesson.SelectedWord.GroupId).Name;
+                GroupName = Lesson.SelectedWord.Group.Name;
             }
 
             protected override void RefreshTranslation()
@@ -1166,49 +1166,49 @@ namespace Wordki.ViewModels
             public override void RefreshView()
             {
                 base.RefreshView();
-                Lesson.FinishLesson();
-                Lesson.Timer.StopTimer();
-                IList<IGroup> lGroupList = Lesson.ResultList.Select(lResult => Database.GetDatabase().GetGroupById(lResult.GroupId)).ToList();
-                CommandQueue<Helpers.Command.ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetUploadQueue();
-                lQueue.MainQueue.AddFirst(new SimpleCommandAsync(async () =>
-                {
-                    Models.IDatabase lDatabase = Models.Database.GetDatabase();
-                    foreach (Result lItem in Lesson.ResultList)
-                    {
-                        await Database.GetDatabase().AddResultAsync(lItem);
-                    }
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        LessonResultDialog lDialog = new LessonResultDialog(lGroupList);
-                        lDialog.ButtonCommand = new BuilderCommand(delegate
-                        {
-                            lDialog.Close();
-                            Switcher.GetSwitcher().Back(true);
-                        });
-                        lDialog.ShowDialog();
-                    });
-                    Models.IDatabase database = Database.GetDatabase();
-                    foreach (Word lItem in Lesson.BeginWordsList)
-                    {
-                        IWord word = database.GetGroupById(lItem.GroupId).Words.FirstOrDefault(x => x.Id == lItem.Id);
-                        if (word == null)
-                        {
-                            continue;
-                        }
-                        word.Drawer = lItem.Drawer;
-                        await lDatabase.UpdateWordAsync(word);
-                    }
-                    return true;
-                }));
-                lQueue.OnQueueComplete += success =>
-                {
-                    if (success)
-                    {
-                        Database.GetDatabase().RefreshDatabase();
-                    }
-                };
-                lQueue.CreateDialog = false;
-                lQueue.Execute();
+                //Lesson.FinishLesson();
+                //Lesson.Timer.StopTimer();
+                //IList<IGroup> lGroupList = Lesson.ResultList.Select(lResult => DatabaseSingleton.GetDatabase().GetGroupById(lResult.Group.Id)).ToList();
+                //CommandQueue<Helpers.Command.ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetUploadQueue();
+                //lQueue.MainQueue.AddFirst(new SimpleCommandAsync(async () =>
+                //{
+                //    Models.IDatabase lDatabase = Models.Database.GetDatabase();
+                //    foreach (Result lItem in Lesson.ResultList)
+                //    {
+                //        await Database.GetDatabase().AddResultAsync(lItem);
+                //    }
+                //    Application.Current.Dispatcher.Invoke(() =>
+                //    {
+                //        LessonResultDialog lDialog = new LessonResultDialog(lGroupList);
+                //        lDialog.ButtonCommand = new BuilderCommand(delegate
+                //        {
+                //            lDialog.Close();
+                //            Switcher.GetSwitcher().Back(true);
+                //        });
+                //        lDialog.ShowDialog();
+                //    });
+                //    Models.IDatabase database = Database.GetDatabase();
+                //    foreach (Word lItem in Lesson.BeginWordsList)
+                //    {
+                //        IWord word = database.GetGroupById(lItem.Group.Id).Words.FirstOrDefault(x => x.Id == lItem.Id);
+                //        if (word == null)
+                //        {
+                //            continue;
+                //        }
+                //        word.Drawer = lItem.Drawer;
+                //        await lDatabase.UpdateWordAsync(word);
+                //    }
+                //    return true;
+                //}));
+                //lQueue.OnQueueComplete += success =>
+                //{
+                //    if (success)
+                //    {
+                //        Database.GetDatabase().RefreshDatabase();
+                //    }
+                //};
+                //lQueue.CreateDialog = false;
+                //lQueue.Execute();
             }
 
             protected override void RefreshFocused() { }

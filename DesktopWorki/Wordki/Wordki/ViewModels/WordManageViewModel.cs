@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using Wordki.Database2;
 using Wordki.Helpers;
 using Wordki.Models;
 
@@ -44,7 +45,7 @@ namespace Wordki.ViewModels
 
         public WordManageViewModel()
         {
-            Database = Models.Database.GetDatabase();
+            Database = DatabaseSingleton.GetDatabase();
             ActivateCommand();
 
         }
@@ -54,7 +55,7 @@ namespace Wordki.ViewModels
             try
             {
                 long lGroupId = (long)Util.PackageStore.Get(0);
-                Group = Database.GetGroupById(lGroupId);
+                Group = Database.Groups.FirstOrDefault(x => x.Id == lGroupId);
                 Name = "jakaś nazwa";
             }
             catch (Exception lException)
@@ -86,7 +87,7 @@ namespace Wordki.ViewModels
             {
                 return;
             }
-            await Database.ConnectWords(items.OfType<IWord>().ToList());
+            //await Database.ConnectWords(items.OfType<IWord>().ToList());
         }
 
         private async void VisibilityChange(object obj)
@@ -117,7 +118,7 @@ namespace Wordki.ViewModels
                 return;
             for (int i = lList.Count - 1; i >= 0; i--)
             {
-                await Database.DeleteWordAsync(Group, (Word)lList[i]);
+                //await Database.DeleteWordAsync(Group, (Word)lList[i]);
             }
         }
 

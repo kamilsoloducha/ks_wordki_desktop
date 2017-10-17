@@ -110,8 +110,8 @@ namespace Wordki.Models.Connector
 
         public override void PrepareMessage()
         {
-            List<IGroup> groups = Database.GetGroupsToSend();
-            Message = JsonConvert.SerializeObject(groups);
+            //List<IGroup> groups = Database.GetGroupsToSend();
+            //Message = JsonConvert.SerializeObject(groups);
         }
     }
 
@@ -128,8 +128,8 @@ namespace Wordki.Models.Connector
 
         public override void PrepareMessage()
         {
-            List<IWord> words = Database.GetWordsToSend();
-            Message = JsonConvert.SerializeObject(words);
+            //List<IWord> words = Database.GetWordsToSend();
+            //Message = JsonConvert.SerializeObject(words);
         }
     }
 
@@ -146,8 +146,8 @@ namespace Wordki.Models.Connector
 
         public override void PrepareMessage()
         {
-            List<IResult> results = Database.GetResultsToSend();
-            Message = JsonConvert.SerializeObject(results);
+            //List<IResult> results = Database.GetResultsToSend();
+            //Message = JsonConvert.SerializeObject(results);
         }
     }
 

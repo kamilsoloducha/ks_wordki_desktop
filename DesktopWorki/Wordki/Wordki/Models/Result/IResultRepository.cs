@@ -1,5 +1,6 @@
 ﻿using Repository.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Wordki.Models
 {
@@ -17,6 +18,19 @@ namespace Wordki.Models
         void Delete(IResult result);
 
         long RowCount();
+
+        Task<IEnumerable<IResult>> GetResultsAsync();
+
+        Task<IResult> GetAsync(long id);
+
+        Task SaveAsync(IResult result);
+
+        Task UpdateAsync(IResult result);
+
+        Task DeleteAsync(IResult result);
+
+        Task<long> RowCountAsync();
+
 
     }
 }

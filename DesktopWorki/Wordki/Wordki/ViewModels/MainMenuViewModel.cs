@@ -173,7 +173,7 @@ namespace Wordki.ViewModels
 
         private void Exit(object obj)
         {
-            Database.GetDatabase().SaveDatabase();
+            DatabaseSingleton.GetDatabase().SaveDatabaseAsync();
             CommandQueue<ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetUploadQueue();
             lQueue.OnQueueComplete += success => Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown());
             lQueue.Execute();
@@ -182,13 +182,13 @@ namespace Wordki.ViewModels
 
         private void RefreshInfo()
         {
-            Models.IDatabase lDatabase = Database.GetDatabase();
-            ObservableCollection<double> lList = new ObservableCollection<double>(lDatabase.GetCountWordsByDrawer());
+            IDatabase lDatabase = DatabaseSingleton.GetDatabase();
+            ObservableCollection<double> lList = new ObservableCollection<double>();
             string lTeachTimeToday = "to DO";//Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.GroupsList.Sum(x => x.GetLessonTime(DateTime.Now)));
-            string lTeachTime = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.GroupsList.Sum(x => x.Results.Sum(y => y.TimeCount)));
-            int lGroupCount = lDatabase.GroupsList.Count;
-            int lWordCount = lDatabase.GroupsList.Sum(x => x.Words.Count);
-            int lResultCount = lDatabase.GroupsList.Sum(x => x.Results.Count);
+            string lTeachTime = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.Groups.Sum(x => x.Results.Sum(y => y.TimeCount)));
+            int lGroupCount = lDatabase.Groups.Count;
+            int lWordCount = lDatabase.Groups.Sum(x => x.Words.Count);
+            int lResultCount = lDatabase.Groups.Sum(x => x.Results.Count);
             Application.Current.Dispatcher.Invoke(() =>
             {
                 TeachTimeToday = lTeachTimeToday;

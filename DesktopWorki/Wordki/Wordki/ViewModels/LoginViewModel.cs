@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Security.Cryptography;
 using Wordki.Database2;
 using Wordki.Helpers;
 using Wordki.Helpers.Command;
@@ -69,24 +70,39 @@ namespace Wordki.ViewModels
             UserName = user;
         }
 
-        public void Loging(object obj)
+        public async void Loging(object obj)
         {
             if (Password == null)
                 return;
             if (UserName == null)
                 return;
-            IUser user = DatabaseSingleton.GetDatabase().GetUserAsync(UserName, Password).Result;
+            NHibernateHelper.DatabaseName = UserName;
+            IUser user = await DatabaseSingleton.GetDatabase().GetUserAsync(UserName, GetHashedPassword());
             if (user != null)
             {
-                IUserManager userManager = UserManagerSingleton.Get();
-                userManager.Set(user);
-                user.LastLoginDateTime = DateTime.Now;
-                userManager.Update();
-                StartWithUser(user as User);
+                StartWithUser(user);
                 return;
                 CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
                 lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestLogin(user as User)) { OnCompleteCommand = OnLogin });
                 lQueue.Execute();
+            }
+            else
+            {
+                IDatabaseOrganizer databaseOrganizer = DatabaseOrganizerSingleton.Get();
+                user = new User()
+                {
+                    LocalId = DateTime.Now.Ticks,
+                    Name = UserName,
+                    Password = GetHashedPassword(),
+                    CreateDateTime = DateTime.Now,
+
+                };
+                if (! await databaseOrganizer.AddDatabaseAsync(user))
+                {
+                    Console.WriteLine("Błąd dodawania bazy danych");
+                    return;
+                }
+                StartWithUser(user);
             }
             //inforamcja o zlym logowaniu
             Console.WriteLine("Błąd logowania");
@@ -107,6 +123,11 @@ namespace Wordki.ViewModels
             HandleResponse(response);
         }
 
+
+        private string GetHashedPassword()
+        {
+            return Util.MD5Hash.GetMd5Hash(MD5.Create(), Password);
+        }
         #endregion
 
     }

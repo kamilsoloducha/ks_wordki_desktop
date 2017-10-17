@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using Wordki.Database2;
 using Wordki.Helpers;
 using Wordki.Helpers.WordComparer;
 using Wordki.Helpers.WordConnector;
@@ -55,7 +56,7 @@ namespace Wordki.ViewModels
                 {
                     return;
                 }
-                IGroup lGroup = Database.GroupsList.FirstOrDefault(x => x.Id == lWordItem.GroupId);
+                IGroup lGroup = Database.Groups.FirstOrDefault(x => x.Id == lWordItem.Group.Id);
                 if (lGroup == null)
                     return;
                 IWord lSelectedWord = lGroup.Words.FirstOrDefault(x => x.Id == lWordItem.Id);
@@ -78,7 +79,7 @@ namespace Wordki.ViewModels
 
         public override void InitViewModel()
         {
-            Database = Models.Database.GetDatabase();
+            Database = DatabaseSingleton.GetDatabase();
         }
 
         public override void Back()
@@ -96,7 +97,7 @@ namespace Wordki.ViewModels
                 return;
             IWordConnector connector = new WordConnector();
             connector.Connect(lList.Cast<Word>());
-            Database.SaveDatabase();
+            Database.SaveDatabaseAsync();
         }
 
         private void Back(object obj)
@@ -106,27 +107,27 @@ namespace Wordki.ViewModels
 
         private async void CreateDataGridCollection()
         {
-            BindingOperations.EnableCollectionSynchronization(Database.GroupsList, _lockObject);
+            BindingOperations.EnableCollectionSynchronization(Database.Groups, _lockObject);
             await Task.Run(() =>
             {
                 DataGridCollection.Clear();
                 IEnumerable<Word> lSameWords = FindSameWords();
                 foreach (Word lWord in lSameWords)
                 {
-                    IGroup lGroup = Database.GroupsList.FirstOrDefault(x => x.Id == lWord.GroupId);
+                    IGroup lGroup = Database.Groups.FirstOrDefault(x => x.Id == lWord.Group.Id);
                     if (lGroup == null)
                         continue;
                     DataGridCollection.Add(lWord);
                 }
             });
-            BindingOperations.DisableCollectionSynchronization(Database.GroupsList);
+            BindingOperations.DisableCollectionSynchronization(Database.Groups);
         }
 
         private IEnumerable<Word> FindSameWords()
         {
             try
             {
-                IEnumerable<IWord> words = Database.GroupsList.SelectMany(x => x.Words);
+                IEnumerable<IWord> words = Database.Groups.SelectMany(x => x.Words);
                 IWordComparer wordComparer = new WordComparer();
                 IWordFinder wordFinder = new WordFinder(words, wordComparer);
                 return wordFinder.FindWords();

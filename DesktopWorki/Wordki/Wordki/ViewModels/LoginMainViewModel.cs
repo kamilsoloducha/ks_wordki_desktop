@@ -5,6 +5,9 @@ using Wordki.Models;
 using Wordki.Models.Connector;
 using Wordki.Helpers.Notification;
 using System.Windows.Input;
+using Repository.Models;
+using System;
+using Wordki.Database2;
 
 namespace Wordki.ViewModels
 {
@@ -104,9 +107,12 @@ namespace Wordki.ViewModels
 
         #region Methods
 
-        protected void StartWithUser(User pUser)
+        protected void StartWithUser(IUser user)
         {
-            Database.GetDatabase().UpdateUser(pUser);
+            IUserManager userManager = UserManagerSingleton.Get();
+            userManager.Set(user);
+            user.LastLoginDateTime = DateTime.Now;
+            userManager.Update();
             Start();
         }
 
@@ -119,14 +125,14 @@ namespace Wordki.ViewModels
             User lUser = JsonConvert.DeserializeObject<User>(response.Message);
             lUser.IsLogin = true;
             lUser.IsRegister = true;
-            IDatabase database = Database.GetDatabase();
-            User dbUser = database.GetUser(lUser.LocalId);
-            if (dbUser == null)
-            {
-                database.AddUser(lUser);
-            }
+            IDatabase database = DatabaseSingleton.GetDatabase();
+            //User dbUser = database.GetUserAsync(lUser.LocalId);
+            //if (dbUser == null)
+            //{
+                //database.AddUser(lUser);
+            //}
             //UserManager.GetInstance().User = lUser;
-            database.LoadDatabase();
+            database.LoadDatabaseAsync();
             StartWithUser(lUser);
         }
 

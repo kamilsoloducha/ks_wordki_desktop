@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using Util;
+using Wordki.Database2;
 using Wordki.Helpers;
 using Wordki.Models;
 using Point = System.Windows.Point;
@@ -86,7 +87,7 @@ namespace Wordki.ViewModels
                     _selectedGroup = value;
                     OnPropertyChanged("SelectedGroup");
                     if (value > 0)
-                        GroupId = Database.GetDatabase().GroupsList[value].Id;
+                        GroupId = DatabaseSingleton.GetDatabase().Groups[value].Id;
                     OnDraw();
                 }
             }
@@ -171,15 +172,15 @@ namespace Wordki.ViewModels
 
         public override void InitViewModel()
         {
-            IDatabase lDatabase = Database.GetDatabase();
+            IDatabase lDatabase = DatabaseSingleton.GetDatabase();
             SelectedLabel = 1;
             GroupId = (long)PackageStore.Get(0);
 
-            foreach (Group lGroup in lDatabase.GroupsList)
-            {
-                GroupNameList.Add(lGroup.Name);
-            }
-            SelectedGroup = GroupNameList.IndexOf(lDatabase.GetGroupById(GroupId).Name);
+            //foreach (Group lGroup in lDatabase.GroupsList)
+            //{
+            //    GroupNameList.Add(lGroup.Name);
+            //}
+            //SelectedGroup = GroupNameList.IndexOf(lDatabase.GetGroupById(GroupId).Name);
             OnDraw();
         }
 
@@ -266,7 +267,7 @@ namespace Wordki.ViewModels
             List<Point> lPointsList = new List<Point>();
             try
             {
-                IList<IResult> lResultList = Database.GetDatabase().GetResultsList(pGroupId).ToList();
+                IList<IResult> lResultList = new List<IResult>();/*DatabaseSingleton.GetDatabase().GetResultsList(pGroupId).ToList();*/
                 if (lResultList.Count == 0)
                 {
                     return lPointsList;

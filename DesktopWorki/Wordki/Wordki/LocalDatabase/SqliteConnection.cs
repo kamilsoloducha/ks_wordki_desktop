@@ -328,7 +328,7 @@ namespace Wordki.LocalDatabase
                     {
                         Word lWord = new Word();
                         lWord.Id = lReader.GetInt64(0);
-                        lWord.GroupId = lReader.GetInt64(2);
+                        lWord.Group.Id = lReader.GetInt64(2);
                         if (!lReader.IsDBNull(3))
                             lWord.Language1 = lReader.GetString(3);
                         if (!lReader.IsDBNull(4))
@@ -362,7 +362,7 @@ namespace Wordki.LocalDatabase
                     {
                         Word lWord = new Word();
                         lWord.Id = lReader.GetInt64(0);
-                        lWord.GroupId = lReader.GetInt64(2);
+                        lWord.Group.Id = lReader.GetInt64(2);
                         if (!lReader.IsDBNull(3))
                             lWord.Language1 = lReader.GetString(3);
                         if (!lReader.IsDBNull(4))

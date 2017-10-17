@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
+using Wordki.Database2;
 using Wordki.Helpers;
 using Wordki.Helpers.FileChooser;
 using Wordki.Helpers.GroupCreator;
@@ -148,7 +149,7 @@ namespace Wordki.ViewModels
 
         private async void SaveGroup(object obj)
         {
-            IDatabase database = Database.GetDatabase();
+            IDatabase database = DatabaseSingleton.GetDatabase();
             await database.AddGroupAsync(Group);
             BackCommand.Execute(null);
         }

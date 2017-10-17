@@ -93,6 +93,13 @@ namespace Wordki.Test.Database
             repo.Update(group);
         }
 
+        [Test]
+        public void Save_empty_group_test()
+        {
+            repo.Save(new Group());
+        }
+
+
         [TearDown]
         public void TearDown()
         {

@@ -1,5 +1,5 @@
 ﻿using Repository.Models;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Wordki.Models
 {
@@ -13,6 +13,14 @@ namespace Wordki.Models
         void Update(IUser user);
 
         long RowCount();
+
+        Task<IUser> GetAsync(string name, string password);
+
+        Task SaveAsync(IUser user);
+
+        Task UpdateAsync(IUser user);
+
+        Task<long> RowCountAsync();
 
     }
 }

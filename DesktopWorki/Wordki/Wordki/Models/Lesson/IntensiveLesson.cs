@@ -118,7 +118,7 @@ namespace Wordki.Models.Lesson
 
         private void MakeKnwon()
         {
-            Result result = ResultList.FirstOrDefault(x => x.GroupId == SelectedWord.GroupId);
+            Result result = ResultList.FirstOrDefault(x => x.Group.Id == SelectedWord.Group.Id);
             if (result == null)
             {
                 return;
@@ -135,7 +135,7 @@ namespace Wordki.Models.Lesson
 
         private void MakeUnknwon()
         {
-            Result result = ResultList.FirstOrDefault(x => x.GroupId == SelectedWord.GroupId);
+            Result result = ResultList.FirstOrDefault(x => x.Group.Id == SelectedWord.Group.Id);
             if (result == null)
             {
                 return;

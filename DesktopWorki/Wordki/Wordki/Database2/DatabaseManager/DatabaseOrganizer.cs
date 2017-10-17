@@ -2,6 +2,7 @@
 using Repository.Models;
 using System.IO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Wordki.Database2
 {
@@ -27,7 +28,9 @@ namespace Wordki.Database2
                 }
                 NHibernateHelper.ResetSession();
                 NHibernateHelper.DatabaseName = user.Name;
-                return Database.AddUserAsync(user).Result;
+                Task<bool> task = Database.AddUserAsync(user);
+                task.Wait();
+                return task.Result;
             }
             catch (Exception)
             {
@@ -59,15 +62,9 @@ namespace Wordki.Database2
             {
                 NHibernateHelper.DatabaseName = user.Name;
                 NHibernateHelper.ResetSession();
-                IUser userFromDatabase = Database.GetUserAsync(user.Name, user.Password).Result;
-                if (userFromDatabase != null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                Task<IUser> task = Database.GetUserAsync(user.Name, user.Password);
+                task.Wait();
+                return task.Result != null;
             }
             catch (Exception)
             {
@@ -77,6 +74,11 @@ namespace Wordki.Database2
 
         public IEnumerable<string> GetDatabases()
         {
+            if (!Directory.Exists(_mainPath))
+            {
+                Directory.CreateDirectory(_mainPath);
+                yield break;
+            }
             string[] files = Directory.GetFiles(_mainPath);
             foreach (string file in files)
             {
@@ -85,6 +87,56 @@ namespace Wordki.Database2
                 {
                     yield return fileName.Replace(".db", "");
                 }
+            }
+        }
+
+        public async Task<bool> CheckDatabaseAsync(IUser user)
+        {
+            try
+            {
+                NHibernateHelper.DatabaseName = user.Name;
+                NHibernateHelper.ResetSession();
+                return await Database.GetUserAsync(user.Name, user.Password) != null;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> AddDatabaseAsync(IUser user)
+        {
+            try
+            {
+                if (await CheckDatabaseAsync(user))
+                {
+                    return true;
+                }
+                NHibernateHelper.ResetSession();
+                NHibernateHelper.DatabaseName = user.Name;
+                return await Database.AddUserAsync(user);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> RemoveDatabaseAsync(IUser user)
+        {
+            try
+            {
+                if (!await CheckDatabaseAsync(user))
+                {
+                    return false;
+                }
+                NHibernateHelper.ResetSession();
+                File.Delete(NHibernateHelper.DatabasePath);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
             }
         }
     }

@@ -14,12 +14,19 @@ namespace Wordki.Models
         [JsonIgnore]
         public virtual long UserId { get; set; }
 
-        public virtual IGroup Group { get; set; }
-
-        public virtual long GroupId
+        private IGroup _group;
+        public virtual IGroup Group
         {
-            get { return Group == null ? 0 : Group.Id; }
-            set { throw new NotImplementedException(); }
+            get { return _group; }
+            set
+            {
+                if (value == _group)
+                {
+                    return;
+                }
+                _group = value;
+                _group.AddWord(this);
+            }
         }
 
         private string _language1;

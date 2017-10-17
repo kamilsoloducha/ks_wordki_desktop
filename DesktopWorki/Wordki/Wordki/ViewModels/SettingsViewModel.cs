@@ -18,7 +18,7 @@ namespace Wordki.ViewModels
     public class SettingsViewModel : ViewModelBase
     {
         public Settings Settings { get; set; }
-        public Models.IDatabase Database { get; set; }
+        public IDatabase Database { get; set; }
 
         public BuilderCommand BackCommand { get; set; }
         public BuilderCommand DefaultCommand { get; set; }
@@ -152,7 +152,7 @@ namespace Wordki.ViewModels
         {
             ActivateCommand();
             Settings = Settings.GetSettings();
-            Database = Models.Database.GetDatabase();
+            Database = DatabaseSingleton.GetDatabase();
         }
 
         public override void InitViewModel()
@@ -286,7 +286,6 @@ namespace Wordki.ViewModels
 
         private void Synchronize(object obj)
         {
-            Models.IDatabase lDatabase = Models.Database.GetDatabase();
             UserManagerSingleton.Get().User.DownloadTime = new DateTime(1991, 5, 20);
             CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
             CommandQueue<ICommand> downloadQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetDownloadQueue();
@@ -294,7 +293,7 @@ namespace Wordki.ViewModels
             {
                 lQueue.MainQueue.AddLast(command);
             }
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetDateTime(UserManagerSingleton.Get().User as User)) { OnCompleteCommand = lDatabase.OnReadDateTime });
+            //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetDateTime(UserManagerSingleton.Get().User as User)) { OnCompleteCommand = lDatabase.OnReadDateTime });
             CommandQueue<ICommand> uploadQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetUploadQueue();
             foreach (ICommand command in uploadQueue.MainQueue)
             {
@@ -302,24 +301,23 @@ namespace Wordki.ViewModels
             }
             lQueue.OnQueueComplete += success =>
             {
-                lDatabase.RefreshDatabase();
-                lDatabase.LoadDatabase();
+                Database.RefreshDatabaseAsync();
+                Database.LoadDatabaseAsync();
             };
             lQueue.Execute();
         }
 
         private void Logout(object obj)
         {
-            Models.Database.GetDatabase().SaveDatabase();
-            Models.Database.ClearDatabase();
+            Database.SaveDatabaseAsync();
             Settings.ResetSettings();
             Switcher.GetSwitcher().Reset();
         }
 
         private void ClearDatabase(object obj)
         {
-            Models.Database.GetDatabase().GroupsList.Clear();
-            Models.Database.ClearDatabase();
+            //Models.Database.GetDatabase().GroupsList.Clear();
+            //Models.Database.ClearDatabase();
             Logout(null);
         }
 

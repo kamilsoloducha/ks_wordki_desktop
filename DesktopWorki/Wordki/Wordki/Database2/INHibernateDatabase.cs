@@ -16,11 +16,14 @@ namespace Wordki.Database2
         Task<bool> DeleteGroupAsync(IGroup group);
         Task<bool> DeleteResultAsync(IResult result);
         Task<bool> DeleteWordAsync(IWord word);
-        void LoadDatabase();
-        void SaveDatabase();
+        Task LoadDatabaseAsync();
+        Task SaveDatabaseAsync();
+        Task RefreshDatabaseAsync();
         Task<bool> UpdateGroupAsync(IGroup group);
         Task<bool> UpdateResultAsync(IResult result);
         Task<bool> UpdateWordAsync(IWord word);
         Task<bool> UpdateUserAsync(IUser user);
+
+
     }
 }

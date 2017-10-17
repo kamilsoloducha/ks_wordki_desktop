@@ -46,17 +46,17 @@ namespace Wordki.Models.RemoteDatabase
                     }
                 }
             });
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetGroups(UserManagerSingleton.Get().User)) { OnCompleteCommand = Database.GetDatabase().OnReadGroups });
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetWords(UserManagerSingleton.Get().User)) { OnCompleteCommand = Database.GetDatabase().OnReadWords });
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetResults(UserManagerSingleton.Get().User)) { OnCompleteCommand = Database.GetDatabase().OnReadResults });
+            //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetGroups(UserManagerSingleton.Get().User)) { OnCompleteCommand = Database.GetDatabase().OnReadGroups });
+            //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetWords(UserManagerSingleton.Get().User)) { OnCompleteCommand = Database.GetDatabase().OnReadWords });
+            //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetResults(UserManagerSingleton.Get().User)) { OnCompleteCommand = Database.GetDatabase().OnReadResults });
             lQueue.OnQueueComplete += success =>
             {
                 if (success)
                 {
                     User user = UserManagerSingleton.Get().User as User;
                     user.DownloadTime = downloadDateTime;
-                    Database.GetDatabase().UpdateUser(user);
-                    Database.GetDatabase().LoadDatabase();
+                    //Database.GetDatabase().UpdateUser(user);
+                    //Database.GetDatabase().LoadDatabase();
                 }
             };
             return lQueue;
@@ -65,26 +65,26 @@ namespace Wordki.Models.RemoteDatabase
         public override CommandQueue<ICommand> GetUploadQueue()
         {
             CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestPutGroups(Database.GetDatabase())));
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestPutWords(Database.GetDatabase())));
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestPutResults(Database.GetDatabase())));
+            //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestPutGroups(Database.GetDatabase())));
+            //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestPutWords(Database.GetDatabase())));
+            //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestPutResults(Database.GetDatabase())));
             lQueue.OnQueueComplete += success =>
             {
                 if (success)
                 {
-                    Database.GetDatabase().RefreshDatabase();
-                    foreach (Group group in Database.GetDatabase().GroupsList)
-                    {
-                        group.State = 0;
-                        foreach (Word word in group.Words)
-                        {
-                            word.State = 0;
-                        }
-                        foreach (Result result in group.Results)
-                        {
-                            result.State = 0;
-                        }
-                    }
+                    //Database.GetDatabase().RefreshDatabase();
+                    //foreach (Group group in Database.GetDatabase().GroupsList)
+                    //{
+                    //    group.State = 0;
+                    //    foreach (Word word in group.Words)
+                    //    {
+                    //        word.State = 0;
+                    //    }
+                    //    foreach (Result result in group.Results)
+                    //    {
+                    //        result.State = 0;
+                    //    }
+                    //}
                 }
             };
             return lQueue;

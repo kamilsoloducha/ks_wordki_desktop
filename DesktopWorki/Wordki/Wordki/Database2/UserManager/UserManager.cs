@@ -32,7 +32,7 @@ namespace Wordki.Database2
 
         public void Update()
         {
-            _userRepo.Update(_user);
+            _userRepo.UpdateAsync(_user);
         }
     }
 }

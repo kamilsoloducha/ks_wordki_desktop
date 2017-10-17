@@ -24,7 +24,7 @@ namespace Wordki.Models.Lesson
         {
             if (Counter++ <= BeginWordsList.Count)
             {
-                Result lResult = ResultList.FirstOrDefault(x => x.GroupId == SelectedWord.GroupId);
+                Result lResult = ResultList.FirstOrDefault(x => x.Group.Id == SelectedWord.Group.Id);
                 SelectedWord.Drawer++;
                 if (IsCorrect)
                 {
@@ -80,10 +80,10 @@ namespace Wordki.Models.Lesson
             ResultList = new List<Result>();
             foreach (Word lWord in BeginWordsList)
             {
-                if (ResultList.Exists(x => x.GroupId == lWord.GroupId)) continue;
-                IGroup lGroup = Database.GetDatabase().GetGroupById(lWord.GroupId);
+                if (ResultList.Exists(x => x.Group.Id == lWord.Group.Id)) continue;
+                IGroup lGroup = lWord.Group;
                 ResultList.Add(new Result(-1,
-                  lWord.GroupId,
+                  lWord.Group.Id,
                   0,
                   0,
                   0,

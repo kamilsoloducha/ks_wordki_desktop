@@ -79,7 +79,7 @@ namespace Wordki.Models.Connector {
     public static CommandQueue<ICommand> GetCommonGroupsQueue() {
       //DateTime downloadDateTime = new DateTime();
       CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-      lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetCommonGroups("dupa", 1, 1)) { OnCompleteCommand = Database.GetDatabase().OnReadCommonGroup });
+      //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetCommonGroups("dupa", 1, 1)) { OnCompleteCommand = Database.GetDatabase().OnReadCommonGroup });
       //lQueue.OnQueueComplete += success => {
       //  if (success) {
       //    User user = Database.GetDatabase().User;

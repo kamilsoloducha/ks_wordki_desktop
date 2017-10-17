@@ -25,27 +25,24 @@ namespace Wordki.Database2
             Groups = new List<IGroup>();
         }
 
-        public void LoadDatabase()
+        public async Task LoadDatabaseAsync()
         {
             if (Groups.Count > 0)
             {
                 Groups.Clear();
             }
-            foreach (var group in _groupRepo.GetGroups())
+            foreach (var group in await _groupRepo.GetGroupsAsync())
             {
                 Groups.Add(group);
             }
         }
 
-        public void SaveDatabase()
+        public async Task SaveDatabaseAsync()
         {
-            foreach (var group in Groups)
-            {
-                _groupRepo.Update(group);
-            }
+            await _groupRepo.UpdateAsync(Groups);
         }
 
-        public void RefreshDatabase()
+        public async Task RefreshDatabaseAsync()
         {
 
         }
@@ -56,7 +53,7 @@ namespace Wordki.Database2
         {
             try
             {
-                await Task.Run(() => _userRepo.Save(user));
+                await _userRepo.SaveAsync(user);
             }
             catch (Exception)
             {
@@ -70,7 +67,7 @@ namespace Wordki.Database2
             IUser result = null;
             try
             {
-                result = await Task.Run<IUser>(() => _userRepo.Get(name, password));
+                result = await _userRepo.GetAsync(name, password);
             }
             catch (Exception)
             {
@@ -83,7 +80,7 @@ namespace Wordki.Database2
         {
             try
             {
-                await Task.Run(() => _userRepo.Update(user));
+                await _userRepo.UpdateAsync(user);
             }
             catch (Exception)
             {
@@ -98,9 +95,10 @@ namespace Wordki.Database2
 
         public async Task<bool> AddGroupAsync(IGroup group)
         {
+            Groups.Add(group);
             try
             {
-                await Task.Run(() => _groupRepo.Save(group));
+                await _groupRepo.SaveAsync(group);
             }
             catch (Exception)
             {
@@ -113,7 +111,7 @@ namespace Wordki.Database2
         {
             try
             {
-                await Task.Run(() => _groupRepo.Update(group));
+                await _groupRepo.UpdateAsync(group);
             }
             catch (Exception)
             {
@@ -126,7 +124,7 @@ namespace Wordki.Database2
         {
             try
             {
-                await Task.Run(() => _groupRepo.Delete(group));
+                await _groupRepo.DeleteAsync(group);
             }
             catch (Exception)
             {
@@ -143,7 +141,7 @@ namespace Wordki.Database2
         {
             try
             {
-                await Task.Run(() => _wordRepo.Save(word));
+                await _wordRepo.SaveAsync(word);
             }
             catch (Exception)
             {
@@ -156,7 +154,7 @@ namespace Wordki.Database2
         {
             try
             {
-                await Task.Run(() => _wordRepo.Update(word));
+                await _wordRepo.UpdateAsync(word);
             }
             catch (Exception)
             {
@@ -169,7 +167,7 @@ namespace Wordki.Database2
         {
             try
             {
-                await Task.Run(() => _wordRepo.Delete(word));
+                await _wordRepo.DeleteAsync(word);
             }
             catch (Exception)
             {
@@ -186,7 +184,7 @@ namespace Wordki.Database2
         {
             try
             {
-                await Task.Run(() => _resultRepo.Save(result));
+                await _resultRepo.SaveAsync(result);
             }
             catch (Exception)
             {
@@ -199,7 +197,7 @@ namespace Wordki.Database2
         {
             try
             {
-                await Task.Run(() => _resultRepo.Update(result));
+                await _resultRepo.UpdateAsync(result);
             }
             catch (Exception)
             {
@@ -212,7 +210,7 @@ namespace Wordki.Database2
         {
             try
             {
-                await Task.Run(() => _resultRepo.Delete(result));
+                await _resultRepo.DeleteAsync(result);
             }
             catch (Exception)
             {

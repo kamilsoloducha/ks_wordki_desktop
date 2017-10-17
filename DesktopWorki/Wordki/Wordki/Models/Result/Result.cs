@@ -12,16 +12,19 @@ namespace Wordki.Models
         public virtual long Id { get; set; }
         public virtual long UserId { get; set; }
 
-        public virtual IGroup Group { get; set; }
-        public virtual long GroupId
+        private IGroup _group;
+        public virtual IGroup Group
         {
-            get
-            {
-                return Group == null ? 0 : Group.Id;
-            }
+            get { return _group; }
             set
             {
-                throw new NotImplementedException();
+                if (_group == value)
+                {
+                    return;
+                }
+                _group = value;
+                _group.AddResult(this);
+
             }
         }
         public virtual short Correct { get; set; }
