@@ -203,6 +203,7 @@
     <Compile Include="Models\Connector\ApiConnector.cs" />
     <Compile Include="Models\Connector\ApiRequest.cs" />
     <Compile Include="Models\Connector\ApiResponse.cs" />
+    <Compile Include="Models\Group\FakeGroup.cs" />
     <Compile Include="Models\Group\IGroupRepository.cs" />
     <Compile Include="Models\Result\IResultRepository.cs" />
     <Compile Include="Models\User\IUserRepository.cs" />

@@ -95,7 +95,6 @@ namespace Wordki.Database2
 
         public async Task<bool> AddGroupAsync(IGroup group)
         {
-            Groups.Add(group);
             try
             {
                 await _groupRepo.SaveAsync(group);
@@ -104,6 +103,7 @@ namespace Wordki.Database2
             {
                 return false;
             }
+            Groups.Add(group);
             return true;
         }
 
@@ -124,12 +124,22 @@ namespace Wordki.Database2
         {
             try
             {
-                await _groupRepo.DeleteAsync(group);
+                group.State = -1;
+                foreach(IWord word in group.Words)
+                {
+                    word.State = -1;
+                }
+                foreach (IResult result in group.Results)
+                {
+                    result.State = -1;
+                }
+                await _groupRepo.UpdateAsync(group);
             }
             catch (Exception)
             {
                 return false;
             }
+            Groups.Remove(group);
             return true;
         }
 
@@ -167,12 +177,14 @@ namespace Wordki.Database2
         {
             try
             {
-                await _wordRepo.DeleteAsync(word);
+                word.State = -1;
+                await _wordRepo.UpdateAsync(word);
             }
             catch (Exception)
             {
                 return false;
             }
+            word.Group.Words.Remove(word);
             return true;
         }
 
@@ -210,12 +222,14 @@ namespace Wordki.Database2
         {
             try
             {
-                await _resultRepo.DeleteAsync(result);
+                result.State = -1;
+                await _resultRepo.UpdateAsync(result);
             }
             catch (Exception)
             {
                 return false;
             }
+            result.Group.Results.Remove(result);
             return true;
         }
 

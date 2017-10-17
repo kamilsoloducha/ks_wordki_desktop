@@ -250,14 +250,6 @@ namespace Wordki.ViewModels
             }
         }
 
-        private async void AddWord(IGroup pGroup, IWord pWord)
-        {
-            if (!await Database.AddWordAsync(pWord))
-            {
-                Logger.LogError("Błąd dodanie słowa do bazy");
-            }
-        }
-
         private async void AddGroup(IGroup pGroup)
         {
             if (!await Database.AddGroupAsync(pGroup))
@@ -431,6 +423,7 @@ namespace Wordki.ViewModels
                 }
                 foreach (Group lGroup in lSpliter.Split(SelectedGroup, factor))
                 {
+
                     AddGroup(lGroup);
                 }
                 Database.SaveDatabaseAsync();
@@ -464,13 +457,12 @@ namespace Wordki.ViewModels
                 PositiveLabel = "Tak",
                 NegativeLabel = "Nie",
             };
-            dialog.PositiveCommand = new Util.BuilderCommand(o =>
+            dialog.PositiveCommand = new Util.BuilderCommand(async o =>
             {
-                IGroup groupToDelete = SelectedGroup;
                 int groupIndex = Database.Groups.IndexOf(SelectedGroup);
                 SelectedGroup = Database.Groups.Count > groupIndex ? Database.Groups[groupIndex] : null;
                 SelectedWord = SelectedGroup != null ? SelectedGroup.Words.LastOrDefault() : null;
-                DeleteGroup(groupToDelete);
+                await Database.DeleteGroupAsync(SelectedGroup);
                 dialog.Close();
                 RefreshView();
             });
@@ -478,11 +470,15 @@ namespace Wordki.ViewModels
             dialog.ShowDialog();
         }
 
-        private void AddGroup(object obj)
+        private async void AddGroup(object obj)
         {
-            IGroup lNewGroup = new Group();
-            AddGroup(lNewGroup);
-            SelectedGroup = lNewGroup;
+            IGroup group = new Group();
+            if(!await Database.AddGroupAsync(group))
+            {
+                Console.WriteLine("Error during adding group");
+                return;
+            }
+            SelectedGroup = group;
             SetOnLastWordCurretGroup();
             RefreshView();
         }
@@ -551,7 +547,7 @@ namespace Wordki.ViewModels
             Switcher.GetSwitcher().Back();
         }
 
-        private void AddWord(object obj)
+        private async void AddWord(object obj)
         {
             if (SelectedGroup == null)
             {
@@ -561,12 +557,14 @@ namespace Wordki.ViewModels
             {
                 return;
             }
-            Word lNewWord = new Word()
+            Word word = new Word();
+            SelectedGroup.AddWord(word);
+            if(!await Database.AddWordAsync(word))
             {
-                Group = SelectedGroup
-            };
-            AddWord(SelectedGroup, lNewWord);
-            SelectedWord = lNewWord;
+                Console.WriteLine("Error during adding word");
+                return;
+            }
+            SelectedWord = word;
             Language1IsFocused = false;
             Language1IsFocused = true;
             RefreshView();
@@ -627,7 +625,7 @@ namespace Wordki.ViewModels
 
         #region Method
 
-        public void RefreshView()
+        private void RefreshView()
         {
             SetGroupNameLabel();
             SetWordLabels();

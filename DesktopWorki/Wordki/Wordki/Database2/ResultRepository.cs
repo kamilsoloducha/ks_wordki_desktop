@@ -108,7 +108,9 @@ namespace Wordki.Database2
 
         public bool CheckObject(IResult result)
         {
-            return result != null;
+            return result != null
+                && result.Id > 0
+                && result.Group != FakeGroup.Group;
         }
     }
 }

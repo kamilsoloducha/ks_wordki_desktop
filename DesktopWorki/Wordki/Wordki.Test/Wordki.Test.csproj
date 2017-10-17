@@ -93,6 +93,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\BuilderTests\AddGroupTests.cs" />
     <Compile Include="Database\AdvanceGroupTests.cs" />
     <Compile Include="Database\GroupTests.cs" />
     <Compile Include="Database\Helper.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Helpers\WordFinderTests\WordFinderTest.cs" />
     <Compile Include="Lessons\TypingLessonTests.cs" />
     <Compile Include="RepositoryTest\DirectionSwaperTests.cs" />
+    <Compile Include="RepositoryTest\GroupsTests.cs" />
     <Compile Include="RepositoryTest\LanguageSwaperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility.cs" />

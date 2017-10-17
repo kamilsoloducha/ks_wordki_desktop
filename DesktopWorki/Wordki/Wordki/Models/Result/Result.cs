@@ -8,7 +8,6 @@ namespace Wordki.Models
     [Serializable]
     public class Result : ModelAbs<IResult>, IComparable<IResult>, IResult
     {
-
         public virtual long Id { get; set; }
         public virtual long UserId { get; set; }
 
@@ -59,6 +58,7 @@ namespace Wordki.Models
         public Result()
         {
             Id = DateTime.Now.Ticks;
+            Group = FakeGroup.Group;
             Correct = 0;
             Accepted = 0;
             Wrong = 0;
@@ -73,6 +73,7 @@ namespace Wordki.Models
         public Result(long pResultId, long pGroupId, short pCorrect, short pAccepted, short pWrong, short pUnvisibilities, short pTime, TranslationDirection pTranslationDirection, LessonType pLessonType, DateTime pDate, int pState = 0)
         {
             Id = pResultId < 0 ? DateTime.Now.Ticks : pResultId;
+            Group = FakeGroup.Group;
             DateTime = pDate;
             Correct = pCorrect;
             Accepted = pAccepted;

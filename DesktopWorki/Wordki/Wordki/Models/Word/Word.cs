@@ -164,6 +164,7 @@ namespace Wordki.Models
         public Word()
         {
             Id = DateTime.Now.Ticks;
+            Group = FakeGroup.Group;
             _language1 = "";
             _language2 = "";
             _drawer = 0;
