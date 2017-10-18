@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Wordki.Models.Lesson.WordComparer
 {
+    [Serializable]
     public class PunctuationNotCheck : INotCheck
     {
         private static StringBuilder _builder = new StringBuilder();

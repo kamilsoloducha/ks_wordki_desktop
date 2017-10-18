@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace Wordki.Models
 {
+    [Serializable]
     public class Group : ModelAbs<IGroup>, IComparable<IGroup>, IGroup
     {
 
@@ -95,12 +96,6 @@ namespace Wordki.Models
         public virtual int CompareTo(IGroup other)
         {
             return String.Compare(Name.ToLower(), other.Name.ToLower(), StringComparison.Ordinal);
-        }
-
-        public virtual int GetLessonTime(DateTime pDateTime)
-        {
-            IEnumerable<IResult> lDateResult = Results.Where(x => pDateTime - x.DateTime < new TimeSpan(1, 0, 0));
-            return lDateResult.Sum(lResult => lResult.TimeCount);
         }
 
         public override bool Equals(object obj)

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Wordki.Models.Lesson
 {
+    
     public interface ILessonSettings
     {
 

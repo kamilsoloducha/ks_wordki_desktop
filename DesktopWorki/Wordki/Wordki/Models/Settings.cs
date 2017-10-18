@@ -102,7 +102,7 @@ namespace Wordki.Models
         public ApplicationStyleEnum ApplicationStyle { get; set; }
         #endregion
 
-        private Settings()
+        public Settings()
         {
             FontSize = 30;
             ApplicationStyle = ApplicationStyleEnum.Light;

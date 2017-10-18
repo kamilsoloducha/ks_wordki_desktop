@@ -6,6 +6,7 @@ using Wordki.Models.StateManager;
 
 namespace Wordki.Models
 {
+    [Serializable]
     public abstract class ModelAbs<T> : INotifyPropertyChanged, ICloneable
     {
 

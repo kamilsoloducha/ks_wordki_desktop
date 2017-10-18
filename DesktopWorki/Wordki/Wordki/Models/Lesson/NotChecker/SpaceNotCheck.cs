@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Wordki.Models.Lesson.WordComparer
 {
+    [Serializable]
     public class SpaceNotCheck : INotCheck
     {
         public string Convert(string text)

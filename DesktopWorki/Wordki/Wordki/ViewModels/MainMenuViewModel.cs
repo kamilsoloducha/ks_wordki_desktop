@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using Controls.ValueDescription;
 using Wordki.Helpers;
 using Wordki.Models;
 using Wordki.Models.RemoteDatabase;
@@ -14,7 +13,7 @@ namespace Wordki.ViewModels
 {
     public class MainMenuViewModel : ViewModelBase
     {
-        
+
         private string _statusBarText;
         private string _login;
         private ObservableCollection<double> _values;
@@ -128,6 +127,8 @@ namespace Wordki.ViewModels
             }
         }
 
+        public IResultCalculator ResultCalculator { get; set; }
+
         #endregion
 
         public MainMenuViewModel()
@@ -137,7 +138,10 @@ namespace Wordki.ViewModels
             SettingsCommand = new BuilderCommand(Settings);
             ExitCommand = new BuilderCommand(Exit);
 
-            ValueDescription l = new ValueDescription();
+            ResultCalculator = new ResultCalculator
+            {
+                Groups = DatabaseSingleton.GetDatabase().Groups,
+            };
         }
 
         public override void InitViewModel()
@@ -184,7 +188,7 @@ namespace Wordki.ViewModels
         {
             IDatabase lDatabase = DatabaseSingleton.GetDatabase();
             ObservableCollection<double> lList = new ObservableCollection<double>();
-            string lTeachTimeToday = "to DO";//Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.GroupsList.Sum(x => x.GetLessonTime(DateTime.Now)));
+            string lTeachTimeToday = Helpers.Util.GetAproximatedTimeFromSeconds(ResultCalculator.GetLessonTime(DateTime.Now.AddDays(-1), DateTime.Now));
             string lTeachTime = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.Groups.Sum(x => x.Results.Sum(y => y.TimeCount)));
             int lGroupCount = lDatabase.Groups.Count;
             int lWordCount = lDatabase.Groups.Sum(x => x.Words.Count);

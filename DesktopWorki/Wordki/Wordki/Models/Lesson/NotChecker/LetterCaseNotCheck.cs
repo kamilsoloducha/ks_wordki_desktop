@@ -7,6 +7,7 @@ using Wordki.Models.Lesson.WordComparer;
 
 namespace Wordki.Models.Lesson.WordComparer
 {
+    [Serializable]
     public class LetterCaseNotCheck : INotCheck
     {
         public string Convert(string text)

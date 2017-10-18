@@ -232,8 +232,6 @@ namespace Wordki.ViewModels
             //queue.Execute();
         }
 
-        
-
         #region Commands
         private void ActivateCommands()
         {
