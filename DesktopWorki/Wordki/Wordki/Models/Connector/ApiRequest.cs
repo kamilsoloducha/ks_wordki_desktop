@@ -2,7 +2,7 @@
 using System.Configuration;
 using Newtonsoft.Json;
 using Repository.Models;
-using Wordki.Database2;
+using Wordki.Database;
 
 namespace Wordki.Models.Connector
 {

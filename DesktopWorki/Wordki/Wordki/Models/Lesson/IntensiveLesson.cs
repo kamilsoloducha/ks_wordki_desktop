@@ -5,24 +5,23 @@ using System.Linq;
 using Repository.Models.Enums;
 using Wordki.Helpers;
 using Repository.Models;
-using Wordki.Database2;
 
 namespace Wordki.Models.Lesson
 {
     [Serializable]
     public class IntensiveLesson : TypingLesson
     {
-        private List<Queue<Word>> DrawersList { get; set; }
+        private List<Queue<IWord>> DrawersList { get; set; }
         private const int Drawers = 5;
         private const int DrawerCount = 6;
 
         public IntensiveLesson(IEnumerable<IWord> lWordsList)
           : base(lWordsList)
         {
-            DrawersList = new List<Queue<Word>>(Drawers);
+            DrawersList = new List<Queue<IWord>>(Drawers);
             for (int i = 0; i < Drawers; i++)
             {
-                DrawersList.Add(new Queue<Word>());
+                DrawersList.Add(new Queue<IWord>());
             }
             CurrentDrawer = -1;
         }
@@ -53,7 +52,7 @@ namespace Wordki.Models.Lesson
         public override void Check(string translation)
         {
             IsChecked = true;
-            switch (UserManagerSingleton.Get().User.TranslationDirection)
+            switch (LessonSettings.TranslationDirection)
             {
                 case TranslationDirection.FromSecond: IsCorrect = translation.Trim().Equals(SelectedWord.Language1); break;
                 case TranslationDirection.FromFirst: IsCorrect = translation.Trim().Equals(SelectedWord.Language2); break;
@@ -71,7 +70,7 @@ namespace Wordki.Models.Lesson
             Console.WriteLine("E - Unknwon - {0}", stopWatch.ElapsedTicks);
         }
 
-        private Word NextWordWithEmptyList()
+        private IWord NextWordWithEmptyList()
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
             CurrentDrawer = 4;
@@ -87,7 +86,7 @@ namespace Wordki.Models.Lesson
             return DrawersList[CurrentDrawer].Count > 0 ? DrawersList[CurrentDrawer].Peek() : null;
         }
 
-        private Word NextWordWithContainedList()
+        private IWord NextWordWithContainedList()
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
             int fullList = -1;
@@ -118,7 +117,7 @@ namespace Wordki.Models.Lesson
 
         private void MakeKnwon()
         {
-            Result result = ResultList.FirstOrDefault(x => x.Group.Id == SelectedWord.Group.Id);
+            IResult result = ResultList.FirstOrDefault(x => x.Group.Id == SelectedWord.Group.Id);
             if (result == null)
             {
                 return;
@@ -135,7 +134,7 @@ namespace Wordki.Models.Lesson
 
         private void MakeUnknwon()
         {
-            Result result = ResultList.FirstOrDefault(x => x.Group.Id == SelectedWord.Group.Id);
+            IResult result = ResultList.FirstOrDefault(x => x.Group.Id == SelectedWord.Group.Id);
             if (result == null)
             {
                 return;

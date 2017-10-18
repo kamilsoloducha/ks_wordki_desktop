@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Wordki.Helpers;
 using Wordki.Models.Lesson.WordComparer;
 
 namespace Wordki.Models.Lesson
@@ -10,21 +10,22 @@ namespace Wordki.Models.Lesson
     [Serializable]
     public abstract class Lesson
     {
-        public List<Result> ResultList { get; protected set; }
-        public Queue<Word> WordList { get; protected set; }
-        public IList<Word> BeginWordsList { get; protected set; }
-        public Word SelectedWord { get; protected set; }
+        public IList<IResult> ResultList { get; protected set; }
+        public Queue<IWord> WordList { get; protected set; }
+        public IList<IWord> BeginWordsList { get; protected set; }
+        public IWord SelectedWord { get; protected set; }
         public bool IsCorrect { get; protected set; }
         public bool IsChecked { get; protected set; }
         public int CurrentDrawer { get; protected set; }
         public Util.Timer Timer { get; private set; }
         public int Counter { get; set; }
         public IWordComparer WordComparer { get; set; }
+        public ILessonSettings LessonSettings { get; set; }
 
         protected Lesson()
         {
-            BeginWordsList = new List<Word>();
-            WordList = new Queue<Word>();
+            BeginWordsList = new List<IWord>();
+            WordList = new Queue<IWord>();
             Timer = new Util.Timer();
             Counter = 1;
         }
@@ -59,7 +60,7 @@ namespace Wordki.Models.Lesson
             if (Counter++ <= BeginWordsList.Count)
             {
                 SelectedWord.Drawer = 0; //reset szuflady
-                Result lResult = ResultList.FirstOrDefault(x => x.Group.Id == SelectedWord.Group.Id);
+                IResult lResult = ResultList.FirstOrDefault(x => x.Group.Id == SelectedWord.Group.Id);
                 if (lResult != null)
                 {
                     lResult.Wrong++;
@@ -77,7 +78,7 @@ namespace Wordki.Models.Lesson
 
         public virtual void FinishLesson()
         {
-            foreach (Result lResult in ResultList)
+            foreach (IResult lResult in ResultList)
             {
                 lResult.TimeCount = (short)(Timer.GetTime() / ResultList.Count);
             }
@@ -110,7 +111,7 @@ namespace Wordki.Models.Lesson
             {
                 lDrawerCountList.Add(0);
             }
-            foreach (Word lWord in BeginWordsList)
+            foreach (IWord lWord in BeginWordsList)
             {
                 lDrawerCountList[lWord.Drawer]++;
             }
@@ -125,7 +126,7 @@ namespace Wordki.Models.Lesson
         public virtual int[] GetDrawerValues()
         {
             int[] lTempValues = new int[5];
-            foreach (Word lWord in BeginWordsList)
+            foreach (IWord lWord in BeginWordsList)
             {
                 lTempValues[lWord.Drawer]++;
             }

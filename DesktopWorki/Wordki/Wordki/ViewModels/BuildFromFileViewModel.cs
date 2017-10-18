@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
-using Wordki.Database2;
+using Wordki.Database;
 using Wordki.Helpers;
 using Wordki.Helpers.FileChooser;
 using Wordki.Helpers.GroupCreator;

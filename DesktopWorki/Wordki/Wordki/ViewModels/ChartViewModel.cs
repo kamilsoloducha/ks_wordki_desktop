@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using Util;
-using Wordki.Database2;
+using Wordki.Database;
 using Wordki.Helpers;
 using Wordki.Models;
 using Point = System.Windows.Point;

@@ -22,7 +22,7 @@ using Util.Serializers;
 using Util;
 using System.Windows.Input;
 using Repository.Models;
-using Wordki.Database2;
+using Wordki.Database;
 
 namespace Wordki.ViewModels
 {
@@ -503,7 +503,14 @@ namespace Wordki.ViewModels
                 lLesson.WordComparer.NotCheckers.Add(new LetterCaseNotCheck());
                 lLesson.WordComparer.NotCheckers.Add(new SpaceNotCheck());
                 lLesson.WordComparer.NotCheckers.Add(new Utf8NotCheck());
-
+                IUser user = UserManagerSingleton.Get().User;
+                ILessonSettings lessonSettings = new LessonSettings()
+                {
+                    AllWords = user.AllWords,
+                    TranslationDirection = user.TranslationDirection,
+                    Timeout = user.Timeout,
+                };
+                lLesson.LessonSettings = lessonSettings;
                 lLesson.InitLesson();
                 PackageStore.Put(0, lLesson);
                 Switcher.GetSwitcher().Switch(Switcher.State.Teach);

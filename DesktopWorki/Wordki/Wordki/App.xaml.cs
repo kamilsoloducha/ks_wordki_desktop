@@ -2,7 +2,6 @@
 using System.Text;
 using System.Windows;
 using Wordki.Helpers;
-using Wordki.LocalDatabase;
 
 namespace Wordki
 {
@@ -13,9 +12,6 @@ namespace Wordki
     {
         public App()
         {
-            SqliteConnection lConnection = new SqliteConnection();
-            lConnection.CreateDatabase();
-            lConnection.CreateTables();
         }
 
         protected override void OnStartup(StartupEventArgs e)

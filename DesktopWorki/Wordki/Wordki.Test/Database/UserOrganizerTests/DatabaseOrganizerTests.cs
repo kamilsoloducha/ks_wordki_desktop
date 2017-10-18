@@ -2,7 +2,7 @@
 using Repository.Models;
 using System;
 using System.IO;
-using Wordki.Database2;
+using Wordki.Database;
 
 namespace Wordki.Test.Database.UserOrganizerTests
 {

@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Wordki.Database2;
+using Wordki.Database;
 
 namespace Wordki.Test.Database
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wordki.Models;
-using Wordki.Database2;
+using Wordki.Database;
 using Repository.Models;
 
 namespace Resultki.Test.Database

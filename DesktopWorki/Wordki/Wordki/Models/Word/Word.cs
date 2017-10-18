@@ -25,7 +25,6 @@ namespace Wordki.Models
                     return;
                 }
                 _group = value;
-                _group.AddWord(this);
             }
         }
 

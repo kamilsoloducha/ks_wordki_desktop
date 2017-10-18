@@ -10,15 +10,15 @@ namespace Wordki.Models.Lesson {
 
     protected override void CreateWordList() {
       foreach (Word word in AllWordList) {
-        BeginWordsList.Add((Word)word.Clone());
+        BeginWordsList.Add((IWord)word.Clone());
       }
-      foreach (Word word in BeginWordsList) {
+      foreach (IWord word in BeginWordsList) {
         WordList.Enqueue(word);
       }
     }
 
     protected override void CreateResultList() {
-      ResultList = new List<Result>();
+      ResultList = new List<IResult>();
     }
   }
 }

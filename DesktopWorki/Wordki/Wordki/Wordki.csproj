@@ -141,28 +141,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Database2\DatabaseSingleton.cs" />
-    <Compile Include="Database2\GroupMap.cs" />
-    <Compile Include="Database2\GroupRepository.cs" />
-    <Compile Include="Database2\INHibernateDatabase.cs" />
-    <Compile Include="Database2\ModelSender\IModelSender.cs" />
-    <Compile Include="Database2\ModelSender\GroupsSender.cs" />
-    <Compile Include="Database2\ModelSender\ResultsSender.cs" />
-    <Compile Include="Database2\ModelSender\WordsSender.cs" />
-    <Compile Include="Database2\NHibernateDatabase.cs" />
-    <Compile Include="Database2\NHibernateHelper.cs" />
-    <Compile Include="Database2\ResultMap.cs" />
-    <Compile Include="Database2\ResultRepository.cs" />
-    <Compile Include="Database2\DatabaseManager\IDatabaseOrganizer.cs" />
-    <Compile Include="Database2\DatabaseManager\DatabaseManagerSingleton.cs" />
-    <Compile Include="Database2\DatabaseManager\DatabaseOrganizer.cs" />
-    <Compile Include="Database2\UserManager\IUserManager.cs" />
-    <Compile Include="Database2\UserManager\UserManager.cs" />
-    <Compile Include="Database2\UserManager\UserManagerSingleton.cs" />
-    <Compile Include="Database2\UserMap.cs" />
-    <Compile Include="Database2\UserRepository.cs" />
-    <Compile Include="Database2\WordMap.cs" />
-    <Compile Include="Database2\WordRepository.cs" />
+    <Compile Include="Database\DatabaseSingleton.cs" />
+    <Compile Include="Database\GroupMap.cs" />
+    <Compile Include="Database\GroupRepository.cs" />
+    <Compile Include="Database\INHibernateDatabase.cs" />
+    <Compile Include="Database\ModelSender\IModelSender.cs" />
+    <Compile Include="Database\ModelSender\GroupsSender.cs" />
+    <Compile Include="Database\ModelSender\ResultsSender.cs" />
+    <Compile Include="Database\ModelSender\WordsSender.cs" />
+    <Compile Include="Database\NHibernateDatabase.cs" />
+    <Compile Include="Database\NHibernateHelper.cs" />
+    <Compile Include="Database\ResultMap.cs" />
+    <Compile Include="Database\ResultRepository.cs" />
+    <Compile Include="Database\DatabaseManager\IDatabaseOrganizer.cs" />
+    <Compile Include="Database\DatabaseManager\DatabaseManagerSingleton.cs" />
+    <Compile Include="Database\DatabaseManager\DatabaseOrganizer.cs" />
+    <Compile Include="Database\UserManager\IUserManager.cs" />
+    <Compile Include="Database\UserManager\UserManager.cs" />
+    <Compile Include="Database\UserManager\UserManagerSingleton.cs" />
+    <Compile Include="Database\UserMap.cs" />
+    <Compile Include="Database\UserRepository.cs" />
+    <Compile Include="Database\WordMap.cs" />
+    <Compile Include="Database\WordRepository.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
     <Compile Include="Helpers\Command\CommandApiRequest.cs" />
     <Compile Include="Helpers\Command\CommandQueue.cs" />
@@ -173,6 +173,7 @@
     <Compile Include="Helpers\Converters\LanguageToImageConverter.cs" />
     <Compile Include="Helpers\Converters\LanguageToStringConverter.cs" />
     <Compile Include="Helpers\Behaviour\CursorAtEndBehavior.cs" />
+    <Compile Include="Helpers\Converters\LanguageTypeToStringConverter.cs" />
     <Compile Include="Helpers\Converters\PassingParametersConverter.cs" />
     <Compile Include="Helpers\Converters\TranslationDirectionToIntConverter.cs" />
     <Compile Include="Helpers\FileChooser\FileChooser.cs" />
@@ -198,13 +199,14 @@
     <Compile Include="Helpers\WordConnector\WordConnector.cs" />
     <Compile Include="Helpers\WordFinder\IWordFinder.cs" />
     <Compile Include="Helpers\WordFinder\WordFinder.cs" />
-    <Compile Include="LocalDatabase\SqliteConnection.cs" />
     <Compile Include="Models\CommonGroup.cs" />
     <Compile Include="Models\Connector\ApiConnector.cs" />
     <Compile Include="Models\Connector\ApiRequest.cs" />
     <Compile Include="Models\Connector\ApiResponse.cs" />
     <Compile Include="Models\Group\FakeGroup.cs" />
     <Compile Include="Models\Group\IGroupRepository.cs" />
+    <Compile Include="Models\Lesson\LessonSettings\ILessonSettings.cs" />
+    <Compile Include="Models\Lesson\LessonSettings\LessonSettings.cs" />
     <Compile Include="Models\Result\IResultRepository.cs" />
     <Compile Include="Models\User\IUserRepository.cs" />
     <Compile Include="Models\Word\IWordRepository.cs" />
@@ -222,7 +224,6 @@
     <Compile Include="Helpers\GroupSplitter\SplitterEnum.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\Switcher.cs" />
-    <Compile Include="LocalDatabase\SqlDatabaseCreator.cs" />
     <Compile Include="Models\ForeignLetter.cs" />
     <Compile Include="Models\Group\Group.cs" />
     <Compile Include="Models\Language.cs" />
@@ -471,9 +472,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="LocalDatabase\Sql\createTables">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

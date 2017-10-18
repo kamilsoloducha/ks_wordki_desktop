@@ -119,6 +119,7 @@
     <Compile Include="Helpers\WordComparerTests\WordComparerWithSpaceNotCheckTest.cs" />
     <Compile Include="Helpers\WordComparerTests\WordComparerWithUtf8NotCheckTest.cs" />
     <Compile Include="Helpers\WordFinderTests\WordFinderTest.cs" />
+    <Compile Include="IntegratedViewModelTests\BuilderViewModelTests\InitViewModelTests.cs" />
     <Compile Include="Lessons\TypingLessonTests.cs" />
     <Compile Include="RepositoryTest\DirectionSwaperTests.cs" />
     <Compile Include="RepositoryTest\GroupsTests.cs" />

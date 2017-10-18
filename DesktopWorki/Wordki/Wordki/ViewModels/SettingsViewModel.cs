@@ -11,7 +11,7 @@ using Wordki.Models.RemoteDatabase;
 using Wordki.Views.Dialogs;
 using Wordki.Helpers.Command;
 using Wordki.Helpers.Notification;
-using Wordki.Database2;
+using Wordki.Database;
 
 namespace Wordki.ViewModels
 {

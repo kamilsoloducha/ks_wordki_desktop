@@ -8,7 +8,7 @@ using Wordki.Models;
 using Wordki.Models.RemoteDatabase;
 using System.Threading.Tasks;
 using Wordki.Helpers.Command;
-using Wordki.Database2;
+using Wordki.Database;
 
 namespace Wordki.ViewModels
 {

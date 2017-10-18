@@ -7,7 +7,7 @@ using Wordki.Helpers.Notification;
 using System.Windows.Input;
 using Repository.Models;
 using System;
-using Wordki.Database2;
+using Wordki.Database;
 
 namespace Wordki.ViewModels
 {
@@ -107,12 +107,13 @@ namespace Wordki.ViewModels
 
         #region Methods
 
-        protected void StartWithUser(IUser user)
+        protected async void StartWithUser(IUser user)
         {
             IUserManager userManager = UserManagerSingleton.Get();
             userManager.Set(user);
             user.LastLoginDateTime = DateTime.Now;
             userManager.Update();
+            await DatabaseSingleton.GetDatabase().LoadDatabaseAsync();
             Start();
         }
 

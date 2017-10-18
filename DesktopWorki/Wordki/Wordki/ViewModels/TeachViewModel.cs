@@ -11,12 +11,10 @@ using Repository.Models.Enums;
 using Wordki.Helpers;
 using Wordki.Models;
 using Wordki.Models.Lesson;
-using Wordki.Models.RemoteDatabase;
 using Wordki.Views.Dialogs;
-using Wordki.Helpers.Command;
 using Util.Serializers;
 using Repository.Models;
-using Wordki.Database2;
+using Wordki.Database;
 
 namespace Wordki.ViewModels
 {
@@ -105,18 +103,18 @@ namespace Wordki.ViewModels
             ActivateCommands();
 
             VisibilityDictionary = new ObservableDictionary<int, Visibility> {
-        {0, Visibility.Collapsed},
-        {1, Visibility.Collapsed},
-      };
+                {0, Visibility.Collapsed},
+                {1, Visibility.Collapsed},
+              };
             ShortKeys = new ObservableCollection<InputBinding>
-      {
-        new KeyBinding {
-          Command = new BuilderCommand(ShortKey),
-          CommandParameter = 'ś',
-          Key = Key.S,
-          Modifiers = ModifierKeys.Alt
-        }
-      };
+            {
+                new KeyBinding {
+                    Command = new BuilderCommand(ShortKey),
+                    CommandParameter = 'ś',
+                    Key = Key.S,
+                    Modifiers = ModifierKeys.Alt
+                }
+            };
         }
 
         private void ShortKey(object obj)
@@ -194,7 +192,7 @@ namespace Wordki.ViewModels
                 Lesson.NextWord();
                 State = StateFactory.GetState(Lesson, LessonStateEnum.NextWord);
                 State.RefreshView();
-                Result lResult = Lesson.ResultList.FirstOrDefault();
+                IResult lResult = Lesson.ResultList.FirstOrDefault();
                 if (lResult == null)
                 {
                     Logger.LogError("{0} - {1}", "TeachViewModel.StartLesson", "lResult == null");
@@ -1163,52 +1161,23 @@ namespace Wordki.ViewModels
 
             protected override void RefreshTranslationColor() { }
 
-            public override void RefreshView()
+            public override async void RefreshView()
             {
                 base.RefreshView();
-                //Lesson.FinishLesson();
-                //Lesson.Timer.StopTimer();
-                //IList<IGroup> lGroupList = Lesson.ResultList.Select(lResult => DatabaseSingleton.GetDatabase().GetGroupById(lResult.Group.Id)).ToList();
-                //CommandQueue<Helpers.Command.ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetUploadQueue();
-                //lQueue.MainQueue.AddFirst(new SimpleCommandAsync(async () =>
-                //{
-                //    Models.IDatabase lDatabase = Models.Database.GetDatabase();
-                //    foreach (Result lItem in Lesson.ResultList)
-                //    {
-                //        await Database.GetDatabase().AddResultAsync(lItem);
-                //    }
-                //    Application.Current.Dispatcher.Invoke(() =>
-                //    {
-                //        LessonResultDialog lDialog = new LessonResultDialog(lGroupList);
-                //        lDialog.ButtonCommand = new BuilderCommand(delegate
-                //        {
-                //            lDialog.Close();
-                //            Switcher.GetSwitcher().Back(true);
-                //        });
-                //        lDialog.ShowDialog();
-                //    });
-                //    Models.IDatabase database = Database.GetDatabase();
-                //    foreach (Word lItem in Lesson.BeginWordsList)
-                //    {
-                //        IWord word = database.GetGroupById(lItem.Group.Id).Words.FirstOrDefault(x => x.Id == lItem.Id);
-                //        if (word == null)
-                //        {
-                //            continue;
-                //        }
-                //        word.Drawer = lItem.Drawer;
-                //        await lDatabase.UpdateWordAsync(word);
-                //    }
-                //    return true;
-                //}));
-                //lQueue.OnQueueComplete += success =>
-                //{
-                //    if (success)
-                //    {
-                //        Database.GetDatabase().RefreshDatabase();
-                //    }
-                //};
-                //lQueue.CreateDialog = false;
-                //lQueue.Execute();
+                IDatabase database = DatabaseSingleton.GetDatabase();
+                Lesson.FinishLesson();
+                Lesson.Timer.StopTimer();
+                foreach (IWord word in Lesson.BeginWordsList)
+                {
+                    await database.UpdateWordAsync(word);
+                }
+                foreach (IResult result in Lesson.ResultList)
+                {
+                    result.Group.Results.Add(result);
+                    await database.AddResultAsync(result);
+                }
+                await database.LoadDatabaseAsync();
+                Switcher.GetSwitcher().Back(true);
             }
 
             protected override void RefreshFocused() { }

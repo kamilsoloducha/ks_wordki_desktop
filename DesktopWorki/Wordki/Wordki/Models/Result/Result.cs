@@ -22,7 +22,6 @@ namespace Wordki.Models
                     return;
                 }
                 _group = value;
-                _group.AddResult(this);
 
             }
         }
@@ -70,10 +69,10 @@ namespace Wordki.Models
             State = int.MaxValue;
         }
 
-        public Result(long pResultId, long pGroupId, short pCorrect, short pAccepted, short pWrong, short pUnvisibilities, short pTime, TranslationDirection pTranslationDirection, LessonType pLessonType, DateTime pDate, int pState = 0)
+        public Result(long pResultId, IGroup group, short pCorrect, short pAccepted, short pWrong, short pUnvisibilities, short pTime, TranslationDirection pTranslationDirection, LessonType pLessonType, DateTime pDate, int pState = 0)
         {
             Id = pResultId < 0 ? DateTime.Now.Ticks : pResultId;
-            Group = FakeGroup.Group;
+            Group = group;
             DateTime = pDate;
             Correct = pCorrect;
             Accepted = pAccepted;

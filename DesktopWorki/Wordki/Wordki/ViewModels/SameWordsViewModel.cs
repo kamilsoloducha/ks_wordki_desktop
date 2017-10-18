@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using Wordki.Database2;
+using Wordki.Database;
 using Wordki.Helpers;
 using Wordki.Helpers.WordComparer;
 using Wordki.Helpers.WordConnector;

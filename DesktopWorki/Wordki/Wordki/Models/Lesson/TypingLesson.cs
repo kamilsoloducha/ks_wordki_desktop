@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Repository.Models.Enums;
 using Repository.Models;
-using Wordki.Database2;
 
 namespace Wordki.Models.Lesson
 {
@@ -24,7 +23,7 @@ namespace Wordki.Models.Lesson
         {
             if (Counter++ <= BeginWordsList.Count)
             {
-                Result lResult = ResultList.FirstOrDefault(x => x.Group.Id == SelectedWord.Group.Id);
+                IResult lResult = ResultList.FirstOrDefault(x => x.Group.Id == SelectedWord.Group.Id);
                 SelectedWord.Drawer++;
                 if (IsCorrect)
                 {
@@ -48,7 +47,7 @@ namespace Wordki.Models.Lesson
         {
             IsCorrect = false;
             IsChecked = true;
-            switch (UserManagerSingleton.Get().User.TranslationDirection)
+            switch (LessonSettings.TranslationDirection)
             {
                 case TranslationDirection.FromSecond:
                     if (CheckTranslation(translation, SelectedWord.Language1))
@@ -63,8 +62,7 @@ namespace Wordki.Models.Lesson
 
         protected override void CreateWordList()
         {
-            bool allWords = UserManagerSingleton.Get().User.AllWords;
-            foreach (Word word in AllWordList.Where(word => word.Visible || allWords))
+            foreach (Word word in AllWordList.Where(word => word.Visible || LessonSettings.AllWords))
             {
                 BeginWordsList.Add((Word)word.Clone());
             }
@@ -77,19 +75,18 @@ namespace Wordki.Models.Lesson
 
         protected override void CreateResultList()
         {
-            ResultList = new List<Result>();
-            foreach (Word lWord in BeginWordsList)
+            ResultList = new List<IResult>();
+            foreach (Word word in BeginWordsList)
             {
-                if (ResultList.Exists(x => x.Group.Id == lWord.Group.Id)) continue;
-                IGroup lGroup = lWord.Group;
+                if (ResultList.Count(x => x.Group == word.Group) != 0) continue;
                 ResultList.Add(new Result(-1,
-                  lWord.Group.Id,
+                  word.Group,
                   0,
                   0,
                   0,
-                  (short)lGroup.Words.Count(x => !x.Visible),
+                  (short)word.Group.Words.Count(x => !x.Visible),
                   0,
-                  UserManagerSingleton.Get().User.TranslationDirection,
+                  LessonSettings.TranslationDirection,
                   (LessonType)Enum.Parse(typeof(LessonType), GetType().Name),
                   DateTime.Now,
                   int.MaxValue));

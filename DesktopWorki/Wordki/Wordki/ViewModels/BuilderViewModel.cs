@@ -13,7 +13,7 @@ using Wordki.Views.Dialogs.ListDialogs;
 using Util;
 using Repository.Helper;
 using Repository.Models;
-using Wordki.Database2;
+using Wordki.Database;
 
 namespace Wordki.ViewModels
 {
@@ -32,14 +32,10 @@ namespace Wordki.ViewModels
     {
 
         private readonly object _groupsLock = new object();
-        private string _nextGroupLabel;
-        private string _previousGroupLabel;
-        private bool _languages1IsFocused;
-        private IGroup _selectedGroup;
-        private IWord _selectedWord;
 
         #region Properies
 
+        private IGroup _selectedGroup;
         public IGroup SelectedGroup
         {
             get { return _selectedGroup; }
@@ -52,6 +48,8 @@ namespace Wordki.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private IWord _selectedWord;
         public IWord SelectedWord
         {
             get { return _selectedWord; }
@@ -64,6 +62,8 @@ namespace Wordki.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private string _nextGroupLabel;
         public string NextGroupLabel
         {
             get { return _nextGroupLabel; }
@@ -75,6 +75,8 @@ namespace Wordki.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private string _previousGroupLabel;
         public string PreviousGroupLabel
         {
             get { return _previousGroupLabel; }
@@ -86,6 +88,8 @@ namespace Wordki.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _languages1IsFocused;
         public bool Language1IsFocused
         {
             get { return _languages1IsFocused; }
@@ -96,19 +100,6 @@ namespace Wordki.ViewModels
                     _languages1IsFocused = value;
                     OnPropertyChanged();
                 }
-            }
-        }
-
-        private int _groupCount;
-        public int GroupCount
-        {
-            get { return _groupCount; }
-            set
-            {
-                if (_groupCount == value)
-                    return;
-                _groupCount = value;
-                OnPropertyChanged();
             }
         }
 
@@ -150,7 +141,6 @@ namespace Wordki.ViewModels
                 OnPropertyChanged();
             }
         }
-
 
         public System.Windows.Input.ICommand PreviousWordCommand { get; set; }
         public System.Windows.Input.ICommand NextWordCommand { get; set; }
@@ -236,43 +226,13 @@ namespace Wordki.ViewModels
 
         public override void Back()
         {
-            Database.SaveDatabaseAsync();
-            var queue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetUploadQueue();
-            queue.CreateDialog = false;
-            queue.Execute();
+            //Database.SaveDatabaseAsync();
+            //var queue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetUploadQueue();
+            //queue.CreateDialog = false;
+            //queue.Execute();
         }
 
-        private async void UpdateWord(IWord pWord)
-        {
-            if (!await Database.UpdateWordAsync(pWord))
-            {
-                Logger.LogError("Błąd Updatu");
-            }
-        }
-
-        private async void AddGroup(IGroup pGroup)
-        {
-            if (!await Database.AddGroupAsync(pGroup))
-            {
-                Logger.LogError("Błąd Dodania");
-            }
-        }
-
-        private async void UpdateGroup(IGroup pGroup)
-        {
-            if (!await Database.UpdateGroupAsync(pGroup))
-            {
-                Logger.LogError("Błąd Updatu");
-            }
-        }
-
-        private async void DeleteGroup(IGroup pGroup)
-        {
-            if (!await Database.DeleteGroupAsync(pGroup))
-            {
-                Logger.LogError("Błąd Usuwania");
-            }
-        }
+        
 
         #region Commands
         private void ActivateCommands()
@@ -470,14 +430,10 @@ namespace Wordki.ViewModels
             dialog.ShowDialog();
         }
 
-        private async void AddGroup(object obj)
+        private void AddGroup(object obj)
         {
             IGroup group = new Group();
-            if(!await Database.AddGroupAsync(group))
-            {
-                Console.WriteLine("Error during adding group");
-                return;
-            }
+            AddGroup_(group);
             SelectedGroup = group;
             SetOnLastWordCurretGroup();
             RefreshView();
@@ -547,7 +503,7 @@ namespace Wordki.ViewModels
             Switcher.GetSwitcher().Back();
         }
 
-        private async void AddWord(object obj)
+        private void AddWord(object obj)
         {
             if (SelectedGroup == null)
             {
@@ -559,11 +515,7 @@ namespace Wordki.ViewModels
             }
             Word word = new Word();
             SelectedGroup.AddWord(word);
-            if(!await Database.AddWordAsync(word))
-            {
-                Console.WriteLine("Error during adding word");
-                return;
-            }
+            AddWord_(word);
             SelectedWord = word;
             Language1IsFocused = false;
             Language1IsFocused = true;
@@ -573,7 +525,6 @@ namespace Wordki.ViewModels
 
         private async void DeleteWord(object obj)
         {
-            //nie ma grup to wychodzi
             if (SelectedWord == null && SelectedGroup != null)
             {
                 RemoveGroup(null);
@@ -602,15 +553,14 @@ namespace Wordki.ViewModels
             };
             lDialog.Button1Command = new Util.BuilderCommand(delegate
             {
-                IGroup lGroup = SelectedGroup;
                 LanguageType lSelectedLanguage = (LanguageType)lDialog.SelectedIndex;
                 if (pLanguageIndex == 1)
                 {
-                    lGroup.Language1 = lSelectedLanguage;
+                    SelectedGroup.Language1 = lSelectedLanguage;
                 }
                 else
                 {
-                    lGroup.Language2 = lSelectedLanguage;
+                    SelectedGroup.Language2 = lSelectedLanguage;
                 }
                 lDialog.Close();
             });
@@ -732,7 +682,6 @@ namespace Wordki.ViewModels
 
         private void SetInfo()
         {
-            GroupCount = Database.Groups.Count;
             if (SelectedGroup != null)
             {
                 GroupNumber = Database.Groups.IndexOf(SelectedGroup) + 1;
@@ -774,6 +723,46 @@ namespace Wordki.ViewModels
                 SelectedWord = SelectedGroup.Words.LastOrDefault();
             }
             RefreshView();
+        }
+
+        private async void UpdateWord(IWord pWord)
+        {
+            if (!await Database.UpdateWordAsync(pWord))
+            {
+                Logger.LogError("Błąd Updatu");
+            }
+        }
+
+        private async void AddWord_(IWord pWord)
+        {
+            if (!await Database.AddWordAsync(pWord))
+            {
+                Logger.LogError("Błąd Dodania");
+            }
+        }
+
+        private async void AddGroup_(IGroup pGroup)
+        {
+            if (!await Database.AddGroupAsync(pGroup))
+            {
+                Logger.LogError("Błąd Dodania");
+            }
+        }
+
+        private async void UpdateGroup(IGroup pGroup)
+        {
+            if (!await Database.UpdateGroupAsync(pGroup))
+            {
+                Logger.LogError("Błąd Updatu");
+            }
+        }
+
+        private async void DeleteGroup(IGroup pGroup)
+        {
+            if (!await Database.DeleteGroupAsync(pGroup))
+            {
+                Logger.LogError("Błąd Usuwania");
+            }
         }
         #endregion
 
