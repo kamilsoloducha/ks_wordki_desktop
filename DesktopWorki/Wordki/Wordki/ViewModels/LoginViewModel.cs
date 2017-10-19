@@ -3,11 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
+using Util.Threads;
 using Wordki.Database;
 using Wordki.Helpers;
 using Wordki.Helpers.Command;
 using Wordki.Models;
 using Wordki.Models.Connector;
+using Wordki.Views.Dialogs.Progress;
 
 namespace Wordki.ViewModels
 {
@@ -72,41 +75,15 @@ namespace Wordki.ViewModels
 
         public async void Loging(object obj)
         {
-            if (Password == null)
-                return;
-            if (UserName == null)
-                return;
-            NHibernateHelper.DatabaseName = UserName;
-            IUser user = await DatabaseSingleton.GetDatabase().GetUserAsync(UserName, GetHashedPassword());
-            if (user != null)
-            {
-                StartWithUser(user);
-                return;
-                CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-                lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestLogin(user as User)) { OnCompleteCommand = OnLogin });
-                lQueue.Execute();
-            }
-            else
-            {
-                IDatabaseOrganizer databaseOrganizer = DatabaseOrganizerSingleton.Get();
-                user = new User()
-                {
-                    LocalId = DateTime.Now.Ticks,
-                    Name = UserName,
-                    Password = GetHashedPassword(),
-                    CreateDateTime = DateTime.Now,
-
-                };
-                if (! await databaseOrganizer.AddDatabaseAsync(user))
-                {
-                    Console.WriteLine("Błąd dodawania bazy danych");
-                    return;
-                }
-                StartWithUser(user);
-            }
-            //inforamcja o zlym logowaniu
-            Console.WriteLine("Błąd logowania");
-            
+            SimpleAsyncWork work = new SimpleAsyncWork();
+            work.WorkFunc += LoginAction;
+            BackgroundQueueWithProgressDialog worker = new BackgroundQueueWithProgressDialog();
+            worker.AddWork(work);
+            worker.OnCompleted += () => { Console.WriteLine("OnCompleted"); };
+            worker.OnCanceled += () => { Console.WriteLine("OnCanceled"); };
+            worker.OnFailed += () => { Console.WriteLine("OnFailed"); };
+            worker.Execute();
+            return;
         }
 
         protected override void ChangeState(object obj)
@@ -128,7 +105,71 @@ namespace Wordki.ViewModels
         {
             return Util.MD5Hash.GetMd5Hash(MD5.Create(), Password);
         }
+
+        private async Task<bool> LoginAction()
+        {
+            if (Password == null)
+                return false;
+            if (UserName == null)
+                return false;
+            NHibernateHelper.DatabaseName = UserName;
+            IUser user = await DatabaseSingleton.GetDatabase().GetUserAsync(UserName, GetHashedPassword());
+            if (user != null)
+            {
+                StartWithUser(user);
+                return true;
+                CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
+                lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestLogin(user as User)) { OnCompleteCommand = OnLogin });
+                lQueue.Execute();
+            }
+            else
+            {
+                IDatabaseOrganizer databaseOrganizer = DatabaseOrganizerSingleton.Get();
+                user = new User()
+                {
+                    LocalId = DateTime.Now.Ticks,
+                    Name = UserName,
+                    Password = GetHashedPassword(),
+                    CreateDateTime = DateTime.Now,
+
+                };
+                if (!await databaseOrganizer.AddDatabaseAsync(user))
+                {
+                    Console.WriteLine("Błąd dodawania bazy danych");
+                    return false;
+                }
+                StartWithUser(user);
+                return true;
+            }
+        }
         #endregion
 
+    }
+
+
+    public class TestWork : IWork
+    {
+        public bool Execute()
+        {
+            System.Threading.Thread.Sleep(2000);
+            return true;
+        }
+
+        public bool Initialize()
+        {
+            return true;
+        }
+
+        public void OnCanceled()
+        {
+        }
+
+        public void OnCompleted()
+        {
+        }
+
+        public void OnFailed()
+        {
+        }
     }
 }

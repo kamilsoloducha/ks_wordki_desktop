@@ -163,6 +163,7 @@
     <Compile Include="Database\UserRepository.cs" />
     <Compile Include="Database\WordMap.cs" />
     <Compile Include="Database\WordRepository.cs" />
+    <Compile Include="Helpers\BackgroundQueueWithProgressDialog.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
     <Compile Include="Helpers\Command\CommandApiRequest.cs" />
     <Compile Include="Helpers\Command\CommandQueue.cs" />
