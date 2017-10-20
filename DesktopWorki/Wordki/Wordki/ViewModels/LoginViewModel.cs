@@ -73,11 +73,19 @@ namespace Wordki.ViewModels
             UserName = user;
         }
 
-        public async void Loging(object obj)
+        public void Loging(object obj)
         {
             SimpleAsyncWork work = new SimpleAsyncWork();
             work.WorkFunc += LoginAction;
             BackgroundQueueWithProgressDialog worker = new BackgroundQueueWithProgressDialog();
+            ProgressDialog dialog = new ProgressDialog();
+            dialog.ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
+            {
+                ButtonLabel = "Anuluj",
+                DialogTitle = "Loguje",
+                CanCanceled = true,
+            };
+            worker.Dialog = dialog;
             worker.AddWork(work);
             worker.OnCompleted += () => { Console.WriteLine("OnCompleted"); };
             worker.OnCanceled += () => { Console.WriteLine("OnCanceled"); };

@@ -163,7 +163,6 @@
     <Compile Include="Database\UserRepository.cs" />
     <Compile Include="Database\WordMap.cs" />
     <Compile Include="Database\WordRepository.cs" />
-    <Compile Include="Helpers\BackgroundQueueWithProgressDialog.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
     <Compile Include="Helpers\Command\CommandApiRequest.cs" />
     <Compile Include="Helpers\Command\CommandQueue.cs" />
@@ -260,6 +259,7 @@
     <Compile Include="ViewModels\BuilderViewModel.cs" />
     <Compile Include="ViewModels\BuildFromFileViewModel.cs" />
     <Compile Include="ViewModels\ChartViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\Progress\ProgressDialogViewModel.cs" />
     <Compile Include="ViewModels\GroupManagerViewModel.cs" />
     <Compile Include="ViewModels\IViewModel.cs" />
     <Compile Include="ViewModels\LoginMainViewModel.cs" />
@@ -307,8 +307,8 @@
     <Compile Include="Views\Dialogs\NumberChooserDialog.xaml.cs">
       <DependentUpon>NumberChooserDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\Progress\ProcessDialog.xaml.cs">
-      <DependentUpon>ProcessDialog.xaml</DependentUpon>
+    <Compile Include="Views\Dialogs\Progress\ProgressDialog.xaml.cs">
+      <DependentUpon>ProgressDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\SplitGroupDialog.xaml.cs">
       <DependentUpon>SplitGroupDialog.xaml</DependentUpon>
@@ -384,7 +384,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\Progress\ProcessDialog.xaml">
+    <Page Include="Views\Dialogs\Progress\ProgressDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

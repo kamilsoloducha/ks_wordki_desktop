@@ -57,7 +57,7 @@ namespace Wordki.Helpers.Command
         {
             if (CreateDialog)
             {
-                ProcessDialog = ProgressNotificationFactory.CreateProgresNotification(ProgressNotificationType.ProgressDialog);
+                //ProcessDialog = ProgressNotificationFactory.CreateProgresNotification(ProgressNotificationType.ProgressDialog);
                 ProcessDialog.Title = "Uwaga";
                 ProcessDialog.Message = "Trwa przetwarzanie...";
                 ProcessDialog.ButtonLabel = "Anuluj";
