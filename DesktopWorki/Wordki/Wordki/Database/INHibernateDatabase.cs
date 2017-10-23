@@ -9,9 +9,16 @@ namespace Wordki.Database
         IList<IGroup> Groups { get; }
 
         Task<IUser> GetUserAsync(string name, string password);
+        IUser GetUesr(string name, string password);
+
         Task<bool> AddGroupAsync(IGroup group);
+        bool AddGroup(IGroup group);
+
         Task<bool> AddResultAsync(IResult result);
+
         Task<bool> AddWordAsync(IWord word);
+        bool AddWord(IWord word);
+
         Task<bool> AddUserAsync(IUser user);
         Task<bool> DeleteGroupAsync(IGroup group);
         Task<bool> DeleteResultAsync(IResult result);

@@ -210,7 +210,7 @@
       <DataGrid
         Grid.Column="4" Grid.Row="0"
         Style="{StaticResource AppDataGridStyle}"
-        ItemsSource="{Binding Path=SelectedGroup.Words}"
+        ItemsSource="{Binding Path=Words}"
         SelectedItem="{Binding Path=SelectedWord, Mode=TwoWay}"
         AutoGenerateColumns="false"
         HorizontalGridLinesBrush="{DynamicResource UsedPressedBrush}"

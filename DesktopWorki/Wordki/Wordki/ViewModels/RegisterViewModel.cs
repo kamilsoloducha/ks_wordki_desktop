@@ -61,9 +61,9 @@ namespace Wordki.ViewModels
                 Name = UserName,
                 Password = Password
             };
-            CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-            lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestRegister(user)) { OnCompleteCommand = OnRegister });
-            lQueue.Execute();
+            //CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
+            //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestRegister(user)) { OnCompleteCommand = OnRegister });
+            //lQueue.Execute();
         }
 
         protected override void ChangeState(object obj)

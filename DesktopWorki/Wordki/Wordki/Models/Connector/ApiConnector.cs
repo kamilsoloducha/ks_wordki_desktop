@@ -74,20 +74,5 @@ namespace Wordki.Models.Connector {
       }
       return lResponse;
     }
-
-
-    public static CommandQueue<ICommand> GetCommonGroupsQueue() {
-      //DateTime downloadDateTime = new DateTime();
-      CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-      //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetCommonGroups("dupa", 1, 1)) { OnCompleteCommand = Database.GetDatabase().OnReadCommonGroup });
-      //lQueue.OnQueueComplete += success => {
-      //  if (success) {
-      //    User user = Database.GetDatabase().User;
-      //    user.DownloadTime = downloadDateTime;
-      //    Database.GetDatabase().AddOrUpdateUser(user);
-      //  }
-      //};
-      return lQueue;
-    }
   }
 }

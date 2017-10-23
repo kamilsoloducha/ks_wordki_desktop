@@ -165,7 +165,6 @@
     <Compile Include="Database\WordRepository.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
     <Compile Include="Helpers\Command\CommandApiRequest.cs" />
-    <Compile Include="Helpers\Command\CommandQueue.cs" />
     <Compile Include="Helpers\Command\ICommand.cs" />
     <Compile Include="Helpers\Command\SimpleCommand.cs" />
     <Compile Include="Helpers\Command\SimpleCommandAsync.cs" />
@@ -245,9 +244,6 @@
     <Compile Include="Models\Lesson\NotChecker\Utf8NotCheck.cs" />
     <Compile Include="Models\Lesson\WordComparer\WordComparer2.cs" />
     <Compile Include="Models\ModelAbs.cs" />
-    <Compile Include="Models\RemoteDatabase\RemoteDatabase.cs" />
-    <Compile Include="Models\RemoteDatabase\RemoteDatabaseBase.cs" />
-    <Compile Include="Models\RemoteDatabase\RemoteDatabaseFake.cs" />
     <Compile Include="Models\Result\Result.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\ShortCutsBindings.cs" />

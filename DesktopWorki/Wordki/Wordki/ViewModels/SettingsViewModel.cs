@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using Wordki.Helpers;
 using Wordki.Models;
 using Wordki.Models.Connector;
-using Wordki.Models.RemoteDatabase;
 using Wordki.Views.Dialogs;
-using Wordki.Helpers.Command;
 using Wordki.Helpers.Notification;
 using Wordki.Database;
 
@@ -240,9 +236,9 @@ namespace Wordki.ViewModels
             };
             if (hashPassword.Equals(UserManagerSingleton.Get().User.Password))
             {
-                CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-                lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestPutUser(user)) { OnCompleteCommand = UpdateLoginPasswordComplete });
-                lQueue.Execute();
+                //CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
+                //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestPutUser(user)) { OnCompleteCommand = UpdateLoginPasswordComplete });
+                //lQueue.Execute();
             }
         }
 
@@ -274,9 +270,9 @@ namespace Wordki.ViewModels
 
         private void Default(object obj)
         {
-            CommandQueue<ICommand> lQueue = ApiConnector.GetCommonGroupsQueue();
-            lQueue.CreateDialog = false;
-            lQueue.Execute();
+            //CommandQueue<ICommand> lQueue = ApiConnector.GetCommonGroupsQueue();
+            //lQueue.CreateDialog = false;
+            //lQueue.Execute();
             //Settings.ChangeStyle(ApplicationStyleEnum.Light);
             //Settings settings = Settings.GetSettings();
             //settings.FontSize = 20;
@@ -287,24 +283,24 @@ namespace Wordki.ViewModels
         private void Synchronize(object obj)
         {
             UserManagerSingleton.Get().User.DownloadTime = new DateTime(1991, 5, 20);
-            CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-            CommandQueue<ICommand> downloadQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetDownloadQueue();
-            foreach (ICommand command in downloadQueue.MainQueue)
-            {
-                lQueue.MainQueue.AddLast(command);
-            }
-            //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetDateTime(UserManagerSingleton.Get().User as User)) { OnCompleteCommand = lDatabase.OnReadDateTime });
-            CommandQueue<ICommand> uploadQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetUploadQueue();
-            foreach (ICommand command in uploadQueue.MainQueue)
-            {
-                lQueue.MainQueue.AddLast(command);
-            }
-            lQueue.OnQueueComplete += success =>
-            {
-                Database.RefreshDatabaseAsync();
-                Database.LoadDatabaseAsync();
-            };
-            lQueue.Execute();
+            //CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
+            //CommandQueue<ICommand> downloadQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetDownloadQueue();
+            //foreach (ICommand command in downloadQueue.MainQueue)
+            //{
+            //    lQueue.MainQueue.AddLast(command);
+            //}
+            ////lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetDateTime(UserManagerSingleton.Get().User as User)) { OnCompleteCommand = lDatabase.OnReadDateTime });
+            //CommandQueue<ICommand> uploadQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetUploadQueue();
+            //foreach (ICommand command in uploadQueue.MainQueue)
+            //{
+            //    lQueue.MainQueue.AddLast(command);
+            //}
+            //lQueue.OnQueueComplete += success =>
+            //{
+            //    Database.RefreshDatabaseAsync();
+            //    Database.LoadDatabaseAsync();
+            //};
+            //lQueue.Execute();
         }
 
         private void Logout(object obj)

@@ -333,7 +333,7 @@ namespace Wordki.ViewModels
         private void Check(object obj)
         {
             Lesson.Check(State.Translation);
-
+            string translation = State.Translation;
             if (Lesson.IsCorrect)
             {
                 State = StateFactory.GetState(Lesson, LessonStateEnum.Correct);
@@ -342,6 +342,7 @@ namespace Wordki.ViewModels
             else
             {
                 State = StateFactory.GetState(Lesson, LessonStateEnum.Wrong);
+                State.Translation = translation;
                 State.RefreshView();
             }
             TimeOutChecking = false;
@@ -691,6 +692,7 @@ namespace Wordki.ViewModels
                     _counter = pLastState._counter;
                     _selectedDrawer = pLastState._selectedDrawer;
                     _progress = pLastState._progress;
+                    _translation = pLastState._translation;
                 }
                 else
                 {
@@ -1169,6 +1171,11 @@ namespace Wordki.ViewModels
                 Lesson.Timer.StopTimer();
                 foreach (IWord word in Lesson.BeginWordsList)
                 {
+                    IWord wordFromGroup = word.Group.Words.FirstOrDefault(x => x.Id == word.Id);
+                    if(wordFromGroup!= null)
+                    {
+                        wordFromGroup.Drawer = word.Drawer;
+                    }
                     await database.UpdateWordAsync(word);
                 }
                 foreach (IResult result in Lesson.ResultList)
@@ -1176,7 +1183,6 @@ namespace Wordki.ViewModels
                     result.Group.Results.Add(result);
                     await database.AddResultAsync(result);
                 }
-                await database.LoadDatabaseAsync();
                 Switcher.GetSwitcher().Back(true);
             }
 

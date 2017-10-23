@@ -7,13 +7,13 @@ using Repository.Models.Language;
 using Wordki.Helpers;
 using Wordki.Helpers.GroupSplitter;
 using Wordki.Models;
-using Wordki.Models.RemoteDatabase;
 using Wordki.Views.Dialogs;
 using Wordki.Views.Dialogs.ListDialogs;
 using Util;
 using Repository.Helper;
 using Repository.Models;
 using Wordki.Database;
+using System.Collections.ObjectModel;
 
 namespace Wordki.ViewModels
 {
@@ -32,6 +32,7 @@ namespace Wordki.ViewModels
     {
 
         private readonly object _groupsLock = new object();
+        private readonly object _wordLock = new object();
 
         #region Properies
 
@@ -45,9 +46,12 @@ namespace Wordki.ViewModels
                     return;
                 UpdateGroup(_selectedGroup);
                 _selectedGroup = value;
+                UpdateWords();
                 OnPropertyChanged();
             }
         }
+
+        
 
         private IWord _selectedWord;
         public IWord SelectedWord
@@ -173,6 +177,11 @@ namespace Wordki.ViewModels
 
         public IDatabase Database { get; set; }
         public ObservableDictionary<string, bool> EnableElementDirectory { get; set; }
+
+
+        public ObservableCollection<IWord> Words { get; set; }
+
+
         //private ClipboardHelper ClipboardHelper { get; set; }
         //private NotifyIcon NotifyIcon { get; set; }
         public Settings Settings { get; set; }
@@ -206,6 +215,8 @@ namespace Wordki.ViewModels
             //NotifyIcon.Icon = SystemIcons.Application;//new Icon(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Icons", "Wordki.png"));
 
             BindingOperations.EnableCollectionSynchronization(Database.Groups, _groupsLock);
+            Words = new ObservableCollection<IWord>();
+            BindingOperations.EnableCollectionSynchronization(Words, _wordLock);
             Settings = Settings.GetSettings();
         }
 
@@ -499,6 +510,7 @@ namespace Wordki.ViewModels
         private void Back(object obj)
         {
             Switcher.GetSwitcher().Back();
+            UpdateGroup(SelectedGroup);
         }
 
         private void AddWord(object obj)
@@ -513,6 +525,7 @@ namespace Wordki.ViewModels
             }
             Word word = new Word();
             SelectedGroup.AddWord(word);
+            Words.Add(word);
             AddWord_(word);
             SelectedWord = word;
             Language1IsFocused = false;
@@ -721,6 +734,15 @@ namespace Wordki.ViewModels
                 SelectedWord = SelectedGroup.Words.LastOrDefault();
             }
             RefreshView();
+        }
+
+        private void UpdateWords()
+        {
+            Words.Clear();
+            foreach(IWord word in SelectedGroup.Words)
+            {
+                Words.Add(word);
+            }
         }
 
         private async void UpdateWord(IWord pWord)

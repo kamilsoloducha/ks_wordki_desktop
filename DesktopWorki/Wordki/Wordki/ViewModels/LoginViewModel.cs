@@ -126,9 +126,9 @@ namespace Wordki.ViewModels
             {
                 StartWithUser(user);
                 return true;
-                CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-                lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestLogin(user as User)) { OnCompleteCommand = OnLogin });
-                lQueue.Execute();
+                //CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
+                //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestLogin(user as User)) { OnCompleteCommand = OnLogin });
+                //lQueue.Execute();
             }
             else
             {

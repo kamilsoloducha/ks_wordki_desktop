@@ -262,6 +262,47 @@ namespace Wordki.Database
             return true;
         }
 
+        public IUser GetUesr(string name, string password)
+        {
+            IUser result = null;
+            try
+            {
+                result = _userRepo.Get(name, password);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return result;
+        }
+
+        public bool AddGroup(IGroup group)
+        {
+            try
+            {
+                _groupRepo.Save(group);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            Groups.Add(group);
+            return true;
+        }
+
+        public bool AddWord(IWord word)
+        {
+            try
+            {
+                _wordRepo.Save(word);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
         #endregion
 
     }

@@ -133,7 +133,6 @@ namespace Wordki.ViewModels
                 //database.AddUser(lUser);
             //}
             //UserManager.GetInstance().User = lUser;
-            database.LoadDatabaseAsync();
             StartWithUser(lUser);
         }
 

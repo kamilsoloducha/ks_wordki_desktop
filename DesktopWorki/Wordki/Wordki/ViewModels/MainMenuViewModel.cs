@@ -4,9 +4,7 @@ using System.Linq;
 using System.Windows;
 using Wordki.Helpers;
 using Wordki.Models;
-using Wordki.Models.RemoteDatabase;
 using System.Threading.Tasks;
-using Wordki.Helpers.Command;
 using Wordki.Database;
 
 namespace Wordki.ViewModels
@@ -14,11 +12,9 @@ namespace Wordki.ViewModels
     public class MainMenuViewModel : ViewModelBase
     {
 
-        private string _statusBarText;
-        private string _login;
-        private ObservableCollection<double> _values;
-        private double _maxValue;
+        #region Properies
 
+        private ObservableCollection<double> _values;
         public ObservableCollection<double> Values
         {
             get { return _values; }
@@ -29,6 +25,8 @@ namespace Wordki.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private double _maxValue;
         public double MaxValue
         {
             get { return _maxValue; }
@@ -40,7 +38,7 @@ namespace Wordki.ViewModels
             }
         }
 
-        #region Properies
+        private string _statusBarText;
         public string StatusBarText
         {
             get { return _statusBarText; }
@@ -54,6 +52,8 @@ namespace Wordki.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private string _login;
         public string Login
         {
             get { return _login; }
@@ -177,10 +177,7 @@ namespace Wordki.ViewModels
 
         private void Exit(object obj)
         {
-            DatabaseSingleton.GetDatabase().SaveDatabaseAsync();
-            CommandQueue<ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetUploadQueue();
-            lQueue.OnQueueComplete += success => Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown());
-            lQueue.Execute();
+            Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown());
         }
         #endregion
 
@@ -205,18 +202,9 @@ namespace Wordki.ViewModels
             });
         }
 
-        private bool _needRead = true;
         private void ReadDatabaseFromServer()
         {
-            if (!_needRead)
-            {
-                Task.Run(() => RefreshInfo());
-                return;
-            }
-            CommandQueue<ICommand> lQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetDownloadQueue();
-            lQueue.OnQueueComplete += success => RefreshInfo();
-            lQueue.Execute();
-            _needRead = false;
+            Task.Run(() => RefreshInfo());
         }
     }
 }
