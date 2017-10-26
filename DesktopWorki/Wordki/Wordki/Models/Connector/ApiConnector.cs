@@ -10,7 +10,7 @@ using Wordki.Helpers.Command;
 namespace Wordki.Models.Connector {
   public class ApiConnector {
     public ApiResponse SentRequest(ApiRequest pRequest) {
-      Logger.LogInfo("Wysyłam: {0} - {1}", pRequest.Url, pRequest.Message);
+      LoggerSingleton.LogInfo("Wysyłam: {0} - {1}", pRequest.Url, pRequest.Message);
       ApiResponse lResponse = new ApiResponse();
       byte[] lData = null;
       HttpWebRequest lRequest;
@@ -19,7 +19,7 @@ namespace Wordki.Models.Connector {
         lRequest.Timeout = 10000;
         lRequest.ReadWriteTimeout = 10000;
       } catch (Exception e) {
-        Logger.LogError("Błąd połączenia - {0}", e.Message);
+        LoggerSingleton.LogError("Błąd połączenia - {0}", e.Message);
         return new ApiResponse { IsError = true };
       }
       lRequest.Method = pRequest.Method;
@@ -39,7 +39,7 @@ namespace Wordki.Models.Connector {
             lStreamWriter.Write(lData, 0, lData.Length);
           }
         } catch (WebException exception) {
-          Logger.LogError("Błąd połączenia z serwerem: {0}", exception.Message);
+          LoggerSingleton.LogError("Błąd połączenia z serwerem: {0}", exception.Message);
           return new ApiResponse {
             IsError = true,
           };
@@ -49,7 +49,7 @@ namespace Wordki.Models.Connector {
       try {
         lWebResponse = (HttpWebResponse)lRequest.GetResponse();
       } catch (Exception e) {
-        Logger.LogInfo("Błąd połączenia z serwerem - {0}", e.Message);
+        LoggerSingleton.LogInfo("Błąd połączenia z serwerem - {0}", e.Message);
         return new ApiResponse();
       }
       var lResponseStream = lWebResponse.GetResponseStream();
@@ -62,12 +62,12 @@ namespace Wordki.Models.Connector {
     }
 
     public ApiResponse GetResponse(string pMessage) {
-      Logger.LogInfo("Odpowiedź: {0}", pMessage);
+      LoggerSingleton.LogInfo("Odpowiedź: {0}", pMessage);
       ApiResponse lResponse;
       try {
         lResponse = JsonConvert.DeserializeObject<ApiResponse>(pMessage);
       } catch (Exception e) {
-        Logger.LogError("GetResponse Error: {0}", e.Message);
+        LoggerSingleton.LogError("GetResponse Error: {0}", e.Message);
         return new ApiResponse {
           IsError = true,
         };

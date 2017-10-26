@@ -1,9 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wordki.Models;
 using Wordki.Models.LessonScheduler;
 using Wordki.Models.LessonScheduler.LessonScheduleInitializer;
@@ -39,21 +35,21 @@ namespace Wordki.Test.Helpers.LessonSchedulerTests
                 DateTime = DateTime.Now.AddDays(-1),
             };
             int r = scheduler.GetColor(result);
-            Assert.IsTrue(0 == r);
+            Assert.AreEqual(0, r);
 
             result = new Result()
             {
                 DateTime = DateTime.Now.AddDays(-7),
             };
             r = scheduler.GetColor(result);
-            Assert.IsTrue(3 == r);
+            Assert.AreEqual(3, r);
 
             result = new Result()
             {
                 DateTime = DateTime.Now.AddDays(-9),
             };
             r = scheduler.GetColor(result);
-            Assert.IsTrue(4 == r);
+            Assert.AreEqual(4, r);
         }
     }
 }

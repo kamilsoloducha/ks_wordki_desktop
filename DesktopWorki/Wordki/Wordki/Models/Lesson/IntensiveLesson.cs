@@ -161,18 +161,18 @@ namespace Wordki.Models.Lesson
         private void PrintDrawers()
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
-            Logger.LogInfo("WordList:");
+            LoggerSingleton.LogInfo("WordList:");
             foreach (Word word in WordList)
             {
-                Logger.LogInfo("Słowo: {0} | {1}", word.Language1, word.Language2);
+                LoggerSingleton.LogInfo("Słowo: {0} | {1}", word.Language1, word.Language2);
             }
-            Logger.LogInfo("DrawersList:");
+            LoggerSingleton.LogInfo("DrawersList:");
             for (int i = 0; i < Drawers; i++)
             {
-                Logger.LogInfo("szuflada: {0} | słów: {1}", i, DrawersList[i].Count);
+                LoggerSingleton.LogInfo("szuflada: {0} | słów: {1}", i, DrawersList[i].Count);
                 foreach (Word word in DrawersList[i])
                 {
-                    Logger.LogInfo("Słowo: {0} | {1}", word.Language1, word.Language2);
+                    LoggerSingleton.LogInfo("Słowo: {0} | {1}", word.Language1, word.Language2);
                 }
             }
             stopWatch.Stop();

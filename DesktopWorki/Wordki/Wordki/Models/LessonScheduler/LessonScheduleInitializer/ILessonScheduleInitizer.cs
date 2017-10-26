@@ -8,7 +8,7 @@ namespace Wordki.Models.LessonScheduler.LessonScheduleInitializer
 {
     public interface ILessonScheduleInitializer
     {
-        int[] TimeSeparator { get; }
+        IEnumerable<int> TimeSeparator { get; }
 
 
     }

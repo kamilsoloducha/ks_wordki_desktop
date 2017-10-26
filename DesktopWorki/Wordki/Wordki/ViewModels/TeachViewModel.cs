@@ -195,7 +195,7 @@ namespace Wordki.ViewModels
                 IResult lResult = Lesson.ResultList.FirstOrDefault();
                 if (lResult == null)
                 {
-                    Logger.LogError("{0} - {1}", "TeachViewModel.StartLesson", "lResult == null");
+                    LoggerSingleton.LogError("{0} - {1}", "TeachViewModel.StartLesson", "lResult == null");
                     return;
                 }
                 switch (lResult.LessonType)
@@ -215,7 +215,7 @@ namespace Wordki.ViewModels
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1}", "TeachViewModel.StartLesson", lException.Message);
+                LoggerSingleton.LogError("{0} - {1}", "TeachViewModel.StartLesson", lException.Message);
             }
         }
 
@@ -245,6 +245,7 @@ namespace Wordki.ViewModels
                 }
                 else if (lResult.HasValue && !lResult.Value)
                 {//correct
+                    await DatabaseSingleton.GetDatabase().UpdateWordAsync(Lesson.SelectedWord);
                     State = StateFactory.GetState(Lesson, lLastState);
                     State.RefreshView();
                 }
@@ -282,7 +283,7 @@ namespace Wordki.ViewModels
                     }
                     catch (Exception e)
                     {
-                        Logger.LogError("Błąd serializowania lekcji - {0}", e.Message);
+                        LoggerSingleton.LogError("Błąd serializowania lekcji - {0}", e.Message);
                     }
                     Lesson.FinishLesson();
                     Lesson.Timer.StopTimer();

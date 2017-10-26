@@ -107,13 +107,13 @@ namespace Wordki.ViewModels
 
         #region Methods
 
-        protected async void StartWithUser(IUser user)
+        protected void StartWithUser(IUser user)
         {
             IUserManager userManager = UserManagerSingleton.Get();
             userManager.Set(user);
             user.LastLoginDateTime = DateTime.Now;
             userManager.Update();
-            await DatabaseSingleton.GetDatabase().LoadDatabaseAsync();
+            DatabaseSingleton.GetDatabase().LoadDatabaseAsync().ConfigureAwait(false);
             Start();
         }
 

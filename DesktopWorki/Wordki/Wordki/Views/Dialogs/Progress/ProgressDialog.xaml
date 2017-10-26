@@ -11,47 +11,47 @@
         Style="{StaticResource AppDialogStyle}"
         Loaded="ProcessDialog_OnLoaded">
 
-  <Window.Resources>
-    <Style x:Key="WinTextBlockStyle" BasedOn="{StaticResource AppTextBlockStyle}" TargetType="{x:Type TextBlock}">
-      <Setter Property="FontSize" Value="20"/>
-      <Setter Property="HorizontalAlignment" Value="Center"/>
-      <Setter Property="VerticalAlignment" Value="Center"/>
-    </Style>
-  </Window.Resources>
+    <Window.Resources>
+        <Style x:Key="WinTextBlockStyle" BasedOn="{StaticResource AppTextBlockStyle}" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
 
-  <Window.InputBindings>
-    <KeyBinding Key="Escape" Command="{Binding Path=CancelCommand}"/>
-  </Window.InputBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding Path=CancelCommand}"/>
+    </Window.InputBindings>
 
-  <Border
+    <Border
     Style="{StaticResource DialogBorderStyle}"
     Padding="0">
-    <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="*"/>
-      </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-      <TextBlock
+            <TextBlock
         Grid.Row="0"
         Style="{StaticResource WinTextBlockStyle}"
         Text="{Binding Path=DialogTitle, UpdateSourceTrigger=PropertyChanged}"/>
 
-      <animatedProgressBar:AnimatedProgressBar
+            <animatedProgressBar:AnimatedProgressBar
         TextStyle="{DynamicResource WinTextBlockStyle}"
         Grid.Row="1"
         FontSize="20"
         Text="{Binding Path=Message, UpdateSourceTrigger=PropertyChanged}" />
-      
-      <Button
+
+            <Button
         HorizontalAlignment="Right"
         Grid.Row="2"
         helpers:FocusExtension.IsFocused="True"
         Style="{StaticResource DialogFlatButtonStyle}"
         Content="{Binding Path=ButtonLabel, UpdateSourceTrigger=PropertyChanged}"
         Command="{Binding Path=CancelCommand}"/>
-    </Grid>
-  </Border>
+        </Grid>
+    </Border>
 
 </Window>

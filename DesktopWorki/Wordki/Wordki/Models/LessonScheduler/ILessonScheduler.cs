@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,8 @@ namespace Wordki.Models.LessonScheduler
     public interface ILessonScheduler
     {
 
-        int GetTimeToLearn(ICollection<Result> results);
-        int GetColor(Result resut);
+        int GetTimeToLearn(ICollection<IResult> results);
+        int GetColor(IResult resut);
 
     }
 }

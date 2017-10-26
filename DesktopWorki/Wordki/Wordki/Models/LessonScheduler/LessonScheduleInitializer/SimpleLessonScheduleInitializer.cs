@@ -10,7 +10,7 @@ namespace Wordki.Models.LessonScheduler.LessonScheduleInitializer
     {
         private static int[] _timeSeparator = { 2, 4, 6, 8 };
 
-        public int[] TimeSeparator
+        public IEnumerable<int> TimeSeparator
         {
             get
             {

@@ -60,7 +60,7 @@ namespace Wordki.ViewModels
             }
             catch (Exception lException)
             {
-                Logger.LogError("Blad w czasie inicjalizacji WordManagerViewModel - {0}", lException.Message);
+                LoggerSingleton.LogError("Blad w czasie inicjalizacji WordManagerViewModel - {0}", lException.Message);
             }
         }
 

@@ -105,7 +105,7 @@ namespace Wordki.Models
         public Settings()
         {
             FontSize = 30;
-            ApplicationStyle = ApplicationStyleEnum.Light;
+            ApplicationStyle = ApplicationStyleEnum.Dark;
             FontSizeSensitive = false;
             ShortCuts = new ObservableCollection<ForeignLetter> {
         new ForeignLetter {
@@ -175,7 +175,7 @@ namespace Wordki.Models
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1}", "Settings.GetSettings", lException.Message);
+                LoggerSingleton.LogError("{0} - {1}", "Settings.GetSettings", lException.Message);
             }
             if (_settigns != null)
                 return _settigns;
@@ -208,7 +208,7 @@ namespace Wordki.Models
             }
             catch (Exception lException)
             {
-                Logger.LogError("Blad w {0} - {1}", "LoadSettings", lException.Message);
+                LoggerSingleton.LogError("Blad w {0} - {1}", "LoadSettings", lException.Message);
             }
             if (_settigns != null)
                 return true;

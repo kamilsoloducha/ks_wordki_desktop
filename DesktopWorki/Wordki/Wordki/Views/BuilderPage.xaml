@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:helpers="clr-namespace:Wordki.Helpers"
              xmlns:converters="clr-namespace:Wordki.Helpers.Converters"
-             
              xmlns:viewModels="clr-namespace:Wordki.ViewModels"
              xmlns:models="clr-namespace:Wordki.Models"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -465,7 +464,7 @@
 
           <valueDescription:ValueDescription
             Description="Ilość słów"
-            Value="{Binding Path=SelectedGroup.WordsList.Count, FallbackValue=''}"/>
+            Value="{Binding Path=SelectedGroup.Words.Count, FallbackValue=''}"/>
 
         </UniformGrid>
       </Grid>

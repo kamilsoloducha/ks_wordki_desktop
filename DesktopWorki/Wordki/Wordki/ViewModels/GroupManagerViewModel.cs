@@ -29,7 +29,7 @@ namespace Wordki.ViewModels
     public class GroupManagerViewModel : ViewModelBase
     {
 
-        private static readonly object GroupsLock = new object();
+        private static readonly object _groupsLock = new object();
         private GroupItem _selectedItem;
         private string _translationDirectionLabel;
         private string _allWordsLabel;
@@ -161,7 +161,7 @@ namespace Wordki.ViewModels
             ActivateCommond();
             Values = new ObservableCollection<double> { 0, 0, 0, 0, 0 };
             ItemsList = new ObservableCollection<GroupItem>();
-            BindingOperations.EnableCollectionSynchronization(ItemsList, GroupsLock);
+            BindingOperations.EnableCollectionSynchronization(ItemsList, _groupsLock);
         }
 
         #region Commands
@@ -200,7 +200,7 @@ namespace Wordki.ViewModels
             }
             catch (Exception e)
             {
-                Logger.LogError("Błąd w czasie deserializacji objektu - {0}", e.Message);
+                LoggerSingleton.LogError("Błąd w czasie deserializacji objektu - {0}", e.Message);
                 return;
             }
             PackageStore.Put(0, lesson);
@@ -250,12 +250,12 @@ namespace Wordki.ViewModels
             {
                 if (obj == null)
                 {
-                    Logger.LogError("{0} - {1}", "DrawerSignClick", "obj == null");
+                    LoggerSingleton.LogError("{0} - {1}", "DrawerSignClick", "obj == null");
                 }
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1}", "DrawerSignClick", lException.Message);
+                LoggerSingleton.LogError("{0} - {1}", "DrawerSignClick", lException.Message);
             }
         }
         private void SelectionChanged(object obj)
@@ -311,8 +311,8 @@ namespace Wordki.ViewModels
                 ILessonScheduler scheduler = new LessonScheduler(new SimpleLessonScheduleInitializer());
                 foreach (GroupItem groupItem in DatabaseSingleton.GetDatabase().Groups.Select(group => new GroupItem(group)))
                 {
-                    //groupItem.Color = scheduler.GetColor(groupItem.Group.GetLastResult());
-                    //groupItem.NextRepeat = scheduler.GetTimeToLearn(groupItem.Group.Results);
+                    groupItem.Color = scheduler.GetColor(groupItem.Group.Results.Last());
+                    groupItem.NextRepeat = scheduler.GetTimeToLearn(groupItem.Group.Results);
                     ItemsList.Add(groupItem);
                 }
             });
@@ -373,7 +373,7 @@ namespace Wordki.ViewModels
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1}", "RefreshInfo", lException.Message);
+                LoggerSingleton.LogError("{0} - {1}", "RefreshInfo", lException.Message);
             }
         }
 
@@ -438,7 +438,7 @@ namespace Wordki.ViewModels
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1}", "GetWordListFromSelectedGroups", lException.Message);
+                LoggerSingleton.LogError("{0} - {1}", "GetWordListFromSelectedGroups", lException.Message);
             }
             return lWords;
         }
@@ -495,7 +495,7 @@ namespace Wordki.ViewModels
                         break;
                     default:
                         {
-                            Logger.LogError("{0} - {1} - {2}", "Blad w startowaniu lekcji", "Blad w przekazanym parametrze", lLessonType);
+                            LoggerSingleton.LogError("{0} - {1} - {2}", "Blad w startowaniu lekcji", "Blad w przekazanym parametrze", lLessonType);
                             return;
                         }
                 }
@@ -517,7 +517,7 @@ namespace Wordki.ViewModels
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1} - {2}", "Blad w startowaniu lekcji", lLessonType.ToString(), lException.Message);
+                LoggerSingleton.LogError("{0} - {1} - {2}", "Blad w startowaniu lekcji", lLessonType.ToString(), lException.Message);
             }
         }
 

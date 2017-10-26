@@ -6,7 +6,7 @@ using Repository.Models.Enums;
 namespace Wordki.Models
 {
     [Serializable]
-    public class Result : ModelAbs<IResult>, IComparable<IResult>, IResult
+    public class Result : ModelBase<IResult>, IComparable<IResult>, IResult
     {
         public virtual long Id { get; set; }
         public virtual long UserId { get; set; }

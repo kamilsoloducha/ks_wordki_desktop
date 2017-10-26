@@ -188,6 +188,7 @@
     <Compile Include="Helpers\Behaviour\InputBindingBehavior.cs" />
     <Compile Include="Helpers\JsonConverters\StringToBoolConverter.cs" />
     <Compile Include="Helpers\JsonConverters\StringToIntConverter.cs" />
+    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\Notification\INotification.cs" />
     <Compile Include="Helpers\Notification\NotificationFactory.cs" />
     <Compile Include="Helpers\Notification\ToastNotification.cs" />
@@ -198,7 +199,7 @@
     <Compile Include="Helpers\WordConnector\WordConnector.cs" />
     <Compile Include="Helpers\WordFinder\IWordFinder.cs" />
     <Compile Include="Helpers\WordFinder\WordFinder.cs" />
-    <Compile Include="Models\CommonGroup.cs" />
+    <Compile Include="Models\Group\CommonGroup.cs" />
     <Compile Include="Models\Connector\ApiConnector.cs" />
     <Compile Include="Models\Connector\ApiRequest.cs" />
     <Compile Include="Models\Connector\ApiResponse.cs" />
@@ -209,6 +210,9 @@
     <Compile Include="Models\Result\IResultCalculator.cs" />
     <Compile Include="Models\Result\IResultRepository.cs" />
     <Compile Include="Models\Result\ResultCalculator.cs" />
+    <Compile Include="Models\Settings\ISettings.cs" />
+    <Compile Include="Models\Settings\Settings.cs" />
+    <Compile Include="Models\Settings\SettingsSingletion.cs" />
     <Compile Include="Models\User\IUserRepository.cs" />
     <Compile Include="Models\Word\IWordCalculator.cs" />
     <Compile Include="Models\Word\IWordRepository.cs" />
@@ -224,7 +228,6 @@
     <Compile Include="Helpers\GroupSplitter\GroupSplitGroupCount.cs" />
     <Compile Include="Helpers\GroupSplitter\GroupSplitWordCount.cs" />
     <Compile Include="Helpers\GroupSplitter\SplitterEnum.cs" />
-    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\Switcher.cs" />
     <Compile Include="Models\ForeignLetter.cs" />
     <Compile Include="Models\Group\Group.cs" />
@@ -243,7 +246,7 @@
     <Compile Include="Models\Lesson\NotChecker\SpaceNotCheck.cs" />
     <Compile Include="Models\Lesson\NotChecker\Utf8NotCheck.cs" />
     <Compile Include="Models\Lesson\WordComparer\WordComparer2.cs" />
-    <Compile Include="Models\ModelAbs.cs" />
+    <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Result\Result.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\ShortCutsBindings.cs" />

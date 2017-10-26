@@ -68,7 +68,7 @@ namespace Wordki.ViewModels
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1}", "SameWordsViewModel.EditWord", lException.Message);
+                LoggerSingleton.LogError("{0} - {1}", "SameWordsViewModel.EditWord", lException.Message);
             }
         }
 
@@ -134,7 +134,7 @@ namespace Wordki.ViewModels
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1}", "BuilderViewModel.FindSame", lException.Message);
+                LoggerSingleton.LogError("{0} - {1}", "BuilderViewModel.FindSame", lException.Message);
                 return Enumerable.Empty<Word>();
             }
         }

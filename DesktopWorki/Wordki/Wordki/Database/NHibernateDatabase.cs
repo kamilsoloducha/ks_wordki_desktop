@@ -51,7 +51,32 @@ namespace Wordki.Database
                     group.Results.Add(result);
                 }
             }
+        }
 
+        public void LoadDatabase()
+        {
+            if (Groups.Count > 0)
+            {
+                Groups.Clear();
+            }
+            foreach (var group in (_groupRepo.GetGroups()).Where(x => x.State > 0))
+            {
+                if (group.State < 0)
+                    continue;
+                Groups.Add(group);
+                IEnumerable<IWord> words = group.Words.Where(x => x.State > 0).ToArray();
+                group.Words.Clear();
+                foreach (IWord word in words)
+                {
+                    group.Words.Add(word);
+                }
+                IEnumerable<IResult> results = group.Results.Where(x => x.State > 0).ToArray();
+                group.Results.Clear();
+                foreach (IResult result in results)
+                {
+                    group.Results.Add(result);
+                }
+            }
         }
 
         public async Task SaveDatabaseAsync()
@@ -59,7 +84,17 @@ namespace Wordki.Database
             await _groupRepo.UpdateAsync(Groups);
         }
 
+        public void SaveDatabase()
+        {
+            _groupRepo.Update(Groups);
+        }
+
         public async Task RefreshDatabaseAsync()
+        {
+
+        }
+
+        public void RefreshDatabase()
         {
 
         }
@@ -72,8 +107,23 @@ namespace Wordki.Database
             {
                 await _userRepo.SaveAsync(user);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                return false;
+            }
+            return true;
+        }
+
+        public bool AddUser(IUser user)
+        {
+            try
+            {
+                _userRepo.Save(user);
+            }
+            catch (Exception e)
+            {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
                 return false;
             }
             return true;
@@ -86,8 +136,24 @@ namespace Wordki.Database
             {
                 result = await _userRepo.GetAsync(name, password);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                return null;
+            }
+            return result;
+        }
+
+        public IUser GetUser(string name, string password)
+        {
+            IUser result = null;
+            try
+            {
+                result = _userRepo.Get(name, password);
+            }
+            catch (Exception e )
+            {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
                 return null;
             }
             return result;
@@ -99,13 +165,27 @@ namespace Wordki.Database
             {
                 await _userRepo.UpdateAsync(user);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
                 return false;
             }
             return true;
         }
 
+        public bool UpdateUser(IUser user)
+        {
+            try
+            {
+                _userRepo.Update(user);
+            }
+            catch (Exception e)
+            {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                return false;
+            }
+            return true;
+        }
         #endregion
 
         #region Groups
@@ -116,8 +196,24 @@ namespace Wordki.Database
             {
                 await _groupRepo.SaveAsync(group);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                return false;
+            }
+            Groups.Add(group);
+            return true;
+        }
+
+        public bool AddGroup(IGroup group)
+        {
+            try
+            {
+                _groupRepo.Save(group);
+            }
+            catch (Exception e)
+            {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
                 return false;
             }
             Groups.Add(group);
@@ -134,8 +230,27 @@ namespace Wordki.Database
             {
                 await _groupRepo.UpdateAsync(group);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                return false;
+            }
+            return true;
+        }
+
+        public bool UpdateGroup(IGroup group)
+        {
+            if (group != null && group.State == 0)
+            {
+                return true;
+            }
+            try
+            {
+                _groupRepo.Update(group);
+            }
+            catch (Exception e)
+            {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
                 return false;
             }
             return true;
@@ -156,14 +271,39 @@ namespace Wordki.Database
                 }
                 await UpdateGroupAsync(group);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
                 return false;
             }
             Groups.Remove(group);
             return true;
         }
 
+
+        public bool DeleteGroup(IGroup group)
+        {
+            try
+            {
+                group.State = -1;
+                foreach (IWord word in group.Words)
+                {
+                    word.State = -1;
+                }
+                foreach (IResult result in group.Results)
+                {
+                    result.State = -1;
+                }
+                UpdateGroup(group);
+            }
+            catch (Exception e)
+            {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                return false;
+            }
+            Groups.Remove(group);
+            return true;
+        }
         #endregion
 
         #region Word
@@ -174,13 +314,27 @@ namespace Wordki.Database
             {
                 await _wordRepo.SaveAsync(word);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
                 return false;
             }
             return true;
         }
 
+        public bool AddWord(IWord word)
+        {
+            try
+            {
+                _wordRepo.Save(word);
+            }
+            catch (Exception e)
+            {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                return false;
+            }
+            return true;
+        }
         public async Task<bool> UpdateWordAsync(IWord word)
         {
             if (word != null && word.State == 0)
@@ -191,8 +345,27 @@ namespace Wordki.Database
             {
                 await _wordRepo.UpdateAsync(word);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                return false;
+            }
+            return true;
+        }
+
+        public bool UpdateWord(IWord word)
+        {
+            if (word != null && word.State == 0)
+            {
+                return true;
+            }
+            try
+            {
+                _wordRepo.Update(word);
+            }
+            catch (Exception e)
+            {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
                 return false;
             }
             return true;
@@ -205,14 +378,30 @@ namespace Wordki.Database
                 word.State = -1;
                 await UpdateWordAsync(word);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
                 return false;
             }
             word.Group.Words.Remove(word);
             return true;
         }
 
+        public bool DeleteWord(IWord word)
+        {
+            try
+            {
+                word.State = -1;
+                UpdateWord(word);
+            }
+            catch (Exception e)
+            {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                return false;
+            }
+            word.Group.Words.Remove(word);
+            return true;
+        }
         #endregion
 
         #region Result
@@ -223,8 +412,23 @@ namespace Wordki.Database
             {
                 await _resultRepo.SaveAsync(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                return false;
+            }
+            return true;
+        }
+
+        public bool AddResult(IResult result)
+        {
+            try
+            {
+                _resultRepo.Save(result);
+            }
+            catch (Exception e)
+            {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
                 return false;
             }
             return true;
@@ -240,8 +444,27 @@ namespace Wordki.Database
             {
                 await _resultRepo.UpdateAsync(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                return false;
+            }
+            return true;
+        }
+
+        public bool UpdateResult(IResult result)
+        {
+            if (result != null && result.State == 0)
+            {
+                return true;
+            }
+            try
+            {
+                _resultRepo.Update(result);
+            }
+            catch (Exception e)
+            {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
                 return false;
             }
             return true;
@@ -254,52 +477,28 @@ namespace Wordki.Database
                 result.State = -1;
                 await UpdateResultAsync(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
                 return false;
             }
             result.Group.Results.Remove(result);
             return true;
         }
 
-        public IUser GetUesr(string name, string password)
-        {
-            IUser result = null;
-            try
-            {
-                result = _userRepo.Get(name, password);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-            return result;
-        }
-
-        public bool AddGroup(IGroup group)
+        public bool DeleteResult(IResult result)
         {
             try
             {
-                _groupRepo.Save(group);
+                result.State = -1;
+                UpdateResult(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Helpers.LoggerSingleton.LogError(e.StackTrace);
                 return false;
             }
-            Groups.Add(group);
-            return true;
-        }
-
-        public bool AddWord(IWord word)
-        {
-            try
-            {
-                _wordRepo.Save(word);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            result.Group.Results.Remove(result);
             return true;
         }
 

@@ -234,21 +234,21 @@ namespace Wordki.ViewModels
             lPointsList = CreatePoints(GroupId, Plots.Correct);
             if (lPointsList == null || lPointsList.Count == 0)
             {
-                Logger.LogInfo("{0} - {1}", "ChartViewModel.PrepareChartData", "lPointsList == null || lPointsList.Count == 0");
+                LoggerSingleton.LogInfo("{0} - {1}", "ChartViewModel.PrepareChartData", "lPointsList == null || lPointsList.Count == 0");
                 return;
             }
             PlotElements.Add(Plots.Correct, lPointsList);
             lPointsList = CreatePoints(GroupId, Plots.Accepted);
             if (lPointsList == null || lPointsList.Count == 0)
             {
-                Logger.LogInfo("{0} - {1}", "ChartViewModel.PrepareChartData", "lPointsList == null || lPointsList.Count == 0");
+                LoggerSingleton.LogInfo("{0} - {1}", "ChartViewModel.PrepareChartData", "lPointsList == null || lPointsList.Count == 0");
                 return;
             }
             PlotElements.Add(Plots.Accepted, lPointsList);
             lPointsList = CreatePoints(GroupId, Plots.Wrong);
             if (lPointsList == null || lPointsList.Count == 0)
             {
-                Logger.LogInfo("{0} - {1}", "ChartViewModel.PrepareChartData", "lPointsList == null || lPointsList.Count == 0");
+                LoggerSingleton.LogInfo("{0} - {1}", "ChartViewModel.PrepareChartData", "lPointsList == null || lPointsList.Count == 0");
                 return;
             }
             PlotElements.Add(Plots.Wrong, lPointsList);
@@ -256,7 +256,7 @@ namespace Wordki.ViewModels
             lPointsList = CreatePoints(GroupId, Plots.Unvisibles);
             if (lPointsList == null || lPointsList.Count == 0)
             {
-                Logger.LogInfo("{0} - {1}", "ChartViewModel.PrepareChartData", "lPointsList == null || lPointsList.Count == 0");
+                LoggerSingleton.LogInfo("{0} - {1}", "ChartViewModel.PrepareChartData", "lPointsList == null || lPointsList.Count == 0");
                 return;
             }
             PlotElements.Add(Plots.Unvisibles, lPointsList);
@@ -326,7 +326,7 @@ namespace Wordki.ViewModels
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1}", "ChartViewModel.CreatePoint", lException.Message);
+                LoggerSingleton.LogError("{0} - {1}", "ChartViewModel.CreatePoint", lException.Message);
             }
             return lPointsList;
         }
@@ -383,7 +383,7 @@ namespace Wordki.ViewModels
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1}", "ChartViewModel.OnDrawPlot", lException.Message);
+                LoggerSingleton.LogError("{0} - {1}", "ChartViewModel.OnDrawPlot", lException.Message);
             }
         }
 

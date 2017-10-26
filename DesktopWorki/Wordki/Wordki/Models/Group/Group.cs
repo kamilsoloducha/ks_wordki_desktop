@@ -10,7 +10,7 @@ using System.Windows.Data;
 namespace Wordki.Models
 {
     [Serializable]
-    public class Group : ModelAbs<IGroup>, IComparable<IGroup>, IGroup
+    public class Group : ModelBase<IGroup>, IComparable<IGroup>, IGroup
     {
 
         public virtual long Id { get; set; }

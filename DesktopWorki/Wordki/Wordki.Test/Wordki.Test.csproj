@@ -128,6 +128,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryTest\ResultCalculatorTests.cs" />
     <Compile Include="RepositoryTest\WordCalculatorTests.cs" />
+    <Compile Include="Settings\SettingsSingletionTests.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>

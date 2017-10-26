@@ -50,7 +50,7 @@ namespace Wordki.Helpers.WordComparer
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1}", "BuilderViewModel.IsPartialSame", lException.Message);
+                LoggerSingleton.LogError("{0} - {1}", "BuilderViewModel.IsPartialSame", lException.Message);
             }
             return false;
         }

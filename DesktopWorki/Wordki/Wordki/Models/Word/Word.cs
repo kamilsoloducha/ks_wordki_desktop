@@ -5,7 +5,7 @@ using Repository.Models;
 namespace Wordki.Models
 {
     [Serializable]
-    public class Word : ModelAbs<IWord>, IWord
+    public class Word : ModelBase<IWord>, IWord
     {
         private static int _maxWordLength = 256;
 

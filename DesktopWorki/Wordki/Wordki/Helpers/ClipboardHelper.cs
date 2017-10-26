@@ -44,7 +44,7 @@ namespace Wordki.Helpers {
           }
           break;
         case Win32.WM_DRAWCLIPBOARD:
-          Logger.LogInfo(Clipboard.GetText());
+          LoggerSingleton.LogInfo(Clipboard.GetText());
           if (OnNewClipboard != null) {
             OnNewClipboard(Clipboard.GetText());
           }

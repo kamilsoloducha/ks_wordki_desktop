@@ -2,8 +2,8 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Wordki.Helpers;
-using Wordki.Models;
+using System.Windows.Input;
+using Util;
 
 namespace Wordki.Views.Dialogs {
   /// <summary>
@@ -52,9 +52,9 @@ namespace Wordki.Views.Dialogs {
         }
       }
     }
-    public BuilderCommand CorrectCommand { get; set; }
-    public BuilderCommand DeleteCommand { get; set; }
-    public BuilderCommand CancelCommand { get; set; }
+    public ICommand CorrectCommand { get; set; }
+    public ICommand DeleteCommand { get; set; }
+    public ICommand CancelCommand { get; set; }
     private IWord Word { get; set; }
     #endregion
 

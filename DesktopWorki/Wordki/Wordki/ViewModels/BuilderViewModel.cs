@@ -409,7 +409,7 @@ namespace Wordki.ViewModels
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1}", "BuilderViewModel.ConnectGroup", lException.Message);
+                LoggerSingleton.LogError("{0} - {1}", "BuilderViewModel.ConnectGroup", lException.Message);
             }
         }
 
@@ -749,7 +749,7 @@ namespace Wordki.ViewModels
         {
             if (!await Database.UpdateWordAsync(pWord))
             {
-                Logger.LogError("Błąd Updatu");
+                LoggerSingleton.LogError("Błąd Updatu");
             }
         }
 
@@ -757,7 +757,7 @@ namespace Wordki.ViewModels
         {
             if (!await Database.AddWordAsync(pWord))
             {
-                Logger.LogError("Błąd Dodania");
+                LoggerSingleton.LogError("Błąd Dodania");
             }
         }
 
@@ -765,7 +765,7 @@ namespace Wordki.ViewModels
         {
             if (!await Database.AddGroupAsync(pGroup))
             {
-                Logger.LogError("Błąd Dodania");
+                LoggerSingleton.LogError("Błąd Dodania");
             }
         }
 
@@ -773,7 +773,7 @@ namespace Wordki.ViewModels
         {
             if (!await Database.UpdateGroupAsync(pGroup))
             {
-                Logger.LogError("Błąd Updatu");
+                LoggerSingleton.LogError("Błąd Updatu");
             }
         }
 
@@ -781,7 +781,7 @@ namespace Wordki.ViewModels
         {
             if (!await Database.DeleteGroupAsync(pGroup))
             {
-                Logger.LogError("Błąd Usuwania");
+                LoggerSingleton.LogError("Błąd Usuwania");
             }
         }
         #endregion
