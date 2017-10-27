@@ -6,9 +6,11 @@
         xmlns:dialogs="clr-namespace:Wordki.Views.Dialogs.Progress"
         xmlns:helpers="clr-namespace:Wordki.Helpers"
         xmlns:animatedProgressBar="clr-namespace:Controls.AnimatedProgressBar;assembly=Controls"
+        xmlns:viewModels="clr-namespace:Wordki.ViewModels.Dialogs.Progress"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         Style="{StaticResource AppDialogStyle}"
+        d:DataContext="{d:DesignInstance {x:Type viewModels:ProgressDialogViewModel}}"
         Loaded="ProcessDialog_OnLoaded">
 
     <Window.Resources>
@@ -34,9 +36,9 @@
             </Grid.RowDefinitions>
 
             <TextBlock
-        Grid.Row="0"
-        Style="{StaticResource WinTextBlockStyle}"
-        Text="{Binding Path=DialogTitle, UpdateSourceTrigger=PropertyChanged}"/>
+                Grid.Row="0"
+                Style="{StaticResource WinTextBlockStyle}"
+                Text="{Binding Path=DialogTitle, UpdateSourceTrigger=PropertyChanged}"/>
 
             <animatedProgressBar:AnimatedProgressBar
         TextStyle="{DynamicResource WinTextBlockStyle}"

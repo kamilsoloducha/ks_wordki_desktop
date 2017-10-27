@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Util.Threads;
 using Wordki.Database;
 using Wordki.Helpers;
-using Wordki.Helpers.Command;
 using Wordki.Models;
 using Wordki.Models.Connector;
 using Wordki.Views.Dialogs.Progress;
@@ -75,7 +74,7 @@ namespace Wordki.ViewModels
 
         public void Loging(object obj)
         {
-            SimpleAsyncWork work = new SimpleAsyncWork();
+            SimpleWork work = new SimpleWork();
             work.WorkFunc += LoginAction;
             BackgroundQueueWithProgressDialog worker = new BackgroundQueueWithProgressDialog();
             ProgressDialog dialog = new ProgressDialog();
@@ -87,9 +86,6 @@ namespace Wordki.ViewModels
             };
             worker.Dialog = dialog;
             worker.AddWork(work);
-            worker.OnCompleted += () => { Console.WriteLine("OnCompleted"); };
-            worker.OnCanceled += () => { Console.WriteLine("OnCanceled"); };
-            worker.OnFailed += () => { Console.WriteLine("OnFailed"); };
             worker.Execute();
             return;
         }
@@ -114,14 +110,14 @@ namespace Wordki.ViewModels
             return Util.MD5Hash.GetMd5Hash(MD5.Create(), Password);
         }
 
-        private async Task<bool> LoginAction()
+        private bool LoginAction()
         {
             if (Password == null)
                 return false;
             if (UserName == null)
                 return false;
             NHibernateHelper.DatabaseName = UserName;
-            IUser user = await DatabaseSingleton.GetDatabase().GetUserAsync(UserName, GetHashedPassword());
+            IUser user = DatabaseSingleton.GetDatabase().GetUser(UserName, GetHashedPassword());
             if (user != null)
             {
                 StartWithUser(user);
@@ -141,7 +137,7 @@ namespace Wordki.ViewModels
                     CreateDateTime = DateTime.Now,
 
                 };
-                if (!await databaseOrganizer.AddDatabaseAsync(user))
+                if (!databaseOrganizer.AddDatabase(user))
                 {
                     Console.WriteLine("Błąd dodawania bazy danych");
                     return false;

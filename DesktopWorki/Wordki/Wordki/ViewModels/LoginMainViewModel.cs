@@ -113,7 +113,7 @@ namespace Wordki.ViewModels
             userManager.Set(user);
             user.LastLoginDateTime = DateTime.Now;
             userManager.Update();
-            DatabaseSingleton.GetDatabase().LoadDatabaseAsync().ConfigureAwait(false);
+            DatabaseSingleton.GetDatabase().LoadDatabase();
             Start();
         }
 
@@ -138,7 +138,7 @@ namespace Wordki.ViewModels
 
         private void Start()
         {
-            //Logger.LogInfo("Loguje użytkownika: {0}", UserManager.GetInstance().User.GetStringFromObject());
+            LoggerSingleton.LogInfo("Loguje użytkownika: {0}", UserManagerSingleton.Get().User.Name);
             Application.Current.Dispatcher.Invoke(() =>
             {
                 Application.Current.Dispatcher.Invoke(() => NotificationFactory.Create().Show("Zalogowano"));

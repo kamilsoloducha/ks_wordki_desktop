@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using Wordki.Helpers;
 
 namespace Wordki.ViewModels.Dialogs.Progress
 {
     public class ProgressDialogViewModel : ViewModelBase
     {
+
+        public event EventHandler ClosingRequest;
 
         private string _dialogTitle;
         public string DialogTitle
@@ -65,8 +69,14 @@ namespace Wordki.ViewModels.Dialogs.Progress
                 OnPropertyChanged();
             }
         }
+        public System.Windows.Input.ICommand CancelCommand { get; private set; }
 
         public Action OnCanceled { get; set; }
+
+        public ProgressDialogViewModel()
+        {
+            CancelCommand = new Helpers.BuilderCommand(Cancel);
+        }
 
         public override void Back()
         {
@@ -74,6 +84,24 @@ namespace Wordki.ViewModels.Dialogs.Progress
 
         public override void InitViewModel()
         {
+        }
+
+        private void Cancel(object obj)
+        {
+            if (OnCanceled != null)
+            {
+                OnCanceled();
+            }
+            OnClosingRequest();
+            LoggerSingleton.LogInfo("Cancel");
+        }
+
+        protected void OnClosingRequest()
+        {
+            if (ClosingRequest != null)
+            {
+                ClosingRequest(this, EventArgs.Empty);
+            }
         }
     }
 }

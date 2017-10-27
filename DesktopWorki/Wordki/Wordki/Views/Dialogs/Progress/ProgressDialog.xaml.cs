@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using Util.Threads;
@@ -11,17 +12,31 @@ namespace Wordki.Views.Dialogs.Progress
     /// </summary>
     public partial class ProgressDialog : Window, IProgressDialog
     {
-        public System.Windows.Input.ICommand CancelCommand { get; private set; }
+        private ProgressDialogViewModel _viewModel;
 
-        public ProgressDialogViewModel ViewModel { get; set; }
+        public ProgressDialogViewModel ViewModel
+        {
+            get { return _viewModel; }
+            set
+            {
+                if(_viewModel == value)
+                {
+                    return;
+                }
+                _viewModel = value;
+                ViewModel.ClosingRequest += (s, e) => Close();
+                DataContext = ViewModel;
+            }
+        }
+
+        public Action OnShow { get; set; }
+        public Action OnClose { get; set; }
 
         public ProgressDialog()
         {
             InitializeComponent();
-            DataContext = ViewModel;
             Owner = Application.Current.MainWindow;
             Width = Owner.ActualWidth;
-            CancelCommand = new Helpers.BuilderCommand(Cancel);
         }
 
         public new void Show()
@@ -31,21 +46,17 @@ namespace Wordki.Views.Dialogs.Progress
 
         public new void Close()
         {
+            Console.WriteLine("Close");
+            if (OnClose != null)
+            {
+                OnClose();
+            }
             base.Close();
         }
 
         private void ProcessDialog_OnLoaded(object sender, RoutedEventArgs e)
         {
             Activate();
-        }
-
-        private void Cancel(object obj)
-        {
-            Close();
-            if (ViewModel.OnCanceled != null)
-            {
-                ViewModel.OnCanceled();
-            }
         }
     }
 }
