@@ -23,6 +23,7 @@ using Util;
 using System.Windows.Input;
 using Repository.Models;
 using Wordki.Database;
+using Util.Collections;
 
 namespace Wordki.ViewModels
 {
@@ -462,7 +463,7 @@ namespace Wordki.ViewModels
                 temp.AddRange(group.Words);
             }
             IEnumerable<IWord> result = temp.Where(x => x.Drawer == 4);
-            result = Util.Collections.Utils.Shuffle(result.ToList());
+            result = result.ToList().Shuffle();
             return result.Take(pCount);
         }
 

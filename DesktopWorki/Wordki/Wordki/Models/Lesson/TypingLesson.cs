@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Repository.Models.Enums;
 using Repository.Models;
+using Util.Collections;
 
 namespace Wordki.Models.Lesson
 {
@@ -66,7 +67,7 @@ namespace Wordki.Models.Lesson
             {
                 BeginWordsList.Add((Word)word.Clone());
             }
-            BeginWordsList = Util.Collections.Utils.Shuffle(BeginWordsList);
+            BeginWordsList = BeginWordsList.Shuffle();
             foreach (Word word in BeginWordsList)
             {
                 WordList.Enqueue(word);

@@ -3,12 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
+using System.Windows.Input;
 using Util.Threads;
 using Wordki.Database;
 using Wordki.Helpers;
 using Wordki.Models;
-using Wordki.Models.Connector;
 using Wordki.Views.Dialogs.Progress;
 
 namespace Wordki.ViewModels
@@ -31,9 +30,9 @@ namespace Wordki.ViewModels
             }
         }
 
-        public System.Windows.Input.ICommand ListViewSelectedChangedCommand { get; set; }
-        public System.Windows.Input.ICommand RemoveUserCommand { get; set; }
-        public System.Windows.Input.ICommand LoginCommand { get; set; }
+        public ICommand ListViewSelectedChangedCommand { get; set; }
+        public ICommand RemoveUserCommand { get; set; }
+        public ICommand LoginCommand { get; set; }
 
         #endregion
 
@@ -99,12 +98,6 @@ namespace Wordki.ViewModels
 
         #region Methods
 
-        private void OnLogin(ApiResponse response)
-        {
-            HandleResponse(response);
-        }
-
-
         private string GetHashedPassword()
         {
             return Util.MD5Hash.GetMd5Hash(MD5.Create(), Password);
@@ -147,33 +140,5 @@ namespace Wordki.ViewModels
             }
         }
         #endregion
-
-    }
-
-
-    public class TestWork : IWork
-    {
-        public bool Execute()
-        {
-            System.Threading.Thread.Sleep(2000);
-            return true;
-        }
-
-        public bool Initialize()
-        {
-            return true;
-        }
-
-        public void OnCanceled()
-        {
-        }
-
-        public void OnCompleted()
-        {
-        }
-
-        public void OnFailed()
-        {
-        }
     }
 }
