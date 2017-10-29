@@ -15,128 +15,130 @@
              d:DataContext="{d:DesignInstance {x:Type viewModels:BuilderViewModel}}"
              Style="{DynamicResource AppPageStyle}"
              KeyboardNavigation.IsTabStop="False">
-  <UserControl.Resources>
-    <Style x:Key="WinTextBoxStyle" BasedOn="{StaticResource AppTextBoxStyle}" TargetType="{x:Type TextBox}">
-      <Setter Property="Margin" Value="5"/>
-      <Setter Property="Background" Value="Transparent"/>
-      <Setter Property="FontSize" Value="{Binding Path=Settings.FontSize}"/>
-      <Setter Property="TextWrapping" Value="Wrap"/>
-    </Style>
+    <UserControl.Resources>
+        <Style x:Key="WinTextBoxStyle" BasedOn="{StaticResource AppTextBoxStyle}" TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontSize" Value="{Binding Path=Settings.FontSize}"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
 
-    <converters:DrawerToColorConverter x:Key="DrawerToColorConverter"/>
-    <converters:LanguageTypeToStringConverter x:Key="LanguageTypeToStringConverter"/>
+        <converters:DrawerToColorConverter x:Key="DrawerToColorConverter"/>
+        <converters:LanguageTypeToStringConverter x:Key="LanguageTypeToStringConverter"/>
+        <converters:WordCheckedToStringConverter x:Key="WordCheckedToStringConverter"/>
+        <converters:WordCheckedToBrushConverter x:Key="WordCheckedToBrushConverter"/>
 
-  </UserControl.Resources>
+    </UserControl.Resources>
 
-  <UserControl.InputBindings>
-    <KeyBinding Key="Enter" Command="{Binding Path=AddWordCommand}" />
-    <KeyBinding Modifiers="Control+Alt" Key="Up" Command="{Binding Path=NextWordCommand}"/>
-    <KeyBinding Modifiers="Control+Alt" Key="Down" Command="{Binding Path=PreviousWordCommand}"/>
-    <KeyBinding Modifiers="Control+Alt" Key="Right" Command="{Binding Path=NextGroupCommand}"/>
-    <KeyBinding Modifiers="Control+Alt" Key="Left" Command="{Binding Path=PreviousGroupCommand}"/>
-    <KeyBinding Modifiers="Alt" Key="Delete" Command="{Binding Path=RemoveWordCommand}"/>
-  </UserControl.InputBindings>
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter" Command="{Binding Path=AddWordCommand}" />
+        <KeyBinding Modifiers="Control+Alt" Key="Up" Command="{Binding Path=NextWordCommand}"/>
+        <KeyBinding Modifiers="Control+Alt" Key="Down" Command="{Binding Path=PreviousWordCommand}"/>
+        <KeyBinding Modifiers="Control+Alt" Key="Right" Command="{Binding Path=NextGroupCommand}"/>
+        <KeyBinding Modifiers="Control+Alt" Key="Left" Command="{Binding Path=PreviousGroupCommand}"/>
+        <KeyBinding Modifiers="Alt" Key="Delete" Command="{Binding Path=RemoveWordCommand}"/>
+    </UserControl.InputBindings>
 
-  <DockPanel>
-    <Grid
+    <DockPanel>
+        <Grid
       DockPanel.Dock="Top">
-      <!--Grid definition-->
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*"/>
-        <ColumnDefinition Width="3"/>
-        <ColumnDefinition Width="5*"/>
-        <ColumnDefinition Width="3"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <!--Grid definition-->
-      <Grid.RowDefinitions>
-        <RowDefinition Height="3*" />
-        <RowDefinition Height="Auto" />
-      </Grid.RowDefinitions>
+            <!--Grid definition-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="3"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!--Grid definition-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-      <TabControl 
+            <TabControl 
         Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3"
         Panel.ZIndex="2"
         KeyboardNavigation.IsTabStop="False"
         Style="{StaticResource AppInnerTabControlStyle}">
-        <TabItem 
+                <TabItem 
           Header="Plik"
           Style="{StaticResource AppInnerTabItemStyle}">
-          <ScrollViewer
+                    <ScrollViewer
             Style="{StaticResource AppScrollViewerStyle}">
-            <StackPanel
+                        <StackPanel
               Background="{DynamicResource UsedNormalBrush}">
 
-              <Button
+                            <Button
                 Command="{Binding BackCommand}"
                 Style="{StaticResource FlatButtonStyle}"
                 Content="Wróć"/>
 
-            </StackPanel>
-          </ScrollViewer>
-        </TabItem>
-        <TabItem 
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem 
                 Header="Grupy"
                 Style="{StaticResource AppInnerTabItemStyle}">
-          <ScrollViewer
+                    <ScrollViewer
                   Style="{StaticResource AppScrollViewerStyle}">
-            <StackPanel
+                        <StackPanel
                     Background="{DynamicResource UsedNormalBrush}">
-              <helpers:ImageButton 
+                            <helpers:ImageButton 
                 Command="{Binding AddGroupCommand}"
                 Style="{StaticResource FlatButtonStyle}"
                 ImageSource="/Resources/Icons/GroupAdd.png"
                 Content="Dodaj grupę"/>
-              <helpers:ImageButton 
+                            <helpers:ImageButton 
                 Command="{Binding AddClipboardGroupCommand}"
                 Style="{StaticResource FlatButtonStyle}"
                 Content="Grupa ze schowka"/>
-              <helpers:ImageButton 
+                            <helpers:ImageButton 
                 Command="{Binding RemoveGroupCommand}"
                 Style="{StaticResource FlatButtonStyle}"
                 ImageSource="/Resources/Icons/GroupRemove.png"
                 Content="Usuń grupę"/>
-              <helpers:ImageButton 
+                            <helpers:ImageButton 
                 Command="{Binding SplitGroupCommand}"
                 Style="{StaticResource FlatButtonStyle}"
                 ImageSource="/Resources/Icons/GroupSplit.png"
                 Content="Podziel grupę"/>
-              <helpers:ImageButton 
+                            <helpers:ImageButton 
                 Command="{Binding ConnectGroupCommand}"
                 Style="{StaticResource FlatButtonStyle}"
                 ImageSource="/Resources/Icons/GroupConnect.png"
                 Content="Połącz grupy"/>
-            </StackPanel>
-          </ScrollViewer>
-        </TabItem>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
 
-        <TabItem 
+                <TabItem 
           Header="Słowa"
           Style="{StaticResource AppInnerTabItemStyle}">
-          <ScrollViewer
+                    <ScrollViewer
             Style="{StaticResource AppScrollViewerStyle}">
-            <StackPanel
+                        <StackPanel
               Background="{DynamicResource UsedNormalBrush}">
-              <helpers:ImageButton 
+                            <helpers:ImageButton 
                 Command="{Binding ShowWordsCommnad}"
                 Style="{StaticResource FlatButtonStyle}"
                 ImageSource="/Resources/Icons/GroupShow.png"
                 Content="Pokaż słowa"/>
-              <helpers:ImageButton 
+                            <helpers:ImageButton 
                 Command="{Binding Path=FindSameWordCommand}"
                 Style="{StaticResource FlatButtonStyle}"
                 ImageSource="/Resources/Icons/GroupShow.png"
                 Content="Znajdź podobne"/>
-              <helpers:ImageButton 
+                            <helpers:ImageButton 
                 Command="{Binding SwapLanguagesCommand}"
                 Style="{StaticResource FlatButtonStyle}"
                 Content="Zmień języki"/>
-            </StackPanel>
-          </ScrollViewer>
-        </TabItem>
-      </TabControl>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
 
-      <DataGrid
+            <DataGrid
         Grid.Column="0" Grid.Row="0"
         Style="{StaticResource AppDataGridStyle}"
         HorizontalGridLinesBrush="{DynamicResource UsedPressedBrush}"
@@ -147,66 +149,66 @@
         FontSize="14"
         KeyboardNavigation.IsTabStop="False"
         Background="Transparent">
-        <i:Interaction.Behaviors>
-          <helpers:ScrollIntoViewBehavior/>
-        </i:Interaction.Behaviors>
-        <DataGrid.Resources>
-          <Style TargetType="{x:Type DataGridCell}">
-            <Setter Property="IsTabStop" Value="False"/>
-          </Style>
-          <Style TargetType="{x:Type DataGridRow}">
-            <Setter Property="IsTabStop" Value="False"/>
-          </Style>
-          <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{DynamicResource UsedHoverColor}"/>
-          <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="{DynamicResource UsedHoverColor}"/>
-        </DataGrid.Resources>
+                <i:Interaction.Behaviors>
+                    <helpers:ScrollIntoViewBehavior/>
+                </i:Interaction.Behaviors>
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Setter Property="IsTabStop" Value="False"/>
+                    </Style>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Setter Property="IsTabStop" Value="False"/>
+                    </Style>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{DynamicResource UsedHoverColor}"/>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="{DynamicResource UsedHoverColor}"/>
+                </DataGrid.Resources>
 
-        <DataGrid.ContextMenu>
-          <ContextMenu 
+                <DataGrid.ContextMenu>
+                    <ContextMenu 
           Style="{StaticResource AppContextMenuStyle}">
-            <MenuItem
+                        <MenuItem
               Header="Dodaj grupę"
               Style="{StaticResource AppMenuItemStyle}"
               Command="{Binding AddGroupCommand}"/>
-            <MenuItem
+                        <MenuItem
               Header="Usuń grupę"
               Style="{StaticResource AppMenuItemStyle}"
               Command="{Binding RemoveGroupCommand}"/>
-          </ContextMenu>
-        </DataGrid.ContextMenu>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
 
-        <i:Interaction.Triggers>
-          <i:EventTrigger EventName="SelectionChanged">
-            <command:EventToCommand
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <command:EventToCommand
               Command="{Binding Path=GroupSelectionChangedCommand}"/>
-          </i:EventTrigger>
-        </i:Interaction.Triggers>
-        <DataGrid.Columns>
-          <DataGridTemplateColumn
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn
             SortMemberPath="GroupName"
             CanUserResize="false"
             Header="Nazwa grupy"
             Width="*"
             HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <TextBlock
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
                   Margin="5,2"
                   FontSize="20"
                   Style="{StaticResource AppTextBlockStyle}"
                   d:DataContext="{d:DesignInstance {x:Type models:Group}}"
                   Text="{Binding Path=Name}"/>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        </DataGrid.Columns>
-      </DataGrid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
 
-      <GridSplitter
+            <GridSplitter
         Grid.Column="1" Grid.Row="0"
         Style="{StaticResource AppGridSplitterStyle}"/>
 
-      <DataGrid
+            <DataGrid
         Grid.Column="4" Grid.Row="0"
         Style="{StaticResource AppDataGridStyle}"
         ItemsSource="{Binding Path=Words}"
@@ -216,157 +218,158 @@
         CanUserAddRows="false"
         FontSize="14"
         KeyboardNavigation.IsTabStop="False">
-        <i:Interaction.Behaviors>
-          <helpers:ScrollIntoViewBehavior/>
-        </i:Interaction.Behaviors>
-        <DataGrid.Resources>
-          <Style TargetType="{x:Type DataGridCell}">
-            <Setter Property="IsTabStop" Value="False"/>
-          </Style>
-          <Style TargetType="{x:Type DataGridRow}">
-            <Setter Property="IsTabStop" Value="False"/>
-          </Style>
-          <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{DynamicResource UsedHoverColor}"/>
-          <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="{DynamicResource UsedHoverColor}"/>
-        </DataGrid.Resources>
+                <i:Interaction.Behaviors>
+                    <helpers:ScrollIntoViewBehavior/>
+                </i:Interaction.Behaviors>
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Setter Property="IsTabStop" Value="False"/>
+                    </Style>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Setter Property="IsTabStop" Value="False"/>
+                    </Style>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{DynamicResource UsedHoverColor}"/>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="{DynamicResource UsedHoverColor}"/>
+                </DataGrid.Resources>
 
-        <DataGrid.ContextMenu>
-          <ContextMenu 
-            Style="{StaticResource AppContextMenuStyle}">
-            <MenuItem
-              Header="Zamień słowa"
-              Style="{StaticResource AppMenuItemStyle}"
-              Command="{Binding Path=SwapSingleWordCommand}"/>
-          </ContextMenu>
-        </DataGrid.ContextMenu>
+                <DataGrid.ContextMenu>
+                    <ContextMenu 
+                        Style="{StaticResource AppContextMenuStyle}">
+                        <MenuItem
+                          Header="Zamień słowa"
+                          Style="{StaticResource AppMenuItemStyle}"
+                          Command="{Binding Path=SwapSingleWordCommand}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
 
-        <i:Interaction.Triggers>
-          <i:EventTrigger EventName="SelectionChanged">
-            <command:EventToCommand
-            Command="{Binding Path=WordSelectionChangedCommand}"/>
-          </i:EventTrigger>
-        </i:Interaction.Triggers>
-        <DataGrid.Columns>
-          <DataGridTemplateColumn
-            SortMemberPath="Language1"
-            CanUserResize="false"
-            Header="Wyrazy"
-            Width="*"
-            HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
-            <DataGridTemplateColumn.CellTemplate>
-              <DataTemplate>
-                <StackPanel
-                  HorizontalAlignment="Stretch"
-                  Orientation="Vertical">
-                  <TextBlock 
-                      Style="{StaticResource AppTextBlockStyle}"
-                      Margin="1,2"
-                      FontSize="20"
-                      d:DataContext="{d:DesignInstance {x:Type models:Word}}"
-                      Text="{Binding Path=Language1}"/>
-                  <TextBlock 
-                    Style="{StaticResource AppTextBlockStyle}"
-                    Margin="1,2"
-                    FontSize="20"
-                    TextAlignment="Right"
-                    d:DataContext="{d:DesignInstance {x:Type models:Word}}"
-                    Text="{Binding Path=Language2}"/>
-                </StackPanel>
-              </DataTemplate>
-            </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>
-        </DataGrid.Columns>
-      </DataGrid>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <command:EventToCommand Command="{Binding Path=WordSelectionChangedCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn
+                        SortMemberPath="Language1"
+                        CanUserResize="false"
+                        Header="Wyrazy"
+                        Width="*"
+                        HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel
+                                      HorizontalAlignment="Stretch"
+                                      Orientation="Vertical">
+                                    <TextBlock 
+                                        Style="{StaticResource AppTextBlockStyle}"
+                                        Margin="1,2"
+                                        FontSize="20"
+                                        d:DataContext="{d:DesignInstance {x:Type models:Word}}"
+                                        Text="{Binding Path=Language1}"
+                                        Foreground="{Binding Path=Checked, Converter={StaticResource WordCheckedToBrushConverter}}"/>
+                                    <TextBlock 
+                                        Style="{StaticResource AppTextBlockStyle}"
+                                        Margin="1,2"
+                                        FontSize="20"
+                                        TextAlignment="Right"
+                                        d:DataContext="{d:DesignInstance {x:Type models:Word}}"
+                                        Text="{Binding Path=Language2}"
+                                        Foreground="{Binding Path=Checked, Converter={StaticResource WordCheckedToBrushConverter}}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
 
-      <GridSplitter
+            <GridSplitter
         Grid.Column="3" Grid.Row="0"
         Style="{StaticResource AppGridSplitterStyle}"/>
 
-      <Grid
+            <Grid
         Grid.Column="2" Grid.Row="0">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-        <Grid
+                <Grid
           Grid.Column="0"
           Grid.ColumnSpan="2"
           Grid.Row="0">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="1.4*"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.4*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-          <Button
+                    <Button
             Grid.Column="0"
             Style="{StaticResource FlatButtonStyle}"
             Command="{Binding PreviousGroupCommand}"
             IsEnabled="{Binding EnableElementDirectory[Previous], UpdateSourceTrigger=PropertyChanged}"
             Content="{Binding PreviousGroupLabel, UpdateSourceTrigger=PropertyChanged}"/>
 
-          <TextBox
+                    <TextBox
             Grid.Column="1"
             Style="{StaticResource WinTextBoxStyle}"
             IsEnabled="{Binding EnableElementDirectory[GroupName], UpdateSourceTrigger=PropertyChanged}"
             Text="{Binding Path=SelectedGroup.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-          <Button
+                    <Button
             Grid.Column="2"
             Style="{StaticResource FlatButtonStyle}"
             Command="{Binding NextGroupCommand}"
             IsEnabled="{Binding EnableElementDirectory[Next], UpdateSourceTrigger=PropertyChanged}"
             Content="{Binding NextGroupLabel, UpdateSourceTrigger=PropertyChanged}"/>
-        </Grid>
+                </Grid>
 
-        <Button
+                <Button
           Grid.Column="0" Grid.Row="1"
           Style="{StaticResource FlatButtonStyle}"
           MinWidth="250"
           Content="{Binding Path=SelectedGroup.Language1, FallbackValue='', Converter={StaticResource LanguageTypeToStringConverter}}"
           Command="{Binding Path=ChangeLanguage1Command}"
           IsTabStop="False">
-        </Button>
+                </Button>
 
-        <Button
+                <Button
           Grid.Column="0" Grid.Row="2"
           Style="{StaticResource FlatButtonStyle}"
           MinWidth="250"
           Content="{Binding Path=SelectedGroup.Language2, FallbackValue='', Converter={StaticResource LanguageTypeToStringConverter}}"
           Command="{Binding Path=ChangeLanguage2Command}"
           IsTabStop="False">
-        </Button>
+                </Button>
 
-        <Button
+                <Button
           Grid.Column="0" Grid.Row="3"
           Style="{StaticResource FlatButtonStyle}"
           MinWidth="250"
           Content="Komentarz j. 1" 
           Command="{Binding Path=ChangeLanguage1Command}"
           IsTabStop="False">
-        </Button>
+                </Button>
 
-        <Button
+                <Button
                 Grid.Column="0" Grid.Row="4"
                 Style="{StaticResource FlatButtonStyle}"
                 MinWidth="250"
                 Content="Komentarz j. 2" 
                 Command="{Binding Path=ChangeLanguage2Command}"
           IsTabStop="False">
-        </Button>
+                </Button>
 
-        <TextBox 
+                <TextBox 
           Grid.Column="1" Grid.Row="1"
           Style="{StaticResource WinTextBoxStyle}"
           Text="{Binding Path=SelectedWord.Language1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -374,9 +377,9 @@
           helpers:FocusExtension.IsFocused="{Binding Path=Language1IsFocused, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
           Margin="10, 10, 10, 0"
           TabIndex="0">
-        </TextBox>
+                </TextBox>
 
-        <TextBox 
+                <TextBox 
           Grid.Column="1" Grid.Row="2" 
           Style="{StaticResource WinTextBoxStyle}"
           IsEnabled="{Binding EnableElementDirectory[Language2], UpdateSourceTrigger=PropertyChanged}"
@@ -384,90 +387,96 @@
           Margin="10, 0, 10, 10"
           TabIndex="1"/>
 
-        <TextBox 
+                <TextBox 
           Grid.Column="1" Grid.Row="3"
           Style="{StaticResource WinTextBoxStyle}"
           IsEnabled="{Binding EnableElementDirectory[Language1Comment], UpdateSourceTrigger=PropertyChanged}"
           Text="{Binding Path=SelectedWord.Language1Comment, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
           Margin="10, 10, 10, 0"/>
 
-        <TextBox 
-          Grid.Column="1" Grid.Row="4"
-          Style="{StaticResource WinTextBoxStyle}"
-          IsEnabled="{Binding EnableElementDirectory[Language2Comment], UpdateSourceTrigger=PropertyChanged}"
-          Text="{Binding Path=SelectedWord.Language2Comment, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-          Margin="10, 0, 10, 10"
-          />
+                <TextBox 
+                    Grid.Column="1" Grid.Row="4"
+                    Style="{StaticResource WinTextBoxStyle}"
+                    IsEnabled="{Binding EnableElementDirectory[Language2Comment], UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding Path=SelectedWord.Language2Comment, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                    Margin="10, 0, 10, 10"
+                 />
 
-        <Grid Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-          <Button 
-            Grid.Column="0" 
-            Style="{StaticResource FlatButtonStyle}"
-            Command="{Binding AddWordCommand}"
-            Content="Dodaj"
-            IsTabStop="False"/>
-          <Button 
-            Grid.Column="1"
-            Style="{StaticResource FlatButtonStyle}"
-            Command="{Binding RemoveWordCommand}"
-            Content="Usuń"
-            IsTabStop="False"/>
-          <!--<Button
+                    <Button 
+                        Grid.Column="0" 
+                        Style="{StaticResource FlatButtonStyle}"
+                        Command="{Binding AddWordCommand}"
+                        Content="Dodaj"
+                        IsTabStop="False"/>
+                    <Button 
+                        Grid.Column="1"
+                        Style="{StaticResource FlatButtonStyle}"
+                        Command="{Binding RemoveWordCommand}"
+                        Content="Usuń"
+                        IsTabStop="False"/>
+                    <Button
+                        Grid.Column="2"
+                        Style="{StaticResource FlatButtonStyle}"
+                        Command="{Binding Path=CheckUncheckWordCommand}"
+                        Content="{Binding Path=SelectedWord.Checked, Converter={StaticResource WordCheckedToStringConverter}}"
+                        IsTabStop="False"/>
+                    <!--<Button
             Grid.Column="2"
             Style="{StaticResource FlatButtonStyle}"
             Command="{Binding TranslateWordCommand}"
             Content="Tłumacz"
             IsTabStop="False"/>-->
-        </Grid>
+                </Grid>
 
-        <UniformGrid
+                <UniformGrid
           Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
           Columns="5">
 
-          <UniformGrid.Resources>
-            <Style TargetType="{x:Type valueDescription:ValueDescription}">
-              <Setter Property="Margin" Value="10"/>
-              <Setter Property="Background" Value="{DynamicResource UsedNormalBrush}"/>
-              <Setter Property="Foreground" Value="{DynamicResource UsedPressedBrush}"/>
-              <Setter Property="FontWeight" Value="Bold"/>
-              <Setter Property="FontSize" Value="20"/>
-              <Setter Property="ValueFontSize" Value="20"/>
-              <Setter Property="FontFamily" Value="Arial"/>
-            </Style>
-          </UniformGrid.Resources>
+                    <UniformGrid.Resources>
+                        <Style TargetType="{x:Type valueDescription:ValueDescription}">
+                            <Setter Property="Margin" Value="10"/>
+                            <Setter Property="Background" Value="{DynamicResource UsedNormalBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource UsedPressedBrush}"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="FontSize" Value="20"/>
+                            <Setter Property="ValueFontSize" Value="20"/>
+                            <Setter Property="FontFamily" Value="Arial"/>
+                        </Style>
+                    </UniformGrid.Resources>
 
-          <valueDescription:ValueDescription
+                    <valueDescription:ValueDescription
             Description="Ilość grup" 
             Value="{Binding Path=Database.Groups.Count, FallbackValue=''}"/>
 
-          <valueDescription:ValueDescription
+                    <valueDescription:ValueDescription
             Description="Numer grupy" 
             Value="{Binding Path=GroupNumber, FallbackValue=''}"/>
 
-          <valueDescription:ValueDescription
+                    <valueDescription:ValueDescription
             Description="Szuflada" 
             Value="{Binding Path=Drawer, FallbackValue=''}">
-            <valueDescription:ValueDescription.Foreground>
-              <SolidColorBrush Color="{Binding Path=SelectedWord.Drawer, Converter={StaticResource DrawerToColorConverter}}"/>
-            </valueDescription:ValueDescription.Foreground>
-          </valueDescription:ValueDescription>
+                        <valueDescription:ValueDescription.Foreground>
+                            <SolidColorBrush Color="{Binding Path=SelectedWord.Drawer, Converter={StaticResource DrawerToColorConverter}}"/>
+                        </valueDescription:ValueDescription.Foreground>
+                    </valueDescription:ValueDescription>
 
-          <valueDescription:ValueDescription
+                    <valueDescription:ValueDescription
             Description="Numer słowa" 
             Value="{Binding Path=WordNumber, FallbackValue=''}"/>
 
-          <valueDescription:ValueDescription
+                    <valueDescription:ValueDescription
             Description="Ilość słów"
             Value="{Binding Path=SelectedGroup.Words.Count, FallbackValue=''}"/>
 
-        </UniformGrid>
-      </Grid>
-    </Grid>
-  </DockPanel>
+                </UniformGrid>
+            </Grid>
+        </Grid>
+    </DockPanel>
 </UserControl>

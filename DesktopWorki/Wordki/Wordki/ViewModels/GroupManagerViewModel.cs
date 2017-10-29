@@ -197,14 +197,14 @@ namespace Wordki.ViewModels
             Lesson lesson;
             try
             {
-                lesson = serializer.Read();
+                //lesson = serializer.Read();
             }
             catch (Exception e)
             {
                 LoggerSingleton.LogError("Błąd w czasie deserializacji objektu - {0}", e.Message);
                 return;
             }
-            PackageStore.Put(0, lesson);
+            //PackageStore.Put(0, lesson);
             Switcher.GetSwitcher().Switch(Switcher.State.Teach);
         }
 
@@ -312,7 +312,7 @@ namespace Wordki.ViewModels
                 ILessonScheduler scheduler = new LessonScheduler(new SimpleLessonScheduleInitializer());
                 foreach (GroupItem groupItem in DatabaseSingleton.GetDatabase().Groups.Select(group => new GroupItem(group)))
                 {
-                    groupItem.Color = scheduler.GetColor(groupItem.Group.Results.Last());
+                    groupItem.Color = scheduler.GetColor(groupItem.Group.Results.LastOrDefault());
                     groupItem.NextRepeat = scheduler.GetTimeToLearn(groupItem.Group.Results);
                     ItemsList.Add(groupItem);
                 }
@@ -415,15 +415,15 @@ namespace Wordki.ViewModels
                     RemoveAfterRead = false,
                 }
             };
-            Lesson serializedLesson = serializer.Read();
-            if (serializedLesson == null)
-            {
-                EndLessonButtonVisibility = Visibility.Collapsed;
-            }
-            else
-            {
-                EndLessonButtonVisibility = Visibility.Visible;
-            }
+            //Lesson serializedLesson = serializer.Read();
+            //if (serializedLesson == null)
+            //{
+            //    EndLessonButtonVisibility = Visibility.Collapsed;
+            //}
+            //else
+            //{
+            //    EndLessonButtonVisibility = Visibility.Visible;
+            //}
         }
 
         private IEnumerable<IWord> GetWordListFromSelectedGroups()

@@ -87,14 +87,16 @@ namespace Wordki.ViewModels
             }
         }
         public ObservableDictionary<int, Visibility> VisibilityDictionary { get; set; }
-        public BuilderCommand UnknownCommand { get; set; }
-        public BuilderCommand CheckCommand { get; set; }
-        public BuilderCommand KnownCommand { get; set; }
-        public BuilderCommand BackCommand { get; set; }
-        public BuilderCommand CorrectCommand { get; set; }
-        public BuilderCommand OnEnterClickCommand { get; set; }
-        public static BuilderCommand StartLessonCommand { get; set; }
-        public static BuilderCommand PauseCommand { get; set; }
+        public ICommand UnknownCommand { get; set; }
+        public ICommand CheckCommand { get; set; }
+        public ICommand KnownCommand { get; set; }
+        public ICommand BackCommand { get; set; }
+        public ICommand CorrectCommand { get; set; }
+        public ICommand OnEnterClickCommand { get; set; }
+        public ICommand CheckUncheckCommand { get; set; }
+
+        public static ICommand StartLessonCommand { get; set; }
+        public static ICommand PauseCommand { get; set; }
         private LessonStateFactory StateFactory { get; set; }
         #endregion
 
@@ -158,6 +160,22 @@ namespace Wordki.ViewModels
             OnEnterClickCommand = new BuilderCommand(OnEnterClick);
             StartLessonCommand = new BuilderCommand(StartLesson);
             PauseCommand = new BuilderCommand(Pause);
+            CheckUncheckCommand = new BuilderCommand(CheckUncheck);
+        }
+
+        private async void CheckUncheck(object obj)
+        {
+            if(Lesson.SelectedWord == null)
+            {
+                return;
+            }
+            IWord word = Lesson.SelectedWord.Group.Words.FirstOrDefault(x => x.Id == Lesson.SelectedWord.Id);
+            if(word == null)
+            {
+                return;
+            }
+            word.Checked = !word.Checked;
+            await DatabaseSingleton.GetDatabase().UpdateWordAsync(word);
         }
 
         private void Pause(object obj)
@@ -413,6 +431,21 @@ namespace Wordki.ViewModels
             public LessonStateEnum StateEnum { get; set; }
 
             #region Properties
+            private IWord _word;
+            public IWord SelectedWord
+            {
+                get { return _word; }
+                set
+                {
+                    if(_word == value)
+                    {
+                        return;
+                    }
+                    _word = value;
+                    OnPropertyChanged();
+                }
+            }
+
             private string _groupName;
             public string GroupName
             {
@@ -665,8 +698,8 @@ namespace Wordki.ViewModels
                 }
             }
 
-            private BuilderCommand _startStopButtonCommand;
-            public BuilderCommand StartStopButtonCommand
+            private ICommand _startStopButtonCommand;
+            public ICommand StartStopButtonCommand
             {
                 get { return _startStopButtonCommand; }
                 set

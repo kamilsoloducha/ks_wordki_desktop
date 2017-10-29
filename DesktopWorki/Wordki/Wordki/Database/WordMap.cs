@@ -16,6 +16,8 @@ namespace Wordki.Database
             Map(x => x.Language1Comment);
             Map(x => x.Language2Comment);
             Map(x => x.Drawer);
+            Map(x => x.Visible);
+            Map(x => x.Checked);
             Map(x => x.State);
             References(x => x.Group).Not.Nullable().Class(typeof(Group));
         }

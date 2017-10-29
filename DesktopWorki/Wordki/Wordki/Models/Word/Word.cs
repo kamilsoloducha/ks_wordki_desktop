@@ -160,6 +160,29 @@ namespace Wordki.Models
 
         public virtual int State { get; set; }
 
+
+        private bool _checked;
+        public virtual bool Checked
+        {
+            get { return _checked; }
+            set
+            {
+                if (_checked == value)
+                {
+                    return;
+                }
+                _checked = value;
+                OnPropertyChanged();
+                State = StateManager.NewState(State);
+            }
+        }
+
+
+        public virtual bool ShouldSerializeChecked()
+        {
+            return StateManager.GetState(State, "Checked") > 0;
+        }
+
         public Word()
         {
             Id = DateTime.Now.Ticks;
@@ -170,22 +193,21 @@ namespace Wordki.Models
             _language1Comment = "";
             _language2Comment = "";
             _visible = true;
+            _checked = false;
             State = int.MaxValue;
         }
 
         public override bool Equals(object obj)
         {
             IWord word = obj as IWord;
-            if (word != null &&
-              word.Id == Id &&
-              word.Drawer == Drawer &&
-              word.Visible == Visible &&
-              word.Language1.Equals(Language1) &&
-              word.Language2.Equals(Language2))
-            {
-                return true;
-            }
-            return false;
+            return word != null
+                && word.Id == Id
+                && word.Drawer == Drawer
+                && word.Visible == Visible
+                && word.Language1.Equals(Language1)
+                && word.Language2.Equals(Language2)
+                && word.Visible == Visible
+                && word.Checked == Checked;
         }
 
     }

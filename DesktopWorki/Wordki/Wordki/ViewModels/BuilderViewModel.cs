@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Data;
 using Repository.Models.Language;
 using Wordki.Helpers;
@@ -14,6 +12,7 @@ using Repository.Helper;
 using Repository.Models;
 using Wordki.Database;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace Wordki.ViewModels
 {
@@ -146,34 +145,35 @@ namespace Wordki.ViewModels
             }
         }
 
-        public System.Windows.Input.ICommand PreviousWordCommand { get; set; }
-        public System.Windows.Input.ICommand NextWordCommand { get; set; }
-        public System.Windows.Input.ICommand PreviousGroupCommand { get; set; }
-        public System.Windows.Input.ICommand NextGroupCommand { get; set; }
-        public System.Windows.Input.ICommand AddWordCommand { get; set; }
-        public System.Windows.Input.ICommand RemoveWordCommand { get; set; }
+        public ICommand PreviousWordCommand { get; set; }
+        public ICommand NextWordCommand { get; set; }
+        public ICommand PreviousGroupCommand { get; set; }
+        public ICommand NextGroupCommand { get; set; }
+        public ICommand AddWordCommand { get; set; }
+        public ICommand RemoveWordCommand { get; set; }
+        public ICommand CheckUncheckWordCommand { get; set; }
 
-        public System.Windows.Input.ICommand BackCommand { get; set; }
+        public ICommand BackCommand { get; set; }
 
-        public System.Windows.Input.ICommand DownloadGroupsNameCommand { get; set; }
-        public System.Windows.Input.ICommand AddGroupCommand { get; set; }
-        public System.Windows.Input.ICommand AddClipboardGroupCommand { get; set; }
-        public System.Windows.Input.ICommand RemoveGroupCommand { get; set; }
-        public System.Windows.Input.ICommand SplitGroupCommand { get; set; }
-        public System.Windows.Input.ICommand ConnectGroupCommand { get; set; }
+        public ICommand DownloadGroupsNameCommand { get; set; }
+        public ICommand AddGroupCommand { get; set; }
+        public ICommand AddClipboardGroupCommand { get; set; }
+        public ICommand RemoveGroupCommand { get; set; }
+        public ICommand SplitGroupCommand { get; set; }
+        public ICommand ConnectGroupCommand { get; set; }
 
-        public System.Windows.Input.ICommand FindSameWordCommand { get; set; }
-        public System.Windows.Input.ICommand ShowWordsCommnad { get; set; }
+        public ICommand FindSameWordCommand { get; set; }
+        public ICommand ShowWordsCommnad { get; set; }
 
-        public System.Windows.Input.ICommand SwapLanguagesCommand { get; set; }
-        public System.Windows.Input.ICommand SwapSingleWordCommand { get; set; }
+        public ICommand SwapLanguagesCommand { get; set; }
+        public ICommand SwapSingleWordCommand { get; set; }
 
-        public System.Windows.Input.ICommand ChangeLanguage1Command { get; set; }
-        public System.Windows.Input.ICommand ChangeLanguage2Command { get; set; }
+        public ICommand ChangeLanguage1Command { get; set; }
+        public ICommand ChangeLanguage2Command { get; set; }
 
-        public System.Windows.Input.ICommand WordSelectionChangedCommand { get; set; }
-        public System.Windows.Input.ICommand GroupSelectionChangedCommand { get; set; }
-        public System.Windows.Input.ICommand AddGroupFromFileCommand { get; set; }
+        public ICommand WordSelectionChangedCommand { get; set; }
+        public ICommand GroupSelectionChangedCommand { get; set; }
+        public ICommand AddGroupFromFileCommand { get; set; }
 
         public IDatabase Database { get; set; }
         public ObservableDictionary<string, bool> EnableElementDirectory { get; set; }
@@ -255,6 +255,7 @@ namespace Wordki.ViewModels
             RemoveWordCommand = new Util.BuilderCommand(DeleteWord);
             AddGroupCommand = new Util.BuilderCommand(AddGroup);
             RemoveGroupCommand = new Util.BuilderCommand(RemoveGroup);
+            CheckUncheckWordCommand = new Util.BuilderCommand(CheckUncheckWord);
 
             DownloadGroupsNameCommand = new Util.BuilderCommand(DownloadGroupsName);
             BackCommand = new Util.BuilderCommand(Back);
@@ -274,6 +275,8 @@ namespace Wordki.ViewModels
             GroupSelectionChangedCommand = new Util.BuilderCommand(GroupSelectionChanged);
             AddGroupFromFileCommand = new Util.BuilderCommand(AddGroupFromFile);
         }
+
+        
 
         private void AddGroupFromFile(object obj)
         {
@@ -439,6 +442,15 @@ namespace Wordki.ViewModels
             dialog.ShowDialog();
         }
 
+        private void CheckUncheckWord(object obj)
+        {
+            if(SelectedWord == null)
+            {
+                return;
+            }
+            SelectedWord.Checked = !SelectedWord.Checked;
+        }
+
         private void AddGroup(object obj)
         {
             IGroup group = new Group();
@@ -544,6 +556,7 @@ namespace Wordki.ViewModels
             }
             if (await Database.DeleteWordAsync(SelectedWord))
             {
+                Words.Remove(SelectedWord);
                 SelectedWord = SelectedGroup.Words.LastOrDefault();
                 if (SelectedWord == null)
                 {

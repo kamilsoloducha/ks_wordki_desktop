@@ -175,6 +175,8 @@
     <Compile Include="Helpers\Converters\LanguageTypeToStringConverter.cs" />
     <Compile Include="Helpers\Converters\PassingParametersConverter.cs" />
     <Compile Include="Helpers\Converters\TranslationDirectionToIntConverter.cs" />
+    <Compile Include="Helpers\Converters\WordCheckedToBrushConverter.cs" />
+    <Compile Include="Helpers\Converters\WordCheckedToStringConverter.cs" />
     <Compile Include="Helpers\FileChooser\FileChooser.cs" />
     <Compile Include="Helpers\FileChooser\IFileChooser.cs" />
     <Compile Include="Helpers\GroupCreator\FileLoader.cs" />
