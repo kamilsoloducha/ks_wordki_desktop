@@ -6,7 +6,11 @@ namespace Wordki.Database
 {
     public static class NHibernateHelper
     {
+#if DEBUG
+        public static string DirectoryPath = "Wordki";
+#else
         public static string DirectoryPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "Wordki");
+#endif
         public static string DatabaseName = "database";
         public static string DatabasePath { get { return Path.Combine(DirectoryPath, $"{DatabaseName}.db"); } }
 

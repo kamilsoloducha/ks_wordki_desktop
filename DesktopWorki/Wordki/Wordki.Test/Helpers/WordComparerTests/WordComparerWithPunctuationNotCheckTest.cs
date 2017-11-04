@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wordki.Models.Lesson.WordComparer;
+using Wordki.Helpers.WordComparer;
 
 namespace Wordki.Test.Helpers.WordComparerTests
 {
@@ -21,6 +21,7 @@ namespace Wordki.Test.Helpers.WordComparerTests
         {
             notCheck = new PunctuationNotCheck();
             comparer = new WordComparer();
+            comparer.Settings = new WordComparerSettings();
         }
 
         [TestMethod]
@@ -28,7 +29,7 @@ namespace Wordki.Test.Helpers.WordComparerTests
         {
             string word1 = "test-";
             string word2 = "test";
-            Assert.IsFalse(comparer.Compare(word1, word2));
+            Assert.IsFalse(comparer.IsEqual(word1, word2));
         }
 
         [TestMethod]
@@ -36,8 +37,8 @@ namespace Wordki.Test.Helpers.WordComparerTests
         {
             string word1 = "test";
             string word2 = "test";
-            comparer.NotCheckers.Add(notCheck);
-            Assert.IsTrue(comparer.Compare(word1, word2));
+            comparer.Settings.NotCheckers.Add(notCheck);
+            Assert.IsTrue(comparer.IsEqual(word1, word2));
         }
 
         [TestMethod]
@@ -45,8 +46,8 @@ namespace Wordki.Test.Helpers.WordComparerTests
         {
             string word1 = "t$e2st";
             string word2 = "t!est-";
-            comparer.NotCheckers.Add(notCheck);
-            Assert.IsTrue(comparer.Compare(word1, word2));
+            comparer.Settings.NotCheckers.Add(notCheck);
+            Assert.IsTrue(comparer.IsEqual(word1, word2));
         }
 
         [TestMethod]
@@ -54,8 +55,8 @@ namespace Wordki.Test.Helpers.WordComparerTests
         {
             string word1 = "Test2";
             string word2 = "test";
-            comparer.NotCheckers.Add(notCheck);
-            Assert.IsFalse(comparer.Compare(word1, word2));
+            comparer.Settings.NotCheckers.Add(notCheck);
+            Assert.IsFalse(comparer.IsEqual(word1, word2));
         }
 
     }

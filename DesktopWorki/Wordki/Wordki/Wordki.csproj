@@ -41,7 +41,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;TEST</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;TEST, DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -196,7 +196,9 @@
     <Compile Include="Helpers\Notification\ToastNotification.cs" />
     <Compile Include="Helpers\Behaviour\ScrollIntoViewBehavior.cs" />
     <Compile Include="Helpers\WordComparer\IWordComparer.cs" />
+    <Compile Include="Helpers\WordComparer\IWordComparerSettings.cs" />
     <Compile Include="Helpers\WordComparer\WordComparer.cs" />
+    <Compile Include="Helpers\WordComparer\WordComparerSettings.cs" />
     <Compile Include="Helpers\WordConnector\IWordConnector.cs" />
     <Compile Include="Helpers\WordConnector\WordConnector.cs" />
     <Compile Include="Helpers\WordFinder\IWordFinder.cs" />
@@ -239,15 +241,13 @@
     <Compile Include="Models\GroupItem.cs" />
     <Compile Include="Models\Lesson\IntensiveLesson.cs" />
     <Compile Include="Models\Lesson\Lessons.cs" />
-    <Compile Include="Models\Lesson\NotChecker\LetterCaseNotCheck.cs" />
+    <Compile Include="Helpers\WordComparer\NotChecker\LetterCaseNotCheck.cs" />
     <Compile Include="Models\Lesson\RandomLesson.cs" />
     <Compile Include="Models\Lesson\TypingLesson.cs" />
-    <Compile Include="Models\Lesson\NotChecker\INotCheck.cs" />
-    <Compile Include="Models\Lesson\WordComparer\IWordComparer.cs" />
-    <Compile Include="Models\Lesson\NotChecker\PunctuationNotCheck.cs" />
-    <Compile Include="Models\Lesson\NotChecker\SpaceNotCheck.cs" />
-    <Compile Include="Models\Lesson\NotChecker\Utf8NotCheck.cs" />
-    <Compile Include="Models\Lesson\WordComparer\WordComparer2.cs" />
+    <Compile Include="Helpers\WordComparer\NotChecker\INotCheck.cs" />
+    <Compile Include="Helpers\WordComparer\NotChecker\PunctuationNotCheck.cs" />
+    <Compile Include="Helpers\WordComparer\NotChecker\SpaceNotCheck.cs" />
+    <Compile Include="Helpers\WordComparer\NotChecker\Utf8NotCheck.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Result\Result.cs" />
     <Compile Include="Models\Settings.cs" />

@@ -54,19 +54,19 @@
         <SolidColorBrush x:Key="DarkHoverBrush" Color="{StaticResource DarkHoverColor}" />
         
         <Color x:Key="DarkPressedColor">#FF444444</Color>
-        <SolidColorBrush x:Key="DarkPressedBrush" Color="{StaticResource DarkPressedBrush}" />
+        <SolidColorBrush x:Key="DarkPressedBrush" Color="{StaticResource DarkPressedColor}" />
         
         <Color x:Key="DarkNormalFrontColor">#FFE4E4E4</Color>
-        <SolidColorBrush x:Key="DarkNormalFrontBrush" Color="{StaticResource DarkNormalFrontBrush}" />
+        <SolidColorBrush x:Key="DarkNormalFrontBrush" Color="{StaticResource DarkNormalFrontColor}" />
         
         <Color x:Key="DarkUnableFrontColor">#FF000000</Color>
-        <SolidColorBrush x:Key="DarkUnableFrontBrush" Color="{StaticResource DarkUnableFrontBrush}" />
+        <SolidColorBrush x:Key="DarkUnableFrontBrush" Color="{StaticResource DarkUnableFrontColor}" />
         
         <Color x:Key="DarkAdditional1Color">#FF33702C</Color>
-        <SolidColorBrush x:Key="DarkAdditional1Brush" Color="{StaticResource DarkAdditional1Brush}" />
+        <SolidColorBrush x:Key="DarkAdditional1Brush" Color="{StaticResource DarkAdditional1Color}" />
         
         <Color x:Key="DarkAdditional2Color">#FF87D683</Color>
-        <SolidColorBrush x:Key="DarkAdditional2Brush" Color="{StaticResource DarkAdditional2Brush}" />
+        <SolidColorBrush x:Key="DarkAdditional2Brush" Color="{StaticResource DarkAdditional2Color}" />
         <!--uzywany-->
         <Color x:Key="UsedNormalColor">#FF000000</Color>
         <SolidColorBrush x:Key="UsedNormalBrush" Color="#FF000000" />

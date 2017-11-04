@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Wordki.Models.Lesson.WordComparer;
+using Wordki.Helpers.WordComparer;
 
 namespace Wordki.Test.Helpers.WordComparerTests
 {
@@ -15,6 +15,7 @@ namespace Wordki.Test.Helpers.WordComparerTests
         {
             notCheck = new Utf8NotCheck();
             comparer = new WordComparer();
+            comparer.Settings = new WordComparerSettings();
         }
 
         [TestMethod]
@@ -22,7 +23,7 @@ namespace Wordki.Test.Helpers.WordComparerTests
         {
             string word1 = "teśt";
             string word2 = "test";
-            Assert.IsFalse(comparer.Compare(word1, word2));
+            Assert.IsFalse(comparer.IsEqual(word1, word2));
         }
 
         [TestMethod]
@@ -30,8 +31,8 @@ namespace Wordki.Test.Helpers.WordComparerTests
         {
             string word1 = "test";
             string word2 = "test";
-            comparer.NotCheckers.Add(notCheck);
-            Assert.IsTrue(comparer.Compare(word1, word2));
+            comparer.Settings.NotCheckers.Add(notCheck);
+            Assert.IsTrue(comparer.IsEqual(word1, word2));
         }
 
         [TestMethod]
@@ -39,8 +40,8 @@ namespace Wordki.Test.Helpers.WordComparerTests
         {
             string word1 = "teśt";
             string word2 = "tęst";
-            comparer.NotCheckers.Add(notCheck);
-            Assert.IsTrue(comparer.Compare(word1, word2));
+            comparer.Settings.NotCheckers.Add(notCheck);
+            Assert.IsTrue(comparer.IsEqual(word1, word2));
         }
 
         [TestMethod]
@@ -48,8 +49,8 @@ namespace Wordki.Test.Helpers.WordComparerTests
         {
             string word1 = "test2";
             string word2 = "Test";
-            comparer.NotCheckers.Add(notCheck);
-            Assert.IsFalse(comparer.Compare(word1, word2));
+            comparer.Settings.NotCheckers.Add(notCheck);
+            Assert.IsFalse(comparer.IsEqual(word1, word2));
         }
 
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Wordki.Models.Lesson.WordComparer;
+using Wordki.Helpers.WordComparer;
 
 namespace Wordki.Test.Helpers
 {
@@ -13,6 +13,7 @@ namespace Wordki.Test.Helpers
         public void Init()
         {
             comparer = new WordComparer();
+            comparer.Settings = new WordComparerSettings();
         }
 
         [TestMethod]
@@ -20,7 +21,7 @@ namespace Wordki.Test.Helpers
         {
             string word1 = "test";
             string word2 = "test";
-            Assert.IsTrue(comparer.Compare(word1, word2));
+            Assert.IsTrue(comparer.IsEqual(word1, word2));
         }
 
         [TestMethod]
@@ -28,7 +29,7 @@ namespace Wordki.Test.Helpers
         {
             string word1 = "test";
             string word2 = "test2";
-            Assert.IsFalse(comparer.Compare(word1, word2));
+            Assert.IsFalse(comparer.IsEqual(word1, word2));
         }
 
     }

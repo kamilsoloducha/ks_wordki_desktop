@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Wordki.Models;
+﻿using Wordki.Models;
 
 namespace Wordki.Helpers.WordComparer
 {
     public interface IWordComparer
     {
+        IWordComparerSettings Settings { get; set; }
+
         bool IsEqual(Word word1, Word word2);
+
+        bool IsEqual(string word1, string word2);
     }
 }

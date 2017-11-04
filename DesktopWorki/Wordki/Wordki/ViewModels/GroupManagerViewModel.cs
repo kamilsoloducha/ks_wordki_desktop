@@ -14,7 +14,6 @@ using Repository.Models.Enums;
 using Wordki.Helpers;
 using Wordki.Models;
 using Wordki.Models.Lesson;
-using Wordki.Models.Lesson.WordComparer;
 using Wordki.Models.LessonScheduler;
 using Wordki.Models.LessonScheduler.LessonScheduleInitializer;
 using Repository.Models.Language;
@@ -24,6 +23,7 @@ using System.Windows.Input;
 using Repository.Models;
 using Wordki.Database;
 using Util.Collections;
+using Wordki.Helpers.WordComparer;
 
 namespace Wordki.ViewModels
 {
@@ -501,9 +501,10 @@ namespace Wordki.ViewModels
                         }
                 }
                 lLesson.WordComparer = new WordComparer();
-                lLesson.WordComparer.NotCheckers.Add(new LetterCaseNotCheck());
-                lLesson.WordComparer.NotCheckers.Add(new SpaceNotCheck());
-                lLesson.WordComparer.NotCheckers.Add(new Utf8NotCheck());
+                lLesson.WordComparer.Settings = new WordComparerSettings();
+                lLesson.WordComparer.Settings.NotCheckers.Add(new LetterCaseNotCheck());
+                lLesson.WordComparer.Settings.NotCheckers.Add(new SpaceNotCheck());
+                lLesson.WordComparer.Settings.NotCheckers.Add(new Utf8NotCheck());
                 IUser user = UserManagerSingleton.Get().User;
                 ILessonSettings lessonSettings = new LessonSettings()
                 {

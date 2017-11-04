@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Util.Serializers;
 using Wordki.Models.Lesson;
-using Wordki.Models.Lesson.WordComparer;
+using Wordki.Helpers.WordComparer;
 
 namespace Wordki.Test.Lessons
 {
@@ -31,9 +31,10 @@ namespace Wordki.Test.Lessons
             words = util.GetGroup().Words;
             lesson = new TypingLesson(words);
             lesson.WordComparer = new WordComparer();
-            lesson.WordComparer.NotCheckers.Add(new LetterCaseNotCheck());
-            lesson.WordComparer.NotCheckers.Add(new SpaceNotCheck());
-            lesson.WordComparer.NotCheckers.Add(new Utf8NotCheck());
+            lesson.WordComparer.Settings = new WordComparerSettings();
+            lesson.WordComparer.Settings.NotCheckers.Add(new LetterCaseNotCheck());
+            lesson.WordComparer.Settings.NotCheckers.Add(new SpaceNotCheck());
+            lesson.WordComparer.Settings.NotCheckers.Add(new Utf8NotCheck());
             ILessonSettings lessonSettings = new LessonSettings()
             {
                 AllWords = true,
@@ -93,10 +94,10 @@ namespace Wordki.Test.Lessons
                 Assert.AreEqual(expected.ResultList[i], actual.ResultList[i]);
             }
 
-            Assert.AreEqual(expected.WordComparer.NotCheckers.Count, actual.WordComparer.NotCheckers.Count, "WordComparer not equal");
+            Assert.AreEqual(expected.WordComparer.Settings.NotCheckers.Count, actual.WordComparer.Settings.NotCheckers.Count, "WordComparer not equal");
             for (int i = 0; i < expected.ResultList.Count; i++)
             {
-                Assert.AreSame(expected.WordComparer.NotCheckers.ElementAt(i).GetType(), actual.WordComparer.NotCheckers.ElementAt(i).GetType(), "Notchecker not equal");
+                Assert.AreSame(expected.WordComparer.Settings.NotCheckers.ElementAt(i).GetType(), actual.WordComparer.Settings.NotCheckers.ElementAt(i).GetType(), "Notchecker not equal");
             }
         }
 

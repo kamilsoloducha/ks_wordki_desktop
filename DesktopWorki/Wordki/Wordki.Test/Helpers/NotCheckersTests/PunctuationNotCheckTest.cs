@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wordki.Models.Lesson.WordComparer;
+using Wordki.Helpers.WordComparer;
 
 namespace Wordki.Test.Helpers
 {

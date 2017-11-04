@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Wordki.Models.Lesson.WordComparer;
+using Wordki.Helpers.WordComparer;
 
 namespace Wordki.Test.Helpers.WordComparerTests
 {
@@ -15,6 +15,7 @@ namespace Wordki.Test.Helpers.WordComparerTests
         public void Init()
         {
             comparer = new WordComparer();
+            comparer.Settings = new WordComparerSettings();
             letterCaseNotCheck = new LetterCaseNotCheck();
         }
 
@@ -23,8 +24,8 @@ namespace Wordki.Test.Helpers.WordComparerTests
         {
             string word1 = "test";
             string word2 = "test";
-            comparer.NotCheckers.Add(letterCaseNotCheck);
-            Assert.IsTrue(comparer.Compare(word1, word2));
+            comparer.Settings.NotCheckers.Add(letterCaseNotCheck);
+            Assert.IsTrue(comparer.IsEqual(word1, word2));
         }
 
         [TestMethod]
@@ -32,8 +33,8 @@ namespace Wordki.Test.Helpers.WordComparerTests
         {
             string word1 = "teSt";
             string word2 = "Test";
-            comparer.NotCheckers.Add(letterCaseNotCheck);
-            Assert.IsTrue(comparer.Compare(word1, word2));
+            comparer.Settings.NotCheckers.Add(letterCaseNotCheck);
+            Assert.IsTrue(comparer.IsEqual(word1, word2));
         }
 
         [TestMethod]
@@ -41,8 +42,8 @@ namespace Wordki.Test.Helpers.WordComparerTests
         {
             string word1 = "test2";
             string word2 = "Test";
-            comparer.NotCheckers.Add(letterCaseNotCheck);
-            Assert.IsFalse(comparer.Compare(word1, word2));
+            comparer.Settings.NotCheckers.Add(letterCaseNotCheck);
+            Assert.IsFalse(comparer.IsEqual(word1, word2));
         }
 
     }

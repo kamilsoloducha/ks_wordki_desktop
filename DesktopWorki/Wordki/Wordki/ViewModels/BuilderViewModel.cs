@@ -751,6 +751,10 @@ namespace Wordki.ViewModels
 
         private void UpdateWords()
         {
+            if(SelectedGroup == null)
+            {
+                return;
+            }
             Words.Clear();
             foreach(IWord word in SelectedGroup.Words)
             {

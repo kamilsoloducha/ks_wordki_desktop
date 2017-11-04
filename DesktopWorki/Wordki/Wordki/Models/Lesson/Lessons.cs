@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Wordki.Models.Lesson.WordComparer;
+using Wordki.Helpers.WordComparer;
 
 namespace Wordki.Models.Lesson
 {
@@ -73,7 +73,7 @@ namespace Wordki.Models.Lesson
 
         protected virtual bool CheckTranslation(string pOriginalWord, string pTranslationWord)
         {
-            return WordComparer.Compare(pOriginalWord, pTranslationWord);
+            return WordComparer.IsEqual(pOriginalWord, pTranslationWord);
         }
 
         public virtual void FinishLesson()
