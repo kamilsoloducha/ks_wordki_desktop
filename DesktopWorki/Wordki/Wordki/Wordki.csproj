@@ -141,28 +141,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Database\DatabaseSingleton.cs" />
-    <Compile Include="Database\GroupMap.cs" />
-    <Compile Include="Database\GroupRepository.cs" />
-    <Compile Include="Database\INHibernateDatabase.cs" />
+    <Compile Include="Database\Database\DatabaseSingleton.cs" />
+    <Compile Include="Database\Maps\GroupMap.cs" />
+    <Compile Include="Database\Repositories\GroupRepository.cs" />
+    <Compile Include="Database\Database\IDatabase.cs" />
     <Compile Include="Database\ModelSender\IModelSender.cs" />
     <Compile Include="Database\ModelSender\GroupsSender.cs" />
     <Compile Include="Database\ModelSender\ResultsSender.cs" />
     <Compile Include="Database\ModelSender\WordsSender.cs" />
-    <Compile Include="Database\NHibernateDatabase.cs" />
-    <Compile Include="Database\NHibernateHelper.cs" />
-    <Compile Include="Database\ResultMap.cs" />
-    <Compile Include="Database\ResultRepository.cs" />
+    <Compile Include="Database\Database\NHibernateDatabase.cs" />
+    <Compile Include="Database\Database\NHibernateHelper.cs" />
+    <Compile Include="Database\Database\MemoryDatabase.cs" />
+    <Compile Include="Database\Maps\ResultMap.cs" />
+    <Compile Include="Database\Repositories\ResultRepository.cs" />
     <Compile Include="Database\DatabaseManager\IDatabaseOrganizer.cs" />
     <Compile Include="Database\DatabaseManager\DatabaseManagerSingleton.cs" />
     <Compile Include="Database\DatabaseManager\DatabaseOrganizer.cs" />
     <Compile Include="Database\UserManager\IUserManager.cs" />
     <Compile Include="Database\UserManager\UserManager.cs" />
     <Compile Include="Database\UserManager\UserManagerSingleton.cs" />
-    <Compile Include="Database\UserMap.cs" />
-    <Compile Include="Database\UserRepository.cs" />
-    <Compile Include="Database\WordMap.cs" />
-    <Compile Include="Database\WordRepository.cs" />
+    <Compile Include="Database\Maps\UserMap.cs" />
+    <Compile Include="Database\Repositories\UserRepository.cs" />
+    <Compile Include="Database\Maps\WordMap.cs" />
+    <Compile Include="Database\Repositories\WordRepository.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
     <Compile Include="Helpers\Command\CommandApiRequest.cs" />
     <Compile Include="Helpers\Command\ICommand.cs" />
