@@ -13,6 +13,9 @@ using Repository.Models;
 using Wordki.Database;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Collections.Generic;
+using System.Collections;
+using Wordki.Helpers.GroupConnector;
 
 namespace Wordki.ViewModels
 {
@@ -406,14 +409,32 @@ namespace Wordki.ViewModels
 
         private void ConnectGroup(object obj)
         {
-            try
+            if (obj == null)
             {
-
+                return;
             }
-            catch (Exception lException)
+            IList list = obj as IList;
+            if(list == null)
             {
-                LoggerSingleton.LogError("{0} - {1}", "BuilderViewModel.ConnectGroup", lException.Message);
+                return;
             }
+            IEnumerable<IGroup> groups = list.Cast<IGroup>();
+            if (groups == null)
+            {
+                return;
+            }
+            IGroupConnector connector = new GroupConnector();
+            if (!connector.Connect(groups.ToList()) && connector.DestinationGroup != null)
+            {
+                return;
+            }
+            foreach(IGroup group in groups.Where(x => x.Words.Count == 0))
+            {
+                DeleteGroup(group);
+            }
+            SelectedGroup = connector.DestinationGroup;
+            UpdateWords();
+            RefreshView();
         }
 
         private void RemoveGroup(object obj)

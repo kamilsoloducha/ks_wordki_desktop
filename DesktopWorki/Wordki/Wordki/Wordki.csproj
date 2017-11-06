@@ -179,6 +179,8 @@
     <Compile Include="Helpers\Converters\WordCheckedToStringConverter.cs" />
     <Compile Include="Helpers\FileChooser\FileChooser.cs" />
     <Compile Include="Helpers\FileChooser\IFileChooser.cs" />
+    <Compile Include="Helpers\GroupConnector\GroupConnector.cs" />
+    <Compile Include="Helpers\GroupConnector\IGroupConnector.cs" />
     <Compile Include="Helpers\GroupCreator\FileLoader.cs" />
     <Compile Include="Helpers\GroupCreator\GroupCreatorFromFile.cs" />
     <Compile Include="Helpers\GroupCreator\GroupCreatorSettings.cs" />
@@ -261,6 +263,7 @@
     <Compile Include="ViewModels\BuildFromFileViewModel.cs" />
     <Compile Include="ViewModels\ChartViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\Progress\ProgressDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\SearchDialog\SearchDialogViewModel.cs" />
     <Compile Include="ViewModels\GroupManagerViewModel.cs" />
     <Compile Include="ViewModels\IViewModel.cs" />
     <Compile Include="ViewModels\LoginMainViewModel.cs" />
@@ -295,6 +298,9 @@
     <Compile Include="Views\Dialogs\Progress\IProgressNotification.cs" />
     <Compile Include="Views\Dialogs\Progress\ProgressNotificationFactory.cs" />
     <Compile Include="Views\Dialogs\Progress\ProgressNotificationType.cs" />
+    <Compile Include="Views\Dialogs\SearchDialog\SearchDialog.xaml.cs">
+      <DependentUpon>SearchDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\TextBoxDialog.xaml.cs">
       <DependentUpon>TextBoxDialog.xaml</DependentUpon>
     </Compile>
@@ -368,6 +374,10 @@
     <Page Include="Views\Dialogs\ListDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\SearchDialog\SearchDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\TextBoxDialog.xaml">
       <SubType>Designer</SubType>

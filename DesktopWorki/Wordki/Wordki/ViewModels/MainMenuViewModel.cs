@@ -6,6 +6,7 @@ using Wordki.Helpers;
 using Wordki.Models;
 using System.Threading.Tasks;
 using Wordki.Database;
+using Wordki.Views.Dialogs.SearchDialog;
 
 namespace Wordki.ViewModels
 {
@@ -148,6 +149,11 @@ namespace Wordki.ViewModels
         {
             Login = UserManagerSingleton.Get().User.Name;
             ReadDatabaseFromServer();
+            SearchDialog dialog = new SearchDialog
+            {
+            };
+            dialog.ViewModel = new Dialogs.SearchDialogViewModel();
+            dialog.ShowDialog();
         }
 
         public override void Back()

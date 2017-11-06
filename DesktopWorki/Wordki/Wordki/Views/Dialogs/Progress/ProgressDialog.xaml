@@ -26,8 +26,8 @@
     </Window.InputBindings>
 
     <Border
-    Style="{StaticResource DialogBorderStyle}"
-    Padding="0">
+        Style="{StaticResource DialogBorderStyle}"
+        Padding="0">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -41,18 +41,18 @@
                 Text="{Binding Path=DialogTitle, UpdateSourceTrigger=PropertyChanged}"/>
 
             <animatedProgressBar:AnimatedProgressBar
-        TextStyle="{DynamicResource WinTextBlockStyle}"
-        Grid.Row="1"
-        FontSize="20"
-        Text="{Binding Path=Message, UpdateSourceTrigger=PropertyChanged}" />
+                TextStyle="{DynamicResource WinTextBlockStyle}"
+                Grid.Row="1"
+                FontSize="20"
+                Text="{Binding Path=Message, UpdateSourceTrigger=PropertyChanged}" />
 
             <Button
-        HorizontalAlignment="Right"
-        Grid.Row="2"
-        helpers:FocusExtension.IsFocused="True"
-        Style="{StaticResource DialogFlatButtonStyle}"
-        Content="{Binding Path=ButtonLabel, UpdateSourceTrigger=PropertyChanged}"
-        Command="{Binding Path=CancelCommand}"/>
+                HorizontalAlignment="Right"
+                Grid.Row="2"
+                helpers:FocusExtension.IsFocused="True"
+                Style="{StaticResource DialogFlatButtonStyle}"
+                Content="{Binding Path=ButtonLabel, UpdateSourceTrigger=PropertyChanged}"
+                Command="{Binding Path=CancelCommand}"/>
         </Grid>
     </Border>
 

@@ -37,17 +37,22 @@ namespace Wordki.Test
             Direction = TranslationDirection.FromSecond;
         }
 
-        public List<IGroup> GetGroups()
+        public List<IGroup> GetGroups(int count)
         {
             List<IGroup> groups = new List<IGroup>();
 
-            for (int i = 0; i < GroupCount; i++)
+            for (int i = 0; i < count; i++)
             {
                 IGroup group = GetGroup();
                 groups.Add(group);
             }
 
             return groups;
+        }
+
+        public List<IGroup> GetGroups()
+        {
+            return GetGroups(GroupCount);
         }
 
         public Word GetWord()

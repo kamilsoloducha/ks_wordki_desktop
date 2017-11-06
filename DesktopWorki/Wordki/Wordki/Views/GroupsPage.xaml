@@ -13,54 +13,54 @@
       Style="{DynamicResource AppPageStyle}"
       d:DataContext="{d:DesignInstance {x:Type viewModels:GroupManagerViewModel}}">
 
-  <UserControl.Resources>
-    <converters:DrawerToColorConverter x:Key="DrawerToColorConverter"/>
-  </UserControl.Resources>
+    <UserControl.Resources>
+        <converters:DrawerToColorConverter x:Key="DrawerToColorConverter"/>
+    </UserControl.Resources>
 
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="2*"/>
-      <ColumnDefinition Width="Auto"/>
-    </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
 
-    <Grid.RowDefinitions>
-      <RowDefinition Height="3*"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    <TabControl
+        <TabControl
       Grid.Column="0"
       Grid.Row="0" Grid.RowSpan="2"
       Panel.ZIndex="2"
       Style="{StaticResource AppInnerTabControlStyle}">
-      <TabItem
+            <TabItem
         Header="Plik"
         Style="{StaticResource AppInnerTabItemStyle}">
-        <ScrollViewer
+                <ScrollViewer
           Style="{StaticResource AppScrollViewerStyle}">
-          <StackPanel
+                    <StackPanel
             Background="{DynamicResource UsedHoverBrush}">
-            <Button 
+                        <Button 
               Command="{Binding BackCommand}"
               Style="{StaticResource FlatButtonStyle}"
               Height="50"
               Content="Wróć"/>
-            <Button
+                        <Button
               Command="{Binding StartTypingLessonCommand}"
               Style="{StaticResource FlatButtonStyle}"
               Height="50"
               Content="Tryb wpisywania"/>
-            <Button
+                        <Button
               Command="{Binding ShowWordsCommand}"
               Style="{StaticResource FlatButtonStyle}"
               Height="50"
               Content="Pokaż słowa"/>
-          </StackPanel>
-        </ScrollViewer>
-      </TabItem>
-    </TabControl>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
 
-    <DataGrid
+        <DataGrid
       x:Name="GroupsDataGrid"
       Grid.Column="0" Grid.Row="0"
       IsReadOnly="True"
@@ -71,249 +71,249 @@
       Style="{StaticResource AppDataGridStyle}"
       HorizontalScrollBarVisibility="Hidden">
 
-      <DataGrid.ContextMenu>
-        <ContextMenu 
+            <DataGrid.ContextMenu>
+                <ContextMenu 
           Style="{StaticResource AppContextMenuStyle}">
-          <MenuItem
+                    <MenuItem
             Header="Edytuj grupę"
             Style="{StaticResource AppMenuItemStyle}"
             Command="{Binding EditGroupCommand}"/>
-          <MenuItem
+                    <MenuItem
             Header="Pokaż slowa"
             Style="{StaticResource AppMenuItemStyle}"
             Command="{Binding ShowWordsCommand}"/>
-          <MenuItem
+                    <MenuItem
             Header="Tryb wprowadzania"
             Style="{StaticResource AppMenuItemStyle}"
             Command="{Binding StartTypingLessonCommand}"/>
-          <MenuItem
+                    <MenuItem
             Header="Tryb intensywny"
             Style="{StaticResource AppMenuItemStyle}"
             Command="{Binding StartReapetLessonCommand}"/>
-          <MenuItem
+                    <MenuItem
             Header="Tryb losowych"
             Style="{StaticResource AppMenuItemStyle}"
             Command="{Binding StartRandomLessonCommand}"/>
-          <MenuItem
+                    <MenuItem
             Header="Tryb zapamiętanych"
             Style="{StaticResource AppMenuItemStyle}"
             Command="{Binding StartBestLessonCommand}"/>
-          <!--<MenuItem
+                    <!--<MenuItem
             Header="Pokaż wyniki"
             Style="{StaticResource AppMenuItemStyle}"
             Command="{Binding ShowPlotCommand}"/>-->
-        </ContextMenu>
-      </DataGrid.ContextMenu>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
 
-      <i:Interaction.Triggers>
-        <i:EventTrigger EventName="SelectionChanged">
-          <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding SelectedItems, ElementName=GroupsDataGrid}"/>
-        </i:EventTrigger>
-      </i:Interaction.Triggers>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding SelectedItems, ElementName=GroupsDataGrid}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
 
-      <DataGrid.Columns>
-        <DataGridTemplateColumn 
+            <DataGrid.Columns>
+                <DataGridTemplateColumn 
           SortMemberPath="GroupName"
           CanUserResize="True"
           Width="3*"
           Header="Nazwa"
           HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate DataType="models:GroupItem">
-              <DockPanel>
-                <TextBlock 
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="models:GroupItem">
+                            <DockPanel>
+                                <TextBlock 
                   Text="{Binding Path=Group.Name, UpdateSourceTrigger=PropertyChanged}"
                   Style="{StaticResource DataGridTextBlockStyle}"
                   HorizontalAlignment="Left"/>
-              </DockPanel>
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
-        <DataGridTemplateColumn 
+                <DataGridTemplateColumn 
           SortMemberPath="WordsCount"
           CanUserResize="True"
           Width="*"
           Header="Słowa"
           HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
 
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate DataType="models:GroupItem">
-              <DockPanel>
-                <TextBlock 
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="models:GroupItem">
+                            <DockPanel>
+                                <TextBlock 
                   Text="{Binding Path=Group.Words.Count, UpdateSourceTrigger=PropertyChanged}"
                   Style="{StaticResource DataGridTextBlockStyle}"
                   HorizontalAlignment="Center"/>
-              </DockPanel>
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
-        <DataGridTemplateColumn 
+                <DataGridTemplateColumn 
           SortMemberPath="RepeatNumber"
           CanUserResize="True"
           Width="*"
           Header="Powtorzenia"
           HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate DataType="models:GroupItem">
-              <DockPanel>
-                <TextBlock 
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="models:GroupItem">
+                            <DockPanel>
+                                <TextBlock 
                   Text="{Binding Path=Group.Results.Count, UpdateSourceTrigger=PropertyChanged}"
                   Style="{StaticResource DataGridTextBlockStyle}"
                   HorizontalAlignment="Center"/>
-              </DockPanel>
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
-        <DataGridTemplateColumn 
+                <DataGridTemplateColumn 
           SortMemberPath="NextReapet"
           CanUserResize="True"
           Width="*"
           Header="Powtórka za:"
           HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
 
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate DataType="models:GroupItem">
-              <DockPanel>
-                <TextBlock 
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="models:GroupItem">
+                            <DockPanel>
+                                <TextBlock 
                   Text="{Binding Path=NextRepeat, UpdateSourceTrigger=PropertyChanged}"
                   Style="{StaticResource DataGridTextBlockStyle}"
                   HorizontalAlignment="Center"/>
-              </DockPanel>
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
-        <DataGridTemplateColumn 
+                <DataGridTemplateColumn 
           SortMemberPath="Color"
           CanUserResize="True"
           Width="*"
           Header="Kolor"
           HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
 
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate DataType="models:GroupItem">
-              <DockPanel>
-                <DockPanel.Background>
-                  <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
-                    <GradientStop Color="{Binding Path=Color, Converter={StaticResource DrawerToColorConverter}}" Offset="0"/>
-                    <GradientStop Color="#00000000" Offset="0.7"/>
-                  </LinearGradientBrush>
-                </DockPanel.Background>
-              </DockPanel>
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-      </DataGrid.Columns>
-    </DataGrid>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="models:GroupItem">
+                            <DockPanel>
+                                <DockPanel.Background>
+                                    <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+                                        <GradientStop Color="{Binding Path=Color, Converter={StaticResource DrawerToColorConverter}}" Offset="0"/>
+                                        <GradientStop Color="#00000000" Offset="0.7"/>
+                                    </LinearGradientBrush>
+                                </DockPanel.Background>
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
 
-    <Grid 
+        <Grid 
       Grid.Column="0" Grid.ColumnSpan="2"
       Grid.Row="1">
-      <Grid.Resources>
-        <Style x:Key="GridTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource AppTextBlockStyle}">
-          <Setter Property="VerticalAlignment" Value="Center"/>
-          <Setter Property="Margin" Value="5"/>
-          <Setter Property="FontSize" Value="15"/>
-        </Style>
-      </Grid.Resources>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"/>
-        <ColumnDefinition Width="*"/>
-        <ColumnDefinition Width="*"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="*"/>
-      </Grid.RowDefinitions>
+            <Grid.Resources>
+                <Style x:Key="GridTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource AppTextBlockStyle}">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="5"/>
+                    <Setter Property="FontSize" Value="15"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-      <StackPanel 
+            <StackPanel 
         Grid.Column="0" Grid.ColumnSpan="4"
         Grid.Row="0">
-        <TextBlock 
+                <TextBlock 
           Style="{StaticResource AppTextBlockStyle}"
           Text="{Binding GroupInfo.GroupName}"
           FontSize="20"
           HorizontalAlignment="Center"/>
-      </StackPanel>
+            </StackPanel>
 
-      <Border
+            <Border
         Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
         Style="{StaticResource AppBorderStyle}">
-        <StackPanel
+                <StackPanel
           Orientation="Horizontal">
-          <TextBlock
+                    <TextBlock
             Style="{DynamicResource GridTextBlockStyle}"
             Text="Słowa:"/>
-          <TextBlock
+                    <TextBlock
             Style="{DynamicResource GridTextBlockStyle}"
             Text="{Binding GroupInfo.WordCount}"/>
-        </StackPanel>
-      </Border>
+                </StackPanel>
+            </Border>
 
-      <Border
+            <Border
         Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
         Style="{StaticResource AppBorderStyle}">
-        <StackPanel
+                <StackPanel
           Orientation="Horizontal">
-          <TextBlock
+                    <TextBlock
             Style="{StaticResource GridTextBlockStyle}"
             Text="Ostatnia powtorka:"/>
-          <TextBlock
+                    <TextBlock
             Style="{StaticResource GridTextBlockStyle}"
             Text="{Binding GroupInfo.LastRepeat}"/>
-        </StackPanel>
-      </Border>
+                </StackPanel>
+            </Border>
 
 
-      <Border
+            <Border
         Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"
         Style="{StaticResource AppBorderStyle}">
-        <StackPanel
+                <StackPanel
           Orientation="Horizontal">
-          <TextBlock
+                    <TextBlock
             Style="{StaticResource GridTextBlockStyle}"
             Text="Ilość powtorzeń:"/>
-          <TextBlock
+                    <TextBlock
             Style="{StaticResource GridTextBlockStyle}"
             Text="{Binding GroupInfo.RepeatCount}"/>
-        </StackPanel>
-      </Border>
+                </StackPanel>
+            </Border>
 
 
-      <Border
+            <Border
         Grid.Column="2" Grid.Row="1"
         Style="{StaticResource AppBorderStyle}">
-        <StackPanel
+                <StackPanel
           Orientation="Horizontal">
-          <TextBlock
+                    <TextBlock
             Style="{StaticResource GridTextBlockStyle}"
             Text="Widocznych:"/>
-          <TextBlock
+                    <TextBlock
             Style="{StaticResource GridTextBlockStyle}"
             Text="{Binding Path=GroupInfo.VisibilitiesCount}"/>
-        </StackPanel>
-      </Border>
+                </StackPanel>
+            </Border>
 
-      <Border
+            <Border
         Grid.Column="2" Grid.Row="2"
         Style="{StaticResource AppBorderStyle}">
-        <Grid 
+                <Grid 
           Height="50">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
-          <TextBlock
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
             Grid.Column="0"
             Style="{StaticResource GridTextBlockStyle}"
             Text="Szuflady:"/>
-          <barChart:BarChart
+                    <barChart:BarChart
             Height="20"
             MarkerHeight="5"
             HorizontalAlignment="Stretch"
@@ -323,24 +323,24 @@
             Values="{Binding Path=Values}"
             MaxValue="{Binding Path=MaxValue}"
             Colors="{StaticResource DrawerColors}"/>
-        </Grid>
-      </Border>
+                </Grid>
+            </Border>
 
-      <StackPanel
+            <StackPanel
         Grid.Column="3" Grid.Row="1"
         Orientation="Horizontal">
-        <Image
+                <Image
           Margin="5"
           MaxWidth="100"
           Source="{Binding GroupInfo.Language1Flag}"/>
-        <Image
+                <Image
           Margin="5"
           MaxWidth="100"
           Source="{Binding GroupInfo.Language2Flag}"/>
 
-      </StackPanel>
+            </StackPanel>
 
-      <Button
+            <Button
         Grid.Column="3" Grid.Row="2"
         Style="{StaticResource FlatButtonStyle}"
         Command="{Binding Path=FinishLessonCommand}"
@@ -348,18 +348,18 @@
         Content="Zakończ lekcje"/>
 
 
-      <Button
+            <Button
         Grid.Column="2" Grid.Row="3"
         Style="{StaticResource FlatButtonStyle}"
         Command="{Binding Path=TranslationDirectionChangedCommand}"
         Content="{Binding Path=TranslationDirectionLabel}"/>
 
-      <Button
+            <Button
         Grid.Column="3" Grid.Row="3"
         Style="{StaticResource FlatButtonStyle}"
         Command="{Binding Path=AllWordsCommand}"
         Content="{Binding Path=AllWordsLabel}"/>
 
+        </Grid>
     </Grid>
-  </Grid>
 </UserControl>

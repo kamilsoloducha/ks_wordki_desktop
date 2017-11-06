@@ -118,6 +118,7 @@
     <Compile Include="Database\UserOrganizerTests\DatabaseOrganizerTests.cs" />
     <Compile Include="Database\UserTests.cs" />
     <Compile Include="Database\WordsTest.cs" />
+    <Compile Include="Helpers\GroupConnectorTests\GroupConnectorTest.cs" />
     <Compile Include="Helpers\GroupCreatorTests\GroupCreatorTest.cs" />
     <Compile Include="Helpers\GroupNameCreatorTests\GroupNameCreatorFromFileTests.cs" />
     <Compile Include="Helpers\GroupSplitterTests\GroupSplitterGroupCountTest.cs" />

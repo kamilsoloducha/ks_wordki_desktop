@@ -81,33 +81,33 @@
                 Header="Grupy"
                 Style="{StaticResource AppInnerTabItemStyle}">
                     <ScrollViewer
-                  Style="{StaticResource AppScrollViewerStyle}">
+                        Style="{StaticResource AppScrollViewerStyle}">
                         <StackPanel
-                    Background="{DynamicResource UsedNormalBrush}">
+                            Background="{DynamicResource UsedNormalBrush}">
                             <helpers:ImageButton 
-                Command="{Binding AddGroupCommand}"
-                Style="{StaticResource FlatButtonStyle}"
-                ImageSource="/Resources/Icons/GroupAdd.png"
-                Content="Dodaj grupę"/>
+                                Command="{Binding AddGroupCommand}"
+                                Style="{StaticResource FlatButtonStyle}"
+                                ImageSource="/Resources/Icons/GroupAdd.png"
+                                Content="Dodaj grupę"/>
                             <helpers:ImageButton 
-                Command="{Binding AddClipboardGroupCommand}"
-                Style="{StaticResource FlatButtonStyle}"
-                Content="Grupa ze schowka"/>
+                                Command="{Binding AddClipboardGroupCommand}"
+                                Style="{StaticResource FlatButtonStyle}"
+                                Content="Grupa ze schowka"/>
                             <helpers:ImageButton 
-                Command="{Binding RemoveGroupCommand}"
-                Style="{StaticResource FlatButtonStyle}"
-                ImageSource="/Resources/Icons/GroupRemove.png"
-                Content="Usuń grupę"/>
+                                Command="{Binding RemoveGroupCommand}"
+                                Style="{StaticResource FlatButtonStyle}"
+                                ImageSource="/Resources/Icons/GroupRemove.png"
+                                Content="Usuń grupę"/>          
                             <helpers:ImageButton 
-                Command="{Binding SplitGroupCommand}"
-                Style="{StaticResource FlatButtonStyle}"
-                ImageSource="/Resources/Icons/GroupSplit.png"
-                Content="Podziel grupę"/>
+                                Command="{Binding SplitGroupCommand}"
+                                Style="{StaticResource FlatButtonStyle}"
+                                ImageSource="/Resources/Icons/GroupSplit.png"
+                                Content="Podziel grupę"/>
                             <helpers:ImageButton 
-                Command="{Binding ConnectGroupCommand}"
-                Style="{StaticResource FlatButtonStyle}"
-                ImageSource="/Resources/Icons/GroupConnect.png"
-                Content="Połącz grupy"/>
+                                Command="{Binding ConnectGroupCommand}"
+                                Style="{StaticResource FlatButtonStyle}"
+                                ImageSource="/Resources/Icons/GroupConnect.png"
+                                Content="Połącz grupy"/>
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
@@ -139,16 +139,17 @@
             </TabControl>
 
             <DataGrid
-        Grid.Column="0" Grid.Row="0"
-        Style="{StaticResource AppDataGridStyle}"
-        HorizontalGridLinesBrush="{DynamicResource UsedPressedBrush}"
-        ItemsSource="{Binding Path=Database.Groups}"
-        SelectedItem="{Binding Path=SelectedGroup, Mode=TwoWay}"
-        AutoGenerateColumns="false"
-        CanUserAddRows="false"
-        FontSize="14"
-        KeyboardNavigation.IsTabStop="False"
-        Background="Transparent">
+                x:Name="GroupsGrid"
+                Grid.Column="0" Grid.Row="0"
+                Style="{StaticResource AppDataGridStyle}"
+                HorizontalGridLinesBrush="{DynamicResource UsedPressedBrush}"
+                ItemsSource="{Binding Path=Database.Groups}"
+                SelectedItem="{Binding Path=SelectedGroup, Mode=TwoWay}"
+                AutoGenerateColumns="false"
+                CanUserAddRows="false"
+                FontSize="14"
+                KeyboardNavigation.IsTabStop="False"
+                Background="Transparent">
                 <i:Interaction.Behaviors>
                     <helpers:ScrollIntoViewBehavior/>
                 </i:Interaction.Behaviors>
@@ -165,15 +166,20 @@
 
                 <DataGrid.ContextMenu>
                     <ContextMenu 
-          Style="{StaticResource AppContextMenuStyle}">
+                        Style="{StaticResource AppContextMenuStyle}">
                         <MenuItem
-              Header="Dodaj grupę"
-              Style="{StaticResource AppMenuItemStyle}"
-              Command="{Binding AddGroupCommand}"/>
+                            Header="Dodaj grupę"
+                            Style="{StaticResource AppMenuItemStyle}"
+                            Command="{Binding AddGroupCommand}"/>
                         <MenuItem
-              Header="Usuń grupę"
-              Style="{StaticResource AppMenuItemStyle}"
-              Command="{Binding RemoveGroupCommand}"/>
+                            Header="Usuń grupę"
+                            Style="{StaticResource AppMenuItemStyle}"
+                            Command="{Binding RemoveGroupCommand}"/>
+                        <MenuItem
+                            Header="Połącz grupy"
+                            Style="{StaticResource AppMenuItemStyle}"
+                            Command="{Binding ConnectGroupCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItems}"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
 
