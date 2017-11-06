@@ -15,6 +15,8 @@ using Wordki.Views.Dialogs;
 using Util.Serializers;
 using Repository.Models;
 using Wordki.Database;
+using Wordki.Views.Dialogs.Progress;
+using Util.Threads;
 
 namespace Wordki.ViewModels
 {
@@ -146,7 +148,6 @@ namespace Wordki.ViewModels
         }
 
         public override void Back() { }
-
 
         #region Commands
 
@@ -1116,10 +1117,10 @@ namespace Wordki.ViewModels
                 switch (_translationDirection)
                 {
                     case TranslationDirection.FromFirst:
-                        Translation = $"{Translation} / {Lesson.SelectedWord.Language2}";
+                        Translation = $"{Translation}\n{Lesson.SelectedWord.Language2}";
                         break;
                     case TranslationDirection.FromSecond:
-                        Translation = $"{Translation} / {Lesson.SelectedWord.Language1}";
+                        Translation = $"{Translation}\n{Lesson.SelectedWord.Language1}";
                         break;
                 }
             }
@@ -1197,27 +1198,48 @@ namespace Wordki.ViewModels
 
             protected override void RefreshTranslationColor() { }
 
-            public override async void RefreshView()
+            public override void RefreshView()
             {
                 base.RefreshView();
+                SimpleWork work = new SimpleWork();
+                work.WorkFunc += SaveDatabase;
+                BackgroundQueueWithProgressDialog worker = new BackgroundQueueWithProgressDialog();
+                ProgressDialog dialog = new ProgressDialog();
+                dialog.ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
+                {
+                    ButtonLabel = "Anuluj",
+                    DialogTitle = "Loguje",
+                    CanCanceled = false,
+                };
+                worker.Dialog = dialog;
+                worker.AddWork(work);
+                worker.Execute();
+                Switcher.GetSwitcher().Back(true);
+            }
+
+            private bool SaveDatabase()
+            {
                 IDatabase database = DatabaseSingleton.GetDatabase();
                 Lesson.FinishLesson();
                 Lesson.Timer.StopTimer();
+                DateTime now = DateTime.Now;
                 foreach (IWord word in Lesson.BeginWordsList)
                 {
                     IWord wordFromGroup = word.Group.Words.FirstOrDefault(x => x.Id == word.Id);
-                    if(wordFromGroup!= null)
+                    if (wordFromGroup != null)
                     {
                         wordFromGroup.Drawer = word.Drawer;
+                        wordFromGroup.RepeatingNumber++;
+                        wordFromGroup.LastRepeating = now;
                     }
-                    await database.UpdateWordAsync(word);
+                    database.UpdateWord(word);
                 }
                 foreach (IResult result in Lesson.ResultList)
                 {
                     result.Group.Results.Add(result);
-                    await database.AddResultAsync(result);
+                    database.AddResult(result);
                 }
-                Switcher.GetSwitcher().Back(true);
+                return true;
             }
 
             protected override void RefreshFocused() { }

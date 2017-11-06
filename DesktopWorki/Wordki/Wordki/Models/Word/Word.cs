@@ -183,6 +183,50 @@ namespace Wordki.Models
             return StateManager.GetState(State, "Checked") > 0;
         }
 
+        private ushort _repeatingNumber;
+        public virtual ushort RepeatingNumber
+        {
+            get { return _repeatingNumber; }
+            set
+            {
+                if (_repeatingNumber == value)
+                {
+                    return;
+                }
+                _repeatingNumber = value;
+                OnPropertyChanged();
+                State = StateManager.NewState(State);
+            }
+        }
+
+        public virtual bool ShouldSerializeRepeatingNumber()
+        {
+            return StateManager.GetState(State, "RepeatingNumber") > 0;
+        }
+
+        private DateTime _lastRepeating;
+
+        public virtual DateTime LastRepeating
+        {
+            get { return _lastRepeating; }
+            set
+            {
+                if (_lastRepeating == value)
+                {
+                    return;
+                }
+                _lastRepeating = value;
+                OnPropertyChanged();
+                State = StateManager.NewState(State);
+            }
+        }
+
+        public virtual bool ShouldSerializeLastRepeating()
+        {
+            return StateManager.GetState(State, "LastRepeating") > 0;
+        }
+
+
         public Word()
         {
             Id = DateTime.Now.Ticks;
@@ -194,6 +238,7 @@ namespace Wordki.Models
             _language2Comment = "";
             _visible = true;
             _checked = false;
+            _repeatingNumber = 0;
             State = int.MaxValue;
         }
 

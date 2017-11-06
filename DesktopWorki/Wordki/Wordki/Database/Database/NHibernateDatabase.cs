@@ -91,12 +91,10 @@ namespace Wordki.Database
 
         public async Task RefreshDatabaseAsync()
         {
-
         }
 
         public void RefreshDatabase()
         {
-
         }
 
         #region User

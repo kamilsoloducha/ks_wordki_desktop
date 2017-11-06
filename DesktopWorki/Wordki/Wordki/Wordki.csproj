@@ -214,6 +214,7 @@
     <Compile Include="Models\Group\IGroupRepository.cs" />
     <Compile Include="Models\Lesson\LessonSettings\ILessonSettings.cs" />
     <Compile Include="Models\Lesson\LessonSettings\LessonSettings.cs" />
+    <Compile Include="Models\Lesson\WorstLesson.cs" />
     <Compile Include="Models\Result\IResultCalculator.cs" />
     <Compile Include="Models\Result\IResultRepository.cs" />
     <Compile Include="Models\Result\ResultCalculator.cs" />
