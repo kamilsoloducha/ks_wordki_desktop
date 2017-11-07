@@ -223,6 +223,7 @@
     <Compile Include="Models\Settings\SettingsSingletion.cs" />
     <Compile Include="Models\Translator\Discription.cs" />
     <Compile Include="Models\Translator\Package.cs" />
+    <Compile Include="Models\Translator\RequestBag.cs" />
     <Compile Include="Models\Translator\Root.cs" />
     <Compile Include="Models\Translator\Translation.cs" />
     <Compile Include="Models\User\IUserRepository.cs" />

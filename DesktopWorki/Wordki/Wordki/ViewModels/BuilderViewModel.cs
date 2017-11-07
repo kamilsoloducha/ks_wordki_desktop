@@ -16,6 +16,9 @@ using System.Windows.Input;
 using System.Collections.Generic;
 using System.Collections;
 using Wordki.Helpers.GroupConnector;
+using Util.Threads;
+using Wordki.Views.Dialogs.Progress;
+using Wordki.Models.Connector;
 
 namespace Wordki.ViewModels
 {
@@ -177,6 +180,7 @@ namespace Wordki.ViewModels
         public ICommand WordSelectionChangedCommand { get; set; }
         public ICommand GroupSelectionChangedCommand { get; set; }
         public ICommand AddGroupFromFileCommand { get; set; }
+        public ICommand TranslateWordCommnad { get; set; }
 
         public IDatabase Database { get; set; }
         public ObservableDictionary<string, bool> EnableElementDirectory { get; set; }
@@ -257,6 +261,7 @@ namespace Wordki.ViewModels
             AddGroupCommand = new Util.BuilderCommand(AddGroup);
             RemoveGroupCommand = new Util.BuilderCommand(RemoveGroup);
             CheckUncheckWordCommand = new Util.BuilderCommand(CheckUncheckWord);
+            TranslateWordCommnad = new Util.BuilderCommand(TranslateWord);
 
             DownloadGroupsNameCommand = new Util.BuilderCommand(DownloadGroupsName);
             BackCommand = new Util.BuilderCommand(Back);
@@ -468,6 +473,23 @@ namespace Wordki.ViewModels
                 return;
             }
             SelectedWord.Checked = !SelectedWord.Checked;
+        }
+
+        public void TranslateWord(object obj)
+        {
+            SimpleWork work = new SimpleWork();
+            work.WorkFunc += SendRequestForWordTranslate;
+            BackgroundQueueWithProgressDialog worker = new BackgroundQueueWithProgressDialog();
+            ProgressDialog dialog = new ProgressDialog();
+            dialog.ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
+            {
+                DialogTitle = "Tłumaczę...",
+                ButtonLabel = "Anuluj",
+                CanCanceled = true,
+            };
+            worker.Dialog = dialog;
+            worker.AddWork(work);
+            worker.Execute();
         }
 
         private void AddGroup(object obj)
@@ -780,6 +802,17 @@ namespace Wordki.ViewModels
             {
                 Words.Add(word);
             }
+        }
+
+        private bool SendRequestForWordTranslate()
+        {
+            ApiConnector connector = new ApiConnector();
+            ApiResponse response = connector.SentRequest(new TranslationRequest(new Models.Translator.RequestBag()
+            {
+                //todo
+            }));
+
+            return true;
         }
 
         private async void UpdateWord(IWord pWord)

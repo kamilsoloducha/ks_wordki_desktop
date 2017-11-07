@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using Newtonsoft.Json;
 using Repository.Models;
 using Wordki.Database;
+using Wordki.Models.Translator;
 
 namespace Wordki.Models.Connector
 {
@@ -211,6 +213,20 @@ namespace Wordki.Models.Connector
         public override void PrepareMessage()
         {
             Message = JsonConvert.SerializeObject(User);
+        }
+    }
+
+    public class TranslationRequest : ApiRequest
+    {
+
+        public TranslationRequest(RequestBag bag)
+        {
+            Url = "https://"+$"glosbe.com/gapi/translate?from={bag.From}&dest={bag.To}&format=json&phrase={bag.Word}";
+            Method = "GET";
+        }
+
+        public override void PrepareMessage()
+        {
         }
     }
 }
