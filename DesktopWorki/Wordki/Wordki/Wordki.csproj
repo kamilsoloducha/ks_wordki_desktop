@@ -221,6 +221,10 @@
     <Compile Include="Models\Settings\ISettings.cs" />
     <Compile Include="Models\Settings\Settings.cs" />
     <Compile Include="Models\Settings\SettingsSingletion.cs" />
+    <Compile Include="Models\Translator\Discription.cs" />
+    <Compile Include="Models\Translator\Package.cs" />
+    <Compile Include="Models\Translator\Root.cs" />
+    <Compile Include="Models\Translator\Translation.cs" />
     <Compile Include="Models\User\IUserRepository.cs" />
     <Compile Include="Models\Word\IWordCalculator.cs" />
     <Compile Include="Models\Word\IWordRepository.cs" />

@@ -50,6 +50,7 @@
                 HorizontalAlignment="Right"
                 Grid.Row="2"
                 helpers:FocusExtension.IsFocused="True"
+                IsEnabled="{Binding Path=CanCanceled}"
                 Style="{StaticResource DialogFlatButtonStyle}"
                 Content="{Binding Path=ButtonLabel, UpdateSourceTrigger=PropertyChanged}"
                 Command="{Binding Path=CancelCommand}"/>

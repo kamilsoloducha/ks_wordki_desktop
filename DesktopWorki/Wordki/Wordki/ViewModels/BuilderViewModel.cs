@@ -240,10 +240,8 @@ namespace Wordki.ViewModels
 
         public override void Back()
         {
-            //Database.SaveDatabaseAsync();
-            //var queue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetUploadQueue();
-            //queue.CreateDialog = false;
-            //queue.Execute();
+            UpdateGroup(SelectedGroup);
+            UpdateWord(SelectedWord);
         }
 
         #region Commands
@@ -542,8 +540,9 @@ namespace Wordki.ViewModels
 
         private void Back(object obj)
         {
-            Switcher.GetSwitcher().Back();
             UpdateGroup(SelectedGroup);
+            UpdateWord(SelectedWord);
+            Switcher.GetSwitcher().Back();
         }
 
         private void AddWord(object obj)

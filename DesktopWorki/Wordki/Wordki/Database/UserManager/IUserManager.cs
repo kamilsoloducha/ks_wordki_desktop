@@ -15,6 +15,7 @@ namespace Wordki.Database
         void Set(IUser user);
         void UnSet();
         void Update();
+        Task UpdateAsync();
 
     }
 }

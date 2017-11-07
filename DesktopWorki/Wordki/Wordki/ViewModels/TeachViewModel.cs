@@ -1207,8 +1207,7 @@ namespace Wordki.ViewModels
                 ProgressDialog dialog = new ProgressDialog();
                 dialog.ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
                 {
-                    ButtonLabel = "Anuluj",
-                    DialogTitle = "Loguje",
+                    DialogTitle = "Zapisuje wyniki",
                     CanCanceled = false,
                 };
                 worker.Dialog = dialog;

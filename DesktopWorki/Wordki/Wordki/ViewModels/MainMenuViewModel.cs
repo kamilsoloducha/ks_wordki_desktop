@@ -149,11 +149,11 @@ namespace Wordki.ViewModels
         {
             Login = UserManagerSingleton.Get().User.Name;
             ReadDatabaseFromServer();
-            SearchDialog dialog = new SearchDialog
-            {
-            };
-            dialog.ViewModel = new Dialogs.SearchDialogViewModel();
-            dialog.ShowDialog();
+            //SearchDialog dialog = new SearchDialog
+            //{
+            //};
+            //dialog.ViewModel = new Dialogs.SearchDialogViewModel();
+            //dialog.ShowDialog();
         }
 
         public override void Back()

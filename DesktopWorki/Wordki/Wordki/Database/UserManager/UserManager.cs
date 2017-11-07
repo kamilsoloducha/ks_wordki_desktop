@@ -1,4 +1,5 @@
 ﻿using Repository.Models;
+using System.Threading.Tasks;
 using Wordki.Models;
 
 namespace Wordki.Database
@@ -32,7 +33,12 @@ namespace Wordki.Database
 
         public void Update()
         {
-            _userRepo.UpdateAsync(_user);
+            _userRepo.Update(_user);
+        }
+
+        public Task UpdateAsync()
+        {
+            return _userRepo.UpdateAsync(_user);
         }
     }
 }

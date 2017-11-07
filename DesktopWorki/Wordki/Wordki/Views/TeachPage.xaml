@@ -1,269 +1,351 @@
-﻿<UserControl x:Class="Wordki.Views.TeachPage"
-			xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-			xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-			xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			xmlns:helpers="clr-namespace:Wordki.Helpers"
-			xmlns:viewModels="clr-namespace:Wordki.ViewModels"
-			xmlns:pieChart="clr-namespace:Controls.PieChart;assembly=Controls"
-			xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:converters="clr-namespace:Wordki.Helpers.Converters"
-						 mc:Ignorable="d" 
-						 Style="{DynamicResource AppPageStyle}"
-						 d:DesignHeight="300" d:DesignWidth="300"
-						 d:DataContext="{d:DesignInstance {x:Type viewModels:TeachViewModel}}">
+﻿<UserControl
+    x:Class="Wordki.Views.TeachPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:Wordki.Helpers"
+    xmlns:viewModels="clr-namespace:Wordki.ViewModels"
+    xmlns:pieChart="clr-namespace:Controls.PieChart;assembly=Controls"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:converters="clr-namespace:Wordki.Helpers.Converters"
+    mc:Ignorable="d"
+    Style="{DynamicResource AppPageStyle}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    d:DataContext="{d:DesignInstance {x:Type viewModels:TeachViewModel}}">
     <UserControl.Resources>
 
-        <Style x:Key="WinTextBoxStyle" BasedOn="{StaticResource AppTextBoxStyle}" TargetType="{x:Type TextBox}">
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="FontSize" Value="{Binding Path=Settings.FontSize}"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
+        <Style
+            x:Key="WinTextBoxStyle"
+            BasedOn="{StaticResource AppTextBoxStyle}"
+            TargetType="{x:Type TextBox}">
+            <Setter
+                Property="Margin"
+                Value="5" />
+            <Setter
+                Property="Background"
+                Value="Transparent" />
+            <Setter
+                Property="FontSize"
+                Value="{Binding Path=Settings.FontSize}" />
+            <Setter
+                Property="TextWrapping"
+                Value="Wrap" />
         </Style>
 
-        <Style x:Key="WinTextBlockStyle" BasedOn="{StaticResource AppTextBlockStyle}" TargetType="{x:Type TextBlock}">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="{Binding Settings.FontSize}"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="TextAlignment" Value="Center"/>
+        <Style
+            x:Key="WinTextBlockStyle"
+            BasedOn="{StaticResource AppTextBlockStyle}"
+            TargetType="{x:Type TextBlock}">
+            <Setter
+                Property="HorizontalAlignment"
+                Value="Center" />
+            <Setter
+                Property="VerticalAlignment"
+                Value="Center" />
+            <Setter
+                Property="FontWeight"
+                Value="Bold" />
+            <Setter
+                Property="FontSize"
+                Value="{Binding Settings.FontSize}" />
+            <Setter
+                Property="TextWrapping"
+                Value="Wrap" />
+            <Setter
+                Property="TextAlignment"
+                Value="Center" />
         </Style>
 
-        <Style x:Key="WinBorderStyle" BasedOn="{StaticResource AppBorderStyle}" TargetType="{x:Type Border}">
-            <Setter Property="Background" Value="Transparent"/>
+        <Style
+            x:Key="WinBorderStyle"
+            BasedOn="{StaticResource AppBorderStyle}"
+            TargetType="{x:Type Border}">
+            <Setter
+                Property="Background"
+                Value="Transparent" />
         </Style>
 
-        <converters:WordCheckedToStringConverter x:Key="WordCheckedToStringConverter"/>
+        <converters:WordCheckedToStringConverter
+            x:Key="WordCheckedToStringConverter" />
     </UserControl.Resources>
 
 
     <UserControl.InputBindings>
-        <KeyBinding Key="Enter" Command="{Binding OnEnterClickCommand}"/>
-        <KeyBinding Key="Escape" Command="{Binding PauseCommand}"/>
+        <KeyBinding
+            Key="Enter"
+            Command="{Binding OnEnterClickCommand}" />
+        <KeyBinding
+            Key="Escape"
+            Command="{Binding PauseCommand}" />
     </UserControl.InputBindings>
 
     <DockPanel>
         <Grid
-						DockPanel.Dock="Top">
+            DockPanel.Dock="Top">
             <!--Grid definition-->
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition
+                    Width="4*" />
+                <ColumnDefinition
+                    Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition
+                    Height="4*" />
+                <RowDefinition
+                    Height="*" />
             </Grid.RowDefinitions>
 
-            <TabControl 
-				Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
-				Panel.ZIndex="2"
-				Style="{StaticResource AppInnerTabControlStyle}">
-                <TabItem 
-						Header="Plik" Style="{StaticResource AppInnerTabItemStyle}">
+            <TabControl
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Panel.ZIndex="2"
+                Style="{StaticResource AppInnerTabControlStyle}">
+                <TabItem
+                    Header="Plik"
+                    Style="{StaticResource AppInnerTabItemStyle}">
                     <ScrollViewer
-						Style="{StaticResource AppScrollViewerStyle}">
+                        Style="{StaticResource AppScrollViewerStyle}">
                         <StackPanel
-							Background="{DynamicResource UsedNormalBrush}">
-                            <helpers:ImageButton 
-								Command="{Binding BackCommand}"
-								Style="{StaticResource FlatButtonStyle}"
-								Content="Wróć"/>
-                            <helpers:ImageButton 
-								Command="{Binding StartLessonCommand}"
-								Style="{StaticResource FlatButtonStyle}"
-								Content="Rozpocznij lekcję"/>
-                            <helpers:ImageButton 
-								Command="{Binding PauseCommand}"
-								Style="{StaticResource FlatButtonStyle}"
-								Content="Przerwa"/>
-                            <helpers:ImageButton 
-								Command="{Binding CorrectCommand}"
-								Style="{StaticResource FlatButtonStyle}"
-								Content="Popraw słowo"/>
-                            <helpers:ImageButton 
-							    Command="{Binding CheckUncheckCommand}"
-							    Style="{StaticResource FlatButtonStyle}"
-							    Content="{Binding Path=State.SelectedWord.Checked, Converter={StaticResource WordCheckedToStringConverter}}"/>
+                            Background="{DynamicResource UsedNormalBrush}">
+                            <helpers:ImageButton
+                                Command="{Binding BackCommand}"
+                                Style="{StaticResource FlatButtonStyle}"
+                                Content="Wróć" />
+                            <helpers:ImageButton
+                                Command="{Binding StartLessonCommand}"
+                                Style="{StaticResource FlatButtonStyle}"
+                                Content="Rozpocznij lekcję" />
+                            <helpers:ImageButton
+                                Command="{Binding PauseCommand}"
+                                Style="{StaticResource FlatButtonStyle}"
+                                Content="Przerwa" />
+                            <helpers:ImageButton
+                                Command="{Binding CorrectCommand}"
+                                Style="{StaticResource FlatButtonStyle}"
+                                Content="Popraw słowo" />
+                            <helpers:ImageButton
+                                Command="{Binding CheckUncheckCommand}"
+                                Style="{StaticResource FlatButtonStyle}"
+                                Content="{Binding Path=State.SelectedWord.Checked, Converter={StaticResource WordCheckedToStringConverter}}" />
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
 
             </TabControl>
             <Grid
-				Grid.Row="0"
-				Grid.Column="0"
-				Grid.ColumnSpan="2">
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition
+                        Height="*" />
+                    <RowDefinition
+                        Height="*" />
+                    <RowDefinition
+                        Height="*" />
+                    <RowDefinition
+                        Height="*" />
+                    <RowDefinition
+                        Height="*" />
+                    <RowDefinition
+                        Height="*" />
                 </Grid.RowDefinitions>
 
                 <Border
-								Grid.Row="0"
-								Style="{StaticResource WinBorderStyle}">
+                    Grid.Row="0"
+                    Style="{StaticResource WinBorderStyle}">
                     <TextBlock
-									Style="{StaticResource WinTextBlockStyle}"
-									Text="{Binding Path=State.GroupName}"/>
+                        Style="{StaticResource WinTextBlockStyle}"
+                        Text="{Binding Path=State.GroupName}" />
                 </Border>
 
                 <Border
-					Grid.Row="1"
-					Style="{StaticResource WinBorderStyle}">
+                    Grid.Row="1"
+                    Style="{StaticResource WinBorderStyle}">
                     <TextBlock
-						Style="{StaticResource WinTextBlockStyle}"
-						Text="{Binding Path=State.CommentLanguage}"/>
+                        Style="{StaticResource WinTextBlockStyle}"
+                        Text="{Binding Path=State.CommentLanguage}" />
                 </Border>
 
                 <Border
-					Grid.Row="2"
-					Style="{StaticResource WinBorderStyle}">
+                    Grid.Row="2"
+                    Style="{StaticResource WinBorderStyle}">
                     <TextBlock
-						Style="{StaticResource WinTextBlockStyle}"
-						Text="{Binding Path=State.CommentTranslation}"/>
+                        Style="{StaticResource WinTextBlockStyle}"
+                        Text="{Binding Path=State.CommentTranslation}" />
                 </Border>
 
                 <Border
-					Grid.Row="3"
-					Style="{StaticResource WinBorderStyle}">
+                    Grid.Row="3"
+                    Style="{StaticResource WinBorderStyle}">
                     <TextBlock
-						Style="{StaticResource WinTextBlockStyle}"
-						Text="{Binding Path=State.Label}"/>
+                        Style="{StaticResource WinTextBlockStyle}"
+                        Text="{Binding Path=State.Label}" />
                 </Border>
 
                 <TextBox
-					Grid.Row="4"
-					Style="{StaticResource WinTextBoxStyle}"
-					Foreground="{Binding Path=State.TranslationColor, UpdateSourceTrigger=PropertyChanged}"
-					Text="{Binding Path=State.Translation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-					IsEnabled="{Binding Path=State.TranslationBoxEnabled}"
-					Focusable="True"
-					helpers:InputBindingBehavior.InputBindingsSource="{Binding Path=ShortKeys, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-					helpers:FocusExtension.IsFocused="{Binding Path=State.TranslationIsFocused}">
+                    Grid.Row="4"
+                    Style="{StaticResource WinTextBoxStyle}"
+                    Foreground="{Binding Path=State.TranslationColor, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding Path=State.Translation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="{Binding Path=State.TranslationBoxEnabled}"
+                    Focusable="True"
+                    helpers:InputBindingBehavior.InputBindingsSource="{Binding Path=ShortKeys, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    helpers:FocusExtension.IsFocused="{Binding Path=State.TranslationIsFocused}">
                 </TextBox>
 
                 <Grid
-					Grid.Row="5">
+                    Grid.Row="5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition
+                            Width="*" />
+                        <ColumnDefinition
+                            Width="*" />
+                        <ColumnDefinition
+                            Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <Button
-						Grid.Column="0"
-						Style="{StaticResource FlatButtonStyle}"
-						Content="Nie wiem"
-						Command="{Binding UnknownCommand}"
-						IsEnabled="{Binding Path=State.WrongButtonEnabled}"
-						helpers:FocusExtension.IsFocused="{Binding Path=State.WrongButtonIsFocused}"
-						IsTabStop="true"/>
+                        Grid.Column="0"
+                        Style="{StaticResource FlatButtonStyle}"
+                        Content="Nie wiem"
+                        Command="{Binding UnknownCommand}"
+                        IsEnabled="{Binding Path=State.WrongButtonEnabled}"
+                        helpers:FocusExtension.IsFocused="{Binding Path=State.WrongButtonIsFocused}"
+                        IsTabStop="true" />
                     <Button
-						Grid.Column="1"
-						Style="{StaticResource FlatButtonStyle}"
-						Content="Sprawdź"
-						IsEnabled="{Binding Path=State.CheckButtonEnabled}"
-						Command="{Binding CheckCommand}"
-						IsTabStop="true"/>
+                        Grid.Column="1"
+                        Style="{StaticResource FlatButtonStyle}"
+                        Content="Sprawdź"
+                        IsEnabled="{Binding Path=State.CheckButtonEnabled}"
+                        Command="{Binding CheckCommand}"
+                        IsTabStop="true" />
                     <Button
-						Grid.Column="2"
-						Style="{StaticResource FlatButtonStyle}"
-						Content="Wiem"
-						Command="{Binding KnownCommand}"
-						IsEnabled="{Binding Path=State.CorrectButtonEnabled}"
-						helpers:FocusExtension.IsFocused="{Binding Path=State.CorrectButtonIsFocused}"
-						IsTabStop="true"/>
+                        Grid.Column="2"
+                        Style="{StaticResource FlatButtonStyle}"
+                        Content="Wiem"
+                        Command="{Binding KnownCommand}"
+                        IsEnabled="{Binding Path=State.CorrectButtonEnabled}"
+                        helpers:FocusExtension.IsFocused="{Binding Path=State.CorrectButtonIsFocused}"
+                        IsTabStop="true" />
                 </Grid>
             </Grid>
 
             <Border
-				Grid.Row="1" Grid.Column="0"
-				Grid.ColumnSpan="2"
-				Style="{StaticResource WinBorderStyle}">
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Style="{StaticResource WinBorderStyle}">
                 <Grid
-					Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch">
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition
+                            Width="*" />
+                        <ColumnDefinition
+                            Width="*" />
+                        <ColumnDefinition
+                            Width="*" />
+                        <ColumnDefinition
+                            Width="*" />
+                        <ColumnDefinition
+                            Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <Grid.Resources>
-                        <Style TargetType="{x:Type pieChart:PieChart }">
-                            <Setter Property="Margin" Value="40,0"/>
-                            <Setter Property="IsAnimate" Value="true"/>
-                            <Setter Property="IsEnabled" Value="false"/>
-                            <Setter Property="RingBackground" Value="{DynamicResource UsedPressedBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource UsedNormalFrontBrush}"/>
-                            <Setter Property="RingWidthFactor" Value="0.5"/>
-                            <Setter Property="FontFamily" Value="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"/>
-                            <Setter Property="FontSize" Value="20"/>
-                            <Setter Property="ValueFontSize" Value="20"/>
+                        <Style
+                            TargetType="{x:Type pieChart:PieChart }">
+                            <Setter
+                                Property="Margin"
+                                Value="40,0" />
+                            <Setter
+                                Property="IsAnimate"
+                                Value="true" />
+                            <Setter
+                                Property="IsEnabled"
+                                Value="false" />
+                            <Setter
+                                Property="RingBackground"
+                                Value="{DynamicResource UsedPressedBrush}" />
+                            <Setter
+                                Property="Foreground"
+                                Value="{DynamicResource UsedNormalFrontBrush}" />
+                            <Setter
+                                Property="RingWidthFactor"
+                                Value="0.5" />
+                            <Setter
+                                Property="FontFamily"
+                                Value="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular" />
+                            <Setter
+                                Property="FontSize"
+                                Value="20" />
+                            <Setter
+                                Property="ValueFontSize"
+                                Value="20" />
                         </Style>
                     </Grid.Resources>
 
                     <pieChart:PieChart
-						Grid.Column="0"
-						Title="Szuflady"
-						DescriptionText="Value"
-						Colors="{StaticResource DrawerColors}"
-						SelectedPiece="{Binding Path=State.SelectedDrawer, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-						MaxValue="{Binding Path=State.MaxValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-						Values="{Binding Path=State.DrawerValues, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        Grid.Column="0"
+                        Title="Szuflady"
+                        DescriptionText="Value"
+                        Colors="{StaticResource DrawerColors}"
+                        SelectedPiece="{Binding Path=State.SelectedDrawer, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        MaxValue="{Binding Path=State.MaxValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        Values="{Binding Path=State.DrawerValues, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                    <pieChart:PieChart 
-						Grid.Column="1"
-						Title="Postęp"
-						DescriptionText="Percentage"
-						Colors="{StaticResource DrawerColors}"
-						SelectedPiece="0"
-						Values="{Binding Path=State.Progress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <pieChart:PieChart
+                        Grid.Column="1"
+                        Title="Postęp"
+                        DescriptionText="Percentage"
+                        Colors="{StaticResource DrawerColors}"
+                        SelectedPiece="0"
+                        Values="{Binding Path=State.Progress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <UniformGrid
-						Rows="2"
-						Grid.Column="2">
+                        Rows="2"
+                        Grid.Column="2">
 
                         <Button
-							Style="{StaticResource DialogFlatButtonStyle}"
-							Content="{Binding Path=State.StartStopButtonContent}"
-							Command="{Binding Path=State.StartStopButtonCommand}"/>
+                            Style="{StaticResource DialogFlatButtonStyle}"
+                            Content="{Binding Path=State.StartStopButtonContent}"
+                            Command="{Binding Path=State.StartStopButtonCommand}" />
 
                         <TextBlock
-							Style="{StaticResource AppTextBlockStyle}"
-							HorizontalAlignment="Center"
-							Text="{Binding Path=Timer}"/>
+                            Style="{StaticResource AppTextBlockStyle}"
+                            HorizontalAlignment="Center"
+                            Text="{Binding Path=Timer}" />
 
                     </UniformGrid>
 
-                    <pieChart:PieChart 
-						Grid.Column="3"
-						Title="Wyniki"
-						DescriptionText="Value"
-						IsEnabled="true"
-						Colors="{StaticResource ResultColors}"
-						MaxValue="{Binding Path=State.MaxResult, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-						Values="{Binding Path=State.Results, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                    <pieChart:PieChart
+                        Grid.Column="3"
+                        Title="Wyniki"
+                        DescriptionText="Value"
+                        IsEnabled="true"
+                        Colors="{StaticResource ResultColors}"
+                        MaxValue="{Binding Path=State.MaxResult, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        Values="{Binding Path=State.Results, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                     </pieChart:PieChart>
 
-                    <pieChart:PieChart 
-						Grid.Column="4"
-						Title="Licznik"
-						DescriptionText="Value"
-						Colors="{StaticResource DrawerColors}"
-						SelectedPiece="0"
-						MaxValue="{Binding Path=State.MaxValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-						Values="{Binding Path=State.Counter, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <pieChart:PieChart
+                        Grid.Column="4"
+                        Title="Licznik"
+                        DescriptionText="Value"
+                        Colors="{StaticResource DrawerColors}"
+                        SelectedPiece="0"
+                        MaxValue="{Binding Path=State.MaxValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        Values="{Binding Path=State.Counter, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
             </Border>
         </Grid>

@@ -215,10 +215,11 @@ namespace Wordki.ViewModels
             Switcher.GetSwitcher().Switch(Switcher.State.Builder);
         }
 
-        private void AllWords(object obj)
+        private async void AllWords(object obj)
         {
-            UserManagerSingleton.Get().User.AllWords = !UserManagerSingleton.Get().User.AllWords;
-            //Database.GetDatabase().UpdateUser(UserManagerSingleton.Get().User as User);
+            IUserManager userManager = UserManagerSingleton.Get();
+            userManager.User.AllWords = !userManager.User.AllWords;
+            await userManager.UpdateAsync();
             SetAllWordsLabel();
         }
 
@@ -228,20 +229,21 @@ namespace Wordki.ViewModels
             PackageStore.Put(0, SelectedItem.Group.Id);
         }
 
-        private void TranslationDirectionChanged(object obj)
+        private async void TranslationDirectionChanged(object obj)
         {
-            switch (UserManagerSingleton.Get().User.TranslationDirection)
+            IUserManager userManager = UserManagerSingleton.Get();
+            switch (userManager.User.TranslationDirection)
             {
                 case TranslationDirection.FromFirst:
-                    UserManagerSingleton.Get().User.TranslationDirection = TranslationDirection.FromSecond;
+                    userManager.User.TranslationDirection = TranslationDirection.FromSecond;
                     break;
                 case TranslationDirection.FromSecond:
-                    UserManagerSingleton.Get().User.TranslationDirection = TranslationDirection.FromFirst;
+                    userManager.User.TranslationDirection = TranslationDirection.FromFirst;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            //Database.GetDatabase().UpdateUser(UserManagerSingleton.Get().User as User);
+            await userManager.UpdateAsync();
             SetTranslationDirectionLabel();
         }
 
@@ -471,27 +473,27 @@ namespace Wordki.ViewModels
         {
             try
             {
-                Lesson lLesson;
+                Lesson lesson;
                 switch (lLessonType)
                 {
                     case LessonType.TypingLesson:
                         {
-                            lLesson = new TypingLesson(GetWordListFromSelectedGroups());
+                            lesson = new TypingLesson(GetWordListFromSelectedGroups());
                         }
                         break;
                     case LessonType.IntensiveLesson:
                         {
-                            lLesson = new IntensiveLesson(GetWordListFromSelectedGroups());
+                            lesson = new IntensiveLesson(GetWordListFromSelectedGroups());
                         }
                         break;
                     case LessonType.RandomLesson:
                         {
-                            lLesson = new RandomLesson(GetWordListRandom(60));
+                            lesson = new RandomLesson(GetWordListRandom(60));
                         }
                         break;
                     case LessonType.BestLesson:
                         {
-                            lLesson = new BestLesson(GetWordListBest(60));
+                            lesson = new BestLesson(GetWordListBest(60));
                         }
                         break;
                     default:
@@ -500,11 +502,11 @@ namespace Wordki.ViewModels
                             return;
                         }
                 }
-                lLesson.WordComparer = new WordComparer();
-                lLesson.WordComparer.Settings = new WordComparerSettings();
-                lLesson.WordComparer.Settings.NotCheckers.Add(new LetterCaseNotCheck());
-                lLesson.WordComparer.Settings.NotCheckers.Add(new SpaceNotCheck());
-                lLesson.WordComparer.Settings.NotCheckers.Add(new Utf8NotCheck());
+                lesson.WordComparer = new WordComparer();
+                lesson.WordComparer.Settings = new WordComparerSettings();
+                lesson.WordComparer.Settings.NotCheckers.Add(new LetterCaseNotCheck());
+                lesson.WordComparer.Settings.NotCheckers.Add(new SpaceNotCheck());
+                lesson.WordComparer.Settings.NotCheckers.Add(new Utf8NotCheck());
                 IUser user = UserManagerSingleton.Get().User;
                 ILessonSettings lessonSettings = new LessonSettings()
                 {
@@ -512,9 +514,14 @@ namespace Wordki.ViewModels
                     TranslationDirection = user.TranslationDirection,
                     Timeout = user.Timeout,
                 };
-                lLesson.LessonSettings = lessonSettings;
-                lLesson.InitLesson();
-                PackageStore.Put(0, lLesson);
+                lesson.LessonSettings = lessonSettings;
+                lesson.InitLesson();
+                if(lesson.BeginWordsList.Count == 0)
+                {
+                    LoggerSingleton.LogError("Brak słów do nauki");
+                    return;
+                }
+                PackageStore.Put(0, lesson);
                 Switcher.GetSwitcher().Switch(Switcher.State.Teach);
             }
             catch (Exception lException)
