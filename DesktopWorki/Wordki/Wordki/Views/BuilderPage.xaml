@@ -488,7 +488,7 @@
                     Grid.Row="3"
                     Style="{StaticResource WinTextBoxStyle}"
                     IsEnabled="{Binding EnableElementDirectory[Language1Comment], UpdateSourceTrigger=PropertyChanged}"
-                    Text="{Binding Path=SelectedWord.Language1Comment, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                    Text="{Binding Path=SelectedWord.Language1Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Margin="10, 10, 10, 0"
                     TabIndex="20" />
 
@@ -497,7 +497,7 @@
                     Grid.Row="4"
                     Style="{StaticResource WinTextBoxStyle}"
                     IsEnabled="{Binding EnableElementDirectory[Language2Comment], UpdateSourceTrigger=PropertyChanged}"
-                    Text="{Binding Path=SelectedWord.Language2Comment, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                    Text="{Binding Path=SelectedWord.Language2Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Margin="10, 0, 10, 10"
                     TabIndex="30" />
 

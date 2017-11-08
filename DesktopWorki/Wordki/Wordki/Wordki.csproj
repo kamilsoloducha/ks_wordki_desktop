@@ -208,6 +208,8 @@
     <Compile Include="Helpers\Notification\NotificationFactory.cs" />
     <Compile Include="Helpers\Notification\ToastNotification.cs" />
     <Compile Include="Helpers\Behaviour\ScrollIntoViewBehavior.cs" />
+    <Compile Include="Helpers\TranslationPusher\ITranslationPusher.cs" />
+    <Compile Include="Helpers\TranslationPusher\TranslationPusher.cs" />
     <Compile Include="Helpers\WordComparer\IWordComparer.cs" />
     <Compile Include="Helpers\WordComparer\IWordComparerSettings.cs" />
     <Compile Include="Helpers\WordComparer\WordComparer.cs" />
@@ -216,6 +218,10 @@
     <Compile Include="Helpers\WordConnector\WordConnector.cs" />
     <Compile Include="Helpers\WordFinder\IWordFinder.cs" />
     <Compile Include="Helpers\WordFinder\WordFinder.cs" />
+    <Compile Include="InteractionProvider\TranlsationProvider\ITranslationProvider.cs" />
+    <Compile Include="InteractionProvider\TranlsationProvider\TranslationProvider.cs" />
+    <Compile Include="InteractionProvider\YesNoProvider\IYesNoProvider.cs" />
+    <Compile Include="InteractionProvider\YesNoProvider\YesNoProvider.cs" />
     <Compile Include="Models\Group\CommonGroup.cs" />
     <Compile Include="Helpers\Connector\ApiConnector.cs" />
     <Compile Include="Helpers\Connector\ApiRequest.cs" />
@@ -283,6 +289,7 @@
     <Compile Include="ViewModels\Dialogs\Progress\ProgressDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\SearchDialog\SearchDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\TranslationListDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\YesNoDialogViewModel.cs" />
     <Compile Include="ViewModels\GroupManagerViewModel.cs" />
     <Compile Include="ViewModels\IViewModel.cs" />
     <Compile Include="ViewModels\LoginMainViewModel.cs" />
@@ -303,6 +310,7 @@
     <Compile Include="Views\Dialogs\CorrectWordDialog.xaml.cs">
       <DependentUpon>CorrectWordDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\DialogBase.cs" />
     <Compile Include="Views\Dialogs\InfoDialog.xaml.cs">
       <DependentUpon>InfoDialog.xaml</DependentUpon>
     </Compile>
@@ -342,7 +350,7 @@
     <Compile Include="Views\Dialogs\SplitGroupDialog.xaml.cs">
       <DependentUpon>SplitGroupDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\YesNoDialog.xaml.cs">
+    <Compile Include="Views\Dialogs\YesNoDialog.xaml.cs">
       <DependentUpon>YesNoDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
@@ -429,7 +437,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\YesNoDialog.xaml">
+    <Page Include="Views\Dialogs\YesNoDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

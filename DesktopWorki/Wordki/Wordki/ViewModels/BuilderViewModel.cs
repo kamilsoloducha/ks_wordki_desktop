@@ -24,6 +24,8 @@ using Wordki.Helpers.Connector.Requests;
 using Wordki.ViewModels.Dialogs;
 using System.Windows;
 using System.Text;
+using Wordki.Helpers.TranslationPusher;
+using Wordki.InteractionProvider;
 
 namespace Wordki.ViewModels
 {
@@ -287,8 +289,6 @@ namespace Wordki.ViewModels
             AddGroupFromFileCommand = new Util.BuilderCommand(AddGroupFromFile);
         }
 
-
-
         private void AddGroupFromFile(object obj)
         {
             Switcher.GetSwitcher().Switch(Switcher.State.BuildFromFile);
@@ -451,24 +451,24 @@ namespace Wordki.ViewModels
             {
                 return;
             }
-            YesNoDialog dialog = new YesNoDialog
-            {
-                DialogTitle = "Uwaga",
-                Message = "Czy na pewno usunąć grupy?",
-                PositiveLabel = "Tak",
-                NegativeLabel = "Nie",
-            };
-            dialog.PositiveCommand = new Util.BuilderCommand(async o =>
-            {
-                int groupIndex = Database.Groups.IndexOf(SelectedGroup);
-                SelectedGroup = Database.Groups.Count > groupIndex ? Database.Groups[groupIndex] : null;
-                SelectedWord = SelectedGroup != null ? SelectedGroup.Words.LastOrDefault() : null;
-                await Database.DeleteGroupAsync(SelectedGroup);
-                dialog.Close();
-                RefreshView();
-            });
-            dialog.NegativeCommand = new Util.BuilderCommand(o => dialog.Close());
-            dialog.ShowDialog();
+            //YesNoDialog dialog = new YesNoDialog
+            //{
+            //    DialogTitle = "Uwaga",
+            //    Message = "Czy na pewno usunąć grupy?",
+            //    PositiveLabel = "Tak",
+            //    NegativeLabel = "Nie",
+            //};
+            //dialog.PositiveCommand = new Util.BuilderCommand(async o =>
+            //{
+            //    int groupIndex = Database.Groups.IndexOf(SelectedGroup);
+            //    SelectedGroup = Database.Groups.Count > groupIndex ? Database.Groups[groupIndex] : null;
+            //    SelectedWord = SelectedGroup != null ? SelectedGroup.Words.LastOrDefault() : null;
+            //    await Database.DeleteGroupAsync(SelectedGroup);
+            //    dialog.Close();
+            //    RefreshView();
+            //});
+            //dialog.NegativeCommand = new Util.BuilderCommand(o => dialog.Close());
+            //dialog.ShowDialog();
         }
 
         private void CheckUncheckWord(object obj)
@@ -827,10 +827,7 @@ namespace Wordki.ViewModels
             catch (Exception e)
             {
                 LoggerSingleton.LogError(e.Message);
-                return new WorkResult()
-                {
-                    Success = false,
-                };
+                return new WorkResult();
             }
             if (response != null)
             {
@@ -844,27 +841,11 @@ namespace Wordki.ViewModels
                     items.Add(item.Translation.Text);
                 }
 
-                TranslationListDialogViewModel viewModel = new TranslationListDialogViewModel(items);
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    TranslationListDialog dialog = new TranslationListDialog()
-                    {
-                        ViewModel = viewModel,
-                    };
-                    dialog.ShowDialog();
-                    if (viewModel.Canceled)
-                    {
-                        return;
-                    }
-                    IEnumerable<string> selectedItems = viewModel.Items.Where(x => x.Approved).Select(x => x.Translation);
-                    StringBuilder builder = new StringBuilder();
-                    foreach(string item in selectedItems)
-                    {
-                        builder.Append(item).Append(", ");
-                    }
-                    builder.Remove(builder.Length - 2, 2);
-                    SelectedWord.Language2 = builder.ToString();
-                });
+                ITranslationProvider interactive = new TranslationProvider();
+                interactive.Items = items;
+                interactive.TranslationDirection = Repository.Models.Enums.TranslationDirection.FromFirst;
+                interactive.Word = SelectedWord;
+                interactive.Interact();
             }
             return new WorkResult()
             {

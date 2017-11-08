@@ -7,7 +7,7 @@ namespace Wordki.Models
     [Serializable]
     public class Word : ModelBase<IWord>, IWord
     {
-        private static int _maxWordLength = 256;
+        private static int _maxWordLength = 512;
 
         public virtual long Id { get; set; }
 

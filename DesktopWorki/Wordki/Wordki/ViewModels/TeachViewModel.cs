@@ -305,47 +305,47 @@ namespace Wordki.ViewModels
         {
             LessonStateEnum lLastState = State.StateEnum;
             YesNoDialog lDialog = new YesNoDialog();
-            lDialog.DialogTitle = "Uwaga";
-            lDialog.Message = "Czy na pewno chcesz opuścić lekcje?";
-            lDialog.PositiveLabel = "Tak";
-            lDialog.NegativeLabel = "Nie";
-            lDialog.PositiveCommand = new BuilderCommand(delegate
-            {
-                if (Lesson != null)
-                {
-                    ISerializer<Lesson> serializer = new BinarySerializer<Lesson>
-                    {
-                        Settings = new BinarySerializerSettings
-                        {
-                            Path = "lesson",
-                            RemoveAfterRead = true,
-                        }
-                    };
-                    try
-                    {
-                        serializer.Write(Lesson);
-                    }
-                    catch (Exception e)
-                    {
-                        LoggerSingleton.LogError("Błąd serializowania lekcji - {0}", e.Message);
-                    }
-                    Lesson.FinishLesson();
-                    Lesson.Timer.StopTimer();
-                }
-                lDialog.Close();
-                Switcher.GetSwitcher().Back(true);
-            });
-            lDialog.NegativeCommand = new BuilderCommand(delegate
-            {
-                State = StateFactory.GetState(Lesson, lLastState);
-                if (State != null)
-                {
-                    State.RefreshView();
-                }
-                lDialog.Close();
-            });
-            State = StateFactory.GetState(Lesson, LessonStateEnum.Pause);
-            State.RefreshView();
+            //lDialog.DialogTitle = "Uwaga";
+            //lDialog.Message = "Czy na pewno chcesz opuścić lekcje?";
+            //lDialog.PositiveLabel = "Tak";
+            //lDialog.NegativeLabel = "Nie";
+            //lDialog.PositiveCommand = new BuilderCommand(delegate
+            //{
+            //    if (Lesson != null)
+            //    {
+            //        ISerializer<Lesson> serializer = new BinarySerializer<Lesson>
+            //        {
+            //            Settings = new BinarySerializerSettings
+            //            {
+            //                Path = "lesson",
+            //                RemoveAfterRead = true,
+            //            }
+            //        };
+            //        try
+            //        {
+            //            serializer.Write(Lesson);
+            //        }
+            //        catch (Exception e)
+            //        {
+            //            LoggerSingleton.LogError("Błąd serializowania lekcji - {0}", e.Message);
+            //        }
+            //        Lesson.FinishLesson();
+            //        Lesson.Timer.StopTimer();
+            //    }
+            //    lDialog.Close();
+            //    Switcher.GetSwitcher().Back(true);
+            //});
+            //lDialog.NegativeCommand = new BuilderCommand(delegate
+            //{
+            //    State = StateFactory.GetState(Lesson, lLastState);
+            //    if (State != null)
+            //    {
+            //        State.RefreshView();
+            //    }
+            //    lDialog.Close();
+            //});
+            //State = StateFactory.GetState(Lesson, LessonStateEnum.Pause);
+            //State.RefreshView();
             lDialog.ShowDialog();
         }
 

@@ -344,12 +344,12 @@ namespace Wordki.ViewModels
         private void YesNo(object obj)
         {
             YesNoDialog lDialog = new YesNoDialog();
-            lDialog.Message = "jakaś wiadomość\nktory zajmuje\nwiecej niz jedna linie";
-            lDialog.PositiveCommand = new BuilderCommand(o => lDialog.Close());
-            lDialog.PositiveLabel = "Tak";
-            lDialog.NegativeCommand = new BuilderCommand(o => lDialog.Close());
-            lDialog.NegativeLabel = "Nie";
-            lDialog.DialogTitle = "Jakis tytuł";
+            //lDialog.Message = "jakaś wiadomość\nktory zajmuje\nwiecej niz jedna linie";
+            //lDialog.PositiveCommand = new BuilderCommand(o => lDialog.Close());
+            //lDialog.PositiveLabel = "Tak";
+            //lDialog.NegativeCommand = new BuilderCommand(o => lDialog.Close());
+            //lDialog.NegativeLabel = "Nie";
+            //lDialog.DialogTitle = "Jakis tytuł";
             lDialog.ShowDialog();
         }
     }

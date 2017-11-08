@@ -1,5 +1,4 @@
 ﻿using FluentNHibernate.Mapping;
-using Repository.Models;
 using Wordki.Models;
 
 namespace Wordki.Database
