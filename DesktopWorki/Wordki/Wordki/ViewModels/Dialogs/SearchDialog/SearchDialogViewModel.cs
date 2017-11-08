@@ -11,10 +11,8 @@ using Wordki.Database;
 
 namespace Wordki.ViewModels.Dialogs
 {
-    public class SearchDialogViewModel : ViewModelBase
+    public class SearchDialogViewModel : DialogViewModelBase
     {
-        public event EventHandler ClosingRequest;
-
         private string _searchingWord;
 
         public string SearchingWord
@@ -66,14 +64,6 @@ namespace Wordki.ViewModels.Dialogs
             foreach(IWord word in words)
             {
                 Words.Add(word);
-            }
-        }
-
-        protected void OnClosingRequest()
-        {
-            if (ClosingRequest != null)
-            {
-                ClosingRequest(this, EventArgs.Empty);
             }
         }
     }

@@ -512,6 +512,8 @@
                             Width="*" />
                         <ColumnDefinition
                             Width="*" />
+                        <ColumnDefinition
+                            Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <Button
@@ -532,12 +534,12 @@
                         Command="{Binding Path=CheckUncheckWordCommand}"
                         Content="{Binding Path=SelectedWord.Checked, Converter={StaticResource WordCheckedToStringConverter}}"
                         IsTabStop="False" />
-                    <!--<Button
-            Grid.Column="2"
-            Style="{StaticResource FlatButtonStyle}"
-            Command="{Binding TranslateWordCommand}"
-            Content="Tłumacz"
-            IsTabStop="False"/>-->
+                    <Button
+                        Grid.Column="3"
+                        Style="{StaticResource FlatButtonStyle}"
+                        Command="{Binding Path=TranslateWordCommnad}"
+                        Content="Tłumacz"
+                        IsTabStop="False" />
                 </Grid>
 
                 <UniformGrid

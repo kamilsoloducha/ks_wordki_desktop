@@ -216,17 +216,4 @@ namespace Wordki.Models.Connector
         }
     }
 
-    public class TranslationRequest : ApiRequest
-    {
-
-        public TranslationRequest(RequestBag bag)
-        {
-            Url = "https://"+$"glosbe.com/gapi/translate?from={bag.From}&dest={bag.To}&format=json&phrase={bag.Word}";
-            Method = "GET";
-        }
-
-        public override void PrepareMessage()
-        {
-        }
-    }
 }

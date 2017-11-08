@@ -103,18 +103,21 @@ namespace Wordki.ViewModels
             return Util.MD5Hash.GetMd5Hash(MD5.Create(), Password);
         }
 
-        private bool LoginAction()
+        private WorkResult LoginAction()
         {
             if (Password == null)
-                return false;
+                return new WorkResult();
             if (UserName == null)
-                return false;
+                return new WorkResult();
             NHibernateHelper.DatabaseName = UserName;
             IUser user = DatabaseSingleton.GetDatabase().GetUser(UserName, GetHashedPassword());
             if (user != null)
             {
                 StartWithUser(user);
-                return true;
+                return new WorkResult()
+                {
+                    Success = true,
+                };
                 //CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
                 //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestLogin(user as User)) { OnCompleteCommand = OnLogin });
                 //lQueue.Execute();
@@ -133,10 +136,13 @@ namespace Wordki.ViewModels
                 if (!databaseOrganizer.AddDatabase(user))
                 {
                     Console.WriteLine("Błąd dodawania bazy danych");
-                    return false;
+                    return new WorkResult();
                 }
                 StartWithUser(user);
-                return true;
+                return new WorkResult()
+                {
+                    Success = true,
+                };
             }
         }
         #endregion

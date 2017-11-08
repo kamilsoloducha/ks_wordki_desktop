@@ -108,6 +108,7 @@
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\System.ComponentModel.DataAnnotations.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite, Version=1.0.105.2, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.105.2\lib\net451\System.Data.SQLite.dll</HintPath>
@@ -122,6 +123,7 @@
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.105.2\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -169,6 +171,14 @@
     <Compile Include="Helpers\Command\ICommand.cs" />
     <Compile Include="Helpers\Command\SimpleCommand.cs" />
     <Compile Include="Helpers\Command\SimpleCommandAsync.cs" />
+    <Compile Include="Helpers\Connector\IConnector.cs" />
+    <Compile Include="Helpers\Connector\IParser.cs" />
+    <Compile Include="Helpers\Connector\IResponse.cs" />
+    <Compile Include="Helpers\Connector\IRequest.cs" />
+    <Compile Include="Helpers\Connector\Parsers\TranslationParser.cs" />
+    <Compile Include="Helpers\Connector\Requests\TranslationRequest.cs" />
+    <Compile Include="Helpers\Connector\Responses\TranslationResponse.cs" />
+    <Compile Include="Helpers\Connector\SimpleConnector\SimpleConnector.cs" />
     <Compile Include="Helpers\Converters\DrawerToColorConverter.cs" />
     <Compile Include="Helpers\Converters\LanguageToImageConverter.cs" />
     <Compile Include="Helpers\Converters\LanguageToStringConverter.cs" />
@@ -207,9 +217,9 @@
     <Compile Include="Helpers\WordFinder\IWordFinder.cs" />
     <Compile Include="Helpers\WordFinder\WordFinder.cs" />
     <Compile Include="Models\Group\CommonGroup.cs" />
-    <Compile Include="Models\Connector\ApiConnector.cs" />
-    <Compile Include="Models\Connector\ApiRequest.cs" />
-    <Compile Include="Models\Connector\ApiResponse.cs" />
+    <Compile Include="Helpers\Connector\ApiConnector.cs" />
+    <Compile Include="Helpers\Connector\ApiRequest.cs" />
+    <Compile Include="Helpers\Connector\ApiResponse.cs" />
     <Compile Include="Models\Group\FakeGroup.cs" />
     <Compile Include="Models\Group\IGroupRepository.cs" />
     <Compile Include="Models\Lesson\LessonSettings\ILessonSettings.cs" />
@@ -269,8 +279,10 @@
     <Compile Include="ViewModels\BuilderViewModel.cs" />
     <Compile Include="ViewModels\BuildFromFileViewModel.cs" />
     <Compile Include="ViewModels\ChartViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\DialogViewModelBase.cs" />
     <Compile Include="ViewModels\Dialogs\Progress\ProgressDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\SearchDialog\SearchDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\TranslationListDialogViewModel.cs" />
     <Compile Include="ViewModels\GroupManagerViewModel.cs" />
     <Compile Include="ViewModels\IViewModel.cs" />
     <Compile Include="ViewModels\LoginMainViewModel.cs" />
@@ -310,6 +322,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\TextBoxDialog.xaml.cs">
       <DependentUpon>TextBoxDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\TranslationListDialog.xaml.cs">
+      <DependentUpon>TranslationListDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\YesNoDialog\IYesNoDialog.cs" />
     <Compile Include="Views\GroupsPage.xaml.cs">
@@ -387,6 +402,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\TextBoxDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\TranslationListDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

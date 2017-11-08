@@ -79,6 +79,10 @@
         <KeyBinding
             Key="Escape"
             Command="{Binding PauseCommand}" />
+        <KeyBinding 
+            Modifiers="Ctrl"
+            Key="H"
+            Command="{Binding HintCommand}"/>
     </UserControl.InputBindings>
 
     <DockPanel>

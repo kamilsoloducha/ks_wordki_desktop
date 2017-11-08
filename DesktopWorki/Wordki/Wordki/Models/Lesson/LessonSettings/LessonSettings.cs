@@ -19,5 +19,10 @@ namespace Wordki.Models.Lesson
                 && lessonSettings.Timeout == Timeout;
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
     }
 }

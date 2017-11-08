@@ -19,6 +19,11 @@ using Wordki.Helpers.GroupConnector;
 using Util.Threads;
 using Wordki.Views.Dialogs.Progress;
 using Wordki.Models.Connector;
+using Wordki.Helpers.Connector;
+using Wordki.Helpers.Connector.Requests;
+using Wordki.ViewModels.Dialogs;
+using System.Windows;
+using System.Text;
 
 namespace Wordki.ViewModels
 {
@@ -56,7 +61,7 @@ namespace Wordki.ViewModels
             }
         }
 
-        
+
 
         private IWord _selectedWord;
         public IWord SelectedWord
@@ -282,7 +287,7 @@ namespace Wordki.ViewModels
             AddGroupFromFileCommand = new Util.BuilderCommand(AddGroupFromFile);
         }
 
-        
+
 
         private void AddGroupFromFile(object obj)
         {
@@ -417,7 +422,7 @@ namespace Wordki.ViewModels
                 return;
             }
             IList list = obj as IList;
-            if(list == null)
+            if (list == null)
             {
                 return;
             }
@@ -431,7 +436,7 @@ namespace Wordki.ViewModels
             {
                 return;
             }
-            foreach(IGroup group in groups.Where(x => x.Words.Count == 0))
+            foreach (IGroup group in groups.Where(x => x.Words.Count == 0))
             {
                 DeleteGroup(group);
             }
@@ -468,7 +473,7 @@ namespace Wordki.ViewModels
 
         private void CheckUncheckWord(object obj)
         {
-            if(SelectedWord == null)
+            if (SelectedWord == null)
             {
                 return;
             }
@@ -793,26 +798,79 @@ namespace Wordki.ViewModels
 
         private void UpdateWords()
         {
-            if(SelectedGroup == null)
+            if (SelectedGroup == null)
             {
                 return;
             }
             Words.Clear();
-            foreach(IWord word in SelectedGroup.Words)
+            foreach (IWord word in SelectedGroup.Words)
             {
                 Words.Add(word);
             }
         }
 
-        private bool SendRequestForWordTranslate()
+        private WorkResult SendRequestForWordTranslate()
         {
-            ApiConnector connector = new ApiConnector();
-            ApiResponse response = connector.SentRequest(new TranslationRequest(new Models.Translator.RequestBag()
+            IRequest request = new TranslationRequest(new Models.Translator.RequestBag
             {
-                //todo
-            }));
+                From = LanguageFactory.GetLanguage(SelectedGroup.Language1).Code,
+                To = LanguageFactory.GetLanguage(SelectedGroup.Language2).Code,
+                Word = SelectedWord.Language1
+            });
+            IConnector<TranslationResponse> connector = new SimpleConnector<TranslationResponse>();
+            connector.Parser = new TranslationParser();
+            TranslationResponse response = null;
+            try
+            {
+                response = connector.SendRequest(request);
+            }
+            catch (Exception e)
+            {
+                LoggerSingleton.LogError(e.Message);
+                return new WorkResult()
+                {
+                    Success = false,
+                };
+            }
+            if (response != null)
+            {
+                List<string> items = new List<string>();
+                foreach (var item in response.TranslationWord.Packages)
+                {
+                    if (item.Translation == null)
+                    {
+                        continue;
+                    }
+                    items.Add(item.Translation.Text);
+                }
 
-            return true;
+                TranslationListDialogViewModel viewModel = new TranslationListDialogViewModel(items);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    TranslationListDialog dialog = new TranslationListDialog()
+                    {
+                        ViewModel = viewModel,
+                    };
+                    dialog.ShowDialog();
+                    if (viewModel.Canceled)
+                    {
+                        return;
+                    }
+                    IEnumerable<string> selectedItems = viewModel.Items.Where(x => x.Approved).Select(x => x.Translation);
+                    StringBuilder builder = new StringBuilder();
+                    foreach(string item in selectedItems)
+                    {
+                        builder.Append(item).Append(", ");
+                    }
+                    builder.Remove(builder.Length - 2, 2);
+                    SelectedWord.Language2 = builder.ToString();
+                });
+            }
+            return new WorkResult()
+            {
+                Result = response,
+                Success = true,
+            };
         }
 
         private async void UpdateWord(IWord pWord)

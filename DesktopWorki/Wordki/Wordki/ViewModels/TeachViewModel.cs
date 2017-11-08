@@ -28,6 +28,8 @@ namespace Wordki.ViewModels
         private Lesson Lesson { get; set; }
         private int TimeOutTicks { get; set; }
         private bool TimeOutChecking { get; set; }
+        private int HintLetters { get; set; }
+
         public Settings Settings { get; set; }
 
         public LessonState State
@@ -96,6 +98,7 @@ namespace Wordki.ViewModels
         public ICommand CorrectCommand { get; set; }
         public ICommand OnEnterClickCommand { get; set; }
         public ICommand CheckUncheckCommand { get; set; }
+        public ICommand HintCommand { get; set; }
 
         public static ICommand StartLessonCommand { get; set; }
         public static ICommand PauseCommand { get; set; }
@@ -119,6 +122,7 @@ namespace Wordki.ViewModels
                     Modifiers = ModifierKeys.Alt
                 }
             };
+            HintLetters = 0;
         }
 
         private void ShortKey(object obj)
@@ -162,6 +166,27 @@ namespace Wordki.ViewModels
             StartLessonCommand = new BuilderCommand(StartLesson);
             PauseCommand = new BuilderCommand(Pause);
             CheckUncheckCommand = new BuilderCommand(CheckUncheck);
+            HintCommand = new BuilderCommand(Hint);
+        }
+
+        private void Hint(object obj)
+        {
+            HintLetters++;
+            if(Lesson.SelectedWord == null)
+            {
+                return;
+            }
+            if (!Lesson.Timer.IsRunning)
+            {
+                return;
+            }
+            string translation = UserManagerSingleton.Get().User.TranslationDirection == TranslationDirection.FromFirst
+                ? Lesson.SelectedWord.Language2
+                : Lesson.SelectedWord.Language1;
+            if(HintLetters<= translation.Length)
+            {
+                State.Translation = translation.Substring(0, HintLetters);
+            }
         }
 
         private async void CheckUncheck(object obj)
@@ -352,6 +377,7 @@ namespace Wordki.ViewModels
 
         private void Check(object obj)
         {
+            HintLetters = 0;
             Lesson.Check(State.Translation);
             string translation = State.Translation;
             if (Lesson.IsCorrect)
@@ -1216,7 +1242,7 @@ namespace Wordki.ViewModels
                 Switcher.GetSwitcher().Back(true);
             }
 
-            private bool SaveDatabase()
+            private WorkResult SaveDatabase()
             {
                 IDatabase database = DatabaseSingleton.GetDatabase();
                 Lesson.FinishLesson();
@@ -1238,7 +1264,10 @@ namespace Wordki.ViewModels
                     result.Group.Results.Add(result);
                     database.AddResult(result);
                 }
-                return true;
+                return new WorkResult()
+                {
+                    Success = true,
+                };
             }
 
             protected override void RefreshFocused() { }
