@@ -29,7 +29,7 @@ namespace Wordki.Views.Dialogs
             Width = Owner.ActualWidth;
         }
 
-        protected void SearchDialog_OnLoaded(object sender, RoutedEventArgs e)
+        public void OnLoaded(object sender, RoutedEventArgs e)
         {
             Activate();
         }

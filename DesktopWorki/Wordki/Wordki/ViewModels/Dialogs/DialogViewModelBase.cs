@@ -21,5 +21,6 @@ namespace Wordki.ViewModels.Dialogs
                 ClosingRequest(this, EventArgs.Empty);
             }
         }
+
     }
 }

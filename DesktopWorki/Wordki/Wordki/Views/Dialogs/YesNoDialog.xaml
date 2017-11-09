@@ -11,7 +11,7 @@
     WindowStartupLocation="CenterOwner"
     Style="{DynamicResource AppDialogStyle}"
     d:DataContext="{d:DesignInstance viewmodels:YesNoDialogViewModel}"
-    Loaded="YesNoDialog_OnLoaded">
+    Loaded="OnLoaded">
 
     <dialogs:DialogBase.Resources>
         <Style

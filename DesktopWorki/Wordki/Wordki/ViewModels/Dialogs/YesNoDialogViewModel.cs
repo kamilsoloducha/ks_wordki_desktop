@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Util;
 
@@ -11,8 +7,8 @@ namespace Wordki.ViewModels.Dialogs
     public class YesNoDialogViewModel : DialogViewModelBase
     {
 
-        public ICommand PositiveCommand { get; set; }
-        public ICommand NegativeCommand { get; set; }
+        public ICommand PositiveCommand { get; private set; }
+        public ICommand NegativeCommand { get; private set; }
 
         public Action NoAction { get; set; }
         public Action YesAction { get; set; }
@@ -84,7 +80,7 @@ namespace Wordki.ViewModels.Dialogs
 
         public YesNoDialogViewModel()
         {
-
+            InitViewModel();
         }
 
         public override void InitViewModel()

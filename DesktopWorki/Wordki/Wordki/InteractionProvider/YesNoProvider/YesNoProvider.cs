@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
 
@@ -15,20 +10,25 @@ namespace Wordki.InteractionProvider
 
         public YesNoProvider()
         {
-
         }
 
         public void Interact()
         {
-            YesNoDialog dialog = new YesNoDialog();
-            dialog.ViewModel = ViewModel;
             if (Application.Current.Dispatcher.CheckAccess())
             {
-                dialog.ShowDialog();
-            }else
-            {
-                Application.Current.Dispatcher.Invoke(() => dialog.ShowDialog());
+                DispacherWork();
             }
+            else
+            {
+                Application.Current.Dispatcher.Invoke(DispacherWork);
+            }
+        }
+
+        private void DispacherWork()
+        {
+            YesNoDialog dialog = new YesNoDialog();
+            dialog.ViewModel = ViewModel;
+            dialog.ShowDialog();
         }
 
     }

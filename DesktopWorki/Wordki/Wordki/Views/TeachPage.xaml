@@ -199,8 +199,10 @@
                     Text="{Binding Path=State.Translation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     IsEnabled="{Binding Path=State.TranslationBoxEnabled}"
                     Focusable="True"
-                    helpers:InputBindingBehavior.InputBindingsSource="{Binding Path=ShortKeys, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     helpers:FocusExtension.IsFocused="{Binding Path=State.TranslationIsFocused}">
+                    <i:Interaction.Behaviors>
+                        <helpers:CursorAtEndBehavior Enabled="{Binding Path=CursorOnEnd}"/>
+                    </i:Interaction.Behaviors>
                 </TextBox>
 
                 <Grid

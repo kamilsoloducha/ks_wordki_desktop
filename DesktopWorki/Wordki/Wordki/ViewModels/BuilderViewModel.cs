@@ -451,24 +451,23 @@ namespace Wordki.ViewModels
             {
                 return;
             }
-            //YesNoDialog dialog = new YesNoDialog
-            //{
-            //    DialogTitle = "Uwaga",
-            //    Message = "Czy na pewno usunąć grupy?",
-            //    PositiveLabel = "Tak",
-            //    NegativeLabel = "Nie",
-            //};
-            //dialog.PositiveCommand = new Util.BuilderCommand(async o =>
-            //{
-            //    int groupIndex = Database.Groups.IndexOf(SelectedGroup);
-            //    SelectedGroup = Database.Groups.Count > groupIndex ? Database.Groups[groupIndex] : null;
-            //    SelectedWord = SelectedGroup != null ? SelectedGroup.Words.LastOrDefault() : null;
-            //    await Database.DeleteGroupAsync(SelectedGroup);
-            //    dialog.Close();
-            //    RefreshView();
-            //});
-            //dialog.NegativeCommand = new Util.BuilderCommand(o => dialog.Close());
-            //dialog.ShowDialog();
+            IYesNoProvider provider = new YesNoProvider();
+            provider.ViewModel = new YesNoDialogViewModel()
+            {
+                DialogTitle = "Uwaga",
+                Message = "Czy na pewno usunąć grupy?",
+                PositiveLabel = "Tak",
+                NegativeLabel = "Nie",
+                YesAction = async () =>
+                {
+                    int groupIndex = Database.Groups.IndexOf(SelectedGroup);
+                    SelectedGroup = Database.Groups.Count > groupIndex ? Database.Groups[groupIndex] : null;
+                    SelectedWord = SelectedGroup != null ? SelectedGroup.Words.LastOrDefault() : null;
+                    await Database.DeleteGroupAsync(SelectedGroup);
+                    RefreshView();
+                },
+            };
+            provider.Interact();
         }
 
         private void CheckUncheckWord(object obj)

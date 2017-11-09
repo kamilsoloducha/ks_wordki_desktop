@@ -17,6 +17,8 @@ using Repository.Models;
 using Wordki.Database;
 using Wordki.Views.Dialogs.Progress;
 using Util.Threads;
+using Wordki.InteractionProvider;
+using Wordki.ViewModels.Dialogs;
 
 namespace Wordki.ViewModels
 {
@@ -90,6 +92,19 @@ namespace Wordki.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _cursonOnEnd;
+        public bool CursorOnEnd
+        {
+            get { return _cursonOnEnd; }
+            set
+            {
+                if (_cursonOnEnd == value) return;
+                _cursonOnEnd = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ObservableDictionary<int, Visibility> VisibilityDictionary { get; set; }
         public ICommand UnknownCommand { get; set; }
         public ICommand CheckCommand { get; set; }
@@ -171,8 +186,9 @@ namespace Wordki.ViewModels
 
         private void Hint(object obj)
         {
+            CursorOnEnd = true;
             HintLetters++;
-            if(Lesson.SelectedWord == null)
+            if (Lesson.SelectedWord == null)
             {
                 return;
             }
@@ -183,20 +199,21 @@ namespace Wordki.ViewModels
             string translation = UserManagerSingleton.Get().User.TranslationDirection == TranslationDirection.FromFirst
                 ? Lesson.SelectedWord.Language2
                 : Lesson.SelectedWord.Language1;
-            if(HintLetters<= translation.Length)
+            if (HintLetters <= translation.Length)
             {
                 State.Translation = translation.Substring(0, HintLetters);
             }
+            CursorOnEnd = false;
         }
 
         private async void CheckUncheck(object obj)
         {
-            if(Lesson.SelectedWord == null)
+            if (Lesson.SelectedWord == null)
             {
                 return;
             }
             IWord word = Lesson.SelectedWord.Group.Words.FirstOrDefault(x => x.Id == Lesson.SelectedWord.Id);
-            if(word == null)
+            if (word == null)
             {
                 return;
             }
@@ -304,49 +321,48 @@ namespace Wordki.ViewModels
         private void Back(object obj)
         {
             LessonStateEnum lLastState = State.StateEnum;
-            YesNoDialog lDialog = new YesNoDialog();
-            //lDialog.DialogTitle = "Uwaga";
-            //lDialog.Message = "Czy na pewno chcesz opuścić lekcje?";
-            //lDialog.PositiveLabel = "Tak";
-            //lDialog.NegativeLabel = "Nie";
-            //lDialog.PositiveCommand = new BuilderCommand(delegate
-            //{
-            //    if (Lesson != null)
-            //    {
-            //        ISerializer<Lesson> serializer = new BinarySerializer<Lesson>
-            //        {
-            //            Settings = new BinarySerializerSettings
-            //            {
-            //                Path = "lesson",
-            //                RemoveAfterRead = true,
-            //            }
-            //        };
-            //        try
-            //        {
-            //            serializer.Write(Lesson);
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            LoggerSingleton.LogError("Błąd serializowania lekcji - {0}", e.Message);
-            //        }
-            //        Lesson.FinishLesson();
-            //        Lesson.Timer.StopTimer();
-            //    }
-            //    lDialog.Close();
-            //    Switcher.GetSwitcher().Back(true);
-            //});
-            //lDialog.NegativeCommand = new BuilderCommand(delegate
-            //{
-            //    State = StateFactory.GetState(Lesson, lLastState);
-            //    if (State != null)
-            //    {
-            //        State.RefreshView();
-            //    }
-            //    lDialog.Close();
-            //});
-            //State = StateFactory.GetState(Lesson, LessonStateEnum.Pause);
-            //State.RefreshView();
-            lDialog.ShowDialog();
+            IYesNoProvider provider = new YesNoProvider();
+            provider.ViewModel = new YesNoDialogViewModel()
+            {
+                DialogTitle = "Uwaga",
+                Message = "Czy na pewno chcesz opuścić lekcje?",
+                PositiveLabel = "Tak",
+                NegativeLabel = "Nie",
+                YesAction = () =>
+                {
+                    //if (Lesson != null)
+                    //{
+                    //    ISerializer<Lesson> serializer = new BinarySerializer<Lesson>
+                    //    {
+                    //        Settings = new BinarySerializerSettings
+                    //        {
+                    //            Path = "lesson",
+                    //            RemoveAfterRead = true,
+                    //        }
+                    //    };
+                    //    try
+                    //    {
+                    //        serializer.Write(Lesson);
+                    //    }
+                    //    catch (Exception e)
+                    //    {
+                    //        LoggerSingleton.LogError("Błąd serializowania lekcji - {0}", e.Message);
+                    //    }
+                    //    Lesson.FinishLesson();
+                    //    Lesson.Timer.StopTimer();
+                    //}
+                    Switcher.GetSwitcher().Back(true);
+                },
+                NoAction = () =>
+                {
+                    State = StateFactory.GetState(Lesson, lLastState);
+                    if (State != null)
+                    {
+                        State.RefreshView();
+                    }
+                }
+            };
+            provider.Interact();
         }
 
         private void OnEnterClick(object obj)
@@ -464,7 +480,7 @@ namespace Wordki.ViewModels
                 get { return _word; }
                 set
                 {
-                    if(_word == value)
+                    if (_word == value)
                     {
                         return;
                     }

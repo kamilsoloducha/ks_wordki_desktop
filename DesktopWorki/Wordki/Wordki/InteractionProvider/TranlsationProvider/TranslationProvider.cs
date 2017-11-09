@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Repository.Models;
 using Repository.Models.Enums;
 using System.Windows;
-using System.ComponentModel;
 using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
 using Wordki.Helpers.TranslationPusher;
@@ -21,19 +17,24 @@ namespace Wordki.InteractionProvider
 
         public void Interact()
         {
+            if (Application.Current.Dispatcher.CheckAccess())
+            {
+                DispacherWork();
+            }
+            else
+            {
+                Application.Current.Dispatcher.Invoke(DispacherWork);
+            }
+        }
+
+        private void DispacherWork()
+        {
             TranslationListDialogViewModel viewModel = new TranslationListDialogViewModel(Items);
             TranslationListDialog dialog = new TranslationListDialog()
             {
                 ViewModel = viewModel,
             };
-            if (Application.Current.Dispatcher.CheckAccess())
-            {
-                dialog.ShowDialog();
-            }
-            else
-            {
-                Application.Current.Dispatcher.Invoke(() => dialog.ShowDialog());
-            }
+            dialog.ShowDialog();
             if (viewModel.Canceled)
             {
                 return;

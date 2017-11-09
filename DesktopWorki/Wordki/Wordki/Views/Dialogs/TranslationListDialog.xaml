@@ -12,6 +12,7 @@
     Width="480"
     Style="{StaticResource AppDialogStyle}"
     WindowStartupLocation="CenterOwner"
+    Loaded="OnLoaded"
     d:DataContext="{d:DesignInstance {x:Type viewModels:TranslationListDialogViewModel}}">
 
     <dialogs:DialogBase.InputBindings>
