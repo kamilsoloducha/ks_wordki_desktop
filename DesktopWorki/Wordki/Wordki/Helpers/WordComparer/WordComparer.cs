@@ -16,8 +16,8 @@ namespace Wordki.Helpers.WordComparer
 
         public bool IsEqual(string word1, string word2)
         {
-            IEnumerable<string> words1 = word1.Split(Settings.WordSeparator);
-            IEnumerable<string> words2 = word2.Split(Settings.WordSeparator);
+            IEnumerable<string> words1 = word1.Split(Settings.WordSeparator).Select(x => x.Trim(' '));
+            IEnumerable<string> words2 = word2.Split(Settings.WordSeparator).Select(x => x.Trim(' '));
             if (CompareWordList(words1, words2))
             {
                 return true;

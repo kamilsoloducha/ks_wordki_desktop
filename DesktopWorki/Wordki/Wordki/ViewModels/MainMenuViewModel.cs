@@ -2,11 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using Wordki.Helpers;
 using Wordki.Models;
 using System.Threading.Tasks;
 using Wordki.Database;
-using Wordki.Views.Dialogs.SearchDialog;
+using System.Windows.Input;
+using Wordki.InteractionProvider;
+using Util;
 
 namespace Wordki.ViewModels
 {
@@ -138,6 +139,7 @@ namespace Wordki.ViewModels
             BuilderCommand = new BuilderCommand(Builder);
             SettingsCommand = new BuilderCommand(Settings);
             ExitCommand = new BuilderCommand(Exit);
+            SearchCommand = new BuilderCommand(Search);
 
             ResultCalculator = new ResultCalculator
             {
@@ -165,20 +167,28 @@ namespace Wordki.ViewModels
         public BuilderCommand BuilderCommand { get; set; }
         public BuilderCommand SettingsCommand { get; set; }
         public BuilderCommand ExitCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
+
+
+        private void Search(object obj)
+        {
+            ISearchProvider provider = new SearchProvider();
+            provider.Interact();
+        }
 
         private void Teach(object obj)
         {
-            Switcher.GetSwitcher().Switch(Switcher.State.Groups);
+            Helpers.Switcher.GetSwitcher().Switch(Helpers.Switcher.State.Groups);
         }
 
         private void Builder(object obj)
         {
-            Switcher.GetSwitcher().Switch(Switcher.State.Builder);
+            Helpers.Switcher.GetSwitcher().Switch(Helpers.Switcher.State.Builder);
         }
 
         private void Settings(object obj)
         {
-            Switcher.GetSwitcher().Switch(Switcher.State.Settings);
+            Helpers.Switcher.GetSwitcher().Switch(Helpers.Switcher.State.Settings);
         }
 
         private void Exit(object obj)

@@ -1,145 +1,192 @@
-﻿<UserControl x:Class="Wordki.Views.MenuPage"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:viewModels="clr-namespace:Wordki.ViewModels"
-             xmlns:pieChart="clr-namespace:Controls.PieChart;assembly=Controls"
-             xmlns:valueDescription="clr-namespace:Controls.ValueDescription;assembly=Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="900" d:DesignWidth="1600"
-             Style="{DynamicResource AppPageStyle}"
-             d:DataContext="{d:DesignInstance {x:Type viewModels:MainMenuViewModel}}">
+﻿<UserControl
+    x:Class="Wordki.Views.MenuPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:viewModels="clr-namespace:Wordki.ViewModels"
+    xmlns:pieChart="clr-namespace:Controls.PieChart;assembly=Controls"
+    xmlns:valueDescription="clr-namespace:Controls.ValueDescription;assembly=Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="900"
+    d:DesignWidth="1600"
+    Style="{DynamicResource AppPageStyle}"
+    d:DataContext="{d:DesignInstance {x:Type viewModels:MainMenuViewModel}}">
 
-  <UserControl.Resources>
-    <Style TargetType="{x:Type valueDescription:ValueDescription}">
-      <Setter Property="Background" Value="{DynamicResource UsedNormalBrush}"/>
-      <Setter Property="Foreground" Value="{DynamicResource UsedPressedBrush}"/>
-      <Setter Property="FontWeight" Value="Bold"/>
-      <Setter Property="FontSize" Value="20"/>
-      <Setter Property="ValueFontSize" Value="20"/>
-      <Setter Property="FontFamily" Value="Arial"/>
-    </Style>
-  </UserControl.Resources>
-
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*"/>
-      <ColumnDefinition Width="*"/>
-    </Grid.ColumnDefinitions>
-
-    <Grid.RowDefinitions>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
-
-    <TextBlock
-      Grid.Column="0" Grid.ColumnSpan="2"
-      Grid.Row="0"
-			Style="{StaticResource AppTextBlockStyle}"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			FontSize="50"
-			Text="{Binding Path=Login, UpdateSourceTrigger=Explicit, Mode=TwoWay}"/>
-
-    <UniformGrid
-      Grid.Column="0" Grid.Row="1" Grid.RowSpan="4"
-      Columns="2"
-      Margin="50">
-
-      <Button 
-			Style="{StaticResource FlatButtonStyle}"
-			Content="Nauka"
-			Command="{Binding TeachCommand}"/>
-
-      <Button 
-			Style="{StaticResource FlatButtonStyle}"
-			Content="Edytor"
-			Command="{Binding BuilderCommand}"/>
-
-      <Button 
-			Style="{StaticResource FlatButtonStyle}"
-			Content="Ustawienia"
-			Command="{Binding SettingsCommand}"/>
-
-      <Button 
-			Style="{StaticResource FlatButtonStyle}"
-			Content="Wyjście"
-			Command="{Binding ExitCommand}"/>
-    </UniformGrid>
+    <UserControl.Resources>
+        <Style
+            TargetType="{x:Type valueDescription:ValueDescription}">
+            <Setter
+                Property="Background"
+                Value="{DynamicResource UsedNormalBrush}" />
+            <Setter
+                Property="Foreground"
+                Value="{DynamicResource UsedPressedBrush}" />
+            <Setter
+                Property="FontWeight"
+                Value="Bold" />
+            <Setter
+                Property="FontSize"
+                Value="20" />
+            <Setter
+                Property="ValueFontSize"
+                Value="20" />
+            <Setter
+                Property="FontFamily"
+                Value="Arial" />
+        </Style>
 
 
-    <Grid
-      Grid.Column="1" Grid.Row="1" Grid.RowSpan="4">
+    </UserControl.Resources>
 
-      <Grid.RowDefinitions>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="*"/>
-      </Grid.RowDefinitions>
+    <UserControl.InputBindings>
 
-      <pieChart:PieChart 
-        Grid.Row="0"
-        DescriptionText="Value"
-        Colors="{StaticResource DrawerColors}"
-        IsAnimate="true"
-        RingWidthFactor="0.5"
-        FontSize="1"
-        RingBackground="{DynamicResource UsedPressedBrush}"
-        MaxValue="{Binding Path=MaxValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-        Values="{Binding Path=Values, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <KeyBinding
+            Modifiers="Ctrl+Shift"
+            Key="F"
+            Command="{Binding Path=SearchCommand}" />
 
-      <Grid
-        Margin="5"
-        Grid.Row="1">
+    </UserControl.InputBindings>
 
+    <Grid>
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="*"/>
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="*" />
         </Grid.ColumnDefinitions>
 
-        <valueDescription:ValueDescription
-          Grid.Column="0"
-          Description="Czas nauki dzisiaj"
-          Value="{Binding Path=TeachTimeToday}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="*" />
+            <RowDefinition
+                Height="*" />
+            <RowDefinition
+                Height="*" />
+            <RowDefinition
+                Height="*" />
+            <RowDefinition
+                Height="*" />
+            <RowDefinition
+                Height="*" />
+        </Grid.RowDefinitions>
 
-        <valueDescription:ValueDescription
-          Grid.Column="1"
-          Description="Czas nauki"
-          Value="{Binding Path=TeachTime}"/>
-      </Grid>
-      <Grid
-        Margin="5"
-        Grid.Row="2">
+        <TextBlock
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Grid.Row="0"
+            Style="{StaticResource AppTextBlockStyle}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="50"
+            Text="{Binding Path=Login, UpdateSourceTrigger=Explicit, Mode=TwoWay}" />
 
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <UniformGrid
+            Grid.Column="0"
+            Grid.Row="1"
+            Grid.RowSpan="4"
+            Columns="2"
+            Margin="50">
 
-        <valueDescription:ValueDescription
-          Grid.Column="0"
-          Description="Ilość grup"
-          Value="{Binding Path=GroupCount}"/>
+            <Button
+                Style="{StaticResource FlatButtonStyle}"
+                Content="Nauka"
+                Command="{Binding TeachCommand}" />
 
-        <valueDescription:ValueDescription
-          Grid.Column="1"
-          Description="Ilość słów"
-          Value="{Binding Path=WordCount}"/>
+            <Button
+                Style="{StaticResource FlatButtonStyle}"
+                Content="Edytor"
+                Command="{Binding BuilderCommand}" />
 
-        <valueDescription:ValueDescription
-          Grid.Column="2"
-          Description="Ilość powtórzeń"
-          Value="{Binding Path=ResultCount}"/>
+            <Button
+                Style="{StaticResource FlatButtonStyle}"
+                Content="Ustawienia"
+                Command="{Binding SettingsCommand}" />
 
-      </Grid>
+            <Button
+                Style="{StaticResource FlatButtonStyle}"
+                Content="Wyjście"
+                Command="{Binding ExitCommand}" />
+        </UniformGrid>
+
+
+        <Grid
+            Grid.Column="1"
+            Grid.Row="1"
+            Grid.RowSpan="4">
+
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="*" />
+                <RowDefinition
+                    Height="*" />
+                <RowDefinition
+                    Height="*" />
+            </Grid.RowDefinitions>
+
+            <pieChart:PieChart
+                Grid.Row="0"
+                DescriptionText="Value"
+                Colors="{StaticResource DrawerColors}"
+                IsAnimate="true"
+                RingWidthFactor="0.5"
+                FontSize="1"
+                RingBackground="{DynamicResource UsedPressedBrush}"
+                MaxValue="{Binding Path=MaxValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                Values="{Binding Path=Values, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Grid
+                Margin="5"
+                Grid.Row="1">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="*" />
+                    <ColumnDefinition
+                        Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <valueDescription:ValueDescription
+                    Grid.Column="0"
+                    Description="Czas nauki dzisiaj"
+                    Value="{Binding Path=TeachTimeToday}" />
+
+                <valueDescription:ValueDescription
+                    Grid.Column="1"
+                    Description="Czas nauki"
+                    Value="{Binding Path=TeachTime}" />
+            </Grid>
+            <Grid
+                Margin="5"
+                Grid.Row="2">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="*" />
+                    <ColumnDefinition
+                        Width="*" />
+                    <ColumnDefinition
+                        Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <valueDescription:ValueDescription
+                    Grid.Column="0"
+                    Description="Ilość grup"
+                    Value="{Binding Path=GroupCount}" />
+
+                <valueDescription:ValueDescription
+                    Grid.Column="1"
+                    Description="Ilość słów"
+                    Value="{Binding Path=WordCount}" />
+
+                <valueDescription:ValueDescription
+                    Grid.Column="2"
+                    Description="Ilość powtórzeń"
+                    Value="{Binding Path=ResultCount}" />
+
+            </Grid>
+
+        </Grid>
 
     </Grid>
-
-  </Grid>
 </UserControl>

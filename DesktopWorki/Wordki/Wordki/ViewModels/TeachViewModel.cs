@@ -170,8 +170,18 @@ namespace Wordki.ViewModels
 
         #region Commands
 
+        public ICommand SearchCommand { get; set; }
+
+
+        private void Search(object obj)
+        {
+            ISearchProvider provider = new SearchProvider();
+            provider.Interact();
+        }
+
         private void ActivateCommands()
         {
+            SearchCommand = new BuilderCommand(Search);
             UnknownCommand = new BuilderCommand(Unknown);
             CheckCommand = new BuilderCommand(Check);
             KnownCommand = new BuilderCommand(Known);

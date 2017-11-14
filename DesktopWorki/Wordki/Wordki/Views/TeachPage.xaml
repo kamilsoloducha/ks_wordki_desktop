@@ -83,6 +83,10 @@
             Modifiers="Ctrl"
             Key="H"
             Command="{Binding HintCommand}"/>
+        <KeyBinding
+            Modifiers="Ctrl"
+            Key="F"
+            Command="{Binding SearchCommand}" />
     </UserControl.InputBindings>
 
     <DockPanel>

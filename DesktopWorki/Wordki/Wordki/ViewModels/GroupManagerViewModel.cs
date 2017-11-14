@@ -504,6 +504,7 @@ namespace Wordki.ViewModels
                 }
                 lesson.WordComparer = new WordComparer();
                 lesson.WordComparer.Settings = new WordComparerSettings();
+                lesson.WordComparer.Settings.WordSeparator = ',';
                 lesson.WordComparer.Settings.NotCheckers.Add(new LetterCaseNotCheck());
                 lesson.WordComparer.Settings.NotCheckers.Add(new SpaceNotCheck());
                 lesson.WordComparer.Settings.NotCheckers.Add(new Utf8NotCheck());

@@ -18,10 +18,10 @@
     <dialogs:DialogBase.InputBindings>
         <KeyBinding
             Key="Enter"
-            Command="{Binding Path=Button1Command}" />
+            Command="{Binding Path=OkCommand}" />
         <KeyBinding
             Key="Escape"
-            Command="{Binding Path=Button2Command}" />
+            Command="{Binding Path=CancelCommand}" />
     </dialogs:DialogBase.InputBindings>
 
     <Grid>
@@ -42,14 +42,14 @@
             ItemsSource="{Binding Path=Items}"
             ScrollViewer.CanContentScroll="False">
 
-            <i:Interaction.Triggers>
+            <!--<i:Interaction.Triggers>
                 <i:EventTrigger
                     EventName="SelectionChanged">
                     <i:InvokeCommandAction
                         Command="{Binding Path=SelectionChangedCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
                 </i:EventTrigger>
-            </i:Interaction.Triggers>
+            </i:Interaction.Triggers>-->
 
             <ListBox.ItemContainerStyle>
                 <Style

@@ -1,10 +1,9 @@
 ﻿using Repository.Models;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 using Util;
 using Wordki.Database;
@@ -13,6 +12,8 @@ namespace Wordki.ViewModels.Dialogs
 {
     public class SearchDialogViewModel : DialogViewModelBase
     {
+
+        private object _wordsLock = new object();
         private string _searchingWord;
 
         public string SearchingWord
@@ -40,15 +41,12 @@ namespace Wordki.ViewModels.Dialogs
         public ICommand CancelCommand { get; set; }
         public ICommand SearchCommand { get; set; }
 
-        public override void Back()
-        {
-        }
-
         public override void InitViewModel()
         {
             CancelCommand = new BuilderCommand(Cancel);
             SearchCommand = new BuilderCommand(Search);
             Words = new ObservableCollection<IWord>();
+            BindingOperations.EnableCollectionSynchronization(Words, _wordsLock);
         }
 
         private void Cancel(object obj)
@@ -58,13 +56,21 @@ namespace Wordki.ViewModels.Dialogs
 
         private void Search(object obj)
         {
-            IDatabase database = DatabaseSingleton.GetDatabase();
-            IEnumerable<IWord> words = database.Groups.SelectMany(x => x.Words).Where(x => x.Language1.Contains(SearchingWord) || x.Language2.Contains(SearchingWord));
-            Words.Clear();
-            foreach(IWord word in words)
+            if (SearchingWord == null)
             {
-                Words.Add(word);
+                Helpers.LoggerSingleton.LogError("Serching word is null");
+                return;
             }
+            Task.Run(() =>
+            {
+                IDatabase database = DatabaseSingleton.GetDatabase();
+                IEnumerable<IWord> words = database.Groups.SelectMany(x => x.Words).Where(x => x.Language1.Contains(SearchingWord) || x.Language2.Contains(SearchingWord));
+                Words.Clear();
+                foreach (IWord word in words)
+                {
+                    Words.Add(word);
+                }
+            });
         }
     }
 }
