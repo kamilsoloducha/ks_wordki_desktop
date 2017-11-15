@@ -7,23 +7,10 @@ namespace Wordki.Helpers
 {
     public class Switcher
     {
-
-        private static Switcher _instance;
-
-        public static Switcher GetSwitcher()
-        {
-            if (_instance == null)
-            {
-                _instance = new Switcher();
-            }
-            return _instance;
-        }
-
-        private Switcher()
+        public Switcher()
         {
             LockStates = new List<State>();
         }
-
 
         public List<State> LockStates { get; private set; }
         private readonly Stack<State> _pageQueue = new Stack<State>();
@@ -50,33 +37,47 @@ namespace Wordki.Helpers
 
         private ISwitchElement PageFactory(State pState)
         {
+            ISwitchElement result;
             switch (pState)
             {
                 case State.Login:
-                    return new LoginPage();
+                    result =  new LoginPage();
+                    break;
                 case State.Register:
-                    return new RegisterPage();
+                    result =  new RegisterPage();
+                    break;
                 case State.Menu:
-                    return new MenuPage();
+                    result =  new MenuPage();
+                    break;
                 case State.Builder:
-                    return new BuilderPage();
+                    result =  new BuilderPage();
+                    break;
                 case State.Groups:
-                    return new GroupsPage();
+                    result =  new GroupsPage();
+                    break;
                 case State.Teach:
-                    return new TeachPage();
+                    result =  new TeachPage();
+                    break;
                 case State.Settings:
-                    return new SettingsPage();
+                    result =  new SettingsPage();
+                    break;
                 case State.Words:
-                    return new WordsPage();
+                    result =  new WordsPage();
+                    break;
                 case State.Plot:
-                    return new PlotPage();
+                    result =  new PlotPage();
+                    break;
                 case State.Same:
-                    return new SameWordsPage();
+                    result =  new SameWordsPage();
+                    break;
                 case State.BuildFromFile:
-                    return new BuildFromFilePage();
+                    result =  new BuildFromFilePage();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("pState");
             }
+            result.ViewModel.Switcher = this;
+            return result;
         }
 
         public void Back(bool pForce = false)

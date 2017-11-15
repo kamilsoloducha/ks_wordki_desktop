@@ -17,7 +17,7 @@ namespace Wordki.Views
         public MainView()
         {
             InitializeComponent();
-            Switcher = Switcher.GetSwitcher();
+            Switcher = new Switcher();
             Switcher.LockStates.Add(Switcher.State.Login);
             Switcher.LockStates.Add(Switcher.State.Register);
             Switcher.LockStates.Add(Switcher.State.Menu);

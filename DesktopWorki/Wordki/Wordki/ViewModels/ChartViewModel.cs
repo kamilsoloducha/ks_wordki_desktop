@@ -224,7 +224,7 @@ namespace Wordki.ViewModels
         private void Back(object obj)
         {
             Back();
-            Switcher.GetSwitcher().Back();
+            Switcher.Back();
         }
 
         private void PrepareChartData()

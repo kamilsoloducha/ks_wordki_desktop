@@ -25,6 +25,7 @@ namespace Wordki.ViewModels
     {
 
         #region Properies
+        public static Switcher _switcher;
         private Lesson Lesson { get; set; }
         private int TimeOutTicks { get; set; }
         private bool TimeOutChecking { get; set; }
@@ -147,6 +148,7 @@ namespace Wordki.ViewModels
 
         public override void InitViewModel()
         {
+            _switcher = Switcher;
             Settings = Settings.GetSettings();
             StateFactory = new LessonStateFactory();
 
@@ -364,7 +366,7 @@ namespace Wordki.ViewModels
                         //    Lesson.FinishLesson();
                         //    Lesson.Timer.StopTimer();
                         //}
-                        Switcher.GetSwitcher().Back(true);
+                        Switcher.Back(true);
                     },
                     NoAction = () =>
                     {
@@ -1269,7 +1271,7 @@ namespace Wordki.ViewModels
                 worker.Dialog = dialog;
                 worker.AddWork(work);
                 worker.Execute();
-                Switcher.GetSwitcher().Back(true);
+                _switcher.Back(true);
             }
 
             private WorkResult SaveDatabase()

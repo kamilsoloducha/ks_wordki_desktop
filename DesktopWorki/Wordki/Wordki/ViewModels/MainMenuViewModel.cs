@@ -178,17 +178,17 @@ namespace Wordki.ViewModels
 
         private void Teach(object obj)
         {
-            Helpers.Switcher.GetSwitcher().Switch(Helpers.Switcher.State.Groups);
+            Switcher.Switch(Helpers.Switcher.State.Groups);
         }
 
         private void Builder(object obj)
         {
-            Helpers.Switcher.GetSwitcher().Switch(Helpers.Switcher.State.Builder);
+            Switcher.Switch(Helpers.Switcher.State.Builder);
         }
 
         private void Settings(object obj)
         {
-            Helpers.Switcher.GetSwitcher().Switch(Helpers.Switcher.State.Settings);
+            Switcher.Switch(Helpers.Switcher.State.Settings);
         }
 
         private void Exit(object obj)

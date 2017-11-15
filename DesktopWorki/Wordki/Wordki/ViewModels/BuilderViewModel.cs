@@ -291,7 +291,7 @@ namespace Wordki.ViewModels
 
         private void AddGroupFromFile(object obj)
         {
-            Switcher.GetSwitcher().Switch(Switcher.State.BuildFromFile);
+            Switcher.Switch(Switcher.State.BuildFromFile);
         }
 
         private void GroupSelectionChanged(object obj)
@@ -364,12 +364,12 @@ namespace Wordki.ViewModels
                 return;
             long lGroupId = SelectedGroup.Id;
             PackageStore.Put(0, lGroupId);
-            Switcher.GetSwitcher().Switch(Switcher.State.Words);
+            Switcher.Switch(Switcher.State.Words);
         }
 
         private void FindSame(object obj)
         {
-            Switcher.GetSwitcher().Switch(Switcher.State.Same);
+            Switcher.Switch(Switcher.State.Same);
         }
 
         private void SplitGroup(object obj)
@@ -570,7 +570,7 @@ namespace Wordki.ViewModels
         {
             UpdateGroup(SelectedGroup);
             UpdateWord(SelectedWord);
-            Switcher.GetSwitcher().Back();
+            Switcher.Back();
         }
 
         private void AddWord(object obj)

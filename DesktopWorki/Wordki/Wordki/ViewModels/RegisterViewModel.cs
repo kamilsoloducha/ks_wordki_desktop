@@ -68,7 +68,7 @@ namespace Wordki.ViewModels
 
         protected override void ChangeState(object obj)
         {
-            Switcher.GetSwitcher().Reset();
+            Switcher.Reset();
         }
 
         #endregion

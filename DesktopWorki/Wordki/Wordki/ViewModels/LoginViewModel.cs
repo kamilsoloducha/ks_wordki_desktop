@@ -91,7 +91,7 @@ namespace Wordki.ViewModels
 
         protected override void ChangeState(object obj)
         {
-            Switcher.GetSwitcher().Switch(Switcher.State.Register);
+            Switcher.Switch(Switcher.State.Register);
         }
 
         #endregion

@@ -102,7 +102,7 @@ namespace Wordki.ViewModels
 
         private void Back(object obj)
         {
-            Switcher.GetSwitcher().Back();
+            Switcher.Back();
         }
 
         private async void CreateDataGridCollection()

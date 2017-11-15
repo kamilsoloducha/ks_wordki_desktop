@@ -206,14 +206,14 @@ namespace Wordki.ViewModels
                 return;
             }
             //PackageStore.Put(0, lesson);
-            Switcher.GetSwitcher().Switch(Switcher.State.Teach);
+            Switcher.Switch(Switcher.State.Teach);
         }
 
         private void EditGroup(object obj)
         {
             IGroup lSelectedGroup = SelectedItem.Group;
             PackageStore.Put(0, lSelectedGroup);
-            Switcher.GetSwitcher().Switch(Switcher.State.Builder);
+            Switcher.Switch(Switcher.State.Builder);
         }
 
         private async void AllWords(object obj)
@@ -277,13 +277,13 @@ namespace Wordki.ViewModels
         {
             if (SelectedItem == null) return;
             PackageStore.Put(0, SelectedItem.Group.Id);
-            Switcher.GetSwitcher().Switch(Switcher.State.Words);
+            Switcher.Switch(Switcher.State.Words);
         }
 
         private void Back(object obj)
         {
             Back();
-            Switcher.GetSwitcher().Back();
+            Switcher.Back();
         }
 
         private void StartReapetLesson(object obj)
@@ -532,7 +532,7 @@ namespace Wordki.ViewModels
                     return;
                 }
                 PackageStore.Put(0, lesson);
-                Switcher.GetSwitcher().Switch(Switcher.State.Teach);
+                Switcher.Switch(Switcher.State.Teach);
             }
             catch (Exception lException)
             {

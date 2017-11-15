@@ -142,7 +142,7 @@ namespace Wordki.ViewModels
             Application.Current.Dispatcher.Invoke(() =>
             {
                 Application.Current.Dispatcher.Invoke(() => NotificationFactory.Create().Show("Zalogowano"));
-                Switcher.GetSwitcher().Switch(Switcher.State.Menu);
+                Switcher.Switch(Switcher.State.Menu);
             });
         }
 

@@ -258,7 +258,7 @@ namespace Wordki.ViewModels
         private void Back(object obj)
         {
             Back();
-            Switcher.GetSwitcher().Back();
+            Switcher.Back();
         }
 
         private void Save(object obj)
@@ -266,7 +266,7 @@ namespace Wordki.ViewModels
             Settings.ChangeStyle(ThemeSelectedIndex);
             Settings.FontSize = TempFontSize;
             Settings.SaveSettings();
-            Switcher.GetSwitcher().Back();
+            Switcher.Back();
         }
 
         private void Default(object obj)
@@ -308,7 +308,7 @@ namespace Wordki.ViewModels
         {
             Database.SaveDatabaseAsync();
             Settings.ResetSettings();
-            Switcher.GetSwitcher().Reset();
+            Switcher.Reset();
         }
 
         private void ClearDatabase(object obj)

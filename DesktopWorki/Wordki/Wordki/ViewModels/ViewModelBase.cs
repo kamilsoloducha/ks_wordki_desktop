@@ -11,6 +11,8 @@ namespace Wordki.ViewModels
 {
     public abstract class ViewModelBase : INotifyPropertyChanged, IViewModel
     {
+        public Switcher Switcher { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged([CallerMemberName] string name="")
