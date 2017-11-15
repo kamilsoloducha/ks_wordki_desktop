@@ -1,21 +1,9 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using Repository.Models;
 
 namespace Wordki.Models {
-  public class GroupItem : INotifyPropertyChanged {
+  public class GroupItem : ModelBase<GroupItem> {
 
-    #region INotifyPropertyChanged
-
-    public event PropertyChangedEventHandler PropertyChanged;
-    public void OnPropertyChanged([CallerMemberName] string name = "") {
-      if (PropertyChanged != null) {
-        PropertyChanged(this, new PropertyChangedEventArgs(name));
-      }
-    }
-
-    #endregion
-
-    public Group Group { get; set; }
+    public IGroup Group { get; set; }
 
     private int _color;
     public int Color {
@@ -37,8 +25,7 @@ namespace Wordki.Models {
       }
     }
 
-
-    public GroupItem(Group group) {
+    public GroupItem(IGroup group) {
       Group = group;
     }
   }

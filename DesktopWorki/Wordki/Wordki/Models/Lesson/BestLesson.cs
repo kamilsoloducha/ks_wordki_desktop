@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Repository.Models;
+using System.Collections.Generic;
 
 namespace Wordki.Models.Lesson {
-  public class BestLesson : RandomLesson{
-    public BestLesson(IEnumerable<Word> pWordsList) : base(pWordsList) {
+  public class BestLesson : RandomLesson {
+    public BestLesson(IEnumerable<IWord> pWordsList) : base(pWordsList) {
     }
   }
 }

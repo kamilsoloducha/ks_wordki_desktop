@@ -2,80 +2,96 @@
 using System.Collections.Generic;
 using System.Linq;
 using Repository.Models.Enums;
-using Wordki.Helpers;
+using Repository.Models;
+using Util.Collections;
 
-namespace Wordki.Models.Lesson {
-  [Serializable]
-  public class TypingLesson : Lesson {
+namespace Wordki.Models.Lesson
+{
+    [Serializable]
+    public class TypingLesson : Lesson
+    {
 
-    protected IEnumerable<Word> AllWordList { get; set; }
+        protected IEnumerable<IWord> AllWordList { get; set; }
 
-    public TypingLesson(IEnumerable<Word> pWordsList)
-      : base() {
-      AllWordList = pWordsList;
-      IsCorrect = false;
-    }
-
-    public override void Known() {
-      if (Counter++ <= BeginWordsList.Count) {
-        Result lResult = ResultList.FirstOrDefault(x => x.GroupId == SelectedWord.GroupId);
-        SelectedWord.Drawer++;
-        if (IsCorrect) {
-          if (lResult != null) {
-            lResult.Correct++;
-          }
-        } else {
-          if (lResult != null) {
-            lResult.Accepted++;
-          }
+        public TypingLesson(IEnumerable<IWord> pWordsList)
+          : base()
+        {
+            AllWordList = pWordsList;
+            IsCorrect = false;
         }
-      }
-      NextWord();
-    }
 
-    public override void Check() {
-      IsCorrect = false;
-      IsChecked = true;
-      switch (Database.GetDatabase().User.TranslationDirection) {
-        case TranslationDirection.FromSecond:
-          if (CheckTranslation(Translation, SelectedWord.Language1))
-            IsCorrect = true; //jesli poprawne
-          break;
-        case TranslationDirection.FromFirst:
-          if (CheckTranslation(Translation, SelectedWord.Language2))
-            IsCorrect = true; //jesli poprawne
-          break;
-      }
-    }
+        public override void Known()
+        {
+            if (Counter++ <= BeginWordsList.Count)
+            {
+                IResult lResult = ResultList.FirstOrDefault(x => x.Group.Id == SelectedWord.Group.Id);
+                SelectedWord.Drawer++;
+                if (IsCorrect)
+                {
+                    if (lResult != null)
+                    {
+                        lResult.Correct++;
+                    }
+                }
+                else
+                {
+                    if (lResult != null)
+                    {
+                        lResult.Accepted++;
+                    }
+                }
+            }
+            NextWord();
+        }
 
-    protected override void CreateWordList() {
-      bool allWords = Database.GetDatabase().User.AllWords;
-      foreach (Word word in AllWordList.Where(word => word.Visible || allWords)) {
-        BeginWordsList.Add((Word)word.Clone());
-      }
-      BeginWordsList = ListShuffle.Shuffle(BeginWordsList);
-      foreach (Word word in BeginWordsList) {
-        WordList.Enqueue(word);
-      }
-    }
+        public override void Check(string translation)
+        {
+            IsCorrect = false;
+            IsChecked = true;
+            switch (LessonSettings.TranslationDirection)
+            {
+                case TranslationDirection.FromSecond:
+                    if (CheckTranslation(translation, SelectedWord.Language1))
+                        IsCorrect = true; //jesli poprawne
+                    break;
+                case TranslationDirection.FromFirst:
+                    if (CheckTranslation(translation, SelectedWord.Language2))
+                        IsCorrect = true; //jesli poprawne
+                    break;
+            }
+        }
 
-    protected override void CreateResultList() {
-      ResultList = new List<Result>();
-      foreach (Word lWord in BeginWordsList) {
-        if (ResultList.Exists(x => x.GroupId == lWord.GroupId)) continue;
-        Group lGroup = Database.GetDatabase().GetGroupById(lWord.GroupId);
-        ResultList.Add(new Result(-1,
-          lWord.GroupId,
-          0,
-          0,
-          0,
-          (short)lGroup.WordsList.Count(x => !x.Visible),
-          0,
-          Database.GetDatabase().User.TranslationDirection,
-          (LessonType)Enum.Parse(typeof(LessonType), GetType().Name),
-          DateTime.Now,
-          int.MaxValue));
-      }
+        protected override void CreateWordList()
+        {
+            foreach (Word word in AllWordList.Where(word => word.Visible || LessonSettings.AllWords))
+            {
+                BeginWordsList.Add((Word)word.Clone());
+            }
+            BeginWordsList = BeginWordsList.Shuffle();
+            foreach (Word word in BeginWordsList)
+            {
+                WordList.Enqueue(word);
+            }
+        }
+
+        protected override void CreateResultList()
+        {
+            ResultList = new List<IResult>();
+            foreach (Word word in BeginWordsList)
+            {
+                if (ResultList.Count(x => x.Group == word.Group) != 0) continue;
+                ResultList.Add(new Result(-1,
+                  word.Group,
+                  0,
+                  0,
+                  0,
+                  (short)word.Group.Words.Count(x => !x.Visible),
+                  0,
+                  LessonSettings.TranslationDirection,
+                  (LessonType)Enum.Parse(typeof(LessonType), GetType().Name),
+                  DateTime.Now,
+                  int.MaxValue));
+            }
+        }
     }
-  }
 }

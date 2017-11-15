@@ -1,108 +1,150 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Security.Cryptography;
+using System.Windows.Input;
+using Util.Threads;
+using Wordki.Database;
 using Wordki.Helpers;
 using Wordki.Models;
-using Wordki.Models.Connector;
+using Wordki.Views.Dialogs.Progress;
 
-namespace Wordki.ViewModels {
-  public class LoginViewModel : LoginMainViewModel{
-    
-    #region Properties
-    private ObservableCollection<User> _users;
-    public ObservableCollection<User> Users {
-      get { return _users; }
-      set {
-        if (_users != value) {
-          _users = value;
-          OnPropertyChanged();
+namespace Wordki.ViewModels
+{
+    public class LoginViewModel : LoginMainViewModel
+    {
+
+        #region Properties
+        private IList<string> _users;
+        public IList<string> Users
+        {
+            get { return _users; }
+            set
+            {
+                if (_users != value)
+                {
+                    _users = value;
+                    OnPropertyChanged();
+                }
+            }
         }
-      }
+
+        public ICommand ListViewSelectedChangedCommand { get; set; }
+        public ICommand RemoveUserCommand { get; set; }
+        public ICommand LoginCommand { get; set; }
+
+        #endregion
+
+        public LoginViewModel()
+        {
+            LoginCommand = new BuilderCommand(Loging);
+            ListViewSelectedChangedCommand = new BuilderCommand(ListViewSelectedChanged);
+            Users = new ObservableCollection<string>();
+        }
+
+
+        public override void InitViewModel()
+        {
+            base.InitViewModel();
+            InitUsers();
+        }
+
+        private void InitUsers()
+        {
+            IDatabaseOrganizer organizer = new DatabaseOrganizer(NHibernateHelper.DirectoryPath);
+            Users.Clear();
+            foreach (var user in organizer.GetDatabases())
+            {
+                Users.Add(user);
+            }
+        }
+
+        #region Commands
+        private void ListViewSelectedChanged(object obj)
+        {
+            string user = obj as string;
+            if (user == null)
+            {
+                return;
+            }
+            UserName = user;
+        }
+
+        public void Loging(object obj)
+        {
+            SimpleWork work = new SimpleWork();
+            work.WorkFunc += LoginAction;
+            BackgroundQueueWithProgressDialog worker = new BackgroundQueueWithProgressDialog();
+            ProgressDialog dialog = new ProgressDialog();
+            dialog.ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
+            {
+                ButtonLabel = "Anuluj",
+                DialogTitle = "Loguje",
+                CanCanceled = true,
+            };
+            worker.Dialog = dialog;
+            worker.AddWork(work);
+            worker.Execute();
+            return;
+        }
+
+        protected override void ChangeState(object obj)
+        {
+            Switcher.GetSwitcher().Switch(Switcher.State.Register);
+        }
+
+        #endregion
+
+        #region Methods
+
+        private string GetHashedPassword()
+        {
+            return Util.MD5Hash.GetMd5Hash(MD5.Create(), Password);
+        }
+
+        private WorkResult LoginAction()
+        {
+            if (Password == null)
+                return new WorkResult();
+            if (UserName == null)
+                return new WorkResult();
+            NHibernateHelper.DatabaseName = UserName;
+            IUser user = DatabaseSingleton.GetDatabase().GetUser(UserName, GetHashedPassword());
+            if (user != null)
+            {
+                StartWithUser(user);
+                return new WorkResult()
+                {
+                    Success = true,
+                };
+                //CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
+                //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestLogin(user as User)) { OnCompleteCommand = OnLogin });
+                //lQueue.Execute();
+            }
+            else
+            {
+                IDatabaseOrganizer databaseOrganizer = DatabaseOrganizerSingleton.Get();
+                user = new User()
+                {
+                    LocalId = DateTime.Now.Ticks,
+                    Name = UserName,
+                    Password = GetHashedPassword(),
+                    CreateDateTime = DateTime.Now,
+
+                };
+                if (!databaseOrganizer.AddDatabase(user))
+                {
+                    Console.WriteLine("Błąd dodawania bazy danych");
+                    return new WorkResult();
+                }
+                StartWithUser(user);
+                return new WorkResult()
+                {
+                    Success = true,
+                };
+            }
+        }
+        #endregion
     }
-
-    public BuilderCommand ListViewSelectedChangedCommand { get; set; }
-    public BuilderCommand RemoveUserCommand { get; set; }
-    public BuilderCommand LoginCommand { get; set; }
-
-    #endregion
-
-
-    public LoginViewModel() {
-      LoginCommand = new BuilderCommand(Loging);
-      ListViewSelectedChangedCommand = new BuilderCommand(ListViewSelectedChanged);
-      RemoveUserCommand = new BuilderCommand(RemoveUser);
-      Users = new ObservableCollection<User>();
-    }
-
-
-    public override void InitViewModel() {
-      base.InitViewModel();
-      InitUsers();
-    }
-
-    private void InitUsers() {
-      Users.Clear();
-      foreach (var user in Database.GetDatabase().GetUsers()) {
-        Users.Add(user);
-      }
-    }
-
-    #region Commands
-    private void RemoveUser(object obj) {
-      User user = obj as User;
-      if (user == null) {
-        return;
-      }
-      if (Database.GetDatabase().DeleteUser(user)) {
-        Users.Remove(user);
-      } else {
-        Console.WriteLine("Błąd usuwania");
-      }
-    }
-
-    private void ListViewSelectedChanged(object obj) {
-      User user = obj as User;
-      if (user == null) {
-        return;
-      }
-      UserName = user.Name;
-    }
-
-    public void Loging(object obj) {
-      if (Password == null)
-        return;
-      if (UserName == null)
-        return;
-      User lUser = UserManager.FindLoginedUser(UserName.Trim(), Password.Trim());
-      if (lUser != null) {
-        StartWithUser(lUser);
-        return;
-      }
-      User user = new User {
-        Name = UserName,
-        Password = Password
-      };
-      CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-      lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestLogin(user)) { OnCompleteCommand = OnLogin });
-      lQueue.Execute();
-    }
-
-    protected override void ChangeState(object obj) { 
-      Switcher.GetSwitcher().Switch(Switcher.State.Register);
-    }
-
-    #endregion
-
-    #region Methods
-
-    private void OnLogin(ApiResponse response) {
-      HandleResponse(response);
-    }
-
-    #endregion
-
-
-
-
-
-  }
 }

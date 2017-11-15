@@ -1,8 +1,9 @@
-﻿using System.ComponentModel;
+﻿using Repository.Models;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Wordki.Helpers;
-using Wordki.Models;
+using System.Windows.Input;
+using Util;
 
 namespace Wordki.Views.Dialogs {
   /// <summary>
@@ -51,13 +52,13 @@ namespace Wordki.Views.Dialogs {
         }
       }
     }
-    public BuilderCommand CorrectCommand { get; set; }
-    public BuilderCommand DeleteCommand { get; set; }
-    public BuilderCommand CancelCommand { get; set; }
-    private Word Word { get; set; }
+    public ICommand CorrectCommand { get; set; }
+    public ICommand DeleteCommand { get; set; }
+    public ICommand CancelCommand { get; set; }
+    private IWord Word { get; set; }
     #endregion
 
-    public CorrectWordDialog(Word pWord) {
+    public CorrectWordDialog(IWord pWord) {
       InitializeComponent();
       DataContext = this;
       Owner = Application.Current.MainWindow;

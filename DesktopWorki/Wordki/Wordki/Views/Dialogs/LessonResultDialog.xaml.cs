@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Repository.Models;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -64,9 +65,9 @@ namespace Wordki.Views.Dialogs {
     }
     public BuilderCommand ButtonCommand { get; set; }
 
-    private IList<Group> GroupList { get; set; }
+    private IList<IGroup> GroupList { get; set; }
 
-    public LessonResultDialog(IList<Group> pGroupList) {
+    public LessonResultDialog(IList<IGroup> pGroupList) {
       InitializeComponent();
       DataContext = this;
       GroupList = pGroupList;
@@ -75,7 +76,7 @@ namespace Wordki.Views.Dialogs {
       int lWrong = 0;
       int lTime = 0;
       foreach (Group lItem in GroupList) {
-        Result lResult = lItem.ResultsList.Last();
+        IResult lResult = lItem.Results.Last();
         lCorrect += lResult.Correct;
         lAccepted += lResult.Accepted;
         lWrong += lResult.Wrong;

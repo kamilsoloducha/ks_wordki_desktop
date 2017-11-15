@@ -5,13 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:Wordki.ViewModels"
              xmlns:helpers="clr-namespace:Wordki.Helpers"
+             xmlns:converters="clr-namespace:Wordki.Helpers.Converters"
              xmlns:models="clr-namespace:Wordki.Models"
              mc:Ignorable="d" 
              Style="{DynamicResource AppPageStyle}"
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance {x:Type viewModels:SameWordsViewModel}}">
   <UserControl.Resources>
-    <helpers:DrawerToColorConverter x:Key="DrawerToColorConverter"/>
+        <converters:DrawerToColorConverter x:Key="DrawerToColorConverter"/>
   </UserControl.Resources>
 
   <Grid>

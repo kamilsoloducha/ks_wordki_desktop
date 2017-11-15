@@ -1,33 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using Repository.Models;
+using System.Collections.Generic;
 using Wordki.Models;
 
-namespace Wordki.Helpers.GroupSplitter {
-  public class GroupSlitPercentage : GroupSplitter {
-
-    public GroupSlitPercentage(int pNumber, Group pGroup, Database database)
-      : base(database) {
-      Number = pNumber;
-      Group = pGroup;
+namespace Wordki.Helpers.GroupSplitter
+{
+    public class GroupSlitPercentage : GroupSplitterBase
+    {
+        public override IEnumerable<IGroup> Split(IGroup group, int factor)
+        {
+            if (factor >= 100 || factor <= 0)
+            {
+                LoggerSingleton.LogError($"Blad podzialu grupy - {factor}");
+                yield break;
+            }
+            if (group == null || group.Words.Count == 0)
+            {
+                LoggerSingleton.LogError("Bład pozialu grupy - nie ma nic do podzielenia");
+                yield break;
+            }
+            IGroup lNewGroup = CreateGroup(group, 1);
+            List<IWord> lWords = new List<IWord>(group.Words);
+            int lWordsCount1 = (group.Words.Count * factor / 100);
+            for (int i = lWordsCount1; i < lWords.Count; ++i)
+            {
+                TransferWord(lWords[i], lNewGroup);
+            }
+            yield return lNewGroup;
+        }
     }
-
-    public override List<Group> Split() {
-      if (Number >= 100 || Number <= 0) {
-        Logger.LogError("Blad podzialu grupy - Number = {0}", Number);
-        return null;
-      }
-      if (Group == null || Group.WordsList.Count == 0) {
-        Logger.LogError("Bład pozialu grupy - nie ma nic do podzielenia");
-        return null;
-      }
-      Group lNewGroup = CreateGroup(1);
-      List<Word> lWords = new List<Word>(Group.WordsList);
-      int lWordsCount1 = (Group.WordsList.Count * Number / 100);
-      for (int i = lWordsCount1; i < lWords.Count; ++i) {
-        TransferWord(lWords[i], lNewGroup);
-      }
-      List<Group> lGroups = new List<Group>();
-      lGroups.Add(lNewGroup);
-      return lGroups;
-    }
-  }
 }

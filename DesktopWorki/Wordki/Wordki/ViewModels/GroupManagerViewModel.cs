@@ -14,27 +14,24 @@ using Repository.Models.Enums;
 using Wordki.Helpers;
 using Wordki.Models;
 using Wordki.Models.Lesson;
-using Wordki.Models.Lesson.WordComparer;
+using Wordki.Models.LessonScheduler;
+using Wordki.Models.LessonScheduler.LessonScheduleInitializer;
+using Repository.Models.Language;
+using Util.Serializers;
+using Util;
+using System.Windows.Input;
+using Repository.Models;
+using Wordki.Database;
+using Util.Collections;
+using Wordki.Helpers.WordComparer;
+using Wordki.ViewModels.Dialogs;
 
 namespace Wordki.ViewModels
 {
-    public class GroupManagerViewModel : INotifyPropertyChanged, IViewModel
+    public class GroupManagerViewModel : ViewModelBase
     {
-        #region INotifyPropertyChanged
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string pPropertyname = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(pPropertyname));
-            }
-        }
-
-        #endregion
-
-        private static readonly object GroupsLock = new object();
+        private static readonly object _groupsLock = new object();
         private GroupItem _selectedItem;
         private string _translationDirectionLabel;
         private string _allWordsLabel;
@@ -42,21 +39,22 @@ namespace Wordki.ViewModels
         private ObservableCollection<GroupItem> _itemList;
         private ObservableCollection<double> _values;
         private double _maxValue;
+
         #region Properties
 
-        public BuilderCommand StartTypingLessonCommand { get; set; }
-        public BuilderCommand StartReapetLessonCommand { get; set; }
-        public BuilderCommand StartRandomLessonCommand { get; set; }
-        public BuilderCommand StartBestLessonCommand { get; set; }
-        public BuilderCommand EditGroupCommand { get; set; }
-        public BuilderCommand BackCommand { get; set; }
-        public BuilderCommand ShowWordsCommand { get; set; }
-        public BuilderCommand SelectionChangedCommand { get; set; }
-        public BuilderCommand DrawerSignClickCommand { get; set; }
-        public BuilderCommand TranslationDirectionChangedCommand { get; set; }
-        public BuilderCommand AllWordsCommand { get; set; }
-        public BuilderCommand ShowPlotCommand { get; set; }
-        public BuilderCommand FinishLessonCommand { get; set; }
+        public ICommand StartTypingLessonCommand { get; set; }
+        public ICommand StartReapetLessonCommand { get; set; }
+        public ICommand StartRandomLessonCommand { get; set; }
+        public ICommand StartBestLessonCommand { get; set; }
+        public ICommand EditGroupCommand { get; set; }
+        public ICommand BackCommand { get; set; }
+        public ICommand ShowWordsCommand { get; set; }
+        public ICommand SelectionChangedCommand { get; set; }
+        public ICommand DrawerSignClickCommand { get; set; }
+        public ICommand TranslationDirectionChangedCommand { get; set; }
+        public ICommand AllWordsCommand { get; set; }
+        public ICommand ShowPlotCommand { get; set; }
+        public ICommand FinishLessonCommand { get; set; }
 
         public double MaxValue
         {
@@ -165,55 +163,64 @@ namespace Wordki.ViewModels
             ActivateCommond();
             Values = new ObservableCollection<double> { 0, 0, 0, 0, 0 };
             ItemsList = new ObservableCollection<GroupItem>();
-            BindingOperations.EnableCollectionSynchronization(ItemsList, GroupsLock);
+            BindingOperations.EnableCollectionSynchronization(ItemsList, _groupsLock);
         }
 
         #region Commands
 
         private void ActivateCommond()
         {
-            StartTypingLessonCommand = new BuilderCommand(StartTypingLesson);
-            StartReapetLessonCommand = new BuilderCommand(StartReapetLesson);
-            StartRandomLessonCommand = new BuilderCommand(StartRandomLesson);
-            StartBestLessonCommand = new BuilderCommand(StartBestLesson);
-            EditGroupCommand = new BuilderCommand(EditGroup);
-            BackCommand = new BuilderCommand(Back);
-            ShowWordsCommand = new BuilderCommand(ShowWords);
-            SelectionChangedCommand = new BuilderCommand(SelectionChanged);
-            DrawerSignClickCommand = new BuilderCommand(DrawerSignClick);
-            TranslationDirectionChangedCommand = new BuilderCommand(TranslationDirectionChanged);
-            AllWordsCommand = new BuilderCommand(AllWords);
-            ShowPlotCommand = new BuilderCommand(ShowPlot);
-            FinishLessonCommand = new BuilderCommand(FinishLesson);
+            StartTypingLessonCommand = new Util.BuilderCommand(StartTypingLesson);
+            StartReapetLessonCommand = new Util.BuilderCommand(StartReapetLesson);
+            StartRandomLessonCommand = new Util.BuilderCommand(StartRandomLesson);
+            StartBestLessonCommand = new Util.BuilderCommand(StartBestLesson);
+            EditGroupCommand = new Util.BuilderCommand(EditGroup);
+            BackCommand = new Util.BuilderCommand(Back);
+            ShowWordsCommand = new Util.BuilderCommand(ShowWords);
+            SelectionChangedCommand = new Util.BuilderCommand(SelectionChanged);
+            DrawerSignClickCommand = new Util.BuilderCommand(DrawerSignClick);
+            TranslationDirectionChangedCommand = new Util.BuilderCommand(TranslationDirectionChanged);
+            AllWordsCommand = new Util.BuilderCommand(AllWords);
+            ShowPlotCommand = new Util.BuilderCommand(ShowPlot);
+            FinishLessonCommand = new Util.BuilderCommand(FinishLesson);
         }
 
         private void FinishLesson(object obj)
         {
+            ISerializer<Lesson> serializer = new BinarySerializer<Lesson>
+            {
+                Settings = new BinarySerializerSettings
+                {
+                    Path = "lesson",
+                    RemoveAfterRead = true,
+                }
+            };
             Lesson lesson;
             try
             {
-                lesson = ObjectSerializer.ReadFromBinaryFile<Lesson>("lesson", true);
+                //lesson = serializer.Read();
             }
             catch (Exception e)
             {
-                Logger.LogError("Błąd w czasie deserializacji objektu - {0}", e.Message);
+                LoggerSingleton.LogError("Błąd w czasie deserializacji objektu - {0}", e.Message);
                 return;
             }
-            PackageStore.Put(0, lesson);
+            //PackageStore.Put(0, lesson);
             Switcher.GetSwitcher().Switch(Switcher.State.Teach);
         }
 
         private void EditGroup(object obj)
         {
-            Group lSelectedGroup = Database.GetDatabase().GetGroupById(SelectedItem.Group.Id);
+            IGroup lSelectedGroup = SelectedItem.Group;
             PackageStore.Put(0, lSelectedGroup);
             Switcher.GetSwitcher().Switch(Switcher.State.Builder);
         }
 
-        private void AllWords(object obj)
+        private async void AllWords(object obj)
         {
-            Database.GetDatabase().User.AllWords = !Database.GetDatabase().User.AllWords;
-            Database.GetDatabase().UpdateUser(Database.GetDatabase().User);
+            IUserManager userManager = UserManagerSingleton.Get();
+            userManager.User.AllWords = !userManager.User.AllWords;
+            await userManager.UpdateAsync();
             SetAllWordsLabel();
         }
 
@@ -223,20 +230,21 @@ namespace Wordki.ViewModels
             PackageStore.Put(0, SelectedItem.Group.Id);
         }
 
-        private void TranslationDirectionChanged(object obj)
+        private async void TranslationDirectionChanged(object obj)
         {
-            switch (Database.GetDatabase().User.TranslationDirection)
+            IUserManager userManager = UserManagerSingleton.Get();
+            switch (userManager.User.TranslationDirection)
             {
                 case TranslationDirection.FromFirst:
-                    Database.GetDatabase().User.TranslationDirection = TranslationDirection.FromSecond;
+                    userManager.User.TranslationDirection = TranslationDirection.FromSecond;
                     break;
                 case TranslationDirection.FromSecond:
-                    Database.GetDatabase().User.TranslationDirection = TranslationDirection.FromFirst;
+                    userManager.User.TranslationDirection = TranslationDirection.FromFirst;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            Database.GetDatabase().UpdateUser(Database.GetDatabase().User);
+            await userManager.UpdateAsync();
             SetTranslationDirectionLabel();
         }
 
@@ -246,12 +254,12 @@ namespace Wordki.ViewModels
             {
                 if (obj == null)
                 {
-                    Logger.LogError("{0} - {1}", "DrawerSignClick", "obj == null");
+                    LoggerSingleton.LogError("{0} - {1}", "DrawerSignClick", "obj == null");
                 }
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1}", "DrawerSignClick", lException.Message);
+                LoggerSingleton.LogError("{0} - {1}", "DrawerSignClick", lException.Message);
             }
         }
         private void SelectionChanged(object obj)
@@ -299,15 +307,16 @@ namespace Wordki.ViewModels
         }
         #endregion
 
-        public void InitViewModel()
+        public override void InitViewModel()
         {
             Task.Run(() =>
             {
                 ItemsList.Clear();
-                foreach (GroupItem groupItem in Database.GetDatabase().GroupsList.Select(group => new GroupItem(group)))
+                ILessonScheduler scheduler = new LessonScheduler(new SimpleLessonScheduleInitializer());
+                foreach (GroupItem groupItem in DatabaseSingleton.GetDatabase().Groups.Select(group => new GroupItem(group)))
                 {
-                    groupItem.Color = LessonScheduler.GetColor(groupItem.Group.GetLastResult());
-                    groupItem.NextRepeat = LessonScheduler.TimeToLearn(groupItem.Group.ResultsList);
+                    groupItem.Color = scheduler.GetColor(groupItem.Group.Results.LastOrDefault());
+                    groupItem.NextRepeat = scheduler.GetTimeToLearn(groupItem.Group.Results);
                     ItemsList.Add(groupItem);
                 }
             });
@@ -317,7 +326,7 @@ namespace Wordki.ViewModels
             SetEndLessonButton();
         }
 
-        public void Back()
+        public override void Back()
         {
 
         }
@@ -340,22 +349,22 @@ namespace Wordki.ViewModels
                     return;
                 foreach (GroupItem lGroupItem in SelectionList)
                 {
-                    Group lGroup = Database.GetDatabase().GetGroupById(lGroupItem.Group.Id);
-                    lLanguage1Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathRectFlag(lGroup.Language1)));
-                    lLanguage2Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathRectFlag(lGroup.Language2)));
+                    IGroup lGroup = lGroupItem.Group;
+                    lLanguage1Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathRectFlag(LanguageFactory.GetLanguage(lGroup.Language1))));
+                    lLanguage2Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathRectFlag(LanguageFactory.GetLanguage(lGroup.Language2))));
                     lGroupNameBuilder.Append(lGroup.Name).Append(" ");
-                    lWordsCount += lGroup.WordsList.Count;
-                    lRepeatsCount += Database.GetDatabase().GetResultsList(lGroupItem.Group.Id).Count;
-                    Result lResult = Database.GetDatabase().GetLastResult(lGroupItem.Group.Id);
-                    if (lResult != null)
-                    {
-                        DateTime lGroupLastResult = lResult.DateTime;
-                        if (lLastRepeat.CompareTo(lGroupLastResult) < 0)
-                        {
-                            lLastRepeat = lGroupLastResult;
-                        }
-                    }
-                    foreach (Word lWord in lGroup.WordsList)
+                    lWordsCount += lGroup.Words.Count;
+                    //lRepeatsCount += Database.GetDatabase().GetResultsList(lGroupItem.Group.Id).Count;
+                    //IResult lResult = Database.GetDatabase().GetLastResult(lGroupItem.Group.Id);
+                    //if (lResult != null)
+                    //{
+                    //    DateTime lGroupLastResult = lResult.DateTime;
+                    //    if (lLastRepeat.CompareTo(lGroupLastResult) < 0)
+                    //    {
+                    //        lLastRepeat = lGroupLastResult;
+                    //    }
+                    //}
+                    foreach (Word lWord in lGroup.Words)
                     {
                         lDrawersCount[lWord.Drawer]++;
                         if (lWord.Visible)
@@ -368,18 +377,18 @@ namespace Wordki.ViewModels
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1}", "RefreshInfo", lException.Message);
+                LoggerSingleton.LogError("{0} - {1}", "RefreshInfo", lException.Message);
             }
         }
 
         private void SetTimeOutLabel()
         {
-            TimeOutLabel = Database.GetDatabase().User.Timeout > 0 ? String.Format("Odliczanie {0} sekund", Database.GetDatabase().User.Timeout) : "Odliczanie wyłączone";
+            TimeOutLabel = UserManagerSingleton.Get().User.Timeout > 0 ? String.Format("Odliczanie {0} sekund", UserManagerSingleton.Get().User.Timeout) : "Odliczanie wyłączone";
         }
 
         private void SetTranslationDirectionLabel()
         {
-            switch (Database.GetDatabase().User.TranslationDirection)
+            switch (UserManagerSingleton.Get().User.TranslationDirection)
             {
                 case TranslationDirection.FromSecond:
                     {
@@ -396,62 +405,68 @@ namespace Wordki.ViewModels
 
         private void SetAllWordsLabel()
         {
-            AllWordsLabel = Database.GetDatabase().User.AllWords ? "Wszystkie słowa" : "Tylko widoczne";
+            AllWordsLabel = UserManagerSingleton.Get().User.AllWords ? "Wszystkie słowa" : "Tylko widoczne";
         }
 
         private void SetEndLessonButton()
         {
-            Lesson serializedLesson = ObjectSerializer.ReadFromBinaryFile<Lesson>("lesson", false);
-            if (serializedLesson == null)
+            ISerializer<Lesson> serializer = new BinarySerializer<Lesson>
             {
-                EndLessonButtonVisibility = Visibility.Collapsed;
-            }
-            else
-            {
-                EndLessonButtonVisibility = Visibility.Visible;
-            }
+                Settings = new BinarySerializerSettings
+                {
+                    Path = "lesson",
+                    RemoveAfterRead = false,
+                }
+            };
+            //Lesson serializedLesson = serializer.Read();
+            //if (serializedLesson == null)
+            //{
+            //    EndLessonButtonVisibility = Visibility.Collapsed;
+            //}
+            //else
+            //{
+            //    EndLessonButtonVisibility = Visibility.Visible;
+            //}
         }
 
-        private IEnumerable<Word> GetWordListFromSelectedGroups()
+        private IEnumerable<IWord> GetWordListFromSelectedGroups()
         {
-            List<Word> lWordsList = new List<Word>();
+            List<IWord> lWords = new List<IWord>();
             try
             {
                 foreach (GroupItem lItem in SelectionList)
                 {
-                    Group lGroup = Database.GetDatabase().GetGroupById(lItem.Group.Id);
-                    lWordsList.AddRange(lGroup.WordsList);
+                    IGroup lGroup = lItem.Group;
+                    lWords.AddRange(lGroup.Words);
                 }
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1}", "GetWordListFromSelectedGroups", lException.Message);
+                LoggerSingleton.LogError("{0} - {1}", "GetWordListFromSelectedGroups", lException.Message);
             }
-            return lWordsList;
+            return lWords;
         }
 
-        private IEnumerable<Word> GetWordListRandom(int pCount)
+        private IEnumerable<IWord> GetWordListRandom(int pCount)
         {
-            var groupList = Database.GetDatabase().GroupsList;
-            List<Word> wordList = new List<Word>();
+            var groupList = DatabaseSingleton.GetDatabase().Groups;
             Random random = new Random();
             for (int i = 0; i < pCount; i++)
             {
-                Group group = groupList[random.Next(groupList.Count - 1)];
-                wordList.Add(group.WordsList[random.Next(group.WordsList.Count - 1)]);
+                IGroup group = groupList[random.Next(groupList.Count - 1)];
+                yield return group.Words[random.Next(group.Words.Count - 1)];
             }
-            return wordList;
         }
 
-        private IEnumerable<Word> GetWordListBest(int pCount)
+        private IEnumerable<IWord> GetWordListBest(int pCount)
         {
-            List<Word> temp = new List<Word>();
-            foreach (Group group in Database.GetDatabase().GroupsList)
+            List<IWord> temp = new List<IWord>();
+            foreach (Group group in DatabaseSingleton.GetDatabase().Groups)
             {
-                temp.AddRange(group.WordsList);
+                temp.AddRange(group.Words);
             }
-            IEnumerable<Word> result = temp.Where(x => x.Drawer == 4);
-            result = ListShuffle.Shuffle(result.ToList());
+            IEnumerable<IWord> result = temp.Where(x => x.Drawer == 4);
+            result = result.ToList().Shuffle();
             return result.Take(pCount);
         }
 
@@ -459,46 +474,69 @@ namespace Wordki.ViewModels
         {
             try
             {
-                Lesson lLesson;
+                Lesson lesson;
                 switch (lLessonType)
                 {
                     case LessonType.TypingLesson:
                         {
-                            lLesson = new TypingLesson(GetWordListFromSelectedGroups());
+                            lesson = new TypingLesson(GetWordListFromSelectedGroups());
                         }
                         break;
                     case LessonType.IntensiveLesson:
                         {
-                            lLesson = new IntensiveLesson(GetWordListFromSelectedGroups());
+                            lesson = new IntensiveLesson(GetWordListFromSelectedGroups());
                         }
                         break;
                     case LessonType.RandomLesson:
                         {
-                            lLesson = new RandomLesson(GetWordListRandom(60));
+                            lesson = new RandomLesson(GetWordListRandom(60));
                         }
                         break;
                     case LessonType.BestLesson:
                         {
-                            lLesson = new BestLesson(GetWordListBest(60));
+                            lesson = new BestLesson(GetWordListBest(60));
                         }
                         break;
                     default:
                         {
-                            Logger.LogError("{0} - {1} - {2}", "Blad w startowaniu lekcji", "Blad w przekazanym parametrze", lLessonType);
+                            LoggerSingleton.LogError("{0} - {1} - {2}", "Blad w startowaniu lekcji", "Blad w przekazanym parametrze", lLessonType);
                             return;
                         }
                 }
-                lLesson.WordComparer = new WordComparer
+                lesson.WordComparer = new WordComparer();
+                lesson.WordComparer.Settings = new WordComparerSettings();
+                lesson.WordComparer.Settings.WordSeparator = ',';
+                lesson.WordComparer.Settings.NotCheckers.Add(new LetterCaseNotCheck());
+                lesson.WordComparer.Settings.NotCheckers.Add(new SpaceNotCheck());
+                lesson.WordComparer.Settings.NotCheckers.Add(new Utf8NotCheck());
+                IUser user = UserManagerSingleton.Get().User;
+                ILessonSettings lessonSettings = new LessonSettings()
                 {
-                    FontSizeSensitive = Settings.FontSizeSensitive
+                    AllWords = user.AllWords,
+                    TranslationDirection = user.TranslationDirection,
+                    Timeout = user.Timeout,
                 };
-                lLesson.InitLesson();
-                PackageStore.Put(0, lLesson);
+                lesson.LessonSettings = lessonSettings;
+                lesson.InitLesson();
+                if(lesson.BeginWordsList.Count == 0)
+                {
+                    InteractionProvider.IInteractionProvider provider = new InteractionProvider.SimpleInfoProvider
+                    {
+                        ViewModel = new InfoDialogViewModel
+                        {
+                            ButtonLabel = "Ok",
+                            Message = "Brak słów do nauki"
+                        }
+                    };
+                    provider.Interact();
+                    return;
+                }
+                PackageStore.Put(0, lesson);
                 Switcher.GetSwitcher().Switch(Switcher.State.Teach);
             }
             catch (Exception lException)
             {
-                Logger.LogError("{0} - {1} - {2}", "Blad w startowaniu lekcji", lLessonType.ToString(), lException.Message);
+                LoggerSingleton.LogError("{0} - {1} - {2}", "Blad w startowaniu lekcji", lLessonType.ToString(), lException.Message);
             }
         }
 

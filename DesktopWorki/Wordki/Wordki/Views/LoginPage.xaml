@@ -8,84 +8,71 @@
              xmlns:hintTextBox="clr-namespace:Controls.HintTextBox;assembly=Controls"
              xmlns:hintPasswordBox="clr-namespace:Controls.HintPasswordBox;assembly=Controls"
              xmlns:command="http://www.galasoft.ch/mvvmlight"
+             xmlns:converters="clr-namespace:Wordki.Helpers.Converters"
              xmlns:models="clr-namespace:Wordki.Models"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              Style="{DynamicResource AppPageStyle}"
+             KeyboardNavigation.IsTabStop="False"
              d:DataContext="{d:DesignInstance {x:Type viewModels:LoginViewModel}}">
-  
-  <UserControl.Resources>
-    <Style x:Key="UserListViewItemStyle" TargetType="{x:Type ListBoxItem}">
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="{x:Type ListBoxItem}">
-            <Border BorderBrush="{StaticResource UsedHoverBrush}" BorderThickness="0,0,0,0.5" Margin="5,0" Background="Transparent" HorizontalAlignment="Stretch">
-              <UniformGrid Columns="2">
-                <TextBlock d:DataContext="{d:DesignInstance models:User}" Name="Text" Background="Transparent" HorizontalAlignment="Center" FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular" FontSize="15" Margin="5" Text="{Binding Path=Name}" />
-                <Button x:Name="RemoveButton" Opacity="0" Content="Usuń" Command="{Binding ElementName=UsersListView, Path=DataContext.RemoveUserCommand}" CommandParameter="{Binding}"/>
-              </UniformGrid>
-            </Border>
-            <ControlTemplate.Triggers>
-              <Trigger Property="IsSelected" Value="true">
-                <Setter TargetName="Text" Property="Foreground" Value="Red" />
-              </Trigger>
-              <EventTrigger RoutedEvent="MouseEnter">
-                <BeginStoryboard>
-                  <Storyboard>
-                    <DoubleAnimation From="0" To="1" Duration="0:0:0.25" Storyboard.TargetName="RemoveButton" Storyboard.TargetProperty="Opacity" />
-                  </Storyboard>
-                </BeginStoryboard>
-              </EventTrigger>
-              <EventTrigger RoutedEvent="MouseLeave">
-                <BeginStoryboard>
-                  <Storyboard>
-                    <DoubleAnimation From="1" To="0" Duration="0:0:0.25" Storyboard.TargetName="RemoveButton" Storyboard.TargetProperty="Opacity" />
-                  </Storyboard>
-                </BeginStoryboard>
-              </EventTrigger>
-            </ControlTemplate.Triggers>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
 
-  </UserControl.Resources>
+    <UserControl.Resources>
+        <Style x:Key="UserListViewItemStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border BorderBrush="{StaticResource UsedHoverBrush}" BorderThickness="0,0,0,0.5" Margin="5,0" Background="Transparent" HorizontalAlignment="Stretch">
+                            <TextBlock Name="Text" Background="Transparent" HorizontalAlignment="Center" FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular" FontSize="15" Margin="5" Text="{Binding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Text" Property="Foreground" Value="Red" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-  <i:Interaction.Triggers>
-    <i:EventTrigger EventName="Loaded">
-      <command:EventToCommand Command="{Binding Path=LoadedWindowCommand}"/>
-    </i:EventTrigger>
-  </i:Interaction.Triggers>
+        <converters:PassingParametersConverter x:Key="PassingParametersConverter"/>
 
-  <UserControl.InputBindings>
-    <KeyBinding Key="Enter" Command="{Binding Path=ActionCommand}"/>
-  </UserControl.InputBindings>
+    </UserControl.Resources>
 
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*"/>
-      <ColumnDefinition Width="3*"/>
-      <ColumnDefinition Width="3*"/>
-      <ColumnDefinition Width="*"/>
-    </Grid.ColumnDefinitions>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <command:EventToCommand Command="{Binding Path=LoadedWindowCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
-    <Grid.RowDefinitions>
-      <RowDefinition Height="2*"/>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="2*"/>
-    </Grid.RowDefinitions>
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter" Command="{Binding Path=LoginCommand}"/>
+    </UserControl.InputBindings>
 
-    <TextBlock
-			Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"
-			HorizontalAlignment="Center"
-			Style="{StaticResource AppTextBlockStyle}"
-			Text="Logowanie"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-    <hintTextBox:HintTextBox
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+      Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"
+      HorizontalAlignment="Center"
+      Style="{StaticResource AppTextBlockStyle}"
+      Text="Logowanie"/>
+
+        <hintTextBox:HintTextBox
       x:Name="UserName"
       Grid.Column="1" Grid.Row="2"
       Margin="10, 20"
@@ -96,7 +83,7 @@
       Background="Transparent"
       Text="{Binding Path=UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-    <hintPasswordBox:HintPasswordBox
+        <hintPasswordBox:HintPasswordBox
       Name="Password"
       Grid.Column="1" Grid.Row="3"
       Margin="10, 20"
@@ -107,55 +94,61 @@
       Foreground="{DynamicResource UsedNormalFrontBrush}"
       Text="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-    <ListView
-      x:Name="UsersListView"
-      Grid.Column="2" Grid.Row="2" Grid.RowSpan="3"
-      Style="{StaticResource AppListBoxStyle}"
-      SelectionMode="Single"
-      ItemContainerStyle="{StaticResource UserListViewItemStyle}"
-      ItemsSource="{Binding Path=Users}" >
+        <ListView
+            x:Name="UsersListView"
+            Grid.Column="2" Grid.Row="2" Grid.RowSpan="3"
+            Style="{StaticResource AppListBoxStyle}"
+            SelectionMode="Single"
+            ItemContainerStyle="{StaticResource UserListViewItemStyle}"
+            ItemsSource="{Binding Path=Users}">
 
-      <i:Interaction.Triggers>
-        <i:EventTrigger EventName="SelectionChanged">
-          <command:EventToCommand Command="{Binding Path=ListViewSelectedChangedCommand}" CommandParameter="{Binding ElementName=UsersListView, Path=SelectedItem}"/>
-        </i:EventTrigger>
-      </i:Interaction.Triggers>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <command:EventToCommand Command="{Binding Path=ListViewSelectedChangedCommand}" CommandParameter="{Binding ElementName=UsersListView, Path=SelectedItem}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <command:EventToCommand Command="{Binding Path=LoginCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
 
-    </ListView>
+        </ListView>
 
-    <UniformGrid 
+        <UniformGrid 
       Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5"
       Columns="2" Margin="20, 10">
 
-      <Button
-				Style="{StaticResource FlatButtonStyle}"
-				Content="Zaloguj"
-				Command="{Binding LoginCommand}"
-        Padding="20"/>
-      <Button
-				Style="{StaticResource FlatButtonStyle}"
-				Content="Wyjdź"
-				Command="{Binding ExitCommand}"
+            <Button
+        Style="{StaticResource FlatButtonStyle}"
+        Content="Zaloguj"
+        Command="{Binding LoginCommand}"
         Padding="20"/>
 
-    </UniformGrid>
+            <Button
+        Style="{StaticResource FlatButtonStyle}"
+        Content="Wyjdź"
+        Command="{Binding ExitCommand}"
+        Padding="20">
+
+            </Button>
+
+        </UniformGrid>
 
 
-    <StackPanel
+        <StackPanel
       Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6"
       VerticalAlignment="Bottom" HorizontalAlignment="Center"
       Margin="20" Orientation="Horizontal">
 
-      <TextBlock FontSize="20" Text="Jesteś nowy?" Margin="0,0,5,0"/>
-      <TextBlock FontSize="20" Text="Stwórz konto!" Foreground="LightGreen">
+            <TextBlock FontSize="20" Text="Jesteś nowy?" Margin="0,0,5,0"/>
+            <TextBlock FontSize="20" Text="Stwórz konto!" Foreground="LightGreen">
               
         <i:Interaction.Triggers>
           <i:EventTrigger EventName="MouseDown">
             <i:InvokeCommandAction Command="{Binding ChangeStateCommand}" />
           </i:EventTrigger>
         </i:Interaction.Triggers>
-      </TextBlock>
+            </TextBlock>
 
-    </StackPanel>
-  </Grid>
+        </StackPanel>
+    </Grid>
 </UserControl>

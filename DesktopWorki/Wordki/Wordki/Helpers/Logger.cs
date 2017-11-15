@@ -10,20 +10,20 @@ namespace Wordki.Helpers {
     Error,
   }
 
-  public class Logger {
+  public class LoggerSingleton {
     private static string _logDirName = Path.Combine(Directory.GetCurrentDirectory(), "Log");
     private static string _logFileName = "_log.log";
-    private static Logger _instance;
+    private static LoggerSingleton _instance;
 
-    private Logger() {
+    private LoggerSingleton() {
       if (!Directory.Exists(_logDirName)) {
         Directory.CreateDirectory(_logDirName);
       }
     }
 
-    private static Logger Instance {
+    private static LoggerSingleton Instance {
       get {
-        return _instance ?? (_instance = new Logger());
+        return _instance ?? (_instance = new LoggerSingleton());
       }
     }
 
