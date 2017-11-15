@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Wordki.Models.LessonScheduler
 {
-    public class IntervalTimeCalculator
+    public static class IntervalTimeCalculator
     {
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Wordki.Models.LessonScheduler
         /// <returns>TimeSpan between dates. If datetime parameter is happend before today midnight, value will be negative</returns>
         public static TimeSpan GetIntervalBetweenTodayMidnight(DateTime dateTime)
         {
-            return dateTime.Subtract(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59));
+            return dateTime.Subtract(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0));
         }
 
     }

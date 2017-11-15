@@ -15,7 +15,6 @@ using Wordki.Helpers;
 using Wordki.Models;
 using Wordki.Models.Lesson;
 using Wordki.Models.LessonScheduler;
-using Wordki.Models.LessonScheduler.LessonScheduleInitializer;
 using Repository.Models.Language;
 using Util.Serializers;
 using Util;
@@ -315,8 +314,8 @@ namespace Wordki.ViewModels
                 ILessonScheduler scheduler = new LessonScheduler(new SimpleLessonScheduleInitializer());
                 foreach (GroupItem groupItem in DatabaseSingleton.GetDatabase().Groups.Select(group => new GroupItem(group)))
                 {
-                    groupItem.Color = scheduler.GetColor(groupItem.Group.Results.LastOrDefault());
-                    groupItem.NextRepeat = scheduler.GetTimeToLearn(groupItem.Group.Results);
+                    groupItem.Color = scheduler.GetColor(groupItem.Group);
+                    groupItem.NextRepeat = scheduler.GetTimeToLearn(groupItem.Group);
                     ItemsList.Add(groupItem);
                 }
             });

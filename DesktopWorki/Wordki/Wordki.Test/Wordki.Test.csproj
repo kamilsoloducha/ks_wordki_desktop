@@ -128,7 +128,9 @@
     <Compile Include="Helpers\GroupSplitterTests\GroupSplitterGroupCountTest.cs" />
     <Compile Include="Helpers\GroupSplitterTests\GroupSplitterPercentageTest.cs" />
     <Compile Include="Helpers\GroupSplitterTests\GroupSplitterWordCountTest.cs" />
+    <Compile Include="Helpers\IntervalTimeCalculatorTests\IntervalTimeCalcuator.cs" />
     <Compile Include="Helpers\LessonSchedulerTests\LessonSchedulerWithSimpleInitializerTest.cs" />
+    <Compile Include="Helpers\NewLessonSchedulerTests\NewLessonSchedulerAnyResutsTest.cs" />
     <Compile Include="Helpers\NotCheckersTests\LetterCaseNotCheckTest.cs" />
     <Compile Include="Helpers\NotCheckersTests\PunctuationNotCheckTest.cs" />
     <Compile Include="Helpers\NotCheckersTests\SpaceNotCheckTest.cs" />

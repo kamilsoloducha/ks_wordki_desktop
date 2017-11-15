@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Wordki.Models.LessonScheduler.LessonScheduleInitializer
+namespace Wordki.Models.LessonScheduler
 {
     public class SimpleLessonScheduleInitializer : ILessonScheduleInitializer
     {

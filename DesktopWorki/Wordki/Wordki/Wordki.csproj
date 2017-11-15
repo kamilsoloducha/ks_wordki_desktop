@@ -236,6 +236,9 @@
     <Compile Include="Helpers\Connector\ApiResponse.cs" />
     <Compile Include="Models\Group\FakeGroup.cs" />
     <Compile Include="Models\Group\IGroupRepository.cs" />
+    <Compile Include="Models\LessonScheduler\LessonScheduleInitializer\LessonSchedulerInitializer.cs" />
+    <Compile Include="Models\LessonScheduler\NewLessonScheduler.cs" />
+    <Compile Include="Models\Lesson\FiszkiLesson.cs" />
     <Compile Include="Models\Lesson\LessonSettings\ILessonSettings.cs" />
     <Compile Include="Models\Lesson\LessonSettings\LessonSettings.cs" />
     <Compile Include="Models\Lesson\WorstLesson.cs" />

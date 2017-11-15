@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Repository.Models;
 using System;
 using Wordki.Models;
 using Wordki.Models.LessonScheduler;
-using Wordki.Models.LessonScheduler.LessonScheduleInitializer;
 
 namespace Wordki.Test.Helpers.LessonSchedulerTests
 {
@@ -34,21 +34,25 @@ namespace Wordki.Test.Helpers.LessonSchedulerTests
             {
                 DateTime = DateTime.Now.AddDays(-1),
             };
-            int r = scheduler.GetColor(result);
+            IGroup group = new Group();
+            group.AddResult(result);
+            int r = scheduler.GetColor(group);
             Assert.AreEqual(0, r);
 
             result = new Result()
             {
                 DateTime = DateTime.Now.AddDays(-7),
             };
-            r = scheduler.GetColor(result);
+            group.AddResult(result);
+            r = scheduler.GetColor(group);
             Assert.AreEqual(3, r);
 
             result = new Result()
             {
                 DateTime = DateTime.Now.AddDays(-9),
             };
-            r = scheduler.GetColor(result);
+            group.AddResult(result);
+            r = scheduler.GetColor(group);
             Assert.AreEqual(4, r);
         }
     }

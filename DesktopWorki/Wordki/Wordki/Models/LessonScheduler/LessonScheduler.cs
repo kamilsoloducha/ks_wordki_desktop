@@ -1,7 +1,6 @@
 ﻿using Repository.Models;
 using System.Collections.Generic;
 using System.Linq;
-using Wordki.Models.LessonScheduler.LessonScheduleInitializer;
 
 namespace Wordki.Models.LessonScheduler
 {
@@ -15,14 +14,14 @@ namespace Wordki.Models.LessonScheduler
             _initializer = initializer;
         }
 
-        public int GetTimeToLearn(ICollection<IResult> results)
+        public int GetTimeToLearn(IGroup group)
         {
-            return results.Any() ? GetTime(results.Count(), (int)IntervalTimeCalculator.GetIntervalBetweenTodayMidnight(results.Last().DateTime).TotalDays) : 0;
+            return group.Results.Any() ? GetTime(group.Results.Count(), (int)IntervalTimeCalculator.GetIntervalBetweenTodayMidnight(group.Results.Last().DateTime).TotalDays) : 0;
         }
 
-        public int GetColor(IResult lResult)
+        public int GetColor(IGroup group)
         {
-            int days = lResult == null ? int.MaxValue : -(int)IntervalTimeCalculator.GetIntervalBetweenTodayMidnight(lResult.DateTime).TotalDays;
+            int days = group.Results.Count == 0 ? int.MaxValue : -(int)IntervalTimeCalculator.GetIntervalBetweenTodayMidnight(group.Results.Last().DateTime).TotalDays;
             if (days < 0)
             {
                 return 4;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wordki.Models.LessonScheduler.LessonScheduleInitializer
+namespace Wordki.Models.LessonScheduler
 {
     public interface ILessonScheduleInitializer
     {
