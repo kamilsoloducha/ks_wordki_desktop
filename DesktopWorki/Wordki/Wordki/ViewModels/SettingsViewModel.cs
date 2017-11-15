@@ -8,6 +8,7 @@ using Wordki.Models.Connector;
 using Wordki.Views.Dialogs;
 using Wordki.Helpers.Notification;
 using Wordki.Database;
+using Wordki.InteractionProvider;
 
 namespace Wordki.ViewModels
 {
@@ -333,12 +334,15 @@ namespace Wordki.ViewModels
 
         private void Info(object obj)
         {
-            InfoDialog lDialog = new InfoDialog();
-            lDialog.DialogTitle = "jakis tytuł";
-            lDialog.Message = "jakaś wiadomość\nktory zajmuje\nwiecej niz jedna linie";
-            lDialog.ButtonCommand = new BuilderCommand(o => lDialog.Close());
-            lDialog.ButtonLabel = "Ok";
-            lDialog.ShowDialog();
+            IInteractionProvider provider = new SimpleInfoProvider
+            {
+                ViewModel = new Dialogs.InfoDialogViewModel
+                {
+                    Message = "jakaś wiadomość\nktory zajmuje\nwiecej niz jedna linie",
+                    ButtonLabel = "Ok",
+                }
+            };
+            provider.Interact();
         }
 
         private void YesNo(object obj)

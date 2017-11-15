@@ -3,16 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Wordki.ViewModels.Dialogs
 {
     public abstract class DialogViewModelBase : ViewModelBase
     {
+        public event EventHandler ClosingRequest;
+
+        public ICommand CloseCommand { get; protected set; }
+
+        public Action CloseAction { get; set; }
+
         public override void Back()
         {
         }
 
-        public event EventHandler ClosingRequest;
+        public override void InitViewModel()
+        {
+            CloseCommand = new Util.BuilderCommand(Close);
+        }
+
 
         protected void OnClosingRequest()
         {
@@ -20,6 +31,15 @@ namespace Wordki.ViewModels.Dialogs
             {
                 ClosingRequest(this, EventArgs.Empty);
             }
+        }
+
+        private void Close(object obj)
+        {
+            if (CloseAction != null)
+            {
+                CloseAction.Invoke();
+            }
+            ClosingRequest(this, EventArgs.Empty);
         }
 
     }

@@ -218,8 +218,12 @@
     <Compile Include="Helpers\WordConnector\WordConnector.cs" />
     <Compile Include="Helpers\WordFinder\IWordFinder.cs" />
     <Compile Include="Helpers\WordFinder\WordFinder.cs" />
+    <Compile Include="InteractionProvider\IInteractionProvider.cs" />
     <Compile Include="InteractionProvider\InfoProvider\IInfoProvider.cs" />
+    <Compile Include="InteractionProvider\InfoProvider\ResultProvider.cs" />
+    <Compile Include="InteractionProvider\InfoProvider\SimpleInfoProvider.cs" />
     <Compile Include="InteractionProvider\InfoProvider\ToastProvider.cs" />
+    <Compile Include="InteractionProvider\InteractionProviderBase.cs" />
     <Compile Include="InteractionProvider\SearchProvider\ISearchProvider.cs" />
     <Compile Include="InteractionProvider\SearchProvider\SearchProvider.cs" />
     <Compile Include="InteractionProvider\TranlsationProvider\ITranslationProvider.cs" />
@@ -290,6 +294,7 @@
     <Compile Include="ViewModels\BuildFromFileViewModel.cs" />
     <Compile Include="ViewModels\ChartViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\DialogViewModelBase.cs" />
+    <Compile Include="ViewModels\Dialogs\InfoDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\Progress\ProgressDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\SearchDialog\SearchDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\TranslationListDialogViewModel.cs" />
@@ -338,7 +343,6 @@
     <Compile Include="Views\Dialogs\TranslationListDialog.xaml.cs">
       <DependentUpon>TranslationListDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\YesNoDialog\IYesNoDialog.cs" />
     <Compile Include="Views\GroupsPage.xaml.cs">
       <DependentUpon>GroupsPage.xaml</DependentUpon>
     </Compile>

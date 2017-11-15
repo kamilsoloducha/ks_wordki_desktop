@@ -9,25 +9,13 @@ using Wordki.Helpers.TranslationPusher;
 
 namespace Wordki.InteractionProvider
 {
-    public class TranslationProvider : ITranslationProvider
+    public class TranslationProvider : InteractionProviderBase, ITranslationProvider
     {
         public TranslationDirection TranslationDirection { get; set; }
         public IWord Word { get; set; }
         public IEnumerable<string> Items { get; set; }
 
-        public void Interact()
-        {
-            if (Application.Current.Dispatcher.CheckAccess())
-            {
-                DispacherWork();
-            }
-            else
-            {
-                Application.Current.Dispatcher.Invoke(DispacherWork);
-            }
-        }
-
-        private void DispacherWork()
+        protected override void DispatcherWork()
         {
             TranslationListDialogViewModel viewModel = new TranslationListDialogViewModel(Items);
             TranslationListDialog dialog = new TranslationListDialog()

@@ -6,30 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Wordki.InteractionProvider.InfoProvider
+namespace Wordki.InteractionProvider
 {
-    public class ToastProvider : IInfoProvider
+    public class ToastProvider : InteractionProviderBase, IInfoProvider
     {
 
         public string Message { get; set; }
 
-        public void Interact()
-        {
-            if (App.Current.Dispatcher.CheckAccess())
-            {
-                DispatcherWork();
-            }
-            else
-            {
-                App.Current.Dispatcher.Invoke(DispatcherWork);
-            }
-        }
-
-        private void DispatcherWork()
+        protected override void DispatcherWork()
         {
             Toaster.NewToast(new ToastProperties()
             {
-                Message = Message;
+                Message = Message,
             });
         }
     }

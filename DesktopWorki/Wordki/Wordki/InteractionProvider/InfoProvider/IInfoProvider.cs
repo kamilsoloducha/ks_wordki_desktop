@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Wordki.InteractionProvider
 {
-    public interface IInfoProvider
+    public interface IInfoProvider : IInteractionProvider
     {
-        void Interact();
     }
 }

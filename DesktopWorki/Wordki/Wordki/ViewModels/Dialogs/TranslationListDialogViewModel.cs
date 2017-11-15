@@ -9,7 +9,6 @@ namespace Wordki.ViewModels.Dialogs
     public class TranslationListDialogViewModel : DialogViewModelBase
     {
 
-        public ICommand CancelCommand { get; set; }
         public ICommand OkCommand { get; set; }
         public ObservableCollection<TranslationItem> Items { get; set; }
         public bool Canceled { get; set; }
@@ -30,7 +29,8 @@ namespace Wordki.ViewModels.Dialogs
 
         public override void InitViewModel()
         {
-            CancelCommand = new Util.BuilderCommand(Cancel);
+            base.InitViewModel();
+            CloseCommand = new Util.BuilderCommand(Cancel);
             OkCommand = new Util.BuilderCommand(Ok);
             Items = new ObservableCollection<TranslationItem>();
         }

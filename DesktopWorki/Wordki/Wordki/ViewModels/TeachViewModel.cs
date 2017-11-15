@@ -12,7 +12,6 @@ using Wordki.Helpers;
 using Wordki.Models;
 using Wordki.Models.Lesson;
 using Wordki.Views.Dialogs;
-using Util.Serializers;
 using Repository.Models;
 using Wordki.Database;
 using Wordki.Views.Dialogs.Progress;
@@ -24,7 +23,6 @@ namespace Wordki.ViewModels
 {
     public class TeachViewModel : ViewModelBase, Util.Timer.ITimerListener
     {
-        private LessonState _lessonState;
 
         #region Properies
         private Lesson Lesson { get; set; }
@@ -34,6 +32,7 @@ namespace Wordki.ViewModels
 
         public Settings Settings { get; set; }
 
+        private LessonState _lessonState;
         public LessonState State
         {
             get { return _lessonState; }
@@ -233,25 +232,28 @@ namespace Wordki.ViewModels
 
         private void Pause(object obj)
         {
-            LessonStateEnum lStateEnum = State.StateEnum;
-            InfoDialog lDialog = new InfoDialog();
-            lDialog.ButtonCommand = new BuilderCommand(o =>
-            {
-                lDialog.Close();
-                State = StateFactory.GetState(Lesson, lStateEnum);
-                if (State != null)
-                {
-                    State.RefreshView();
-                }
-            });
-            lDialog.ButtonLabel = "Koniec";
-            lDialog.Message = "Przerwa";
-            lDialog.DialogTitle = "Uwaga";
             using (LessonState lState = StateFactory.GetState(Lesson, LessonStateEnum.Pause))
             {
+                LessonStateEnum lStateEnum = State.StateEnum;
+                IInteractionProvider provider = new SimpleInfoProvider
+                {
+                    ViewModel = new InfoDialogViewModel
+                    {
+                        ButtonLabel = "Wznów",
+                        Message = "Przerwa",
+                        CloseAction = () =>
+                        {
+                            State = StateFactory.GetState(Lesson, lStateEnum);
+                            if (State != null)
+                            {
+                                State.RefreshView();
+                            }
+                        }
+                    }
+                };
                 State = lState;
                 State.RefreshView();
-                lDialog.ShowDialog();
+                provider.Interact();
             }
         }
 
@@ -331,46 +333,48 @@ namespace Wordki.ViewModels
         private void Back(object obj)
         {
             LessonStateEnum lLastState = State.StateEnum;
-            IYesNoProvider provider = new YesNoProvider();
-            provider.ViewModel = new YesNoDialogViewModel()
+            IInteractionProvider provider = new YesNoProvider()
             {
-                DialogTitle = "Uwaga",
-                Message = "Czy na pewno chcesz opuścić lekcje?",
-                PositiveLabel = "Tak",
-                NegativeLabel = "Nie",
-                YesAction = () =>
+                ViewModel = new YesNoDialogViewModel()
                 {
-                    //if (Lesson != null)
-                    //{
-                    //    ISerializer<Lesson> serializer = new BinarySerializer<Lesson>
-                    //    {
-                    //        Settings = new BinarySerializerSettings
-                    //        {
-                    //            Path = "lesson",
-                    //            RemoveAfterRead = true,
-                    //        }
-                    //    };
-                    //    try
-                    //    {
-                    //        serializer.Write(Lesson);
-                    //    }
-                    //    catch (Exception e)
-                    //    {
-                    //        LoggerSingleton.LogError("Błąd serializowania lekcji - {0}", e.Message);
-                    //    }
-                    //    Lesson.FinishLesson();
-                    //    Lesson.Timer.StopTimer();
-                    //}
-                    Switcher.GetSwitcher().Back(true);
-                },
-                NoAction = () =>
-                {
-                    State = StateFactory.GetState(Lesson, lLastState);
-                    if (State != null)
+                    DialogTitle = "Uwaga",
+                    Message = "Czy na pewno chcesz opuścić lekcje?",
+                    PositiveLabel = "Tak",
+                    NegativeLabel = "Nie",
+                    YesAction = () =>
                     {
-                        State.RefreshView();
+                        //if (Lesson != null)
+                        //{
+                        //    ISerializer<Lesson> serializer = new BinarySerializer<Lesson>
+                        //    {
+                        //        Settings = new BinarySerializerSettings
+                        //        {
+                        //            Path = "lesson",
+                        //            RemoveAfterRead = true,
+                        //        }
+                        //    };
+                        //    try
+                        //    {
+                        //        serializer.Write(Lesson);
+                        //    }
+                        //    catch (Exception e)
+                        //    {
+                        //        LoggerSingleton.LogError("Błąd serializowania lekcji - {0}", e.Message);
+                        //    }
+                        //    Lesson.FinishLesson();
+                        //    Lesson.Timer.StopTimer();
+                        //}
+                        Switcher.GetSwitcher().Back(true);
+                    },
+                    NoAction = () =>
+                    {
+                        State = StateFactory.GetState(Lesson, lLastState);
+                        if (State != null)
+                        {
+                            State.RefreshView();
+                        }
                     }
-                }
+                },
             };
             provider.Interact();
         }

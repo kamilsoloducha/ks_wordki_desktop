@@ -8,13 +8,11 @@ using System.Threading.Tasks;
 
 namespace Wordki.InteractionProvider
 {
-    public interface ITranslationProvider
+    public interface ITranslationProvider : IInteractionProvider
     {
 
         IWord Word { get; set; }
         TranslationDirection TranslationDirection { get; set; }
         IEnumerable<string> Items { get; set; }
-
-        void Interact();
     }
 }

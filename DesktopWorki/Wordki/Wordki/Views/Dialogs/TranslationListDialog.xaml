@@ -21,7 +21,7 @@
             Command="{Binding Path=OkCommand}" />
         <KeyBinding
             Key="Escape"
-            Command="{Binding Path=CancelCommand}" />
+            Command="{Binding Path=CloseCommand}" />
     </dialogs:DialogBase.InputBindings>
 
     <Grid>

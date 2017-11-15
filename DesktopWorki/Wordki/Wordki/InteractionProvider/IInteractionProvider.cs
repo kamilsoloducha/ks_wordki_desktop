@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wordki.Views.Dialogs
+namespace Wordki.InteractionProvider
 {
-    public interface IYesNoDialog
+    public interface IInteractionProvider
     {
-
-
-
+        void Interact();
     }
 }

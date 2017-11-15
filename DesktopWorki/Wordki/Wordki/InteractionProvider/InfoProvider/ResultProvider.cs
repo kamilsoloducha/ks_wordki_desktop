@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Wordki.InteractionProvider
 {
-    public interface ISearchProvider : IInteractionProvider
+    public class ResultProvider : InteractionProviderBase, IInfoProvider
     {
+
+        protected override void DispatcherWork()
+        {
+
+
+
+        }
     }
 }

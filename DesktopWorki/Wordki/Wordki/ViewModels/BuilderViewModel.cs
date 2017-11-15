@@ -451,20 +451,22 @@ namespace Wordki.ViewModels
             {
                 return;
             }
-            IYesNoProvider provider = new YesNoProvider();
-            provider.ViewModel = new YesNoDialogViewModel()
+            IInteractionProvider provider = new YesNoProvider()
             {
-                DialogTitle = "Uwaga",
-                Message = "Czy na pewno usunąć grupy?",
-                PositiveLabel = "Tak",
-                NegativeLabel = "Nie",
-                YesAction = async () =>
+                ViewModel = new YesNoDialogViewModel()
                 {
-                    int groupIndex = Database.Groups.IndexOf(SelectedGroup);
-                    SelectedGroup = Database.Groups.Count > groupIndex ? Database.Groups[groupIndex] : null;
-                    SelectedWord = SelectedGroup != null ? SelectedGroup.Words.LastOrDefault() : null;
-                    await Database.DeleteGroupAsync(SelectedGroup);
-                    RefreshView();
+                    DialogTitle = "Uwaga",
+                    Message = "Czy na pewno usunąć grupy?",
+                    PositiveLabel = "Tak",
+                    NegativeLabel = "Nie",
+                    YesAction = async () =>
+                    {
+                        int groupIndex = Database.Groups.IndexOf(SelectedGroup);
+                        SelectedGroup = Database.Groups.Count > groupIndex ? Database.Groups[groupIndex] : null;
+                        SelectedWord = SelectedGroup != null ? SelectedGroup.Words.LastOrDefault() : null;
+                        await Database.DeleteGroupAsync(SelectedGroup);
+                        RefreshView();
+                    },
                 },
             };
             provider.Interact();

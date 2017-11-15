@@ -24,6 +24,7 @@ using Repository.Models;
 using Wordki.Database;
 using Util.Collections;
 using Wordki.Helpers.WordComparer;
+using Wordki.ViewModels.Dialogs;
 
 namespace Wordki.ViewModels
 {
@@ -519,7 +520,15 @@ namespace Wordki.ViewModels
                 lesson.InitLesson();
                 if(lesson.BeginWordsList.Count == 0)
                 {
-                    LoggerSingleton.LogError("Brak słów do nauki");
+                    InteractionProvider.IInteractionProvider provider = new InteractionProvider.SimpleInfoProvider
+                    {
+                        ViewModel = new InfoDialogViewModel
+                        {
+                            ButtonLabel = "Ok",
+                            Message = "Brak słów do nauki"
+                        }
+                    };
+                    provider.Interact();
                     return;
                 }
                 PackageStore.Put(0, lesson);
