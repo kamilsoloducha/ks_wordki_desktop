@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Input;
 using Wordki.Database;
 using Wordki.Helpers;
 using Wordki.Helpers.WordComparer;
@@ -22,10 +23,10 @@ namespace Wordki.ViewModels
 
         private IDatabase Database { get; set; }
         public ObservableCollection<Word> DataGridCollection { get; set; }
-        public BuilderCommand BackCommand { get; set; }
-        public BuilderCommand ConnectWordsCommand { get; set; }
-        public BuilderCommand EditWordCommand { get; set; }
-        public BuilderCommand BothLanguagesCommand { get; set; }
+        public ICommand BackCommand { get; set; }
+        public ICommand ConnectWordsCommand { get; set; }
+        public ICommand EditWordCommand { get; set; }
+        public ICommand BothLanguagesCommand { get; set; }
 
         private object _lockObject = new object();
 
@@ -37,10 +38,10 @@ namespace Wordki.ViewModels
 
         private void ActivateCommand()
         {
-            BackCommand = new BuilderCommand(Back);
-            ConnectWordsCommand = new BuilderCommand(ConnectWord);
-            EditWordCommand = new BuilderCommand(EditWord);
-            BothLanguagesCommand = new BuilderCommand(BothLanguages);
+            BackCommand = new Util.BuilderCommand(Back);
+            ConnectWordsCommand = new Util.BuilderCommand(ConnectWord);
+            EditWordCommand = new Util.BuilderCommand(EditWord);
+            BothLanguagesCommand = new Util.BuilderCommand(BothLanguages);
         }
 
         private void EditWord(object obj)
