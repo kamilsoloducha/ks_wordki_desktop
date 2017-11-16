@@ -21,7 +21,7 @@ namespace Wordki.Models.LessonScheduler
             int specificDaysToLearn = 0;
             if (Initializer.TimeSeparator.Count() >= group.Results.Count)
             {
-                specificDaysToLearn = Initializer.TimeSeparator.ElementAt(group.Results.Count);
+                specificDaysToLearn = Initializer.TimeSeparator.ElementAt(group.Results.Count - 1);
             }
             else
             {

@@ -45,18 +45,6 @@ namespace Wordki.ViewModels
             }
         }
 
-        private ObservableCollection<InputBinding> _shortKeys;
-        public ObservableCollection<InputBinding> ShortKeys
-        {
-            get { return _shortKeys; }
-            set
-            {
-                if (_shortKeys == value) return;
-                _shortKeys = value;
-                OnPropertyChanged();
-            }
-        }
-
         private int _selectionStart;
         public int SelectionStart
         {
@@ -114,6 +102,7 @@ namespace Wordki.ViewModels
         public ICommand OnEnterClickCommand { get; set; }
         public ICommand CheckUncheckCommand { get; set; }
         public ICommand HintCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
 
         public static ICommand StartLessonCommand { get; set; }
         public static ICommand PauseCommand { get; set; }
@@ -128,22 +117,7 @@ namespace Wordki.ViewModels
                 {0, Visibility.Collapsed},
                 {1, Visibility.Collapsed},
               };
-            ShortKeys = new ObservableCollection<InputBinding>
-            {
-                new KeyBinding {
-                    Command = new BuilderCommand(ShortKey),
-                    CommandParameter = 'ś',
-                    Key = Key.S,
-                    Modifiers = ModifierKeys.Alt
-                }
-            };
             HintLetters = 0;
-        }
-
-        private void ShortKey(object obj)
-        {
-            char character = (char)obj;
-            State.Translation += character;
         }
 
         public override void InitViewModel()
@@ -170,16 +144,6 @@ namespace Wordki.ViewModels
         public override void Back() { }
 
         #region Commands
-
-        public ICommand SearchCommand { get; set; }
-
-
-        private void Search(object obj)
-        {
-            ISearchProvider provider = new SearchProvider();
-            provider.Interact();
-        }
-
         private void ActivateCommands()
         {
             SearchCommand = new BuilderCommand(Search);
@@ -193,6 +157,12 @@ namespace Wordki.ViewModels
             PauseCommand = new BuilderCommand(Pause);
             CheckUncheckCommand = new BuilderCommand(CheckUncheck);
             HintCommand = new BuilderCommand(Hint);
+        }
+
+        private void Search(object obj)
+        {
+            ISearchProvider provider = new SearchProvider();
+            provider.Interact();
         }
 
         private void Hint(object obj)
@@ -236,7 +206,7 @@ namespace Wordki.ViewModels
         {
             using (LessonState lState = StateFactory.GetState(Lesson, LessonStateEnum.Pause))
             {
-                LessonStateEnum lStateEnum = State.StateEnum;
+                LessonStateEnum stateEnumBeforePause = State.StateEnum;
                 IInteractionProvider provider = new SimpleInfoProvider
                 {
                     ViewModel = new InfoDialogViewModel
@@ -245,7 +215,7 @@ namespace Wordki.ViewModels
                         Message = "Przerwa",
                         CloseAction = () =>
                         {
-                            State = StateFactory.GetState(Lesson, lStateEnum);
+                            State = StateFactory.GetState(Lesson, stateEnumBeforePause);
                             if (State != null)
                             {
                                 State.RefreshView();

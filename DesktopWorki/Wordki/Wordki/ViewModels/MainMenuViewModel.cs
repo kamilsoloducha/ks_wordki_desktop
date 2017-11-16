@@ -8,6 +8,7 @@ using Wordki.Database;
 using System.Windows.Input;
 using Wordki.InteractionProvider;
 using Util;
+using Wordki.ViewModels.Dialogs;
 
 namespace Wordki.ViewModels
 {
@@ -150,7 +151,7 @@ namespace Wordki.ViewModels
         public override void InitViewModel()
         {
             Login = UserManagerSingleton.Get().User.Name;
-            ReadDatabaseFromServer();
+            RefreshInfo();
             //SearchDialog dialog = new SearchDialog
             //{
             //};
@@ -193,34 +194,41 @@ namespace Wordki.ViewModels
 
         private void Exit(object obj)
         {
-            Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown());
+            IInteractionProvider provider = new YesNoProvider
+            {
+                ViewModel = new YesNoDialogViewModel
+                {
+                    YesAction = () => { Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown()); },
+                    Message = "Czy chcesz wyjść z programu?",
+                    NegativeLabel = "Nie",
+                    PositiveLabel = "Tak"
+                }
+            };
         }
         #endregion
 
         private void RefreshInfo()
         {
-            IDatabase lDatabase = DatabaseSingleton.GetDatabase();
-            ObservableCollection<double> lList = new ObservableCollection<double>();
-            string lTeachTimeToday = Helpers.Util.GetAproximatedTimeFromSeconds(ResultCalculator.GetLessonTime(DateTime.Now.AddDays(-1), DateTime.Now));
-            string lTeachTime = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.Groups.Sum(x => x.Results.Sum(y => y.TimeCount)));
-            int lGroupCount = lDatabase.Groups.Count;
-            int lWordCount = lDatabase.Groups.Sum(x => x.Words.Count);
-            int lResultCount = lDatabase.Groups.Sum(x => x.Results.Count);
-            Application.Current.Dispatcher.Invoke(() =>
+            Task.Run(() =>
             {
-                TeachTimeToday = lTeachTimeToday;
-                TeachTime = lTeachTime;
-                GroupCount = lGroupCount;
-                WordCount = lWordCount;
-                ResultCount = lResultCount;
-                Values = lList;
-                MaxValue = lList.Sum();
+                IDatabase lDatabase = DatabaseSingleton.GetDatabase();
+                ObservableCollection<double> lList = new ObservableCollection<double>();
+                string lTeachTimeToday = Helpers.Util.GetAproximatedTimeFromSeconds(ResultCalculator.GetLessonTime(DateTime.Now.AddDays(-1), DateTime.Now));
+                string lTeachTime = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.Groups.Sum(x => x.Results.Sum(y => y.TimeCount)));
+                int lGroupCount = lDatabase.Groups.Count;
+                int lWordCount = lDatabase.Groups.Sum(x => x.Words.Count);
+                int lResultCount = lDatabase.Groups.Sum(x => x.Results.Count);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    TeachTimeToday = lTeachTimeToday;
+                    TeachTime = lTeachTime;
+                    GroupCount = lGroupCount;
+                    WordCount = lWordCount;
+                    ResultCount = lResultCount;
+                    Values = lList;
+                    MaxValue = lList.Sum();
+                });
             });
-        }
-
-        private void ReadDatabaseFromServer()
-        {
-            Task.Run(() => RefreshInfo());
         }
     }
 }

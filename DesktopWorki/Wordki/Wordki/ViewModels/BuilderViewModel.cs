@@ -18,13 +18,9 @@ using System.Collections;
 using Wordki.Helpers.GroupConnector;
 using Util.Threads;
 using Wordki.Views.Dialogs.Progress;
-using Wordki.Models.Connector;
 using Wordki.Helpers.Connector;
 using Wordki.Helpers.Connector.Requests;
 using Wordki.ViewModels.Dialogs;
-using System.Windows;
-using System.Text;
-using Wordki.Helpers.TranslationPusher;
 using Wordki.InteractionProvider;
 
 namespace Wordki.ViewModels
@@ -502,6 +498,11 @@ namespace Wordki.ViewModels
         {
             IGroup group = new Group();
             AddGroup_(group);
+            if (SelectedGroup != null)
+            {
+                group.Language1 = SelectedGroup.Language1;
+                group.Language2 = SelectedGroup.Language2;
+            }
             SelectedGroup = group;
             SetOnLastWordCurretGroup();
             RefreshView();

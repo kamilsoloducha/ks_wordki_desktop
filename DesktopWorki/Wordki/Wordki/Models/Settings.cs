@@ -107,7 +107,8 @@ namespace Wordki.Models
             FontSize = 30;
             ApplicationStyle = ApplicationStyleEnum.Dark;
             FontSizeSensitive = false;
-            ShortCuts = new ObservableCollection<ForeignLetter> {
+            ShortCuts = new ObservableCollection<ForeignLetter>()
+            {
         new ForeignLetter {
           ForeignKey = "ś",
           KeyboardKey = 's'
