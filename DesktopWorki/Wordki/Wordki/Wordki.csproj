@@ -154,6 +154,7 @@
     <Compile Include="Database\Repositories\UserRepository.cs" />
     <Compile Include="Database\Maps\WordMap.cs" />
     <Compile Include="Database\Repositories\WordRepository.cs" />
+    <Compile Include="Helpers\Behaviour\ListBoxAtLeastOneSelectedItemBehavior.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
     <Compile Include="Helpers\Command\CommandApiRequest.cs" />
     <Compile Include="Helpers\Command\ICommand.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="Helpers\Behaviour\CursorAtEndBehavior.cs" />
     <Compile Include="Helpers\Converters\LanguageTypeToStringConverter.cs" />
     <Compile Include="Helpers\Converters\PassingParametersConverter.cs" />
+    <Compile Include="Helpers\Converters\RatioConverter.cs" />
     <Compile Include="Helpers\Converters\TranslationDirectionToIntConverter.cs" />
     <Compile Include="Helpers\Converters\WordCheckedToBrushConverter.cs" />
     <Compile Include="Helpers\Converters\WordCheckedToStringConverter.cs" />
@@ -196,6 +198,8 @@
     <Compile Include="Helpers\Notification\NotificationFactory.cs" />
     <Compile Include="Helpers\Notification\ToastNotification.cs" />
     <Compile Include="Helpers\Behaviour\ScrollIntoViewBehavior.cs" />
+    <Compile Include="Helpers\ResultConnector\IResultConnector.cs" />
+    <Compile Include="Helpers\ResultConnector\ResultConnector.cs" />
     <Compile Include="Helpers\TranslationPusher\ITranslationPusher.cs" />
     <Compile Include="Helpers\TranslationPusher\TranslationPusher.cs" />
     <Compile Include="Helpers\WordComparer\IWordComparer.cs" />
@@ -281,9 +285,18 @@
     <Compile Include="Models\User\User.cs" />
     <Compile Include="Models\Word\Word.cs" />
     <Compile Include="Models\Word\WordCalculator.cs" />
+    <Compile Include="ViewModels\LessonStates\FiszkiStates\AfterEndFiszkiState.cs" />
+    <Compile Include="ViewModels\LessonStates\FiszkiStates\BeforeStartFiszkiState.cs" />
+    <Compile Include="ViewModels\LessonStates\FiszkiStates\CorrectFiszkiState.cs" />
+    <Compile Include="ViewModels\LessonStates\FiszkiStates\NextWordFiszkiState.cs" />
+    <Compile Include="ViewModels\LessonStates\FiszkiStates\PauseFiszkiState.cs" />
+    <Compile Include="ViewModels\LessonStates\FiszkiLessonStateFactory.cs" />
+    <Compile Include="ViewModels\LessonStates\FiszkiStates\WrongFiszkiState.cs" />
+    <Compile Include="ViewModels\LessonStates\TypingStates\AfterEndTypingState.cs" />
     <Compile Include="ViewModels\BuilderViewModel.cs" />
     <Compile Include="ViewModels\BuildFromFileViewModel.cs" />
     <Compile Include="ViewModels\ChartViewModel.cs" />
+    <Compile Include="ViewModels\LessonStates\TypingStates\CorrectTypingState.cs" />
     <Compile Include="ViewModels\Dialogs\DialogViewModelBase.cs" />
     <Compile Include="ViewModels\Dialogs\InfoDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\Progress\ProgressDialogViewModel.cs" />
@@ -292,15 +305,25 @@
     <Compile Include="ViewModels\Dialogs\YesNoDialogViewModel.cs" />
     <Compile Include="ViewModels\GroupManagerViewModel.cs" />
     <Compile Include="ViewModels\IViewModel.cs" />
+    <Compile Include="ViewModels\LessonStates\LessonStateBase.cs" />
+    <Compile Include="ViewModels\LessonStates\LessonStateEnum.cs" />
+    <Compile Include="ViewModels\LessonStates\LessonStateFactoryBase.cs" />
+    <Compile Include="ViewModels\LessonStates\TypingStates\BeforeStartTypingState.cs" />
+    <Compile Include="ViewModels\LessonStates\TypingStates\PauseTypingTypingState.cs" />
+    <Compile Include="ViewModels\LessonStates\TypingLessonStateFactory.cs" />
     <Compile Include="ViewModels\LoginMainViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
+    <Compile Include="ViewModels\LessonStates\TypingStates\NextWordTypingState.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\SameWordsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="ViewModels\TeachViewModel.cs" />
+    <Compile Include="ViewModels\TeachFiszkiViewModel.cs" />
+    <Compile Include="ViewModels\TeachTypingViewModel.cs" />
+    <Compile Include="ViewModels\TeachViewModelBase.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\WordManageViewModel.cs" />
+    <Compile Include="ViewModels\LessonStates\TypingStates\WrongTypingState.cs" />
     <Compile Include="Views\BuilderPage.xaml.cs">
       <DependentUpon>BuilderPage.xaml</DependentUpon>
     </Compile>

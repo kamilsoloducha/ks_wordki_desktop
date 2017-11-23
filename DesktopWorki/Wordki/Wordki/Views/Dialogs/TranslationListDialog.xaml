@@ -98,7 +98,7 @@
             <Button
                 Style="{StaticResource DialogFlatButtonStyle}"
                 Content="Anuluj"
-                Command="{Binding Path=CancelCommand}" />
+                Command="{Binding Path=CloseCommand}" />
         </StackPanel>
     </Grid>
 </dialogs:DialogBase>

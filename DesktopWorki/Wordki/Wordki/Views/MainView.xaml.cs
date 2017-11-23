@@ -21,7 +21,7 @@ namespace Wordki.Views
             Switcher.LockStates.Add(Switcher.State.Login);
             Switcher.LockStates.Add(Switcher.State.Register);
             Switcher.LockStates.Add(Switcher.State.Menu);
-            Switcher.LockStates.Add(Switcher.State.Teach);
+            Switcher.LockStates.Add(Switcher.State.TeachTyping);
             Switcher.OnSwich += (sender, args) =>
             {
                 ISwitchElement page = ((Switcher.SwitchEventArgs)args).Page;

@@ -27,6 +27,12 @@ using Wordki.ViewModels.Dialogs;
 
 namespace Wordki.ViewModels
 {
+    public enum SortDirection
+    {
+        Increasing,
+        Decreasing
+    }
+
     public class GroupManagerViewModel : ViewModelBase
     {
 
@@ -41,10 +47,7 @@ namespace Wordki.ViewModels
 
         #region Properties
 
-        public ICommand StartTypingLessonCommand { get; set; }
-        public ICommand StartReapetLessonCommand { get; set; }
-        public ICommand StartRandomLessonCommand { get; set; }
-        public ICommand StartBestLessonCommand { get; set; }
+        public ICommand StartLessonCommand { get; set; }
         public ICommand EditGroupCommand { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand ShowWordsCommand { get; set; }
@@ -54,6 +57,7 @@ namespace Wordki.ViewModels
         public ICommand AllWordsCommand { get; set; }
         public ICommand ShowPlotCommand { get; set; }
         public ICommand FinishLessonCommand { get; set; }
+        public ICommand SortDirectionCommand { get; private set; }
 
         public double MaxValue
         {
@@ -80,12 +84,13 @@ namespace Wordki.ViewModels
             get { return _selectedItem; }
             set
             {
-                if (_selectedItem != value)
+                if (_selectedItem == value)
                 {
-                    _selectedItem = value;
-                    OnPropertyChanged();
-                    RefreshInfo();
+                    return;
                 }
+                _selectedItem = value;
+                OnPropertyChanged();
+                RefreshInfo();
             }
         }
         public string TranslationDirectionLabel
@@ -169,10 +174,7 @@ namespace Wordki.ViewModels
 
         private void ActivateCommond()
         {
-            StartTypingLessonCommand = new Util.BuilderCommand(StartTypingLesson);
-            StartReapetLessonCommand = new Util.BuilderCommand(StartReapetLesson);
-            StartRandomLessonCommand = new Util.BuilderCommand(StartRandomLesson);
-            StartBestLessonCommand = new Util.BuilderCommand(StartBestLesson);
+            StartLessonCommand = new Util.BuilderCommand(StartLesson);
             EditGroupCommand = new Util.BuilderCommand(EditGroup);
             BackCommand = new Util.BuilderCommand(Back);
             ShowWordsCommand = new Util.BuilderCommand(ShowWords);
@@ -183,6 +185,7 @@ namespace Wordki.ViewModels
             ShowPlotCommand = new Util.BuilderCommand(ShowPlot);
             FinishLessonCommand = new Util.BuilderCommand(FinishLesson);
         }
+
 
         private void FinishLesson(object obj)
         {
@@ -205,7 +208,7 @@ namespace Wordki.ViewModels
                 return;
             }
             //PackageStore.Put(0, lesson);
-            Switcher.Switch(Switcher.State.Teach);
+            Switcher.Switch(Switcher.State.TeachTyping);
         }
 
         private void EditGroup(object obj)
@@ -285,25 +288,6 @@ namespace Wordki.ViewModels
             Switcher.Back();
         }
 
-        private void StartReapetLesson(object obj)
-        {
-            StartLesson(LessonType.IntensiveLesson);
-        }
-
-        private void StartTypingLesson(object obj)
-        {
-            StartLesson(LessonType.TypingLesson);
-        }
-
-        private void StartRandomLesson(object obj)
-        {
-            StartLesson(LessonType.RandomLesson);
-        }
-
-        private void StartBestLesson(object obj)
-        {
-            StartLesson(LessonType.BestLesson);
-        }
         #endregion
 
         public override void InitViewModel()
@@ -311,13 +295,23 @@ namespace Wordki.ViewModels
             Task.Run(() =>
             {
                 ItemsList.Clear();
-                ILessonScheduler scheduler = new LessonScheduler(new SimpleLessonScheduleInitializer());
+                ILessonScheduler scheduler = new NewLessonScheduler()
+                {
+                    Initializer = new LessonSchedulerInitializer2(new List<int>() { 1, 1, 2, 4, 7 }),
+                };
                 foreach (GroupItem groupItem in DatabaseSingleton.GetDatabase().Groups.Select(group => new GroupItem(group)))
                 {
                     groupItem.Color = scheduler.GetColor(groupItem.Group);
-                    groupItem.NextRepeat = scheduler.GetTimeToLearn(groupItem.Group);
+                    groupItem.NextRepeat = Math.Max(scheduler.GetTimeToLearn(groupItem.Group), 0);
                     ItemsList.Add(groupItem);
                 }
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (ItemsList.Count > 0)
+                    {
+                        SelectedItem = ItemsList.First();
+                    }
+                });
             });
             SetTranslationDirectionLabel();
             SetTimeOutLabel();
@@ -346,33 +340,29 @@ namespace Wordki.ViewModels
                     lDrawersCount.Add(0);
                 if (SelectionList == null)
                     return;
-                foreach (GroupItem lGroupItem in SelectionList)
+                foreach (GroupItem item in SelectionList)
                 {
-                    IGroup lGroup = lGroupItem.Group;
-                    lLanguage1Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathRectFlag(LanguageFactory.GetLanguage(lGroup.Language1))));
-                    lLanguage2Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathRectFlag(LanguageFactory.GetLanguage(lGroup.Language2))));
-                    lGroupNameBuilder.Append(lGroup.Name).Append(" ");
-                    lWordsCount += lGroup.Words.Count;
-                    //lRepeatsCount += Database.GetDatabase().GetResultsList(lGroupItem.Group.Id).Count;
-                    //IResult lResult = Database.GetDatabase().GetLastResult(lGroupItem.Group.Id);
-                    //if (lResult != null)
-                    //{
-                    //    DateTime lGroupLastResult = lResult.DateTime;
-                    //    if (lLastRepeat.CompareTo(lGroupLastResult) < 0)
-                    //    {
-                    //        lLastRepeat = lGroupLastResult;
-                    //    }
-                    //}
-                    foreach (Word lWord in lGroup.Words)
+                    lLanguage1Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathCircleFlag(LanguageFactory.GetLanguage(item.Group.Language1))));
+                    lLanguage2Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathCircleFlag(LanguageFactory.GetLanguage(item.Group.Language2))));
+                    lGroupNameBuilder.Append(item.Group.Name).Append(" ");
+                    lWordsCount += item.Group.Words.Count;
+                    foreach (Word lWord in item.Group.Words)
                     {
                         lDrawersCount[lWord.Drawer]++;
                         if (lWord.Visible)
                             lVisibilitiesCount++;
                     }
+                    DateTime itemDateTime = item.Group.Results.Max(x => x.DateTime);
+                    if (itemDateTime > lLastRepeat)
+                    {
+                        lLastRepeat = itemDateTime;
+                    }
+                    lRepeatsCount += item.Group.Results.Count;
                 }
                 MaxValue = lDrawersCount.Sum();
                 Values = new ObservableCollection<double>(lDrawersCount);
-                GroupInfo.SetValue(lGroupNameBuilder.ToString(), lWordsCount, lRepeatsCount, lLastRepeat, lVisibilitiesCount, lLanguage1Flag, lLanguage2Flag);
+                GroupInfo.
+                    SetValue(lGroupNameBuilder.ToString(), lWordsCount, lRepeatsCount, lLastRepeat, lVisibilitiesCount, lLanguage1Flag, lLanguage2Flag);
             }
             catch (Exception lException)
             {
@@ -469,31 +459,43 @@ namespace Wordki.ViewModels
             return result.Take(pCount);
         }
 
-        private void StartLesson(LessonType lLessonType)
+        private void StartLesson(object obj)
         {
+            LessonType lLessonType = (LessonType)obj;
             try
             {
                 Lesson lesson;
+                Switcher.State stateToStart;
                 switch (lLessonType)
                 {
+                    case LessonType.FiszkiLesson:
+                        {
+                            lesson = new FiszkiLesson(GetWordListFromSelectedGroups());
+                            stateToStart = Switcher.State.TeachFiszki;
+                        }
+                        break;
                     case LessonType.TypingLesson:
                         {
                             lesson = new TypingLesson(GetWordListFromSelectedGroups());
+                            stateToStart = Switcher.State.TeachTyping;
                         }
                         break;
                     case LessonType.IntensiveLesson:
                         {
                             lesson = new IntensiveLesson(GetWordListFromSelectedGroups());
+                            stateToStart = Switcher.State.TeachTyping;
                         }
                         break;
                     case LessonType.RandomLesson:
                         {
                             lesson = new RandomLesson(GetWordListRandom(60));
+                            stateToStart = Switcher.State.TeachTyping;
                         }
                         break;
                     case LessonType.BestLesson:
                         {
                             lesson = new BestLesson(GetWordListBest(60));
+                            stateToStart = Switcher.State.TeachTyping;
                         }
                         break;
                     default:
@@ -517,7 +519,7 @@ namespace Wordki.ViewModels
                 };
                 lesson.LessonSettings = lessonSettings;
                 lesson.InitLesson();
-                if(lesson.BeginWordsList.Count == 0)
+                if (lesson.BeginWordsList.Count == 0)
                 {
                     InteractionProvider.IInteractionProvider provider = new InteractionProvider.SimpleInfoProvider
                     {
@@ -531,15 +533,13 @@ namespace Wordki.ViewModels
                     return;
                 }
                 PackageStore.Put(0, lesson);
-                Switcher.Switch(Switcher.State.Teach);
+                Switcher.Switch(stateToStart);
             }
             catch (Exception lException)
             {
                 LoggerSingleton.LogError("{0} - {1} - {2}", "Blad w startowaniu lekcji", lLessonType.ToString(), lException.Message);
             }
         }
-
-
 
     }
 
@@ -558,8 +558,6 @@ namespace Wordki.ViewModels
         }
 
         #endregion
-
-        private const string FormatDate = "yyyy-MM-dd hh:mm:ss";
 
         private string _groupName;
         private int _wordsCount;
@@ -661,7 +659,7 @@ namespace Wordki.ViewModels
             RepeatCount = pRepeatCount;
             if (pRepeatCount != 0)
             {
-                LastRepeat = pLastRepeat.ToString(FormatDate);
+                LastRepeat = Convert.ToString((int)(DateTime.Now - pLastRepeat).TotalDays);
             }
             else
             {

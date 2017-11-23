@@ -97,12 +97,10 @@ namespace Wordki.Models
         public override bool Equals(object obj)
         {
             IResult result = obj as IResult;
-            if (result != null &&
-              result.Id == Id)
-            {
-                return true;
-            }
-            return true;
+            return result != null
+                && result.Id == Id
+                && result.LessonType == LessonType
+                && result.State == State;
         }
     }
 }

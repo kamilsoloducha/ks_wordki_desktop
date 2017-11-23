@@ -428,7 +428,7 @@ namespace Wordki.ViewModels
                 return;
             }
             IGroupConnector connector = new GroupConnector();
-            if (!connector.Connect(groups.ToList()) && connector.DestinationGroup != null)
+            if (!connector.Connect(groups.ToList()) || connector.DestinationGroup == null)
             {
                 return;
             }

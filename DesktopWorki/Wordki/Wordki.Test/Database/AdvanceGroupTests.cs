@@ -108,6 +108,7 @@ namespace Wordki.Test.Database
             resultToChange.Accepted = 1;
             resultToChange.Invisibilities = 1;
             resultToChange.TranslationDirection = Repository.Models.Enums.TranslationDirection.FromFirst;
+            resultToChange.State = -1;
 
             groupRepo.Update(groups);
             IResult resultFromDatabase = resultRepo.Get(resultToChange.Id);

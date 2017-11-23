@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Util;
 using Wordki.Models;
 
 namespace Wordki.Test
@@ -69,18 +70,24 @@ namespace Wordki.Test
             };
         }
 
-        public Result GetResult()
+        public Result GetResult(short correct = 10,
+            short accepted = 10,
+            short wrong = 10,
+            short invisibilities = 10,
+            LessonType lessonType = LessonType.TypingLesson,
+            short timeCount = 10,
+            TranslationDirection direction = TranslationDirection.FromSecond)
         {
             return new Result()
             {
-                Correct = 10,
-                Accepted = 10,
-                Wrong = 10,
-                Invisibilities = 10,
+                Correct = correct,
+                Accepted = accepted,
+                Wrong = wrong,
+                Invisibilities = invisibilities,
                 DateTime = new DateTime(1990, 9, 24, 12, 0, 0),
-                LessonType = Repository.Models.Enums.LessonType.TypingLesson,
-                TimeCount = 10,
-                TranslationDirection = Direction,
+                LessonType = lessonType,
+                TimeCount = timeCount,
+                TranslationDirection = direction,
                 State = 3,
             };
         }

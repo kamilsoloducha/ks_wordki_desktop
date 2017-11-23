@@ -41,37 +41,40 @@ namespace Wordki.Helpers
             switch (pState)
             {
                 case State.Login:
-                    result =  new LoginPage();
+                    result = new LoginPage();
                     break;
                 case State.Register:
-                    result =  new RegisterPage();
+                    result = new RegisterPage();
                     break;
                 case State.Menu:
-                    result =  new MenuPage();
+                    result = new MenuPage();
                     break;
                 case State.Builder:
-                    result =  new BuilderPage();
+                    result = new BuilderPage();
                     break;
                 case State.Groups:
-                    result =  new GroupsPage();
+                    result = new GroupsPage();
                     break;
-                case State.Teach:
-                    result =  new TeachPage();
+                case State.TeachTyping:
+                    result = new TeachPage(TeachPageType.Typing);
+                    break;
+                case State.TeachFiszki:
+                    result = new TeachPage(TeachPageType.Fiszki);
                     break;
                 case State.Settings:
-                    result =  new SettingsPage();
+                    result = new SettingsPage();
                     break;
                 case State.Words:
-                    result =  new WordsPage();
+                    result = new WordsPage();
                     break;
                 case State.Plot:
-                    result =  new PlotPage();
+                    result = new PlotPage();
                     break;
                 case State.Same:
-                    result =  new SameWordsPage();
+                    result = new SameWordsPage();
                     break;
                 case State.BuildFromFile:
-                    result =  new BuildFromFilePage();
+                    result = new BuildFromFilePage();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("pState");
@@ -109,7 +112,8 @@ namespace Wordki.Helpers
             Menu,
             Builder,
             Groups,
-            Teach,
+            TeachTyping,
+            TeachFiszki,
             Settings,
             Words,
             Plot,

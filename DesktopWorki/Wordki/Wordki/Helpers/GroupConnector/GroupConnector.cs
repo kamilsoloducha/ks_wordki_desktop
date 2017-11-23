@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Repository.Models;
+using Wordki.Helpers.ResultConnector;
 
 namespace Wordki.Helpers.GroupConnector
 {
@@ -8,6 +9,12 @@ namespace Wordki.Helpers.GroupConnector
     {
 
         public IGroup DestinationGroup { get; private set; }
+        private IResultConnector _resultConnector;
+
+        public GroupConnector()
+        {
+            _resultConnector = new ResultConnector.ResultConnector();
+        }
 
         public bool Connect(IList<IGroup> groups)
         {
@@ -31,11 +38,7 @@ namespace Wordki.Helpers.GroupConnector
                     dest.AddWord(word);
                 }
                 groups[i].Words.Clear();
-                foreach (IResult result in groups[i].Results)
-                {
-                    dest.AddResult(result);
-                }
-                groups[i].Results.Clear();
+                _resultConnector.Connect(dest, groups[i]);
             }
             DestinationGroup = dest;
             return true;

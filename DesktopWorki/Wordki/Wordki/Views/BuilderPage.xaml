@@ -23,9 +23,6 @@
             BasedOn="{StaticResource AppTextBoxStyle}"
             TargetType="{x:Type TextBox}">
             <Setter
-                Property="Margin"
-                Value="5" />
-            <Setter
                 Property="Background"
                 Value="Transparent" />
             <Setter
@@ -470,7 +467,6 @@
                     Text="{Binding Path=SelectedWord.Language1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     IsEnabled="{Binding EnableElementDirectory[Language1], UpdateSourceTrigger=PropertyChanged}"
                     helpers:FocusExtension.IsFocused="{Binding Path=Language1IsFocused, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Margin="10, 10, 10, 0"
                     TabIndex="0">
                 </TextBox>
 
@@ -480,7 +476,6 @@
                     Style="{StaticResource WinTextBoxStyle}"
                     IsEnabled="{Binding EnableElementDirectory[Language2], UpdateSourceTrigger=PropertyChanged}"
                     Text="{Binding Path=SelectedWord.Language2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Margin="10, 0, 10, 10"
                     TabIndex="10" />
 
                 <TextBox
@@ -489,7 +484,6 @@
                     Style="{StaticResource WinTextBoxStyle}"
                     IsEnabled="{Binding EnableElementDirectory[Language1Comment], UpdateSourceTrigger=PropertyChanged}"
                     Text="{Binding Path=SelectedWord.Language1Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Margin="10, 10, 10, 0"
                     TabIndex="20" />
 
                 <TextBox
@@ -498,7 +492,6 @@
                     Style="{StaticResource WinTextBoxStyle}"
                     IsEnabled="{Binding EnableElementDirectory[Language2Comment], UpdateSourceTrigger=PropertyChanged}"
                     Text="{Binding Path=SelectedWord.Language2Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Margin="10, 0, 10, 10"
                     TabIndex="30" />
 
                 <Grid

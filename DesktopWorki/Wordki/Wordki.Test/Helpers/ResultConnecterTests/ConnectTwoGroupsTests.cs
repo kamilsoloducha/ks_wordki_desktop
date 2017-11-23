@@ -68,5 +68,16 @@ namespace Wordki.Test.Helpers.ResultConnecterTests
             Assert.AreEqual(2, dest.Results.Count);
         }
 
+        [Test]
+        public void Connect_two_groups_with_diffrent_number_of_results_test()
+        {
+            util.ResultCount = 2;
+            IGroup dest = util.GetGroup();
+            util.ResultCount = 4;
+            IGroup src = util.GetGroup();
+            connector.Connect(dest, src);
+            Assert.AreEqual(2, dest.Results.Count);
+        }
+
     }
 }

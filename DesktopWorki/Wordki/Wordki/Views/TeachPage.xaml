@@ -13,7 +13,7 @@
     Style="{DynamicResource AppPageStyle}"
     d:DesignHeight="300"
     d:DesignWidth="300"
-    d:DataContext="{d:DesignInstance {x:Type viewModels:TeachViewModel}}">
+    d:DataContext="{d:DesignInstance {x:Type viewModels:TeachViewModelBase}}">
     <UserControl.Resources>
 
         <Style

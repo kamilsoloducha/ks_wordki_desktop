@@ -17,7 +17,6 @@ namespace Wordki.Database
             Map(x => x.LessonType);
             Map(x => x.TimeCount);
             Map(x => x.TranslationDirection);
-            Map(x => x.UserId);
             Map(x => x.State);
             References(x => x.Group).Not.Nullable().Class(typeof(Group));
         }

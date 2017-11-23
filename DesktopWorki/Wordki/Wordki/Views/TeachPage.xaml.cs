@@ -1,21 +1,47 @@
-﻿using Wordki.Helpers;
+﻿using System;
+using Wordki.Helpers;
 using Wordki.ViewModels;
 
-namespace Wordki.Views {
-  /// <summary>
-  /// Interaction logic for TeachPage.xaml
-  /// </summary>
-  public partial class TeachPage : ISwitchElement {
-    
-    private readonly IViewModel viewModel;
+namespace Wordki.Views
+{
+    /// <summary>
+    /// Interaction logic for TeachPage.xaml
+    /// </summary>
+    public partial class TeachPage : ISwitchElement
+    {
 
-    public TeachPage() {
-      InitializeComponent();
-      viewModel = new TeachViewModel();
-      DataContext = viewModel;
+        private readonly IViewModel viewModel;
+
+        public TeachPage(TeachPageType type)
+        {
+            InitializeComponent();
+            viewModel = GetViewModel(type);
+            DataContext = viewModel;
+        }
+
+        public IViewModel ViewModel { get { return viewModel; } }
+
+        private IViewModel GetViewModel(TeachPageType type)
+        {
+            switch (type)
+            {
+                case TeachPageType.Typing:
+                    {
+                        return new TeachTypingViewModel();
+                    }
+                case TeachPageType.Fiszki:
+                    {
+                        return new TeachFiszkiViewModel();
+                    }
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
     }
 
-    public IViewModel ViewModel { get { return viewModel; } }
-
-  }
+    public enum TeachPageType
+    {
+        Typing,
+        Fiszki
+    }
 }

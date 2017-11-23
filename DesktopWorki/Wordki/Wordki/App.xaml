@@ -758,14 +758,14 @@
                 Value="{DynamicResource UsedPressedBrush}" />
             <Setter
                 Property="BorderThickness"
-                Value="1,0,1,0" />
+                Value="0" />
             <Style.Triggers>
                 <Trigger
                     Property="IsSelected"
                     Value="True">
                     <Setter
                         Property="Background"
-                        Value="{DynamicResource UsedHoverBrush}" />
+                        Value="Red" />
                     <Setter
                         Property="BorderBrush"
                         Value="{DynamicResource UsedNormalBrush}" />
@@ -807,9 +807,9 @@
             <Setter
                 Property="RowHeaderWidth"
                 Value="0" />
-            <Setter
+            <!--<Setter
                 Property="CellStyle"
-                Value="{DynamicResource AppDataGridCellStyle}" />
+                Value="{DynamicResource AppDataGridCellStyle}" />-->
         </Style>
         <!-- DATAGRIDCOLUMNHEADER -->
         <!-- ######################################################################## -->

@@ -18,6 +18,7 @@ namespace Wordki.Views.Dialogs
             set
             {
                 _viewModel = value;
+                _viewModel.InitViewModel();
                 ViewModel.ClosingRequest += (s, e) => Close();
                 DataContext = ViewModel;
             }

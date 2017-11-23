@@ -10,13 +10,13 @@ namespace Wordki.ViewModels.Dialogs
     {
 
         public ICommand OkCommand { get; set; }
-        public ObservableCollection<TranslationItem> Items { get; set; }
+        public List<TranslationItem> Items { get; set; }
         public bool Canceled { get; set; }
 
 
         public TranslationListDialogViewModel(IEnumerable<string> items)
         {
-            InitViewModel();
+            Items = new List<TranslationItem>();
             foreach (string item in items)
             {
                 Items.Add(new TranslationItem()
@@ -30,9 +30,8 @@ namespace Wordki.ViewModels.Dialogs
         public override void InitViewModel()
         {
             base.InitViewModel();
-            CloseCommand = new Util.BuilderCommand(Cancel);
+            CloseCommand = new Util.BuilderCommand(Close);
             OkCommand = new Util.BuilderCommand(Ok);
-            Items = new ObservableCollection<TranslationItem>();
         }
 
         private void Ok(object obj)
@@ -41,10 +40,10 @@ namespace Wordki.ViewModels.Dialogs
             OnClosingRequest();
         }
 
-        private void Cancel(object obj)
+        protected override void Close(object obj)
         {
+            base.Close(obj);
             Canceled = true;
-            OnClosingRequest();
         }
 
         public class TranslationItem : INotifyPropertyChanged

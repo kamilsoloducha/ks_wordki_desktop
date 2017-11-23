@@ -123,6 +123,8 @@
     <Compile Include="Helpers\NotCheckersTests\PunctuationNotCheckTest.cs" />
     <Compile Include="Helpers\NotCheckersTests\SpaceNotCheckTest.cs" />
     <Compile Include="Helpers\NotCheckersTests\Utf8NotCheckTest.cs" />
+    <Compile Include="Helpers\ResultConnecterTests\ConnectTwoResultTests.cs" />
+    <Compile Include="Helpers\ResultConnecterTests\ConnectTwoGroupsTests.cs" />
     <Compile Include="Helpers\WordComparerTests\WordComparerTest.cs" />
     <Compile Include="Helpers\WordComparerTests\WordComparerWithLetterCaseNotCheckTest.cs" />
     <Compile Include="Helpers\WordComparerTests\WordComparerWithPunctuationNotCheckTest.cs" />

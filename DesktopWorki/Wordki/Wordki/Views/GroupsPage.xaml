@@ -9,7 +9,9 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:models="clr-namespace:Wordki.Models"
     xmlns:viewModels="clr-namespace:Wordki.ViewModels"
+    xmlns:lessons="clr-namespace:Repository.Models.Enums;assembly=Repository"
     xmlns:barChart="clr-namespace:Controls.BarChart;assembly=Controls"
+    xmlns:pieChart="clr-namespace:Controls.PieChart;assembly=Controls"
     mc:Ignorable="d"
     Style="{DynamicResource AppPageStyle}"
     d:DataContext="{d:DesignInstance {x:Type viewModels:GroupManagerViewModel}}">
@@ -24,7 +26,7 @@
             <ColumnDefinition
                 Width="2*" />
             <ColumnDefinition
-                Width="Auto" />
+                Width="1*" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -67,19 +69,18 @@
             </TabItem>
         </TabControl>
 
-        <DataGrid
+
+        <!--<ListBox
             x:Name="GroupsDataGrid"
             Grid.Column="0"
             Grid.Row="0"
-            IsReadOnly="True"
             ScrollViewer.CanContentScroll="False"
-            SelectedItem="{Binding SelectedItem}"
+            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
             ItemsSource="{Binding ItemsList}"
-            SelectionUnit="FullRow"
-            Style="{StaticResource AppDataGridStyle}"
-            HorizontalScrollBarVisibility="Hidden">
+            SelectionMode="Multiple"
+            BorderThickness="0">
 
-            <DataGrid.ContextMenu>
+            <ListBox.ContextMenu>
                 <ContextMenu
                     Style="{StaticResource AppContextMenuStyle}">
                     <MenuItem
@@ -106,10 +107,149 @@
                         Header="Tryb zapamiętanych"
                         Style="{StaticResource AppMenuItemStyle}"
                         Command="{Binding StartBestLessonCommand}" />
-                    <!--<MenuItem
-            Header="Pokaż wyniki"
-            Style="{StaticResource AppMenuItemStyle}"
-            Command="{Binding ShowPlotCommand}"/>-->
+                </ContextMenu>
+            </ListBox.ContextMenu>
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger
+                    EventName="SelectionChanged">
+                    <i:InvokeCommandAction
+                        Command="{Binding SelectionChangedCommand}"
+                        CommandParameter="{Binding SelectedItems, ElementName=GroupsDataGrid}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+            <i:Interaction.Behaviors>
+                <helpers:ListBoxAtLeastOneSelectedItemBehavior />
+            </i:Interaction.Behaviors>
+
+            <ListBox.ItemContainerStyle>
+                <Style
+                    TargetType="{x:Type ListBoxItem}">
+                    <Setter
+                        Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate
+                                TargetType="{x:Type ListBoxItem}">
+                                <Grid
+                                    x:Name="ItemBackground"
+                                    Margin="0,2"
+                                    Background="#22000000">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition
+                                            Width="*" />
+                                        <ColumnDefinition
+                                            Width="Auto" />
+                                        <ColumnDefinition
+                                            Width="*" />
+                                        <ColumnDefinition
+                                            Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Background="Transparent"
+                                        FontSize="30"
+                                        Margin="20, 10"
+                                        FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
+                                        Text="{Binding Path=Group.Name}" />
+
+                                    <Rectangle
+                                        Grid.Column="1"
+                                        Width="1"
+                                        Margin="4"
+                                        Fill="#AA000000" />
+
+                                    <StackPanel
+                                        Grid.Column="2"
+                                        VerticalAlignment="Center"
+                                        Orientation="Vertical">
+                                        
+                                        <StackPanel
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal">
+                                            <Label
+                                                VerticalAlignment="Bottom"
+                                                FontSize="15"
+                                                Content="Słowa" />
+
+                                            <Label
+                                                VerticalAlignment="Bottom"
+                                                FontSize="30"
+                                                Content="{Binding Path=Group.Words.Count}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger
+                                        Property="IsSelected"
+                                        Value="true">
+                                        <Setter
+                                            TargetName="ItemBackground"
+                                            Property="Background"
+                                            Value="Red" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+        </ListBox>-->
+
+        <DataGrid
+            x:Name="GroupsDataGrid"
+            Grid.Column="0"
+            Grid.Row="0"
+            Style="{StaticResource AppDataGridStyle}"
+            Margin="10,10,10,0"
+            IsReadOnly="True"
+            ScrollViewer.CanContentScroll="False"
+            SelectedItem="{Binding SelectedItem}"
+            ItemsSource="{Binding ItemsList}"
+            SelectionUnit="FullRow"
+            BorderThickness="0"
+            HeadersVisibility="Row"
+            HorizontalScrollBarVisibility="Hidden"
+            HorizontalGridLinesBrush="Transparent">
+
+            <DataGrid.ContextMenu>
+                <ContextMenu
+                    Style="{StaticResource AppContextMenuStyle}">
+                    <MenuItem
+                        Header="Edytuj grupę"
+                        Style="{StaticResource AppMenuItemStyle}"
+                        Command="{Binding EditGroupCommand}" />
+                    <MenuItem
+                        Header="Pokaż slowa"
+                        Style="{StaticResource AppMenuItemStyle}"
+                        Command="{Binding ShowWordsCommand}" />
+                    <MenuItem
+                        Header="Tryb wprowadzania"
+                        Style="{StaticResource AppMenuItemStyle}"
+                        Command="{Binding Path=StartLessonCommand}"
+                        CommandParameter="{x:Static lessons:LessonType.TypingLesson}" />
+                    <MenuItem
+                        Header="Fiszki"
+                        Style="{StaticResource AppMenuItemStyle}"
+                        Command="{Binding Path=StartLessonCommand}"
+                        CommandParameter="{x:Static lessons:LessonType.FiszkiLesson}" />
+                    <MenuItem
+                        Header="Tryb intensywny"
+                        Style="{StaticResource AppMenuItemStyle}"
+                        Command="{Binding Path=StartLessonCommand}"
+                        CommandParameter="{x:Static lessons:LessonType.IntensiveLesson}" />
+                    <MenuItem
+                        Header="Tryb losowych"
+                        Style="{StaticResource AppMenuItemStyle}"
+                        Command="{Binding Path=StartLessonCommand}"
+                        CommandParameter="{x:Static lessons:LessonType.RandomLesson}" />
+                    <MenuItem
+                        Header="Tryb zapamiętanych"
+                        Style="{StaticResource AppMenuItemStyle}"
+                        Command="{Binding Path=StartLessonCommand}"
+                        CommandParameter="{x:Static lessons:LessonType.BestLesson}" />
                 </ContextMenu>
             </DataGrid.ContextMenu>
 
@@ -122,299 +262,305 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
 
+            <DataGrid.CellStyle>
+                <Style
+                    TargetType="{x:Type DataGridCell}">
+                    <Setter
+                        Property="BorderThickness"
+                        Value="0" />
+                    <Style.Triggers>
+                        <Trigger
+                            Property="IsSelected"
+                            Value="True">
+                            <Setter
+                                Property="Background"
+                                Value="Transparent" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+
             <DataGrid.Columns>
                 <DataGridTemplateColumn
-                    SortMemberPath="GroupName"
-                    CanUserResize="True"
-                    Width="3*"
-                    Header="Nazwa"
-                    HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
+                    Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate
                             DataType="models:GroupItem">
-                            <DockPanel>
-                                <TextBlock
-                                    Text="{Binding Path=Group.Name, UpdateSourceTrigger=PropertyChanged}"
-                                    Style="{StaticResource DataGridTextBlockStyle}"
-                                    HorizontalAlignment="Left" />
-                            </DockPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                            <Border
+                                x:Name="ItemBackground"
+                                Margin="0,2"
+                                CornerRadius="10"
+                                Background="#22000000">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition
+                                            Width="*" />
+                                        <ColumnDefinition
+                                            Width="Auto" />
+                                        <ColumnDefinition
+                                            Width="*" />
+                                        <ColumnDefinition
+                                            Width="*" />
+                                    </Grid.ColumnDefinitions>
 
-                <DataGridTemplateColumn
-                    SortMemberPath="WordsCount"
-                    CanUserResize="True"
-                    Width="*"
-                    Header="Słowa"
-                    HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Background="Transparent"
+                                        FontSize="30"
+                                        Margin="20, 10"
+                                        FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
+                                        Text="{Binding Path=Group.Name}" />
 
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate
-                            DataType="models:GroupItem">
-                            <DockPanel>
-                                <TextBlock
-                                    Text="{Binding Path=Group.Words.Count, UpdateSourceTrigger=PropertyChanged}"
-                                    Style="{StaticResource DataGridTextBlockStyle}"
-                                    HorizontalAlignment="Center" />
-                            </DockPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                                    <Rectangle
+                                        Grid.Column="1"
+                                        Width="1"
+                                        Margin="4"
+                                        Fill="#AA000000" />
 
-                <DataGridTemplateColumn
-                    SortMemberPath="RepeatNumber"
-                    CanUserResize="True"
-                    Width="*"
-                    Header="Powtorzenia"
-                    HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate
-                            DataType="models:GroupItem">
-                            <DockPanel>
-                                <TextBlock
-                                    Text="{Binding Path=Group.Results.Count, UpdateSourceTrigger=PropertyChanged}"
-                                    Style="{StaticResource DataGridTextBlockStyle}"
-                                    HorizontalAlignment="Center" />
-                            </DockPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                                    <StackPanel
+                                        Grid.Column="2"
+                                        VerticalAlignment="Center"
+                                        Orientation="Vertical">
 
-                <DataGridTemplateColumn
-                    SortMemberPath="NextReapet"
-                    CanUserResize="True"
-                    Width="*"
-                    Header="Powtórka za:"
-                    HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
+                                        <StackPanel
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal">
+                                            <Label
+                                                VerticalAlignment="Bottom"
+                                                FontSize="15"
+                                                Content="Słowa" />
 
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate
-                            DataType="models:GroupItem">
-                            <DockPanel>
-                                <TextBlock
-                                    Text="{Binding Path=NextRepeat, UpdateSourceTrigger=PropertyChanged}"
-                                    Style="{StaticResource DataGridTextBlockStyle}"
-                                    HorizontalAlignment="Center" />
-                            </DockPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                                            <Label
+                                                VerticalAlignment="Bottom"
+                                                FontSize="30"
+                                                Content="{Binding Path=Group.Words.Count}" />
+                                        </StackPanel>
 
-                <DataGridTemplateColumn
-                    SortMemberPath="Color"
-                    CanUserResize="True"
-                    Width="*"
-                    Header="Kolor"
-                    HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
 
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate
-                            DataType="models:GroupItem">
-                            <DockPanel>
-                                <DockPanel.Background>
-                                    <LinearGradientBrush
-                                        EndPoint="0,0.5"
-                                        StartPoint="1,0.5">
-                                        <GradientStop
-                                            Color="{Binding Path=Color, Converter={StaticResource DrawerToColorConverter}}"
-                                            Offset="0" />
-                                        <GradientStop
-                                            Color="#00000000"
-                                            Offset="0.7" />
-                                    </LinearGradientBrush>
-                                </DockPanel.Background>
-                            </DockPanel>
+                                    </StackPanel>
+
+                                    <StackPanel
+                                        Grid.Column="3"
+                                        VerticalAlignment="Center"
+                                        Orientation="Horizontal">
+                                        <Label
+                                            VerticalAlignment="Bottom"
+                                            FontSize="15"
+                                            Content="Powtórka za" />
+
+                                        <Label
+                                            VerticalAlignment="Bottom"
+                                            FontSize="30"
+                                            Content="{Binding Path=NextRepeat}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Grid
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Grid.Row="1">
-            <Grid.Resources>
+        <ScrollViewer
+            Margin="5,40,5,0"
+            Grid.Row="0"
+            Grid.Column="1">
+
+            <ScrollViewer.Resources>
                 <Style
-                    x:Key="GridTextBlockStyle"
-                    TargetType="{x:Type TextBlock}"
-                    BasedOn="{StaticResource AppTextBlockStyle}">
-                    <Setter
-                        Property="VerticalAlignment"
-                        Value="Center" />
-                    <Setter
-                        Property="Margin"
-                        Value="5" />
+                    x:Key="LocalLabelStyle"
+                    TargetType="{x:Type Label}">
                     <Setter
                         Property="FontSize"
                         Value="15" />
+                    <Setter
+                        Property="VerticalAlignment"
+                        Value="Bottom" />
+                    <Setter
+                        Property="Foreground"
+                        Value="#DD000000" />
+                    <Setter
+                        Property="Padding"
+                        Value="0" />
                 </Style>
-            </Grid.Resources>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition
-                    Width="Auto" />
-                <ColumnDefinition
-                    Width="*" />
-                <ColumnDefinition
-                    Width="*" />
-                <ColumnDefinition
-                    Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition
-                    Height="*" />
-                <RowDefinition
-                    Height="*" />
-                <RowDefinition
-                    Height="*" />
-                <RowDefinition
-                    Height="*" />
-            </Grid.RowDefinitions>
+                <Style
+                    x:Key="LocalValueStyle"
+                    TargetType="{x:Type Label}">
+                    <Setter
+                        Property="FontSize"
+                        Value="50" />
+                    <Setter
+                        Property="VerticalAlignment"
+                        Value="Bottom" />
+                    <Setter
+                        Property="FontWeight"
+                        Value="Bold" />
+                    <Setter
+                        Property="Padding"
+                        Value="0" />
+                </Style>
+            </ScrollViewer.Resources>
+
+            <Border
+                Background="#11000000"
+                CornerRadius="20">
+
+                <StackPanel
+                    Orientation="Vertical">
+
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition
+                                Width="Auto" />
+                            <ColumnDefinition
+                                Width="*" />
+                            <ColumnDefinition
+                                Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Image
+                            Grid.Column="0"
+                            Margin="20"
+                            MaxWidth="50"
+                            Source="{Binding GroupInfo.Language1Flag}" />
+
+                        <Label
+                            Grid.Column="1"
+                            FontSize="40"
+                            Margin="20"
+                            HorizontalAlignment="Center"
+                            Content="{Binding Path=SelectedItem.Group.Name}" />
+                        <Image
+                            Grid.Column="2"
+                            Margin="20"
+                            MaxWidth="50"
+                            Source="{Binding GroupInfo.Language2Flag}" />
+
+                    </Grid>
+
+
+                    <Rectangle
+                        Height="1"
+                        Margin="10"
+                        Fill="#AA000000" />
+
+                    <UniformGrid
+                        Margin="5"
+                        Columns="2">
+
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical">
+                            <Label
+                                Style="{StaticResource LocalLabelStyle}"
+                                Content="Słowa" />
+
+                            <Label
+                                Style="{StaticResource LocalValueStyle}"
+                                Content="{Binding Path=GroupInfo.WordCount}" />
+
+                        </StackPanel>
+
+                        <StackPanel
+                            Orientation="Vertical"
+                            HorizontalAlignment="Center">
+                            <Label
+                                Style="{StaticResource LocalLabelStyle}"
+                                Content="Widoczne" />
+
+                            <Label
+                                Style="{StaticResource LocalValueStyle}"
+                                Content="{Binding Path=GroupInfo.VisibilitiesCount}" />
+
+                        </StackPanel>
+
+                    </UniformGrid>
+
+                    <UniformGrid
+                        Margin="5"
+                        Columns="2">
+
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical">
+                            <Label
+                                Style="{StaticResource LocalLabelStyle}"
+                                Content="Wyniki" />
+
+                            <Label
+                                Style="{StaticResource LocalValueStyle}"
+                                Content="{Binding Path=SelectedItem.Group.Results.Count}" />
+
+                        </StackPanel>
+
+                        <StackPanel
+                            Orientation="Vertical"
+                            HorizontalAlignment="Center">
+                            <Label
+                                Style="{StaticResource LocalLabelStyle}"
+                                Content="Dni od powtórki" />
+
+                            <Label
+                                Style="{StaticResource LocalValueStyle}"
+                                Content="{Binding Path=GroupInfo.LastRepeat}" />
+
+                        </StackPanel>
+
+                    </UniformGrid>
+
+                    <StackPanel
+                        Orientation="Vertical"
+                        HorizontalAlignment="Center">
+                        <Label
+                            Style="{StaticResource LocalLabelStyle}"
+                            Content="Języki" />
+
+                        <StackPanel
+                            Orientation="Horizontal">
+
+
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <pieChart:PieChart
+                        DescriptionText="Value"
+                        Colors="{StaticResource DrawerColors}"
+                        Margin="20"
+                        Height="200"
+                        IsAnimate="true"
+                        RingWidthFactor="0.5"
+                        FontSize="1"
+                        RingBackground="{DynamicResource UsedPressedBrush}"
+                        MaxValue="{Binding Path=MaxValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        Values="{Binding Path=Values, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                </StackPanel>
+
+            </Border>
+        </ScrollViewer>
+
+        <ScrollViewer
+            Grid.Column="1"
+            Grid.Row="1">
 
             <StackPanel
-                Grid.Column="0"
-                Grid.ColumnSpan="4"
-                Grid.Row="0">
-                <TextBlock
-                    Style="{StaticResource AppTextBlockStyle}"
-                    Text="{Binding GroupInfo.GroupName}"
-                    FontSize="20"
-                    HorizontalAlignment="Center" />
-            </StackPanel>
+                Orientation="Vertical">
 
-            <Border
-                Grid.Column="0"
-                Grid.Row="1"
-                Grid.ColumnSpan="2"
-                Style="{StaticResource AppBorderStyle}">
-                <StackPanel
-                    Orientation="Horizontal">
-                    <TextBlock
-                        Style="{DynamicResource GridTextBlockStyle}"
-                        Text="Słowa:" />
-                    <TextBlock
-                        Style="{DynamicResource GridTextBlockStyle}"
-                        Text="{Binding GroupInfo.WordCount}" />
-                </StackPanel>
-            </Border>
+                <Button
+                    Style="{StaticResource FlatButtonStyle}"
+                    Command="{Binding Path=TranslationDirectionChangedCommand}"
+                    Content="{Binding Path=TranslationDirectionLabel}" />
 
-            <Border
-                Grid.Column="0"
-                Grid.Row="2"
-                Grid.ColumnSpan="2"
-                Style="{StaticResource AppBorderStyle}">
-                <StackPanel
-                    Orientation="Horizontal">
-                    <TextBlock
-                        Style="{StaticResource GridTextBlockStyle}"
-                        Text="Ostatnia powtorka:" />
-                    <TextBlock
-                        Style="{StaticResource GridTextBlockStyle}"
-                        Text="{Binding GroupInfo.LastRepeat}" />
-                </StackPanel>
-            </Border>
-
-
-            <Border
-                Grid.Column="0"
-                Grid.Row="3"
-                Grid.ColumnSpan="2"
-                Style="{StaticResource AppBorderStyle}">
-                <StackPanel
-                    Orientation="Horizontal">
-                    <TextBlock
-                        Style="{StaticResource GridTextBlockStyle}"
-                        Text="Ilość powtorzeń:" />
-                    <TextBlock
-                        Style="{StaticResource GridTextBlockStyle}"
-                        Text="{Binding GroupInfo.RepeatCount}" />
-                </StackPanel>
-            </Border>
-
-
-            <Border
-                Grid.Column="2"
-                Grid.Row="1"
-                Style="{StaticResource AppBorderStyle}">
-                <StackPanel
-                    Orientation="Horizontal">
-                    <TextBlock
-                        Style="{StaticResource GridTextBlockStyle}"
-                        Text="Widocznych:" />
-                    <TextBlock
-                        Style="{StaticResource GridTextBlockStyle}"
-                        Text="{Binding Path=GroupInfo.VisibilitiesCount}" />
-                </StackPanel>
-            </Border>
-
-            <Border
-                Grid.Column="2"
-                Grid.Row="2"
-                Style="{StaticResource AppBorderStyle}">
-                <Grid
-                    Height="50">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition
-                            Width="Auto" />
-                        <ColumnDefinition
-                            Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock
-                        Grid.Column="0"
-                        Style="{StaticResource GridTextBlockStyle}"
-                        Text="Szuflady:" />
-                    <barChart:BarChart
-                        Height="20"
-                        MarkerHeight="5"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Center"
-                        Grid.Column="1"
-                        Margin="10,0"
-                        Values="{Binding Path=Values}"
-                        MaxValue="{Binding Path=MaxValue}"
-                        Colors="{StaticResource DrawerColors}" />
-                </Grid>
-            </Border>
-
-            <StackPanel
-                Grid.Column="3"
-                Grid.Row="1"
-                Orientation="Horizontal">
-                <Image
-                    Margin="5"
-                    MaxWidth="100"
-                    Source="{Binding GroupInfo.Language1Flag}" />
-                <Image
-                    Margin="5"
-                    MaxWidth="100"
-                    Source="{Binding GroupInfo.Language2Flag}" />
+                <Button
+                    Style="{StaticResource FlatButtonStyle}"
+                    Command="{Binding Path=AllWordsCommand}"
+                    Content="{Binding Path=AllWordsLabel}" />
 
             </StackPanel>
 
-            <Button
-                Grid.Column="3"
-                Grid.Row="2"
-                Style="{StaticResource FlatButtonStyle}"
-                Command="{Binding Path=FinishLessonCommand}"
-                Visibility="{Binding Path=EndLessonButtonVisibility}"
-                Content="Zakończ lekcje" />
+        </ScrollViewer>
 
 
-            <Button
-                Grid.Column="2"
-                Grid.Row="3"
-                Style="{StaticResource FlatButtonStyle}"
-                Command="{Binding Path=TranslationDirectionChangedCommand}"
-                Content="{Binding Path=TranslationDirectionLabel}" />
-
-            <Button
-                Grid.Column="3"
-                Grid.Row="3"
-                Style="{StaticResource FlatButtonStyle}"
-                Command="{Binding Path=AllWordsCommand}"
-                Content="{Binding Path=AllWordsLabel}" />
-
-        </Grid>
     </Grid>
 </UserControl>

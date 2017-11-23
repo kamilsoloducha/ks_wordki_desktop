@@ -78,7 +78,7 @@ namespace Wordki.Test.Helpers.GroupConnectorTests
         public void Check_results_count_after_connection_test()
         {
             connector.Connect(groups);
-            Assert.AreEqual(groupCount * resultCount, groups[0].Words.Count);
+            Assert.AreEqual(resultCount, groups[0].Results.Count);
         }
 
         [Test]
@@ -107,5 +107,6 @@ namespace Wordki.Test.Helpers.GroupConnectorTests
             connector.Connect(groups);
             Assert.AreSame(groups[0], connector.DestinationGroup);
         }
+
     }
 }

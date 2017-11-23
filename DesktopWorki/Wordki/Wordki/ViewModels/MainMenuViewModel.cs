@@ -204,6 +204,7 @@ namespace Wordki.ViewModels
                     PositiveLabel = "Tak"
                 }
             };
+            provider.Interact();
         }
         #endregion
 
