@@ -17,16 +17,19 @@ namespace Wordki.Database
 
         }
 
-        public static IUserManager Get()
+        public static IUserManager Instence
         {
-            lock (_lock)
+            get
             {
-                if (_instance == null)
+                lock (_lock)
                 {
-                    _instance = new UserManager();
+                    if (_instance == null)
+                    {
+                        _instance = new UserManager();
+                    }
                 }
+                return _instance;
             }
-            return _instance;
         }
 
     }

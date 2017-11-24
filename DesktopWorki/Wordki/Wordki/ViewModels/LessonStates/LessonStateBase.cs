@@ -306,7 +306,7 @@ namespace Wordki.ViewModels.LessonStates
         protected LessonStateBase(Lesson pLesson, LessonStateBase pLastState)
         {
             Lesson = pLesson;
-            _translationDirection = UserManagerSingleton.Get().User.TranslationDirection;
+            _translationDirection = UserManagerSingleton.Instence.User.TranslationDirection;
             if (pLastState != null)
             {
                 _drawerValues = pLastState._drawerValues;

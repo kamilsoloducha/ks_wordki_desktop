@@ -63,7 +63,7 @@ namespace Wordki.ViewModels.Dialogs
             }
             Task.Run(() =>
             {
-                IDatabase database = DatabaseSingleton.GetDatabase();
+                IDatabase database = DatabaseSingleton.Instance;
                 IEnumerable<IWord> words = database.Groups.SelectMany(x => x.Words).Where(x => x.Language1.Contains(SearchingWord) || x.Language2.Contains(SearchingWord));
                 Words.Clear();
                 foreach (IWord word in words)

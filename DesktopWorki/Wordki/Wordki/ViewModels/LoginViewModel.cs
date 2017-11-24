@@ -110,7 +110,7 @@ namespace Wordki.ViewModels
             if (UserName == null)
                 return new WorkResult();
             NHibernateHelper.DatabaseName = UserName;
-            IUser user = DatabaseSingleton.GetDatabase().GetUser(UserName, GetHashedPassword());
+            IUser user = DatabaseSingleton.Instance.GetUser(UserName, GetHashedPassword());
             if (user != null)
             {
                 StartWithUser(user);

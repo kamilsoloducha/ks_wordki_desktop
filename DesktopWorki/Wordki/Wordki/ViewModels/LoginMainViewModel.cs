@@ -109,11 +109,11 @@ namespace Wordki.ViewModels
 
         protected void StartWithUser(IUser user)
         {
-            IUserManager userManager = UserManagerSingleton.Get();
+            IUserManager userManager = UserManagerSingleton.Instence;
             userManager.Set(user);
             user.LastLoginDateTime = DateTime.Now;
             userManager.Update();
-            DatabaseSingleton.GetDatabase().LoadDatabase();
+            DatabaseSingleton.Instance.LoadDatabase();
             Start();
         }
 
@@ -126,7 +126,7 @@ namespace Wordki.ViewModels
             User lUser = JsonConvert.DeserializeObject<User>(response.Message);
             lUser.IsLogin = true;
             lUser.IsRegister = true;
-            IDatabase database = DatabaseSingleton.GetDatabase();
+            IDatabase database = DatabaseSingleton.Instance;
             //User dbUser = database.GetUserAsync(lUser.LocalId);
             //if (dbUser == null)
             //{
@@ -138,7 +138,7 @@ namespace Wordki.ViewModels
 
         private void Start()
         {
-            LoggerSingleton.LogInfo("Loguje użytkownika: {0}", UserManagerSingleton.Get().User.Name);
+            LoggerSingleton.LogInfo("Loguje użytkownika: {0}", UserManagerSingleton.Instence.User.Name);
             Application.Current.Dispatcher.Invoke(() =>
             {
                 Application.Current.Dispatcher.Invoke(() => NotificationFactory.Create().Show("Zalogowano"));

@@ -201,7 +201,7 @@ namespace Wordki.ViewModels
         public BuilderViewModel()
         {
             ActivateCommands();
-            Database = DatabaseSingleton.GetDatabase();
+            Database = DatabaseSingleton.Instance;
             EnableElementDirectory = new ObservableDictionary<string, bool> {
                 { EnableElementBuilder.Previous.ToString(), true },
                 { EnableElementBuilder.Next.ToString(), true },

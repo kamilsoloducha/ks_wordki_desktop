@@ -56,7 +56,7 @@ namespace Wordki.ViewModels.LessonStates
 
         private WorkResult SaveDatabase()
         {
-            IDatabase database = DatabaseSingleton.GetDatabase();
+            IDatabase database = DatabaseSingleton.Instance;
             Lesson.FinishLesson();
             Lesson.Timer.StopTimer();
             DateTime now = DateTime.Now;

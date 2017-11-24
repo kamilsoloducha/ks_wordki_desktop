@@ -20,7 +20,7 @@ namespace Wordki.Test.Database.UserOrganizerTests
         {
             databaseOrganizer = new DatabaseOrganizer("");
             user = util.GetUser();
-            database = DatabaseSingleton.GetDatabase();
+            database = DatabaseSingleton.Instance;
         }
 
         [Test]

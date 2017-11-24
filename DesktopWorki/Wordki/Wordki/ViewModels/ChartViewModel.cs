@@ -87,7 +87,7 @@ namespace Wordki.ViewModels
                     _selectedGroup = value;
                     OnPropertyChanged("SelectedGroup");
                     if (value > 0)
-                        GroupId = DatabaseSingleton.GetDatabase().Groups[value].Id;
+                        GroupId = DatabaseSingleton.Instance.Groups[value].Id;
                     OnDraw();
                 }
             }
@@ -172,7 +172,7 @@ namespace Wordki.ViewModels
 
         public override void InitViewModel()
         {
-            IDatabase lDatabase = DatabaseSingleton.GetDatabase();
+            IDatabase lDatabase = DatabaseSingleton.Instance;
             SelectedLabel = 1;
             GroupId = (long)PackageStore.Get(0);
 
@@ -267,7 +267,7 @@ namespace Wordki.ViewModels
             List<Point> lPointsList = new List<Point>();
             try
             {
-                IList<IResult> lResultList = new List<IResult>();/*DatabaseSingleton.GetDatabase().GetResultsList(pGroupId).ToList();*/
+                IList<IResult> lResultList = new List<IResult>();/*DatabaseSingleton.Instance.GetResultsList(pGroupId).ToList();*/
                 if (lResultList.Count == 0)
                 {
                     return lPointsList;

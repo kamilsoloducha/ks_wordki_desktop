@@ -584,7 +584,7 @@
                             BorderBrush="Transparent">
                             <TextBlock
                                 TextAlignment="Center">
-                <ContentPresenter />
+                                <ContentPresenter />
                             </TextBlock>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -1403,6 +1403,9 @@
             x:Key="AppInnerTabControlStyle"
             TargetType="{x:Type TabControl}">
             <Setter
+                Property="KeyboardNavigation.IsTabStop"
+                Value="False" />
+            <Setter
                 Property="TabStripPlacement"
                 Value="Right" />
             <Setter
@@ -1494,6 +1497,9 @@
             <Setter
                 Property="Margin"
                 Value="0,5,0,5" />
+            <Setter
+                Property="KeyboardNavigation.IsTabStop"
+                Value="False" />
         </Style>
         <!-- TEXTBLOCK -->
         <!-- ######################################################################## -->

@@ -9,6 +9,7 @@ using System.Windows.Input;
 using Wordki.InteractionProvider;
 using Util;
 using Wordki.ViewModels.Dialogs;
+using System.ComponentModel;
 
 namespace Wordki.ViewModels
 {
@@ -144,13 +145,13 @@ namespace Wordki.ViewModels
 
             ResultCalculator = new ResultCalculator
             {
-                Groups = DatabaseSingleton.GetDatabase().Groups,
+                Groups = DatabaseSingleton.Instance.Groups,
             };
         }
 
         public override void InitViewModel()
         {
-            Login = UserManagerSingleton.Get().User.Name;
+            Login = UserManagerSingleton.Instence.User.Name;
             RefreshInfo();
             //SearchDialog dialog = new SearchDialog
             //{
@@ -198,7 +199,7 @@ namespace Wordki.ViewModels
             {
                 ViewModel = new YesNoDialogViewModel
                 {
-                    YesAction = () => { Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown()); },
+                    YesAction = ExitAction,
                     Message = "Czy chcesz wyjść z programu?",
                     NegativeLabel = "Nie",
                     PositiveLabel = "Tak"
@@ -206,13 +207,21 @@ namespace Wordki.ViewModels
             };
             provider.Interact();
         }
+
+        private void ExitAction()
+        {
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += (s, e) => DatabaseSingleton.Instance.RefreshDatabase();
+            worker.RunWorkerAsync();
+            Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown());
+        }
         #endregion
 
         private void RefreshInfo()
         {
             Task.Run(() =>
             {
-                IDatabase lDatabase = DatabaseSingleton.GetDatabase();
+                IDatabase lDatabase = DatabaseSingleton.Instance;
                 ObservableCollection<double> lList = new ObservableCollection<double>();
                 string lTeachTimeToday = Helpers.Util.GetAproximatedTimeFromSeconds(ResultCalculator.GetLessonTime(DateTime.Now.AddDays(-1), DateTime.Now));
                 string lTeachTime = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.Groups.Sum(x => x.Results.Sum(y => y.TimeCount)));

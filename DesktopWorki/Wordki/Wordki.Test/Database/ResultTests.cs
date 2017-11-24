@@ -51,6 +51,12 @@ namespace Resultki.Test.Database
             resultRepo = new ResultRepository();
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            NHibernateHelper.ClearDatabase();
+        }
+
         [Test]
         public void Save_result_to_database_test()
         {
@@ -161,11 +167,7 @@ namespace Resultki.Test.Database
             Assert.AreEqual(0, resultRepo.RowCount());
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            NHibernateHelper.ClearDatabase();
-        }
+        
 
         private void ChangeResult(IResult result)
         {

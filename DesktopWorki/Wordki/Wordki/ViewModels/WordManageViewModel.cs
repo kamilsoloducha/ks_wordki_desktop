@@ -45,7 +45,7 @@ namespace Wordki.ViewModels
 
         public WordManageViewModel()
         {
-            Database = DatabaseSingleton.GetDatabase();
+            Database = DatabaseSingleton.Instance;
             ActivateCommand();
 
         }

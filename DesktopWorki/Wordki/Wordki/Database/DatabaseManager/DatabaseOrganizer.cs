@@ -14,7 +14,7 @@ namespace Wordki.Database
 
         public DatabaseOrganizer(string mainPath)
         {
-            Database = DatabaseSingleton.GetDatabase();
+            Database = DatabaseSingleton.Instance;
             _mainPath = mainPath;
         }
 

@@ -80,7 +80,7 @@ namespace Wordki.ViewModels
 
         public override void InitViewModel()
         {
-            Database = DatabaseSingleton.GetDatabase();
+            Database = DatabaseSingleton.Instance;
         }
 
         public override void Back()

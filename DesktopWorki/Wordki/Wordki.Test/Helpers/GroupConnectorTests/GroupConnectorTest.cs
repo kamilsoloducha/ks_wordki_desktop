@@ -17,8 +17,6 @@ namespace Wordki.Test.Helpers.GroupConnectorTests
         Utility util = new Utility()
         {
             GroupCount = groupCount,
-            Language1 = Repository.Models.Language.LanguageType.English,
-            Language2 = Repository.Models.Language.LanguageType.French,
             ResultCount = resultCount,
             WordCount = wordCount,
         };

@@ -175,7 +175,7 @@ namespace Wordki.ViewModels
             {
                 return;
             }
-            string translation = UserManagerSingleton.Get().User.TranslationDirection == TranslationDirection.FromFirst
+            string translation = UserManagerSingleton.Instence.User.TranslationDirection == TranslationDirection.FromFirst
                 ? Lesson.SelectedWord.Language2
                 : Lesson.SelectedWord.Language1;
             if (HintLetters <= translation.Length)
@@ -197,7 +197,7 @@ namespace Wordki.ViewModels
                 return;
             }
             word.Checked = !word.Checked;
-            await DatabaseSingleton.GetDatabase().UpdateWordAsync(word);
+            await DatabaseSingleton.Instance.UpdateWordAsync(word);
         }
 
         private void Pause(object obj)
@@ -256,7 +256,7 @@ namespace Wordki.ViewModels
                 bool? lResult = lDialog.DialogResult;
                 if (lResult.HasValue && lResult.Value)
                 {//delete
-                    await DatabaseSingleton.GetDatabase().DeleteWordAsync(Lesson.SelectedWord);
+                    await DatabaseSingleton.Instance.DeleteWordAsync(Lesson.SelectedWord);
                     //usunięcie śladu po słowie w wynikach
                     if (Lesson.Counter > Lesson.BeginWordsList.Count)
                     {
@@ -268,7 +268,7 @@ namespace Wordki.ViewModels
                 }
                 else if (lResult.HasValue && !lResult.Value)
                 {//correct
-                    await DatabaseSingleton.GetDatabase().UpdateWordAsync(Lesson.SelectedWord);
+                    await DatabaseSingleton.Instance.UpdateWordAsync(Lesson.SelectedWord);
                     State = StateFactory.GetState(Lesson, lLastState);
                     State.RefreshView();
                 }

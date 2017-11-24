@@ -107,7 +107,7 @@ namespace Wordki.Models.Connector
             Url = Host + "group";
             Method = "PUT";
             Database = database;
-            Headers = new Dictionary<string, string> { { "authorization", UserManagerSingleton.Get().User.ApiKey } };
+            Headers = new Dictionary<string, string> { { "authorization", UserManagerSingleton.Instence.User.ApiKey } };
         }
 
         public override void PrepareMessage()
@@ -124,7 +124,7 @@ namespace Wordki.Models.Connector
         {
             Url = Host + "word";
             Method = "PUT";
-            Headers = new Dictionary<string, string> { { "authorization", UserManagerSingleton.Get().User.ApiKey } };
+            Headers = new Dictionary<string, string> { { "authorization", UserManagerSingleton.Instence.User.ApiKey } };
             Database = database;
         }
 
@@ -142,7 +142,7 @@ namespace Wordki.Models.Connector
         {
             Url = Host + "result";
             Method = "PUT";
-            Headers = new Dictionary<string, string> { { "authorization", UserManagerSingleton.Get().User.ApiKey } };
+            Headers = new Dictionary<string, string> { { "authorization", UserManagerSingleton.Instence.User.ApiKey } };
             Database = database;
         }
 

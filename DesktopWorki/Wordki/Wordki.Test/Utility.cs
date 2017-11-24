@@ -23,19 +23,11 @@ namespace Wordki.Test
         public int WordCount { get; set; }
         public int ResultCount { get; set; }
 
-        public LanguageType Language1 { get; set; }
-        public LanguageType Language2 { get; set; }
-
-        public TranslationDirection Direction { get; set; }
-
         public Utility()
         {
             GroupCount = 10;
             WordCount = 10;
             ResultCount = 10;
-            Language1 = LanguageType.Polish;
-            Language2 = LanguageType.English;
-            Direction = TranslationDirection.FromSecond;
         }
 
         public List<IGroup> GetGroups(int count)
@@ -56,17 +48,22 @@ namespace Wordki.Test
             return GetGroups(GroupCount);
         }
 
-        public Word GetWord()
+        public Word GetWord(string language1 = "lang1",
+            string language2 = "lang2",
+            string language1Comment = "lang1Comment",
+            string language2Comment = "lang2Comment",
+            byte drawer = 3,
+            bool visible = true)
         {
             return new Word()
             {
-                Language1 = "Language1",
-                Language1Comment = "Language1Comment",
-                Language2 = "Language2",
-                Language2Comment = "Language2Comment",
-                Drawer = 3,
+                Language1 = language1,
+                Language1Comment = language1Comment,
+                Language2 = language2,
+                Language2Comment = language2Comment,
+                Drawer = drawer,
                 State = 2,
-                Visible = true,
+                Visible = visible,
             };
         }
 
@@ -92,14 +89,14 @@ namespace Wordki.Test
             };
         }
 
-        public IGroup GetGroup()
+        public IGroup GetGroup(LanguageType language1 = LanguageType.English, LanguageType language2 = LanguageType.Polish, string name = "Name")
         {
             Group group = new Group()
             {
                 Id = groupCounter++,
-                Language1 = Language1,
-                Language2 = Language2,
-                Name = "Name",
+                Language1 = language1,
+                Language2 = language2,
+                Name = name,
                 State = 3,
             };
             for (int i = 0; i < WordCount; i++)

@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Repository.Helper;
 using Repository.Models;
+using Repository.Models.Language;
 using Wordki.Models;
 
 namespace Wordki.Test.RepositoryTests
@@ -29,10 +30,12 @@ namespace Wordki.Test.RepositoryTests
         [Test]
         public void Swap_group_check_group_test()
         {
-            IGroup group = utility.GetGroup();
+            LanguageType type1 = LanguageType.French;
+            LanguageType type2 = LanguageType.Polish;
+            IGroup group = utility.GetGroup(language1: type1, language2: type2);
             swaper.Swap(group);
-            Assert.AreEqual(utility.Language1, group.Language2, "Error with swap Language1Type");
-            Assert.AreEqual(utility.Language2, group.Language1, "Error with swap Language2Type");
+            Assert.AreEqual(type1, group.Language2, "Error with swap Language1Type");
+            Assert.AreEqual(type2, group.Language1, "Error with swap Language2Type");
         }
 
         [Test]

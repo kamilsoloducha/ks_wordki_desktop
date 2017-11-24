@@ -220,7 +220,7 @@ namespace Wordki.ViewModels
 
         private async void AllWords(object obj)
         {
-            IUserManager userManager = UserManagerSingleton.Get();
+            IUserManager userManager = UserManagerSingleton.Instence;
             userManager.User.AllWords = !userManager.User.AllWords;
             await userManager.UpdateAsync();
             SetAllWordsLabel();
@@ -234,7 +234,7 @@ namespace Wordki.ViewModels
 
         private async void TranslationDirectionChanged(object obj)
         {
-            IUserManager userManager = UserManagerSingleton.Get();
+            IUserManager userManager = UserManagerSingleton.Instence;
             switch (userManager.User.TranslationDirection)
             {
                 case TranslationDirection.FromFirst:
@@ -299,7 +299,7 @@ namespace Wordki.ViewModels
                 {
                     Initializer = new LessonSchedulerInitializer2(new List<int>() { 1, 1, 2, 4, 7 }),
                 };
-                foreach (GroupItem groupItem in DatabaseSingleton.GetDatabase().Groups.Select(group => new GroupItem(group)))
+                foreach (GroupItem groupItem in DatabaseSingleton.Instance.Groups.Select(group => new GroupItem(group)))
                 {
                     groupItem.Color = scheduler.GetColor(groupItem.Group);
                     groupItem.NextRepeat = Math.Max(scheduler.GetTimeToLearn(groupItem.Group), 0);
@@ -372,12 +372,12 @@ namespace Wordki.ViewModels
 
         private void SetTimeOutLabel()
         {
-            TimeOutLabel = UserManagerSingleton.Get().User.Timeout > 0 ? String.Format("Odliczanie {0} sekund", UserManagerSingleton.Get().User.Timeout) : "Odliczanie wyłączone";
+            TimeOutLabel = UserManagerSingleton.Instence.User.Timeout > 0 ? String.Format("Odliczanie {0} sekund", UserManagerSingleton.Instence.User.Timeout) : "Odliczanie wyłączone";
         }
 
         private void SetTranslationDirectionLabel()
         {
-            switch (UserManagerSingleton.Get().User.TranslationDirection)
+            switch (UserManagerSingleton.Instence.User.TranslationDirection)
             {
                 case TranslationDirection.FromSecond:
                     {
@@ -394,7 +394,7 @@ namespace Wordki.ViewModels
 
         private void SetAllWordsLabel()
         {
-            AllWordsLabel = UserManagerSingleton.Get().User.AllWords ? "Wszystkie słowa" : "Tylko widoczne";
+            AllWordsLabel = UserManagerSingleton.Instence.User.AllWords ? "Wszystkie słowa" : "Tylko widoczne";
         }
 
         private void SetEndLessonButton()
@@ -438,7 +438,7 @@ namespace Wordki.ViewModels
 
         private IEnumerable<IWord> GetWordListRandom(int pCount)
         {
-            var groupList = DatabaseSingleton.GetDatabase().Groups;
+            var groupList = DatabaseSingleton.Instance.Groups;
             Random random = new Random();
             for (int i = 0; i < pCount; i++)
             {
@@ -450,7 +450,7 @@ namespace Wordki.ViewModels
         private IEnumerable<IWord> GetWordListBest(int pCount)
         {
             List<IWord> temp = new List<IWord>();
-            foreach (Group group in DatabaseSingleton.GetDatabase().Groups)
+            foreach (Group group in DatabaseSingleton.Instance.Groups)
             {
                 temp.AddRange(group.Words);
             }
@@ -510,7 +510,7 @@ namespace Wordki.ViewModels
                 lesson.WordComparer.Settings.NotCheckers.Add(new LetterCaseNotCheck());
                 lesson.WordComparer.Settings.NotCheckers.Add(new SpaceNotCheck());
                 lesson.WordComparer.Settings.NotCheckers.Add(new Utf8NotCheck());
-                IUser user = UserManagerSingleton.Get().User;
+                IUser user = UserManagerSingleton.Instence.User;
                 ILessonSettings lessonSettings = new LessonSettings()
                 {
                     AllWords = user.AllWords,

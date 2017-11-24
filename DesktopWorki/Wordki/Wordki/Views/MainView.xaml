@@ -9,22 +9,27 @@
     Style="{DynamicResource AppWindowsStyle}"
     Title="Wordki">
 
-    <Window.CommandBindings>
+    <!--<Window.CommandBindings>
         <CommandBinding
             Executed="CommandBinding_OnExecuted"
             Command="Undo" />
-    </Window.CommandBindings>
+    </Window.CommandBindings>-->
 
     <Window.InputBindings>
         <KeyBinding
             Key="Escape"
-            Command="Undo" />
+            Command="{Binding Path=BackCommand}" />
+        <KeyBinding 
+            Key="F"
+            Modifiers="Ctrl"
+            Command="{Binding Path=SearchWordCommand}"/>
     </Window.InputBindings>
 
     <Grid>
         <ContentControl
             x:Name="Page"
-            KeyboardNavigation.IsTabStop="False" />
+            KeyboardNavigation.IsTabStop="False" 
+            Content="{Binding Path=Page}"/>
         <notification:ToastList
             x:Name="ToastList"
             ToastBackground="{DynamicResource UsedPressedBrush}"

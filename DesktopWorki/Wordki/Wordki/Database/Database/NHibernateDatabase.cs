@@ -18,7 +18,7 @@ namespace Wordki.Database
         private IWordRepository _wordRepo;
         private IResultRepository _resultRepo;
 
-        public NHibernateDatabase()
+        internal NHibernateDatabase()
         {
             _userRepo = new UserRepository();
             _groupRepo = new GroupRepository();
@@ -95,6 +95,23 @@ namespace Wordki.Database
 
         public void RefreshDatabase()
         {
+            IEnumerable<IGroup> allGroups = _groupRepo.GetGroups();
+            foreach (IGroup group in allGroups)
+            {
+                if (group.State < 0)
+                {
+                    _groupRepo.Delete(group);
+                    continue;
+                }
+                foreach (IWord word in group.Words.Where(x => x.State < 0))
+                {
+                    _wordRepo.Delete(word);
+                }
+                foreach (IResult result in group.Results.Where(x => x.State < 0))
+                {
+                    _resultRepo.Delete(result);
+                }
+            }
         }
 
         #region User

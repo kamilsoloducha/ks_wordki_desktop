@@ -149,7 +149,7 @@ namespace Wordki.ViewModels
 
         private async void SaveGroup(object obj)
         {
-            IDatabase database = DatabaseSingleton.GetDatabase();
+            IDatabase database = DatabaseSingleton.Instance;
             await database.AddGroupAsync(Group);
             BackCommand.Execute(null);
         }

@@ -149,16 +149,16 @@ namespace Wordki.ViewModels
         {
             ActivateCommand();
             Settings = Settings.GetSettings();
-            Database = DatabaseSingleton.GetDatabase();
+            Database = DatabaseSingleton.Instance;
         }
 
         public override void InitViewModel()
         {
             ThemeSelectedIndex = Settings.ApplicationStyle == ApplicationStyleEnum.Dark ? 1 : 0;
             FontSizeSelectedIndex = Settings.FontSize.ToString("D");
-            UserName = UserManagerSingleton.Get().User.Name;
-            LoginDateTime = UserManagerSingleton.Get().User.LastLoginDateTime.ToString("HH:mm:ss dd/MM/yyyy");
-            DownloadDateTime = UserManagerSingleton.Get().User.DownloadTime.ToString("HH:mm:ss dd/MM/yyyy");
+            UserName = UserManagerSingleton.Instence.User.Name;
+            LoginDateTime = UserManagerSingleton.Instence.User.LastLoginDateTime.ToString("HH:mm:ss dd/MM/yyyy");
+            DownloadDateTime = UserManagerSingleton.Instence.User.DownloadTime.ToString("HH:mm:ss dd/MM/yyyy");
             Password = "***";
             TestString = "Napis";
             Settings.ShortCuts.CollectionChanged += ShortCutsOnCollectionChanged;
@@ -232,10 +232,10 @@ namespace Wordki.ViewModels
             string hashPassword = Util.MD5Hash.GetMd5Hash(MD5.Create(), oldPassword);
             var user = new User()
             {
-                Name = UserManagerSingleton.Get().User.Name,
+                Name = UserManagerSingleton.Instence.User.Name,
                 Password = Password,
             };
-            if (hashPassword.Equals(UserManagerSingleton.Get().User.Password))
+            if (hashPassword.Equals(UserManagerSingleton.Instence.User.Password))
             {
                 //CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
                 //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestPutUser(user)) { OnCompleteCommand = UpdateLoginPasswordComplete });
@@ -283,15 +283,15 @@ namespace Wordki.ViewModels
 
         private void Synchronize(object obj)
         {
-            UserManagerSingleton.Get().User.DownloadTime = new DateTime(1991, 5, 20);
+            UserManagerSingleton.Instence.User.DownloadTime = new DateTime(1991, 5, 20);
             //CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-            //CommandQueue<ICommand> downloadQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetDownloadQueue();
+            //CommandQueue<ICommand> downloadQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Instence.User as User).GetDownloadQueue();
             //foreach (ICommand command in downloadQueue.MainQueue)
             //{
             //    lQueue.MainQueue.AddLast(command);
             //}
-            ////lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetDateTime(UserManagerSingleton.Get().User as User)) { OnCompleteCommand = lDatabase.OnReadDateTime });
-            //CommandQueue<ICommand> uploadQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Get().User as User).GetUploadQueue();
+            ////lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestGetDateTime(UserManagerSingleton.Instence.User as User)) { OnCompleteCommand = lDatabase.OnReadDateTime });
+            //CommandQueue<ICommand> uploadQueue = RemoteDatabaseBase.GetRemoteDatabase(UserManagerSingleton.Instence.User as User).GetUploadQueue();
             //foreach (ICommand command in uploadQueue.MainQueue)
             //{
             //    lQueue.MainQueue.AddLast(command);
