@@ -1,7 +1,7 @@
 ﻿using Repository.Models;
 using System.Threading.Tasks;
 
-namespace Wordki.Models
+namespace Wordki.Database.Repositories
 {
     public interface IUserRepository
     {

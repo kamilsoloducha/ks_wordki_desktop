@@ -2,9 +2,9 @@
 using NHibernate.Linq;
 using System.Linq;
 using System.Collections.Generic;
-using Wordki.Models;
 using Repository.Models;
 using System.Threading.Tasks;
+using Wordki.Database.Repositories;
 
 namespace Wordki.Database
 {
@@ -45,7 +45,7 @@ namespace Wordki.Database
             return Task.Run(() => Get(id));
         }
 
-        public IEnumerable<IGroup> GetGroups()
+        public IEnumerable<IGroup> GetAll()
         {
             using (ISession session = NHibernateHelper.OpenSession())
             {
@@ -59,9 +59,9 @@ namespace Wordki.Database
             }
         }
 
-        public Task<IEnumerable<IGroup>> GetGroupsAsync()
+        public Task<IEnumerable<IGroup>> GetAllAsync()
         {
-            return Task.Run(() => GetGroups());
+            return Task.Run(() => GetAll());
         }
 
         public long RowCount()

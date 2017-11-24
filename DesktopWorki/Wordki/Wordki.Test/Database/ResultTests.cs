@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Wordki.Models;
 using Wordki.Database;
 using Repository.Models;
+using Wordki.Database.Repositories;
 
 namespace Resultki.Test.Database
 {

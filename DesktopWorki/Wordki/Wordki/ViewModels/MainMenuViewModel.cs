@@ -153,11 +153,6 @@ namespace Wordki.ViewModels
         {
             Login = UserManagerSingleton.Instence.User.Name;
             RefreshInfo();
-            //SearchDialog dialog = new SearchDialog
-            //{
-            //};
-            //dialog.ViewModel = new Dialogs.SearchDialogViewModel();
-            //dialog.ShowDialog();
         }
 
         public override void Back()
@@ -223,7 +218,15 @@ namespace Wordki.ViewModels
             {
                 IDatabase lDatabase = DatabaseSingleton.Instance;
                 ObservableCollection<double> lList = new ObservableCollection<double>();
-                string lTeachTimeToday = Helpers.Util.GetAproximatedTimeFromSeconds(ResultCalculator.GetLessonTime(DateTime.Now.AddDays(-1), DateTime.Now));
+                IWordCalculator calculator = new WordCalculator()
+                {
+                    Groups = lDatabase.Groups,
+                };
+                foreach (int drawer in calculator.GetDrawerCount())
+                {
+                    lList.Add(drawer);
+                }
+                string lTeachTimeToday = Helpers.Util.GetAproximatedTimeFromSeconds(ResultCalculator.GetLessonTimeToday());
                 string lTeachTime = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.Groups.Sum(x => x.Results.Sum(y => y.TimeCount)));
                 int lGroupCount = lDatabase.Groups.Count;
                 int lWordCount = lDatabase.Groups.Sum(x => x.Words.Count);

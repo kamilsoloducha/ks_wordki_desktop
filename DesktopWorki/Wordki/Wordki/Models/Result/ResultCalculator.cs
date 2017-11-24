@@ -29,5 +29,13 @@ namespace Wordki.Models
             return counter;
         }
 
+        public int GetLessonTimeToday()
+        {
+            DateTime now = DateTime.Now;
+            DateTime start = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
+            DateTime end = start.AddDays(1);
+            return GetLessonTime(start, end);
+        }
+
     }
 }

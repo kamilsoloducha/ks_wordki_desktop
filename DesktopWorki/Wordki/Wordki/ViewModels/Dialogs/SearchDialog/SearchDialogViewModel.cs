@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Util;
 using Wordki.Database;
+using System;
 
 namespace Wordki.ViewModels.Dialogs
 {
@@ -40,13 +41,26 @@ namespace Wordki.ViewModels.Dialogs
 
         public ICommand CancelCommand { get; set; }
         public ICommand SearchCommand { get; set; }
+        public ICommand MouseDoubleClickCommand { get; set; }
 
         public override void InitViewModel()
         {
             CancelCommand = new BuilderCommand(Cancel);
             SearchCommand = new BuilderCommand(Search);
+            MouseDoubleClickCommand = new BuilderCommand(CheckUncheckWord);
             Words = new ObservableCollection<IWord>();
             BindingOperations.EnableCollectionSynchronization(Words, _wordsLock);
+        }
+
+        private void CheckUncheckWord(object obj)
+        {
+            IWord word = obj as IWord;
+            if(word == null)
+            {
+                return;
+            }
+            word.Checked = !word.Checked;
+            DatabaseSingleton.Instance.UpdateWord(word);
         }
 
         private void Cancel(object obj)

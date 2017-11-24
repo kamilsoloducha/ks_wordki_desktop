@@ -37,25 +37,26 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition 
-                    Width="4*"/>
+                <ColumnDefinition
+                    Width="4*" />
                 <ColumnDefinition
                     Width="*" />
             </Grid.ColumnDefinitions>
 
             <TextBox
+                Name="SearchingWord_TextBox"
                 Grid.Column="0"
                 Style="{StaticResource AppTextBoxStyle}"
-                Text="{Binding Path=SearchingWord, UpdateSourceTrigger=PropertyChanged}"/>
+                Text="{Binding Path=SearchingWord, UpdateSourceTrigger=PropertyChanged}" />
 
-            <Button 
+            <Button
                 Grid.Column="1"
                 Style="{StaticResource FlatButtonStyle}"
                 Command="{Binding Path=SearchCommand}"
-                Content="Szukaj"/>
+                Content="Szukaj" />
 
         </Grid>
-            
+
 
         <ListBox
             x:Name="ListBox"
@@ -65,14 +66,14 @@
             ItemsSource="{Binding Path=Words}"
             ScrollViewer.CanContentScroll="False">
 
-            <!--<i:Interaction.Triggers>
+            <i:Interaction.Triggers>
                 <i:EventTrigger
-                    EventName="SelectionChanged">
+                    EventName="MouseDoubleClick">
                     <i:InvokeCommandAction
-                        Command="{Binding Path=SelectionChangedCommand}"
+                        Command="{Binding Path=MouseDoubleClickCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
                 </i:EventTrigger>
-            </i:Interaction.Triggers>-->
+            </i:Interaction.Triggers>
 
             <ListBox.ItemContainerStyle>
                 <Style
@@ -82,28 +83,34 @@
                         <Setter.Value>
                             <ControlTemplate
                                 TargetType="{x:Type ListBoxItem}">
-                                <Border
-                                    Background="Transparent">
-                                    <StackPanel
-                                        Orientation="Horizontal"
-                                        HorizontalAlignment="Center">
-                                        <TextBlock
-                                            FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
-                                            Background="Transparent"
-                                            FontSize="20"
-                                            Text="{Binding Path=Language1}" />
-                                        <TextBlock
-                                            FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
-                                            Background="Transparent"
-                                            FontSize="20"
-                                            Text=" - " />
-                                        <TextBlock
-                                            FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
-                                            Background="Transparent"
-                                            FontSize="20"
-                                            Text="{Binding Path=Language2}" />
-                                    </StackPanel>
-                                </Border>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition
+                                            Width="*" />
+                                        <ColumnDefinition
+                                            Width="Auto" />
+                                        <ColumnDefinition
+                                            Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
+                                        Background="Transparent"
+                                        FontSize="20"
+                                        Text="{Binding Path=Language1}" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
+                                        Background="Transparent"
+                                        FontSize="20"
+                                        Text=" - " />
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
+                                        Background="Transparent"
+                                        FontSize="20"
+                                        Text="{Binding Path=Language2}" />
+                                </Grid>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
@@ -122,6 +129,7 @@
                 Style="{StaticResource DialogFlatButtonStyle}"
                 Content="Wyjdź"
                 Command="{Binding Path=CancelCommand}" />
+
         </StackPanel>
     </Grid>
 </dialogs:DialogBase>

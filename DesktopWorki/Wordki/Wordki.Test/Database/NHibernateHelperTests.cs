@@ -2,6 +2,7 @@
 using Repository.Models;
 using System.Collections.Generic;
 using Wordki.Database;
+using Wordki.Database.Repositories;
 using Wordki.Models;
 
 namespace Wordki.Test.Database
@@ -108,7 +109,7 @@ namespace Wordki.Test.Database
 
             NHibernateHelper.RefreshDatabase();
 
-            foreach(IGroup group in groupRepo.GetGroups())
+            foreach(IGroup group in groupRepo.GetAll())
             {
                 Assert.AreEqual(0, group.State);
                 foreach(IWord word in group.Words)

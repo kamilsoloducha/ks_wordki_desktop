@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Wordki.Models;
+using Wordki.Database.Repositories;
 
 namespace Wordki.Database
 {
@@ -33,7 +34,7 @@ namespace Wordki.Database
             {
                 Groups.Clear();
             }
-            foreach (var group in (await _groupRepo.GetGroupsAsync()).Where(x => x.State > 0))
+            foreach (var group in (await _groupRepo.GetAllAsync()).Where(x => x.State > 0))
             {
                 if (group.State < 0)
                     continue;
@@ -59,7 +60,7 @@ namespace Wordki.Database
             {
                 Groups.Clear();
             }
-            foreach (var group in (_groupRepo.GetGroups()).Where(x => x.State > 0))
+            foreach (var group in (_groupRepo.GetAll()).Where(x => x.State > 0))
             {
                 if (group.State < 0)
                     continue;
@@ -95,7 +96,7 @@ namespace Wordki.Database
 
         public void RefreshDatabase()
         {
-            IEnumerable<IGroup> allGroups = _groupRepo.GetGroups();
+            IEnumerable<IGroup> allGroups = _groupRepo.GetAll();
             foreach (IGroup group in allGroups)
             {
                 if (group.State < 0)

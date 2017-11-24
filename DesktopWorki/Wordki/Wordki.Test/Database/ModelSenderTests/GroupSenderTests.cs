@@ -4,6 +4,7 @@ using Repository.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Wordki.Database;
+using Wordki.Database.Repositories;
 using Wordki.Models;
 
 namespace Wordki.Test.Database.ModelSenderTests
@@ -31,7 +32,7 @@ namespace Wordki.Test.Database.ModelSenderTests
             {
                 group.State = 0;
             }
-            mock.Setup(m => m.GetGroups()).Returns(groups);
+            mock.Setup(m => m.GetAll()).Returns(groups);
             modelSender = new GroupsSender() { GroupRepo = mock.Object };
 
             Assert.AreEqual(groups.Count(x => x.State != 0), modelSender.GetModelToSend().Count());
@@ -45,7 +46,7 @@ namespace Wordki.Test.Database.ModelSenderTests
             {
                 group.State = 1;
             }
-            mock.Setup(m => m.GetGroups()).Returns(groups);
+            mock.Setup(m => m.GetAll()).Returns(groups);
             modelSender = new GroupsSender() { GroupRepo = mock.Object };
 
             Assert.AreEqual(groups.Count(x => x.State != 0), modelSender.GetModelToSend().Count());
@@ -60,7 +61,7 @@ namespace Wordki.Test.Database.ModelSenderTests
             }
             groups.First().State = 1;
             groups.Last().State = 1;
-            mock.Setup(m => m.GetGroups()).Returns(groups);
+            mock.Setup(m => m.GetAll()).Returns(groups);
             modelSender = new GroupsSender() { GroupRepo = mock.Object };
 
             Assert.AreEqual(groups.Count(x => x.State != 0), modelSender.GetModelToSend().Count());

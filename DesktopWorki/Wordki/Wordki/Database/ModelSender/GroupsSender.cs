@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Repository.Models;
 using Wordki.Models;
+using Wordki.Database.Repositories;
 
 namespace Wordki.Database
 {
@@ -16,7 +17,7 @@ namespace Wordki.Database
 
         public IEnumerable<IGroup> GetModelToSend()
         {
-            foreach (IGroup group in GroupRepo.GetGroups())
+            foreach (IGroup group in GroupRepo.GetAll())
             {
                 if (group.State != 0)
                 {

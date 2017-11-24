@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Repository.Models;
 using System.Linq;
 using Wordki.Database;
+using Wordki.Database.Repositories;
 using Wordki.Models;
 
 namespace Wordki.Test.Database

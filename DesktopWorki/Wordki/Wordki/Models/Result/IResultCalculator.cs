@@ -7,5 +7,7 @@ namespace Wordki.Models
     public interface IResultCalculator
     {
         int GetLessonTime(DateTime start, DateTime end);
+
+        int GetLessonTimeToday();
     }
 }

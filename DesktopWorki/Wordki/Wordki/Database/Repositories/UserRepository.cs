@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using NHibernate;
 using Repository.Models;
 using Wordki.Models;
+using Wordki.Database.Repositories;
 
 namespace Wordki.Database
 {

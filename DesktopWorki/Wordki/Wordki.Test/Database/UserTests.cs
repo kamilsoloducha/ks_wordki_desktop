@@ -2,6 +2,7 @@
 using Repository.Models;
 using System;
 using Wordki.Database;
+using Wordki.Database.Repositories;
 using Wordki.Models;
 
 namespace Wordki.Test.Database

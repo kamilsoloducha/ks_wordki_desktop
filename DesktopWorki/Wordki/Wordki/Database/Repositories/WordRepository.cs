@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Wordki.Models;
 using Repository.Models;
 using System.Threading.Tasks;
+using Wordki.Database.Repositories;
 
 namespace Wordki.Database
 {
@@ -43,7 +44,7 @@ namespace Wordki.Database
             return Task.Run(() => Get(id));
         }
 
-        public IEnumerable<IWord> GetWords()
+        public IEnumerable<IWord> GetAll()
         {
             using (ISession session = NHibernateHelper.OpenSession())
             {
@@ -51,9 +52,9 @@ namespace Wordki.Database
             }
         }
 
-        public Task<IEnumerable<IWord>> GetWordsAsync()
+        public Task<IEnumerable<IWord>> GetAllAsync()
         {
-            return Task.Run(() => GetWords());
+            return Task.Run(() => GetAll());
         }
 
         public long RowCount()
@@ -112,6 +113,51 @@ namespace Wordki.Database
             return word != null
                 && word.Id > 0
                 && word.Group != FakeGroup.Group;
+        }
+
+        //TODO test it
+        public void Save(IEnumerable<IWord> items)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                foreach (IWord item in items)
+                {
+                    if (!CheckObject(item))
+                    {
+                        continue;
+                    }
+                    session.SaveOrUpdate(item);
+                }
+                transaction.Commit();
+            }
+        }
+
+        public void Update(IEnumerable<IWord> items)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                foreach (IWord item in items)
+                {
+                    if (!CheckObject(item))
+                    {
+                        continue;
+                    }
+                    session.Update(item);
+                }
+                transaction.Commit();
+            }
+        }
+
+        public Task SaveAsync(IEnumerable<IWord> items)
+        {
+            return Task.Run(() => Save(items));
+        }
+
+        public Task UpdateAsync(IEnumerable<IWord> items)
+        {
+            return Task.Run(() => Update(items));
         }
     }
 }

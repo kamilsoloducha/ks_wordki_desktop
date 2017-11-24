@@ -7,10 +7,10 @@ namespace Wordki.Views.Dialogs
     /// </summary>
     public partial class SearchDialog : DialogBase
     {
-
-        public SearchDialog()
+        public SearchDialog() : base()
         {
             InitializeComponent();
+            SearchingWord_TextBox.Focus();
         }
     }
 }
