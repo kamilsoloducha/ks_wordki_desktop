@@ -15,11 +15,11 @@ namespace Wordki.InteractionProvider
 
         protected override void DispatcherWork()
         {
-            DialogBase dialog = new InfoDialog()
+            IDialogOrganizer dialogOrganizer = DialogOrganizerSingleton.Instance;
+            dialogOrganizer.ShowDialog(new InfoDialog()
             {
-                ViewModel = ViewModel,
-            };
-            dialog.ShowDialog();
+                ViewModel = ViewModel
+            });
         }
     }
 }

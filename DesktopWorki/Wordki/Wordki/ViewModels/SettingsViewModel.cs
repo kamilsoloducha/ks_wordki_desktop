@@ -218,12 +218,12 @@ namespace Wordki.ViewModels
 
         private void LoginPasswordChange(object obj)
         {
-            TextBoxDialog dialog = new TextBoxDialog()
-            {
-                Message = "Podaj stare hasło.",
-                OkCommand = new BuilderCommand(LoginPasswordChangeOk),
-            };
-            dialog.ShowDialog();
+            //TextBoxDialog dialog = new TextBoxDialog()
+            //{
+            //    Message = "Podaj stare hasło.",
+            //    OkCommand = new BuilderCommand(LoginPasswordChangeOk),
+            //};
+            //dialog.ShowDialog();
         }
 
         private void LoginPasswordChangeOk(object obj)

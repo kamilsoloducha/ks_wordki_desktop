@@ -10,24 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Wordki.Views.Dialogs
 {
     /// <summary>
-    /// Interaction logic for DialogMainView.xaml
+    /// Interaction logic for NoneDialog.xaml
     /// </summary>
-    public partial class DialogMainView : Window
+    public partial class NoneDialog : UserControl
     {
-        public DialogMainView()
+        public NoneDialog()
         {
             InitializeComponent();
-        }
-
-
-        private void CommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            Close();
         }
     }
 }

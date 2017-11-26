@@ -4,8 +4,8 @@ using Wordki.Helpers;
 using Wordki.Models.Lesson;
 using Repository.Models;
 using Wordki.Database;
-using Wordki.Views.Dialogs.Progress;
 using Util.Threads;
+using Wordki.InteractionProvider;
 
 namespace Wordki.ViewModels.LessonStates
 {
@@ -42,13 +42,16 @@ namespace Wordki.ViewModels.LessonStates
             SimpleWork work = new SimpleWork();
             work.WorkFunc += SaveDatabase;
             BackgroundQueueWithProgressDialog worker = new BackgroundQueueWithProgressDialog();
-            ProgressDialog dialog = new ProgressDialog();
-            dialog.ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
+            ProcessProvider provider = new ProcessProvider()
             {
-                DialogTitle = "Zapisuje wyniki",
-                CanCanceled = false,
+                ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
+                {
+                    ButtonLabel = "Anuluj",
+                    DialogTitle = "Zapisuje",
+                    CanCanceled = true,
+                }
             };
-            worker.Dialog = dialog;
+            worker.Dialog = provider;
             worker.AddWork(work);
             worker.Execute();
             TeachViewModelBase._switcher.Back(true);

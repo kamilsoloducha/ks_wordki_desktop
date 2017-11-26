@@ -50,7 +50,7 @@ namespace Wordki.ViewModels.LessonStates
             Lesson.Timer.Pause();
         }
 
-        public new void Dispose()
+        public override void Dispose()
         {
             Lesson.Timer.Resume();
         }

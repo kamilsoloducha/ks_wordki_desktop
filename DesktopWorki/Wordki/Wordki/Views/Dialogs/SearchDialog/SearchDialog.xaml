@@ -47,6 +47,7 @@
                 Name="SearchingWord_TextBox"
                 Grid.Column="0"
                 Style="{StaticResource AppTextBoxStyle}"
+                FontSize="30"
                 Text="{Binding Path=SearchingWord, UpdateSourceTrigger=PropertyChanged}" />
 
             <Button
@@ -63,6 +64,7 @@
             Grid.Row="1"
             Style="{StaticResource AppListBoxStyle}"
             Height="400"
+            BorderThickness="0"
             ItemsSource="{Binding Path=Words}"
             ScrollViewer.CanContentScroll="False">
 
@@ -83,7 +85,8 @@
                         <Setter.Value>
                             <ControlTemplate
                                 TargetType="{x:Type ListBoxItem}">
-                                <Grid>
+                                <Grid
+                                    Margin="10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition
                                             Width="*" />
@@ -97,6 +100,7 @@
                                         FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
                                         Background="Transparent"
                                         FontSize="20"
+                                        HorizontalAlignment="Right"
                                         Text="{Binding Path=Language1}" />
                                     <TextBlock
                                         Grid.Column="1"

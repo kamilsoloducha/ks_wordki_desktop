@@ -449,7 +449,7 @@ namespace Wordki.ViewModels.LessonStates
             return "%ERROR%";
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
         }
     }

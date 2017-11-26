@@ -133,11 +133,14 @@ namespace Wordki.ViewModels
             Timer = "";
             Lesson = lLesson;
 
-            
+
             OnTimerTick(0);
         }
 
-        public override void Back() { }
+        public override void Back()
+        {
+            Lesson.Timer.TimerListeners.Remove(this);
+        }
 
         protected abstract void Check(object obj);
 
@@ -283,50 +286,55 @@ namespace Wordki.ViewModels
         private void Back(object obj)
         {
             LessonStateEnum lLastState = State.StateEnum;
-            IInteractionProvider provider = new YesNoProvider()
+            using (LessonStateBase lessonState = StateFactory.GetState(Lesson, LessonStateEnum.Pause))
             {
-                ViewModel = new YesNoDialogViewModel()
+                IInteractionProvider provider = new YesNoProvider()
                 {
-                    DialogTitle = "Uwaga",
-                    Message = "Czy na pewno chcesz opuścić lekcje?",
-                    PositiveLabel = "Tak",
-                    NegativeLabel = "Nie",
-                    YesAction = () =>
+                    ViewModel = new YesNoDialogViewModel()
                     {
-                        //if (Lesson != null)
-                        //{
-                        //    ISerializer<Lesson> serializer = new BinarySerializer<Lesson>
-                        //    {
-                        //        Settings = new BinarySerializerSettings
-                        //        {
-                        //            Path = "lesson",
-                        //            RemoveAfterRead = true,
-                        //        }
-                        //    };
-                        //    try
-                        //    {
-                        //        serializer.Write(Lesson);
-                        //    }
-                        //    catch (Exception e)
-                        //    {
-                        //        LoggerSingleton.LogError("Błąd serializowania lekcji - {0}", e.Message);
-                        //    }
-                        //    Lesson.FinishLesson();
-                        //    Lesson.Timer.StopTimer();
-                        //}
-                        Switcher.Back(true);
-                    },
-                    NoAction = () =>
-                    {
-                        State = StateFactory.GetState(Lesson, lLastState);
-                        if (State != null)
+                        DialogTitle = "Uwaga",
+                        Message = "Czy na pewno chcesz opuścić lekcje?",
+                        PositiveLabel = "Tak",
+                        NegativeLabel = "Nie",
+                        YesAction = () =>
                         {
-                            State.RefreshView();
+                            //if (Lesson != null)
+                            //{
+                            //    ISerializer<Lesson> serializer = new BinarySerializer<Lesson>
+                            //    {
+                            //        Settings = new BinarySerializerSettings
+                            //        {
+                            //            Path = "lesson",
+                            //            RemoveAfterRead = true,
+                            //        }
+                            //    };
+                            //    try
+                            //    {
+                            //        serializer.Write(Lesson);
+                            //    }
+                            //    catch (Exception e)
+                            //    {
+                            //        LoggerSingleton.LogError("Błąd serializowania lekcji - {0}", e.Message);
+                            //    }
+                            //    Lesson.FinishLesson();
+                            //    Lesson.Timer.StopTimer();
+                            //}
+                            Switcher.Back(true);
+                        },
+                        NoAction = () =>
+                        {
+                            State = StateFactory.GetState(Lesson, lLastState);
+                            if (State != null)
+                            {
+                                State.RefreshView();
+                            }
                         }
-                    }
-                },
-            };
-            provider.Interact();
+                    },
+                };
+                State = lessonState;
+                State.RefreshView();
+                provider.Interact();
+            }
         }
 
         private void OnEnterClick(object obj)

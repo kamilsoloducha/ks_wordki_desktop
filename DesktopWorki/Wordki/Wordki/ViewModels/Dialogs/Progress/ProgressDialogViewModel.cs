@@ -8,10 +8,8 @@ using Wordki.Helpers;
 
 namespace Wordki.ViewModels.Dialogs.Progress
 {
-    public class ProgressDialogViewModel : ViewModelBase
+    public class ProgressDialogViewModel : DialogViewModelBase
     {
-
-        public event EventHandler ClosingRequest;
 
         private string _dialogTitle;
         public string DialogTitle
@@ -73,17 +71,9 @@ namespace Wordki.ViewModels.Dialogs.Progress
 
         public Action OnCanceled { get; set; }
 
-        public ProgressDialogViewModel()
+        public ProgressDialogViewModel() : base()
         {
             CancelCommand = new Helpers.BuilderCommand(Cancel);
-        }
-
-        public override void Back()
-        {
-        }
-
-        public override void InitViewModel()
-        {
         }
 
         private void Cancel(object obj)
@@ -96,12 +86,5 @@ namespace Wordki.ViewModels.Dialogs.Progress
             LoggerSingleton.LogInfo("Cancel");
         }
 
-        protected void OnClosingRequest()
-        {
-            if (ClosingRequest != null)
-            {
-                ClosingRequest(this, EventArgs.Empty);
-            }
-        }
     }
 }

@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Collections;
 using Wordki.Helpers.GroupConnector;
 using Util.Threads;
-using Wordki.Views.Dialogs.Progress;
 using Wordki.Helpers.Connector;
 using Wordki.Helpers.Connector.Requests;
 using Wordki.ViewModels.Dialogs;
@@ -482,14 +481,16 @@ namespace Wordki.ViewModels
             SimpleWork work = new SimpleWork();
             work.WorkFunc += SendRequestForWordTranslate;
             BackgroundQueueWithProgressDialog worker = new BackgroundQueueWithProgressDialog();
-            ProgressDialog dialog = new ProgressDialog();
-            dialog.ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
+            ProcessProvider provider = new ProcessProvider()
             {
-                DialogTitle = "Tłumaczę...",
-                ButtonLabel = "Anuluj",
-                CanCanceled = true,
+                ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
+                {
+                    ButtonLabel = "Anuluj",
+                    DialogTitle = "Tłumaczę",
+                    CanCanceled = true,
+                }
             };
-            worker.Dialog = dialog;
+            worker.Dialog = provider;
             worker.AddWork(work);
             worker.Execute();
         }
