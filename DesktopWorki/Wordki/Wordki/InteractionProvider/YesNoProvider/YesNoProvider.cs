@@ -17,7 +17,9 @@ namespace Wordki.InteractionProvider
         {
             YesNoDialog dialog = new YesNoDialog();
             dialog.ViewModel = ViewModel;
-            dialog.ShowDialog();
+            IDialogOrganizer organizer = DialogOrganizerSingleton.Instance;
+            organizer.ShowDialog(dialog);
+
         }
     }
 }

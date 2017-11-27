@@ -13,11 +13,13 @@ namespace Wordki.InteractionProvider
     {
         protected override void DispatcherWork()
         {
-            SearchDialog dialog = new SearchDialog();
             SearchDialogViewModel viewModel = new SearchDialogViewModel();
             viewModel.InitViewModel();
-            dialog.ViewModel = viewModel;
-            dialog.ShowDialog();
+            IDialogOrganizer dialogOrganizer = DialogOrganizerSingleton.Instance;
+            dialogOrganizer.ShowDialog(new SearchDialog()
+            {
+                ViewModel = viewModel
+            });
         }
     }
 }

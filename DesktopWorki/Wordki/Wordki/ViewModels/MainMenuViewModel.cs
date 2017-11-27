@@ -141,7 +141,6 @@ namespace Wordki.ViewModels
             BuilderCommand = new BuilderCommand(Builder);
             SettingsCommand = new BuilderCommand(Settings);
             ExitCommand = new BuilderCommand(Exit);
-            SearchCommand = new BuilderCommand(Search);
 
             ResultCalculator = new ResultCalculator
             {
@@ -164,14 +163,7 @@ namespace Wordki.ViewModels
         public BuilderCommand BuilderCommand { get; set; }
         public BuilderCommand SettingsCommand { get; set; }
         public BuilderCommand ExitCommand { get; set; }
-        public ICommand SearchCommand { get; set; }
 
-
-        private void Search(object obj)
-        {
-            ISearchProvider provider = new SearchProvider();
-            provider.Interact();
-        }
 
         private void Teach(object obj)
         {

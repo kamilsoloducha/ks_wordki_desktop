@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using Wordki.ViewModels.Dialogs;
-
-namespace Wordki.Views.Dialogs
+﻿namespace Wordki.Views.Dialogs
 {
     /// <summary>
     /// Interaction logic for TranslationListDialog.xaml

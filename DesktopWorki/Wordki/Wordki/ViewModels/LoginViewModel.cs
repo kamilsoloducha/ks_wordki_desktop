@@ -7,8 +7,9 @@ using System.Windows.Input;
 using Util.Threads;
 using Wordki.Database;
 using Wordki.Helpers;
+using Wordki.InteractionProvider;
 using Wordki.Models;
-using Wordki.Views.Dialogs.Progress;
+using Wordki.ViewModels.Dialogs;
 
 namespace Wordki.ViewModels
 {
@@ -76,14 +77,16 @@ namespace Wordki.ViewModels
             SimpleWork work = new SimpleWork();
             work.WorkFunc += LoginAction;
             BackgroundQueueWithProgressDialog worker = new BackgroundQueueWithProgressDialog();
-            ProgressDialog dialog = new ProgressDialog();
-            dialog.ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
+            ProcessProvider provider = new ProcessProvider()
             {
-                ButtonLabel = "Anuluj",
-                DialogTitle = "Loguje",
-                CanCanceled = true,
+                ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
+                {
+                    ButtonLabel = "Anuluj",
+                    DialogTitle = "Zapisuje",
+                    CanCanceled = true,
+                }
             };
-            worker.Dialog = dialog;
+            worker.Dialog = provider;
             worker.AddWork(work);
             worker.Execute();
             return;

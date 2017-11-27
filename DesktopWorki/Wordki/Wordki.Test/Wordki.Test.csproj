@@ -106,7 +106,6 @@
     <Compile Include="Database\Helper.cs" />
     <Compile Include="Database\ModelSenderTests\GroupSenderTests.cs" />
     <Compile Include="Database\NHibernateHelperTests.cs" />
-    <Compile Include="Database\RefreshDatabaseTests.cs" />
     <Compile Include="Database\ResultTests.cs" />
     <Compile Include="Database\UserOrganizerTests\DatabaseOrganizerTests.cs" />
     <Compile Include="Database\UserTests.cs" />

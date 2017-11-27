@@ -39,15 +39,6 @@
 
     </UserControl.Resources>
 
-    <UserControl.InputBindings>
-
-        <KeyBinding
-            Modifiers="Ctrl+Shift"
-            Key="F"
-            Command="{Binding Path=SearchCommand}" />
-
-    </UserControl.InputBindings>
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition

@@ -39,7 +39,10 @@ namespace Wordki.ViewModels.Dialogs
             {
                 CloseAction.Invoke();
             }
-            ClosingRequest(this, EventArgs.Empty);
+            if(ClosingRequest != null)
+            {
+                ClosingRequest(this, EventArgs.Empty);
+            }
         }
 
     }

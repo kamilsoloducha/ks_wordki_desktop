@@ -2,7 +2,6 @@
 using System.Linq;
 using Repository.Models;
 using Repository.Models.Enums;
-using System.Windows;
 using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
 using Wordki.Helpers.TranslationPusher;
@@ -17,12 +16,13 @@ namespace Wordki.InteractionProvider
 
         protected override void DispatcherWork()
         {
+            IDialogOrganizer organizer = DialogOrganizerSingleton.Instance;
             TranslationListDialogViewModel viewModel = new TranslationListDialogViewModel(Items);
             TranslationListDialog dialog = new TranslationListDialog()
             {
                 ViewModel = viewModel,
             };
-            dialog.ShowDialog();
+            organizer.ShowDialog(dialog);
             if (viewModel.Canceled)
             {
                 return;
