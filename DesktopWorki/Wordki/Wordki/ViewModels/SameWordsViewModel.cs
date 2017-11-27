@@ -38,7 +38,7 @@ namespace Wordki.ViewModels
 
         private void ActivateCommand()
         {
-            BackCommand = new Util.BuilderCommand(Back);
+            BackCommand = new Util.BuilderCommand(BackAction);
             ConnectWordsCommand = new Util.BuilderCommand(ConnectWord);
             EditWordCommand = new Util.BuilderCommand(EditWord);
             BothLanguagesCommand = new Util.BuilderCommand(BothLanguages);
@@ -101,7 +101,7 @@ namespace Wordki.ViewModels
             Database.SaveDatabaseAsync();
         }
 
-        private void Back(object obj)
+        private void BackAction(object obj)
         {
             Switcher.Back();
         }

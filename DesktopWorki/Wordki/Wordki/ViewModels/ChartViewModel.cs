@@ -191,7 +191,7 @@ namespace Wordki.ViewModels
 
         private void ActivateCommand()
         {
-            BackCommand = new Util.BuilderCommand(Back);
+            BackCommand = new Util.BuilderCommand(BackAction);
             RefreshChartCommand = new Util.BuilderCommand(RefreshChart);
 
             MouseMoveCommand = new Util.BuilderCommand(MouseMove);
@@ -221,7 +221,7 @@ namespace Wordki.ViewModels
             OnDraw();
         }
 
-        private void Back(object obj)
+        private void BackAction(object obj)
         {
             Back();
             Switcher.Back();

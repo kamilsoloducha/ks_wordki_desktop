@@ -266,7 +266,7 @@ namespace Wordki.ViewModels
             TranslateWordCommnad = new Util.BuilderCommand(TranslateWord);
 
             DownloadGroupsNameCommand = new Util.BuilderCommand(DownloadGroupsName);
-            BackCommand = new Util.BuilderCommand(Back);
+            BackCommand = new Util.BuilderCommand(BackAction);
 
             SplitGroupCommand = new Util.BuilderCommand(SplitGroup);
             ConnectGroupCommand = new Util.BuilderCommand(ConnectGroup);
@@ -568,7 +568,7 @@ namespace Wordki.ViewModels
             }
         }
 
-        private void Back(object obj)
+        private void BackAction()
         {
             UpdateGroup(SelectedGroup);
             UpdateWord(SelectedWord);
@@ -625,7 +625,7 @@ namespace Wordki.ViewModels
                 Items = LanguageFactory.GetLanguages(),
                 Button1Label = "Wybierz"
             };
-            lDialog.Button1Command = new Util.BuilderCommand(delegate
+            lDialog.Button1Command = new Util.BuilderCommand(() =>
             {
                 LanguageType lSelectedLanguage = (LanguageType)lDialog.SelectedIndex;
                 if (pLanguageIndex == 1)
@@ -639,10 +639,7 @@ namespace Wordki.ViewModels
                 lDialog.Close();
             });
             lDialog.Button2Label = "Anuluj";
-            lDialog.Button2Command = new Util.BuilderCommand(delegate
-            {
-                lDialog.Close();
-            });
+            lDialog.Button2Command = new Util.BuilderCommand(lDialog.Close);
             lDialog.ShowDialog();
         }
         #endregion

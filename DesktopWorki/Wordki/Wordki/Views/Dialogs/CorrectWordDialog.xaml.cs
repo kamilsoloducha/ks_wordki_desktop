@@ -72,7 +72,7 @@ namespace Wordki.Views.Dialogs {
       Language2 = Word.Language2;
       Language1Comment = Word.Language1Comment;
       Language2Comment = Word.Language2Comment;
-      CorrectCommand = new BuilderCommand(delegate {
+      CorrectCommand = new BuilderCommand(() =>{
         Word.Language1 = Language1;
         Word.Language2 = Language2;
         Word.Language1Comment = Language1Comment;
@@ -80,11 +80,11 @@ namespace Wordki.Views.Dialogs {
         DialogResult = false;
         Close();
       });
-      DeleteCommand = new BuilderCommand(delegate {
+      DeleteCommand = new BuilderCommand(() => {
         DialogResult = true;
         Close();
       });
-      CancelCommand = new BuilderCommand(delegate {
+      CancelCommand = new BuilderCommand(() => {
         DialogResult = null;
         Close();
       });

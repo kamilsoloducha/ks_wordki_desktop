@@ -282,7 +282,7 @@ namespace Wordki.ViewModels
             Switcher.Switch(Switcher.State.Words);
         }
 
-        private void Back(object obj)
+        private void BackAction(object obj)
         {
             Back();
             Switcher.Back();
