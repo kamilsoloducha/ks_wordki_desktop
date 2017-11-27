@@ -288,6 +288,7 @@
     <Compile Include="Models\User\User.cs" />
     <Compile Include="Models\Word\Word.cs" />
     <Compile Include="Models\Word\WordCalculator.cs" />
+    <Compile Include="ViewModels\Dialogs\CorrectWordDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\DialogOrganizer\DialogOrganizer.cs" />
     <Compile Include="ViewModels\Dialogs\DialogOrganizer\DialogOrganizerSingleton.cs" />
     <Compile Include="ViewModels\Dialogs\DialogOrganizer\IDialogOrganizer.cs" />
