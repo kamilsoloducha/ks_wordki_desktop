@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Repository.Models.Enums;
 
 namespace Wordki.Models.LessonScheduler
 {
@@ -13,5 +15,7 @@ namespace Wordki.Models.LessonScheduler
                 return _timeSeparator;
             }
         }
+
+        public TranslationDirection TranslationDirection { get; set; }
     }
 }

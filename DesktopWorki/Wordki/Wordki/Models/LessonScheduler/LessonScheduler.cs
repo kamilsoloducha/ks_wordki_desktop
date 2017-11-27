@@ -16,7 +16,11 @@ namespace Wordki.Models.LessonScheduler
 
         public int GetTimeToLearn(IGroup group)
         {
-            return group.Results.Any() ? GetTime(group.Results.Count(), (int)IntervalTimeCalculator.GetIntervalBetweenTodayMidnight(group.Results.Last().DateTime).TotalDays) : 0;
+            return group.Results.Any()
+                ? GetTime(group.Results.Count(),
+                (int)IntervalTimeCalculator.GetIntervalBetweenTodayMidnight(
+                    group.Results.Last(x => x.TranslationDirection == _initializer.TranslationDirection).DateTime).TotalDays) 
+                : 0;
         }
 
         public int GetColor(IGroup group)

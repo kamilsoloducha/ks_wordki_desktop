@@ -16,7 +16,10 @@ namespace Wordki.Test.Helpers.NewLessonSchedulerTests
         [SetUp]
         public void SetUp()
         {
-            initializer = new LessonSchedulerInitializer2(days);
+            initializer = new LessonSchedulerInitializer2(days)
+            {
+                TranslationDirection = Repository.Models.Enums.TranslationDirection.FromFirst,
+            };
             lessonScheduler = new NewLessonScheduler()
             {
                 Initializer = initializer,

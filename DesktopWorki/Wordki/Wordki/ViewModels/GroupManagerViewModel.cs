@@ -297,7 +297,10 @@ namespace Wordki.ViewModels
                 ItemsList.Clear();
                 ILessonScheduler scheduler = new NewLessonScheduler()
                 {
-                    Initializer = new LessonSchedulerInitializer2(new List<int>() { 1, 1, 2, 4, 7 }),
+                    Initializer = new LessonSchedulerInitializer2(new List<int>() { 1, 1, 2, 4, 7 })
+                    {
+                        TranslationDirection = TranslationDirection.FromFirst,
+                    },
                 };
                 foreach (GroupItem groupItem in DatabaseSingleton.Instance.Groups.Select(group => new GroupItem(group)))
                 {
