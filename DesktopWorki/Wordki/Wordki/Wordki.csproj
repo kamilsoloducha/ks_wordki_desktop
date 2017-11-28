@@ -211,12 +211,16 @@
     <Compile Include="Helpers\WordConnector\WordConnector.cs" />
     <Compile Include="Helpers\WordFinder\IWordFinder.cs" />
     <Compile Include="Helpers\WordFinder\WordFinder.cs" />
+    <Compile Include="InteractionProvider\CorrectWordProvider\CorrectWordProvider.cs" />
+    <Compile Include="InteractionProvider\CorrectWordProvider\ICorrectWordProvider.cs" />
     <Compile Include="InteractionProvider\IInteractionProvider.cs" />
     <Compile Include="InteractionProvider\InfoProvider\IInfoProvider.cs" />
     <Compile Include="InteractionProvider\InfoProvider\ResultProvider.cs" />
     <Compile Include="InteractionProvider\InfoProvider\SimpleInfoProvider.cs" />
     <Compile Include="InteractionProvider\InfoProvider\ToastProvider.cs" />
     <Compile Include="InteractionProvider\InteractionProviderBase.cs" />
+    <Compile Include="InteractionProvider\LessonResultProvider\ILessonResultProvider.cs" />
+    <Compile Include="InteractionProvider\LessonResultProvider\LessonResultProvider.cs" />
     <Compile Include="InteractionProvider\ProcessProvider\ProcessProvider.cs" />
     <Compile Include="InteractionProvider\SearchProvider\ISearchProvider.cs" />
     <Compile Include="InteractionProvider\SearchProvider\SearchProvider.cs" />
@@ -293,6 +297,7 @@
     <Compile Include="ViewModels\Dialogs\DialogOrganizer\DialogOrganizerSingleton.cs" />
     <Compile Include="ViewModels\Dialogs\DialogOrganizer\IDialogOrganizer.cs" />
     <Compile Include="ViewModels\Dialogs\DialogWindowViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\LessonResultDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\TextBoxDialogViewModel.cs" />
     <Compile Include="ViewModels\LessonStates\FiszkiStates\AfterEndFiszkiState.cs" />
     <Compile Include="ViewModels\LessonStates\FiszkiStates\BeforeStartFiszkiState.cs" />
@@ -344,9 +349,6 @@
       <DependentUpon>CorrectWordDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\DialogBase.cs" />
-    <Compile Include="Views\Dialogs\DialogWindow.xaml.cs">
-      <DependentUpon>DialogWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Dialogs\InfoDialog.xaml.cs">
       <DependentUpon>InfoDialog.xaml</DependentUpon>
     </Compile>
@@ -358,9 +360,6 @@
     </Compile>
     <Compile Include="Views\Dialogs\ListDialogs\IListDialog.cs" />
     <Compile Include="Views\Dialogs\ListDialogs\LanguageListDialog.cs" />
-    <Compile Include="Views\Dialogs\NoneDialog.xaml.cs">
-      <DependentUpon>NoneDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Dialogs\SearchDialog\SearchDialog.xaml.cs">
       <DependentUpon>SearchDialog.xaml</DependentUpon>
     </Compile>
@@ -428,10 +427,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\DialogWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Dialogs\InfoDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -443,10 +438,6 @@
     <Page Include="Views\Dialogs\ListDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Dialogs\NoneDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\SearchDialog\SearchDialog.xaml">
       <SubType>Designer</SubType>

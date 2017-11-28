@@ -147,17 +147,17 @@ namespace Wordki.ViewModels
         #region Commands
         private void ActivateCommands()
         {
-            SearchCommand = new BuilderCommand(Search);
-            UnknownCommand = new BuilderCommand(Unknown);
-            CheckCommand = new BuilderCommand(Check);
-            KnownCommand = new BuilderCommand(Known);
+            SearchCommand = new Util.BuilderCommand(Search);
+            UnknownCommand = new Util.BuilderCommand(Unknown);
+            CheckCommand = new Util.BuilderCommand(Check);
+            KnownCommand = new Util.BuilderCommand(Known);
             BackCommand = new BuilderCommand(Back);
-            CorrectCommand = new BuilderCommand(Correct);
-            OnEnterClickCommand = new BuilderCommand(OnEnterClick);
-            StartLessonCommand = new BuilderCommand(StartLesson);
-            PauseCommand = new BuilderCommand(Pause);
-            CheckUncheckCommand = new BuilderCommand(CheckUncheck);
-            HintCommand = new BuilderCommand(Hint);
+            CorrectCommand = new Util.BuilderCommand(Correct);
+            OnEnterClickCommand = new Util.BuilderCommand(OnEnterClick);
+            StartLessonCommand = new Util.BuilderCommand(StartLesson);
+            PauseCommand = new Util.BuilderCommand(Pause);
+            CheckUncheckCommand = new Util.BuilderCommand(CheckUncheck);
+            HintCommand = new Util.BuilderCommand(Hint);
         }
 
         private void Search(object obj)
@@ -245,41 +245,40 @@ namespace Wordki.ViewModels
             }
         }
 
-        private async void Correct(object obj)
+        private void Correct()
         {
             if (Lesson == null || Lesson.SelectedWord == null)
                 return;
-            LessonStateEnum lLastState = State.StateEnum;
+            LessonStateEnum lastState = State.StateEnum;
             using (LessonStateBase lPauseState = StateFactory.GetState(Lesson, LessonStateEnum.Pause))
             {
                 State = lPauseState;
                 State.RefreshView();
-                CorrectWordDialog lDialog = new CorrectWordDialog(Lesson.SelectedWord);
-                lDialog.ShowDialog();
-                bool? lResult = lDialog.DialogResult;
-                if (lResult.HasValue && lResult.Value)
-                {//delete
-                    await DatabaseSingleton.Instance.DeleteWordAsync(Lesson.SelectedWord);
-                    //usunięcie śladu po słowie w wynikach
-                    if (Lesson.Counter > Lesson.BeginWordsList.Count)
+                IInteractionProvider provider = new CorrectWordProvider()
+                {
+                    Word = Lesson.SelectedWord,
+                    OnRemove = () =>
                     {
-                        Lesson.ResultList.First(x => x.Group.Id == Lesson.SelectedWord.Group.Id).Wrong--;
-                    }
-                    Lesson.BeginWordsList.Remove(Lesson.SelectedWord);
-                    Lesson.NextWord();
-                    CheckNextState();
-                }
-                else if (lResult.HasValue && !lResult.Value)
-                {//correct
-                    await DatabaseSingleton.Instance.UpdateWordAsync(Lesson.SelectedWord);
-                    State = StateFactory.GetState(Lesson, lLastState);
-                    State.RefreshView();
-                }
-                else
-                {//cancel
-                    State = StateFactory.GetState(Lesson, lLastState);
-                    State.RefreshView();
-                }
+                        if (Lesson.Counter > Lesson.BeginWordsList.Count)
+                        {
+                            Lesson.ResultList.First(x => x.Group.Id == Lesson.SelectedWord.Group.Id).Wrong--;
+                        }
+                        Lesson.BeginWordsList.Remove(Lesson.SelectedWord);
+                        Lesson.NextWord();
+                        CheckNextState();
+                    },
+                    OnCorrect = () =>
+                    {
+                        State = StateFactory.GetState(Lesson, lastState);
+                        State.RefreshView();
+                    },
+                    OnClose = () =>
+                     {
+                         State = StateFactory.GetState(Lesson, lastState);
+                         State.RefreshView();
+                     }
+                };
+                provider.Interact();
             }
         }
 

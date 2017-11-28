@@ -39,9 +39,9 @@ namespace Wordki.ViewModels.Dialogs
             OnClosingRequest();
         }
 
-        protected override void Close(object obj)
+        protected override void Close()
         {
-            base.Close(obj);
+            base.Close();
             Canceled = true;
         }
 

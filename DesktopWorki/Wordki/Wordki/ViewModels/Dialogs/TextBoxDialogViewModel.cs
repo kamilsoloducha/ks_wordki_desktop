@@ -55,7 +55,7 @@ namespace Wordki.ViewModels.Dialogs
             {
                 NegativeAction.Invoke();
             }
-            Close(null);
+            Close();
         }
 
         private void Positive(object obj)
@@ -64,7 +64,7 @@ namespace Wordki.ViewModels.Dialogs
             {
                 PositiveAction.Invoke();
             }
-            Close(null);
+            Close();
         }
     }
 }

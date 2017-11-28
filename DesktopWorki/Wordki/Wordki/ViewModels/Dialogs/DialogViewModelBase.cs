@@ -33,7 +33,7 @@ namespace Wordki.ViewModels.Dialogs
             }
         }
 
-        protected virtual void Close(object obj)
+        protected virtual void Close()
         {
             if (CloseAction != null)
             {

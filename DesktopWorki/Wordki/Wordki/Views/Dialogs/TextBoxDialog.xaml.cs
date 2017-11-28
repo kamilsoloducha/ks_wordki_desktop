@@ -3,7 +3,7 @@
     public partial class TextBoxDialog : DialogBase
     {
 
-        public TextBoxDialog()
+        public TextBoxDialog() : base()
         {
             InitializeComponent();
         }

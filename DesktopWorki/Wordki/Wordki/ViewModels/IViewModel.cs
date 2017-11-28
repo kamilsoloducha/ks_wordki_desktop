@@ -12,7 +12,6 @@ namespace Wordki.ViewModels
         Switcher Switcher { get; set; }
         void InitViewModel();
         void Back();
-
         void Loaded();
         void Unloaded();
     }

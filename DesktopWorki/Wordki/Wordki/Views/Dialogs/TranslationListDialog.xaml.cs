@@ -5,7 +5,7 @@
     /// </summary>
     public partial class TranslationListDialog : DialogBase
     {
-        public TranslationListDialog()
+        public TranslationListDialog() : base()
         {
             InitializeComponent();
             Height = Owner.ActualWidth / 3;

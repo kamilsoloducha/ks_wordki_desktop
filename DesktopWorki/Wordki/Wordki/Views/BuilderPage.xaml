@@ -476,6 +476,7 @@
                     Style="{StaticResource WinTextBoxStyle}"
                     IsEnabled="{Binding EnableElementDirectory[Language2], UpdateSourceTrigger=PropertyChanged}"
                     Text="{Binding Path=SelectedWord.Language2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    helpers:FocusExtension.IsFocused="{Binding Path=Language2IsFocused, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     TabIndex="10" />
 
                 <TextBox

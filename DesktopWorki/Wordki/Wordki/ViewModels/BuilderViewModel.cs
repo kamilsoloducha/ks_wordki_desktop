@@ -1,26 +1,26 @@
-﻿using System;
+﻿using Repository.Helper;
+using Repository.Models;
+using Repository.Models.Language;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Data;
-using Repository.Models.Language;
-using Wordki.Helpers;
-using Wordki.Helpers.GroupSplitter;
-using Wordki.Models;
-using Wordki.Views.Dialogs;
-using Wordki.Views.Dialogs.ListDialogs;
-using Util;
-using Repository.Helper;
-using Repository.Models;
-using Wordki.Database;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
-using System.Collections.Generic;
-using System.Collections;
-using Wordki.Helpers.GroupConnector;
+using Util;
 using Util.Threads;
+using Wordki.Database;
+using Wordki.Helpers;
 using Wordki.Helpers.Connector;
 using Wordki.Helpers.Connector.Requests;
-using Wordki.ViewModels.Dialogs;
+using Wordki.Helpers.GroupConnector;
+using Wordki.Helpers.GroupSplitter;
 using Wordki.InteractionProvider;
+using Wordki.Models;
+using Wordki.ViewModels.Dialogs;
+using Wordki.Views.Dialogs;
+using Wordki.Views.Dialogs.ListDialogs;
 
 namespace Wordki.ViewModels
 {
@@ -111,6 +111,21 @@ namespace Wordki.ViewModels
                     _languages1IsFocused = value;
                     OnPropertyChanged();
                 }
+            }
+        }
+
+        private bool languages2IsFocused;
+        public bool Language2IsFocused
+        {
+            get { return languages2IsFocused; }
+            set
+            {
+                if (languages2IsFocused == value)
+                {
+                    return;
+                }
+                languages2IsFocused = value;
+                OnPropertyChanged();
             }
         }
 
@@ -846,6 +861,7 @@ namespace Wordki.ViewModels
                 interactive.TranslationDirection = Repository.Models.Enums.TranslationDirection.FromFirst;
                 interactive.Word = SelectedWord;
                 interactive.Interact();
+                Language2IsFocused = true;
             }
             return new WorkResult()
             {

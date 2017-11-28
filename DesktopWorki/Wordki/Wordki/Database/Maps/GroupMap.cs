@@ -13,6 +13,7 @@ namespace Wordki.Database
             Map(x => x.Name);
             Map(x => x.Language1);
             Map(x => x.Language2);
+            Map(x => x.CreationDate);
             Map(x => x.State);
             HasMany<Word>(x => x.Words)
                 .Inverse()

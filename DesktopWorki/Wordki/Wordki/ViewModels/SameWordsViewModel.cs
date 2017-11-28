@@ -13,6 +13,7 @@ using Wordki.Helpers;
 using Wordki.Helpers.WordComparer;
 using Wordki.Helpers.WordConnector;
 using Wordki.Helpers.WordFinder;
+using Wordki.InteractionProvider;
 using Wordki.Models;
 using Wordki.Views.Dialogs;
 
@@ -46,31 +47,20 @@ namespace Wordki.ViewModels
 
         private void EditWord(object obj)
         {
-            try
+            if (obj == null)
             {
-                if (obj == null)
-                {
-                    return;
-                }
-                Word lWordItem = obj as Word;
-                if (lWordItem == null)
-                {
-                    return;
-                }
-                IGroup lGroup = Database.Groups.FirstOrDefault(x => x.Id == lWordItem.Group.Id);
-                if (lGroup == null)
-                    return;
-                IWord lSelectedWord = lGroup.Words.FirstOrDefault(x => x.Id == lWordItem.Id);
-                if (lSelectedWord == null)
-                    return;
-
-                CorrectWordDialog lDialog = new CorrectWordDialog(lSelectedWord);
-                lDialog.ShowDialog();
+                return;
             }
-            catch (Exception lException)
+            IWord word = obj as IWord;
+            if (word == null)
             {
-                LoggerSingleton.LogError("{0} - {1}", "SameWordsViewModel.EditWord", lException.Message);
+                return;
             }
+            IInteractionProvider provider = new CorrectWordProvider()
+            {
+                Word = word,
+            };
+            provider.Interact();
         }
 
         private void BothLanguages(object obj)

@@ -7,6 +7,7 @@ using Repository.Models;
 using System.Windows.Input;
 using Wordki.Models;
 using Wordki.Database;
+using Wordki.InteractionProvider;
 
 namespace Wordki.ViewModels.Dialogs
 {
@@ -36,13 +37,20 @@ namespace Wordki.ViewModels.Dialogs
         private IWord originalWord;
         private IDatabase database;
 
-        public CorrectWordDialogViewModel(IWord word)
+        public CorrectWordDialogViewModel(IWord word) : base()
         {
             Word = word.Clone() as IWord;
             originalWord = word;
             CorrectCommad = new Util.BuilderCommand(Correct);
             RemoveCommand = new Util.BuilderCommand(Remove);
             database = DatabaseSingleton.Instance;
+        }
+
+        public CorrectWordDialogViewModel(ICorrectWordProvider provdier) : this(provdier.Word)
+        {
+            CorrectWord = provdier.OnCorrect;
+            RemoveWord = provdier.OnRemove;
+            CloseAction = provdier.OnClose;
         }
 
         public void Correct(object obj)
@@ -59,6 +67,11 @@ namespace Wordki.ViewModels.Dialogs
             originalWord.Checked = word.Checked;
             originalWord.Visible = word.Visible;
             database.UpdateWordAsync(originalWord);
+            if (CorrectWord != null)
+            {
+                CorrectWord();
+            }
+            Close();
         }
 
         public void Remove(object obj)
@@ -69,6 +82,11 @@ namespace Wordki.ViewModels.Dialogs
                 return;
             }
             database.DeleteWordAsync(word);
+            if (RemoveWord != null)
+            {
+                RemoveWord();
+            }
+            Close();
         }
 
 

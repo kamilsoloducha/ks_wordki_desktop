@@ -106,6 +106,18 @@ namespace Wordki.Models
             }
         }
 
+        public DateTime CreationDate
+        {
+            get
+            {
+                return new DateTime();
+            }
+
+            set
+            {
+            }
+        }
+
         public void AddResult(IResult result)
         {
         }

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 using Repository.Models;
 using Repository.Models.Language;
-using System.Collections.ObjectModel;
-using System.Windows.Data;
 
 namespace Wordki.Models
 {
@@ -69,6 +66,22 @@ namespace Wordki.Models
             }
         }
 
+        private DateTime creationDate;
+        public DateTime CreationDate
+        {
+            get { return creationDate; }
+            set
+            {
+                if(creationDate == value)
+                {
+                    return;
+                }
+                creationDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public virtual bool ShouldSerializeLanguage2()
         {
             return StateManager.GetState(State, "Language2") > 0;
@@ -82,7 +95,6 @@ namespace Wordki.Models
         [JsonIgnore]
         public virtual IList<IResult> Results { get; set; }
 
-
         public Group()
         {
             Id = DateTime.Now.Ticks;
@@ -90,6 +102,7 @@ namespace Wordki.Models
             _language1 = LanguageType.Default;
             _language2 = LanguageType.Default;
             State = int.MaxValue;
+            CreationDate = DateTime.Now;
             Words = new List<IWord>();
             Results = new List<IResult>();
         }
@@ -107,11 +120,6 @@ namespace Wordki.Models
                    group.Name.Equals(Name) &&
                    group.Language1 == Language1 &&
                    group.Language2 == Language2;
-        }
-
-        public virtual IResult GetLastResult()
-        {
-            return Results.OrderBy(x => x.DateTime).FirstOrDefault();
         }
 
         public virtual void AddWord(IWord word)
