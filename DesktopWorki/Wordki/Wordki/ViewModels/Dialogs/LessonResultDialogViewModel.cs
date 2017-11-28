@@ -28,8 +28,6 @@ namespace Wordki.ViewModels.Dialogs
             }
         }
 
-
-
         public ICommand PreviousCommand { get; }
         public ICommand NextCommand { get; }
 
