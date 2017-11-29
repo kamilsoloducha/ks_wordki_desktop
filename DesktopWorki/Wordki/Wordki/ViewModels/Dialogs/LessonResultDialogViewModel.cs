@@ -7,23 +7,25 @@ using Wordki.InteractionProvider;
 using System.Globalization;
 using System.Collections;
 using System.Windows.Input;
+using System.Collections.ObjectModel;
+using Util.Collections;
 
 namespace Wordki.ViewModels.Dialogs
 {
     public class LessonResultDialogViewModel : DialogViewModelBase
     {
 
-        private int selectedIndex;
-        public int SelectedIndex
+        private IResult selectedItem;
+        public IResult SelectedItem
         {
-            get { return selectedIndex; }
+            get { return selectedItem; }
             set
             {
-                if (selectedIndex == value)
+                if (selectedItem == value)
                 {
                     return;
                 }
-                selectedIndex = value;
+                selectedItem = value;
                 OnPropertyChanged();
             }
         }
@@ -31,68 +33,33 @@ namespace Wordki.ViewModels.Dialogs
         public ICommand PreviousCommand { get; }
         public ICommand NextCommand { get; }
 
-        internal IList<IResult> Results { get; set; }
+        public IList<IResult> Results { get; set; }
 
         public LessonResultDialogViewModel(ILessonResultProvider model) : base()
         {
             CloseAction = model.OnClose;
-            Results = model.Results.ToList();
+            Results = model.Results.OrderBy(x => x.Group.CreationDate).ToList();
             PreviousCommand = new Util.BuilderCommand(Previous);
             NextCommand = new Util.BuilderCommand(Next);
+            SelectedItem = Results[0];
         }
 
         private void Next()
         {
-            if (SelectedIndex < Results.Count - 1)
+            IResult previous = Results.Next(SelectedItem);
+            if (previous != null)
             {
-                SelectedIndex++;
+                SelectedItem = previous;
             }
         }
 
         private void Previous()
         {
-            if (SelectedIndex > 0)
+            IResult previous = Results.Previous(SelectedItem);
+            if (previous != null)
             {
-                SelectedIndex--;
+                SelectedItem = previous;
             }
         }
-    }
-
-    public class CollectionIndexToIndexerEnabledConverter : IValueConverter
-    {
-        public CheckingElement Index { get; set; }
-
-        private IList collection;
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (collection == null)
-            {
-                collection = parameter as IList;
-            }
-            return collection.IndexOf(value) == GetValueToCompare();
-        }
-
-        private int GetValueToCompare()
-        {
-            if (Index == CheckingElement.First)
-            {
-                return 0;
-            }
-            else
-            {
-                return collection.Count - 1;
-            }
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public enum CheckingElement
-    {
-        First,
-        Last,
     }
 }

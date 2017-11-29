@@ -31,13 +31,6 @@ namespace Wordki.Test.IntegratedViewModelTests.BuilderViewModelTests
 
             Assert.IsNull(ViewModel.SelectedGroup);
             Assert.IsNull(ViewModel.SelectedWord);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Previous.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Next.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Language1.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Language2.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Language1Comment.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Language2Comment.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.GroupName.ToString()]);
         }
 
         [Test]
@@ -51,13 +44,6 @@ namespace Wordki.Test.IntegratedViewModelTests.BuilderViewModelTests
 
             Assert.AreSame(group, ViewModel.SelectedGroup);
             Assert.IsNull(ViewModel.SelectedWord);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Previous.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Next.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Language1.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Language2.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Language1Comment.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Language2Comment.ToString()]);
-            Assert.IsTrue(ViewModel.EnableElementDirectory[EnableElementBuilder.GroupName.ToString()]);
         }
 
 
@@ -75,13 +61,6 @@ namespace Wordki.Test.IntegratedViewModelTests.BuilderViewModelTests
 
             Assert.AreSame(groups.Last(), ViewModel.SelectedGroup);
             Assert.IsNull(ViewModel.SelectedWord);
-            Assert.IsTrue(ViewModel.EnableElementDirectory[EnableElementBuilder.Previous.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Next.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Language1.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Language2.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Language1Comment.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Language2Comment.ToString()]);
-            Assert.IsTrue(ViewModel.EnableElementDirectory[EnableElementBuilder.GroupName.ToString()]);
         }
 
         [Test]
@@ -95,13 +74,6 @@ namespace Wordki.Test.IntegratedViewModelTests.BuilderViewModelTests
 
             Assert.AreSame(group, ViewModel.SelectedGroup);
             Assert.AreSame(group.Words.Last(), ViewModel.SelectedWord);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Previous.ToString()]);
-            Assert.IsFalse(ViewModel.EnableElementDirectory[EnableElementBuilder.Next.ToString()]);
-            Assert.IsTrue(ViewModel.EnableElementDirectory[EnableElementBuilder.Language1.ToString()]);
-            Assert.IsTrue(ViewModel.EnableElementDirectory[EnableElementBuilder.Language2.ToString()]);
-            Assert.IsTrue(ViewModel.EnableElementDirectory[EnableElementBuilder.Language1Comment.ToString()]);
-            Assert.IsTrue(ViewModel.EnableElementDirectory[EnableElementBuilder.Language2Comment.ToString()]);
-            Assert.IsTrue(ViewModel.EnableElementDirectory[EnableElementBuilder.GroupName.ToString()]);
         }
 
     }

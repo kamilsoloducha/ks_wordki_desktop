@@ -170,10 +170,12 @@
     <Compile Include="Helpers\Connector\Responses\TranslationResponse.cs" />
     <Compile Include="Helpers\Connector\SimpleConnector\SimpleConnector.cs" />
     <Compile Include="Helpers\Converters\DrawerToColorConverter.cs" />
+    <Compile Include="Helpers\Converters\ItemIndexToBoolConverter.cs" />
     <Compile Include="Helpers\Converters\LanguageToImageConverter.cs" />
     <Compile Include="Helpers\Converters\LanguageToStringConverter.cs" />
     <Compile Include="Helpers\Behaviour\CursorAtEndBehavior.cs" />
     <Compile Include="Helpers\Converters\LanguageTypeToStringConverter.cs" />
+    <Compile Include="Helpers\Converters\ObjectToBoolConverter.cs" />
     <Compile Include="Helpers\Converters\PassingParametersConverter.cs" />
     <Compile Include="Helpers\Converters\RatioConverter.cs" />
     <Compile Include="Helpers\Converters\TranslationDirectionToIntConverter.cs" />

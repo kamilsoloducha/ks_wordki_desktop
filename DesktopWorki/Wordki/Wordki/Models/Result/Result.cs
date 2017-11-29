@@ -22,7 +22,7 @@ namespace Wordki.Models
                     return;
                 }
                 _group = value;
-
+                OnPropertyChanged();
             }
         }
         public virtual short Correct { get; set; }

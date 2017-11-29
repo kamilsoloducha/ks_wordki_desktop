@@ -39,6 +39,11 @@ namespace Wordki.ViewModels.LessonStates
         public override void RefreshView()
         {
             base.RefreshView();
+            IInteractionProvider provider2 = new LessonResultProvider()
+            {
+                Results = Lesson.ResultList,
+            };
+            provider2.Interact();
             SimpleWork work = new SimpleWork();
             work.WorkFunc += SaveDatabase;
             BackgroundQueueWithProgressDialog worker = new BackgroundQueueWithProgressDialog();

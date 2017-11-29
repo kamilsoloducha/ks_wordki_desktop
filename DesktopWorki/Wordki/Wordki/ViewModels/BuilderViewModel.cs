@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
 using Util;
+using Util.Collections;
 using Util.Threads;
 using Wordki.Database;
 using Wordki.Helpers;
@@ -24,17 +25,6 @@ using Wordki.Views.Dialogs.ListDialogs;
 
 namespace Wordki.ViewModels
 {
-    public enum EnableElementBuilder
-    {
-        Previous,
-        Next,
-        GroupName,
-        Language1,
-        Language2,
-        Language1Comment,
-        Language2Comment,
-    }
-
     public class BuilderViewModel : ViewModelBase
     {
 
@@ -53,12 +43,42 @@ namespace Wordki.ViewModels
                     return;
                 UpdateGroup(_selectedGroup);
                 _selectedGroup = value;
+                GroupNext = Database.Groups.Next(_selectedGroup);
+                GroupPrevious = Database.Groups.Previous(_selectedGroup);
                 UpdateWords();
                 OnPropertyChanged();
             }
         }
 
+        private IGroup previousGroup;
+        public IGroup GroupPrevious
+        {
+            get { return previousGroup; }
+            set
+            {
+                if(previousGroup == value)
+                {
+                    return;
+                }
+                previousGroup = value;
+                OnPropertyChanged();
+            }
+        }
 
+        private IGroup nextGroup;
+        public IGroup GroupNext
+        {
+            get { return nextGroup; }
+            set
+            {
+                if (nextGroup == value)
+                {
+                    return;
+                }
+                nextGroup = value;
+                OnPropertyChanged();
+            }
+        }
 
         private IWord _selectedWord;
         public IWord SelectedWord
@@ -70,32 +90,6 @@ namespace Wordki.ViewModels
                     return;
                 UpdateWord(_selectedWord);
                 _selectedWord = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _nextGroupLabel;
-        public string NextGroupLabel
-        {
-            get { return _nextGroupLabel; }
-            set
-            {
-                if (_nextGroupLabel == value)
-                    return;
-                _nextGroupLabel = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _previousGroupLabel;
-        public string PreviousGroupLabel
-        {
-            get { return _previousGroupLabel; }
-            set
-            {
-                if (_previousGroupLabel == value)
-                    return;
-                _previousGroupLabel = value;
                 OnPropertyChanged();
             }
         }
@@ -200,8 +194,6 @@ namespace Wordki.ViewModels
         public ICommand TranslateWordCommnad { get; set; }
 
         public IDatabase Database { get; set; }
-        public ObservableDictionary<string, bool> EnableElementDirectory { get; set; }
-
 
         public ObservableCollection<IWord> Words { get; set; }
 
@@ -216,15 +208,6 @@ namespace Wordki.ViewModels
         {
             ActivateCommands();
             Database = DatabaseSingleton.Instance;
-            EnableElementDirectory = new ObservableDictionary<string, bool> {
-                { EnableElementBuilder.Previous.ToString(), true },
-                { EnableElementBuilder.Next.ToString(), true },
-                { EnableElementBuilder.GroupName.ToString(), true },
-                { EnableElementBuilder.Language1.ToString(), true },
-                { EnableElementBuilder.Language2.ToString(), true },
-                { EnableElementBuilder.Language1Comment.ToString(), true },
-                { EnableElementBuilder.Language2Comment.ToString(), true }
-            };
             //ClipboardHelper = new ClipboardHelper(App.Current.MainWindow);
 
             //NotifyIcon = new NotifyIcon();
@@ -344,7 +327,6 @@ namespace Wordki.ViewModels
                 return;
             ILanguageSwaper swaper = new LanguageSwaper();
             swaper.Swap(SelectedGroup);
-            SetWordLabels();
         }
 
         private void SwapSingleWord(object obj)
@@ -510,10 +492,10 @@ namespace Wordki.ViewModels
             worker.Execute();
         }
 
-        private void AddGroup(object obj)
+        private async void AddGroup(object obj)
         {
             IGroup group = new Group();
-            AddGroup_(group);
+            await Database.AddGroupAsync(group);
             if (SelectedGroup != null)
             {
                 group.Language1 = SelectedGroup.Language1;
@@ -536,51 +518,50 @@ namespace Wordki.ViewModels
 
         private void NextWord(object obj)
         {
-            if (SelectedWord == null)
+            if (SelectedGroup == null)
             {
                 return;
             }
-            int wordIndex = SelectedGroup.Words.IndexOf(SelectedWord);
-            if (wordIndex < SelectedGroup.Words.Count - 1)
+            IWord previousWord = SelectedGroup.Words.Next(SelectedWord);
+            if (previousWord != null)
             {
-                SelectedWord = SelectedGroup.Words[++wordIndex];
+                SelectedWord = previousWord;
                 RefreshView();
             }
         }
 
         private void PreviousWord(object obj)
         {
-            if (SelectedWord == null)
+            if(SelectedGroup == null)
             {
                 return;
             }
-            int wordIndex = SelectedGroup.Words.IndexOf(SelectedWord);
-            if (wordIndex > 0)
+            IWord previousWord = SelectedGroup.Words.Previous(SelectedWord);
+            if (previousWord != null)
             {
-                SelectedWord = SelectedGroup.Words[--wordIndex];
+                SelectedWord = previousWord;
                 RefreshView();
             }
         }
 
         private void PreviuosGroup(object obj)
         {
-            int lGroupIndex = Database.Groups.IndexOf(SelectedGroup);
-            if (lGroupIndex > 0)
+            if (GroupPrevious == null)
             {
-                SelectedGroup = Database.Groups[--lGroupIndex];
-                SetOnLastWordCurretGroup();
-                RefreshView();
+                return;
             }
+            SelectedGroup = GroupPrevious;
+            SetOnLastWordCurretGroup();
         }
 
         private void NextGroup(object obj)
         {
-            int lGroupIndex = Database.Groups.IndexOf(SelectedGroup);
-            if (lGroupIndex < Database.Groups.Count - 1)
+            if (GroupNext == null)
             {
-                SelectedGroup = Database.Groups[++lGroupIndex];
-                SetOnLastWordCurretGroup();
+                return;
             }
+            SelectedGroup = GroupNext;
+            SetOnLastWordCurretGroup();
         }
 
         private void BackAction()
@@ -663,107 +644,7 @@ namespace Wordki.ViewModels
 
         private void RefreshView()
         {
-            SetGroupNameLabel();
-            SetWordLabels();
-            SetNextGroupButton();
-            SetPreviousGroupButton();
             SetInfo();
-        }
-
-        private void SetGroupNameLabel()
-        {
-            if (SelectedGroup == null)
-            {
-                UnableGroupName();
-            }
-            else
-            {
-                EnableGroupName();
-            }
-        }
-
-        private void UnableGroupName()
-        {
-            EnableElementDirectory[EnableElementBuilder.GroupName.ToString()] = false;
-        }
-
-        private void EnableGroupName()
-        {
-            EnableElementDirectory[EnableElementBuilder.GroupName.ToString()] = true;
-        }
-
-        private void SetWordLabels()
-        {
-            if (SelectedWord == null)
-            {
-                UnableWord();
-            }
-            else
-            {
-                EnableWord();
-            }
-        }
-
-        private void EnableWord()
-        {
-            EnableElementDirectory[EnableElementBuilder.Language1.ToString()] = true;
-            EnableElementDirectory[EnableElementBuilder.Language2.ToString()] = true;
-            EnableElementDirectory[EnableElementBuilder.Language1Comment.ToString()] = true;
-            EnableElementDirectory[EnableElementBuilder.Language2Comment.ToString()] = true;
-        }
-
-        private void UnableWord()
-        {
-            EnableElementDirectory[EnableElementBuilder.Language1.ToString()] = false;
-            EnableElementDirectory[EnableElementBuilder.Language2.ToString()] = false;
-            EnableElementDirectory[EnableElementBuilder.Language1Comment.ToString()] = false;
-            EnableElementDirectory[EnableElementBuilder.Language2Comment.ToString()] = false;
-        }
-
-        private void SetNextGroupButton()
-        {
-            if (SelectedGroup != null)
-            {
-                int lGroupIndex = Database.Groups.IndexOf(SelectedGroup);
-                if (lGroupIndex < Database.Groups.Count - 1)
-                {
-                    NextGroupLabel = Database.Groups[lGroupIndex + 1].Name;
-                    EnableElementDirectory[EnableElementBuilder.Next.ToString()] = true;
-                }
-                else
-                {
-                    NextGroupLabel = "";
-                    EnableElementDirectory[EnableElementBuilder.Next.ToString()] = false;
-                }
-            }
-            else
-            {
-                NextGroupLabel = "";
-                EnableElementDirectory[EnableElementBuilder.Next.ToString()] = false;
-            }
-        }
-
-        private void SetPreviousGroupButton()
-        {
-            if (SelectedGroup != null)
-            {
-                int lGroupIndex = Database.Groups.IndexOf(SelectedGroup);
-                if (lGroupIndex > 0)
-                {
-                    PreviousGroupLabel = Database.Groups[lGroupIndex - 1].Name;
-                    EnableElementDirectory[EnableElementBuilder.Previous.ToString()] = true;
-                }
-                else
-                {
-                    PreviousGroupLabel = "";
-                    EnableElementDirectory[EnableElementBuilder.Previous.ToString()] = false;
-                }
-            }
-            else
-            {
-                PreviousGroupLabel = "";
-                EnableElementDirectory[EnableElementBuilder.Previous.ToString()] = false;
-            }
         }
 
         private void SetInfo()

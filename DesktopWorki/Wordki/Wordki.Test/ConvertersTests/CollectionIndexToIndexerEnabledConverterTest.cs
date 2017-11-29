@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wordki.Helpers.Converters;
 using Wordki.ViewModels.Dialogs;
 
 namespace Wordki.Test.ConvertersTests
@@ -14,13 +15,13 @@ namespace Wordki.Test.ConvertersTests
     {
 
         Utility util = new Utility();
-        CollectionIndexToIndexerEnabledConverter converter;
+        ItemIndexToBoolConverter converter;
         List<object> list;
 
         [SetUp]
         public void SetUp()
         {
-            converter = new CollectionIndexToIndexerEnabledConverter();
+            converter = new ItemIndexToBoolConverter();
             list = new List<object> { new object(), new object(), new object(), new object(), new object(), new object(), new object() };
         }
 
@@ -28,7 +29,7 @@ namespace Wordki.Test.ConvertersTests
         public void Is_true_if_search_first_element_test()
         {
             converter.Index = CheckingElement.First;
-            bool result = (bool)converter.Convert(list[0], typeof(bool), list, CultureInfo.CurrentUICulture);
+            bool result = (bool)converter.Convert(new object[] { list[0], list }, typeof(bool), list, CultureInfo.CurrentUICulture);
             Assert.IsTrue(result);
         }
 
@@ -36,7 +37,7 @@ namespace Wordki.Test.ConvertersTests
         public void Is_false_if_search_a_element_test()
         {
             converter.Index = CheckingElement.First;
-            bool result = (bool)converter.Convert(list[2], typeof(bool), list, CultureInfo.CurrentUICulture);
+            bool result = (bool)converter.Convert(new object[] { list[2], list }, typeof(bool), list, CultureInfo.CurrentUICulture);
             Assert.IsFalse(result);
         }
 
@@ -44,7 +45,7 @@ namespace Wordki.Test.ConvertersTests
         public void Is_true_if_search_last_element_test()
         {
             converter.Index = CheckingElement.Last;
-            bool result = (bool)converter.Convert(list.Last(), typeof(bool), list, CultureInfo.CurrentUICulture);
+            bool result = (bool)converter.Convert(new object[] { list.Last(), list }, typeof(bool), list, CultureInfo.CurrentUICulture);
             Assert.IsTrue(result);
         }
 
@@ -52,7 +53,7 @@ namespace Wordki.Test.ConvertersTests
         public void Is_false_if_search_a_element_from_last_test()
         {
             converter.Index = CheckingElement.Last;
-            bool result = (bool)converter.Convert(list[2], typeof(bool), list, CultureInfo.CurrentUICulture);
+            bool result = (bool)converter.Convert(new object[] { list[2], list }, typeof(bool), list, CultureInfo.CurrentUICulture);
             Assert.IsFalse(result);
         }
 

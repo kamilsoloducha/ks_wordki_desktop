@@ -42,6 +42,17 @@
         <converters:WordCheckedToBrushConverter
             x:Key="WordCheckedToBrushConverter" />
 
+        <converters:ItemIndexToBoolConverter
+            x:Key="CheckIsFirst"
+            Index="{x:Static converters:CheckingElement.First}" />
+
+        <converters:ItemIndexToBoolConverter
+            x:Key="CheckIsLast"
+            Index="{x:Static converters:CheckingElement.Last}" />
+
+        <converters:ObjectToBoolConverter
+            x:Key="ObjectToBoolConverter" />
+
     </UserControl.Resources>
 
     <UserControl.InputBindings>
@@ -403,21 +414,23 @@
                         Grid.Column="0"
                         Style="{StaticResource FlatButtonStyle}"
                         Command="{Binding PreviousGroupCommand}"
-                        IsEnabled="{Binding EnableElementDirectory[Previous], UpdateSourceTrigger=PropertyChanged}"
-                        Content="{Binding PreviousGroupLabel, UpdateSourceTrigger=PropertyChanged}" />
+                        Content="{Binding Path=GroupPrevious.Name}"
+                        IsEnabled="{Binding Path=GroupPrevious, Converter={StaticResource ObjectToBoolConverter}}">
+                    </Button>
 
                     <TextBox
                         Grid.Column="1"
                         Style="{StaticResource WinTextBoxStyle}"
-                        IsEnabled="{Binding EnableElementDirectory[GroupName], UpdateSourceTrigger=PropertyChanged}"
+                        IsEnabled="{Binding Path=SelectedGroup, Converter={StaticResource ObjectToBoolConverter}}"
                         Text="{Binding Path=SelectedGroup.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <Button
                         Grid.Column="2"
                         Style="{StaticResource FlatButtonStyle}"
                         Command="{Binding NextGroupCommand}"
-                        IsEnabled="{Binding EnableElementDirectory[Next], UpdateSourceTrigger=PropertyChanged}"
-                        Content="{Binding NextGroupLabel, UpdateSourceTrigger=PropertyChanged}" />
+                        Content="{Binding Path=GroupNext.Name}"
+                        IsEnabled="{Binding Path=GroupNext, Converter={StaticResource ObjectToBoolConverter}}">
+                    </Button>
                 </Grid>
 
                 <Button
@@ -425,6 +438,7 @@
                     Grid.Row="1"
                     Style="{StaticResource FlatButtonStyle}"
                     MinWidth="250"
+                    IsEnabled="{Binding Path=SelectedGroup, Converter={StaticResource ObjectToBoolConverter}}"
                     Content="{Binding Path=SelectedGroup.Language1, FallbackValue='', Converter={StaticResource LanguageTypeToStringConverter}}"
                     Command="{Binding Path=ChangeLanguage1Command}"
                     IsTabStop="False">
@@ -435,6 +449,7 @@
                     Grid.Row="2"
                     Style="{StaticResource FlatButtonStyle}"
                     MinWidth="250"
+                    IsEnabled="{Binding Path=SelectedGroup, Converter={StaticResource ObjectToBoolConverter}}"
                     Content="{Binding Path=SelectedGroup.Language2, FallbackValue='', Converter={StaticResource LanguageTypeToStringConverter}}"
                     Command="{Binding Path=ChangeLanguage2Command}"
                     IsTabStop="False">
@@ -446,6 +461,7 @@
                     Style="{StaticResource FlatButtonStyle}"
                     MinWidth="250"
                     Content="Komentarz j. 1"
+                    IsEnabled="{Binding Path=SelectedGroup, Converter={StaticResource ObjectToBoolConverter}}"
                     Command="{Binding Path=ChangeLanguage1Command}"
                     IsTabStop="False">
                 </Button>
@@ -456,6 +472,7 @@
                     Style="{StaticResource FlatButtonStyle}"
                     MinWidth="250"
                     Content="Komentarz j. 2"
+                    IsEnabled="{Binding Path=SelectedGroup, Converter={StaticResource ObjectToBoolConverter}}"
                     Command="{Binding Path=ChangeLanguage2Command}"
                     IsTabStop="False">
                 </Button>
@@ -465,7 +482,7 @@
                     Grid.Row="1"
                     Style="{StaticResource WinTextBoxStyle}"
                     Text="{Binding Path=SelectedWord.Language1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    IsEnabled="{Binding EnableElementDirectory[Language1], UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="{Binding Path=SelectedWord, Converter={StaticResource ObjectToBoolConverter}}"
                     helpers:FocusExtension.IsFocused="{Binding Path=Language1IsFocused, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     TabIndex="0">
                 </TextBox>
@@ -474,7 +491,7 @@
                     Grid.Column="1"
                     Grid.Row="2"
                     Style="{StaticResource WinTextBoxStyle}"
-                    IsEnabled="{Binding EnableElementDirectory[Language2], UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="{Binding Path=SelectedWord, Converter={StaticResource ObjectToBoolConverter}}"
                     Text="{Binding Path=SelectedWord.Language2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     helpers:FocusExtension.IsFocused="{Binding Path=Language2IsFocused, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     TabIndex="10" />
@@ -483,7 +500,7 @@
                     Grid.Column="1"
                     Grid.Row="3"
                     Style="{StaticResource WinTextBoxStyle}"
-                    IsEnabled="{Binding EnableElementDirectory[Language1Comment], UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="{Binding Path=SelectedWord, Converter={StaticResource ObjectToBoolConverter}}"
                     Text="{Binding Path=SelectedWord.Language1Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     TabIndex="20" />
 
@@ -491,7 +508,7 @@
                     Grid.Column="1"
                     Grid.Row="4"
                     Style="{StaticResource WinTextBoxStyle}"
-                    IsEnabled="{Binding EnableElementDirectory[Language2Comment], UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="{Binding Path=SelectedWord, Converter={StaticResource ObjectToBoolConverter}}"
                     Text="{Binding Path=SelectedWord.Language2Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     TabIndex="30" />
 

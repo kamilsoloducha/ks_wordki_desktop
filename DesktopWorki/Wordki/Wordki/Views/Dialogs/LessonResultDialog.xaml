@@ -6,14 +6,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:dialogs="clr-namespace:Wordki.Views.Dialogs"
     xmlns:viewModels="clr-namespace:Wordki.ViewModels.Dialogs"
+    xmlns:converters="clr-namespace:Wordki.Helpers.Converters"
     mc:Ignorable="d"
-    Title="LessonResultDialog"
     WindowStartupLocation="CenterOwner"
     Style="{StaticResource AppDialogStyle}"
-    d:DataContext="{d:DesignInstance viewModels:LessonResultDialogViewModel}"
-    Loaded="LessonResultDialog_OnLoaded">
-    
-    
+    d:DataContext="{d:DesignInstance viewModels:LessonResultDialogViewModel}">
+
+
     <dialogs:DialogBase.Resources>
         <Style
             x:Key="WinTextBlockStyle"
@@ -30,13 +29,13 @@
                 Value="Center" />
         </Style>
 
-        <viewModels:CollectionIndexToIndexerEnabledConverter
+        <converters:ItemIndexToBoolConverter
             x:Key="CheckIsFirst"
-            Index="{x:Static viewModels:CheckingElement.First}"/>
+            Index="{x:Static converters:CheckingElement.First}" />
 
-        <viewModels:CollectionIndexToIndexerEnabledConverter
+        <converters:ItemIndexToBoolConverter
             x:Key="CheckIsLast"
-            Index="{x:Static viewModels:CheckingElement.First}" />
+            Index="{x:Static converters:CheckingElement.Last}" />
     </dialogs:DialogBase.Resources>
 
     <dialogs:DialogBase.InputBindings>
@@ -71,26 +70,45 @@
                 Grid.Column="0"
                 Grid.Row="0"
                 Grid.ColumnSpan="2"
-                HorizontalAlignment="Center">
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
 
                 <Button
                     Content="&lt;"
                     Style="{StaticResource FlatButtonStyle}"
-                    IsEnabled="{Binding Path=Results[SelectedIndex], Converter={StaticResource CheckIsFirst}, ConverterParameter=Results}"
-                    Command="{Binding Path=PreviousItem}"/>
-                
+                    Command="{Binding Path=PreviousCommand}">
+                    <Button.IsEnabled>
+                        <MultiBinding
+                            Converter="{StaticResource ResourceKey=CheckIsFirst}">
+                            <Binding
+                                Path="SelectedItem" />
+                            <Binding
+                                Path="Results" />
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+
                 <TextBlock
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Margin="10"
                     Style="{StaticResource AppTextBlockStyle}"
-                    Text="{Binding Path=Results[SelectedIndex].Group.Name}" />
-                
+                    Text="{Binding Path=SelectedItem.Group.Name}" />
+
                 <Button
-                    Content="&lt;"
+                    Content="&gt;"
                     Style="{StaticResource FlatButtonStyle}"
-                    IsEnabled="{Binding Path=Results[SelectedIndex], Converter={StaticResource CheckIsLast}, ConverterParameter=Results}"
-                    Command="{Binding Path=NextItem}" />
+                    Command="{Binding Path=NextCommand}">
+                    <Button.IsEnabled>
+                        <MultiBinding
+                            Converter="{StaticResource ResourceKey=CheckIsLast}">
+                            <Binding
+                                Path="SelectedItem" />
+                            <Binding
+                                Path="Results" />
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
             </StackPanel>
 
 
@@ -142,21 +160,21 @@
                         Text="Poprawne" />
                     <TextBlock
                         Style="{StaticResource ResultTextBlockStyle}"
-                        Text="{Binding Path=Results[SelectedIndex].Correct, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding Path=SelectedItem.Correct, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
                         Style="{StaticResource ElementTextBlockStyle}"
                         Text="Zaakceptowane" />
                     <TextBlock
                         Style="{StaticResource ResultTextBlockStyle}"
-                        Text="{Binding Path=Results[SelectedIndex].Accepted, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding Path=SelectedItem.Accepted, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
                         Style="{StaticResource ElementTextBlockStyle}"
                         Text="Błędne" />
                     <TextBlock
                         Style="{StaticResource ResultTextBlockStyle}"
-                        Text="{Binding Path=Results[SelectedIndex].Wrong, UpdateSourceTrigger=PropertyChanged}"
+                        Text="{Binding Path=SelectedItem.Wrong, UpdateSourceTrigger=PropertyChanged}"
                         FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular" />
 
                     <TextBlock
@@ -164,7 +182,7 @@
                         Text="Czas" />
                     <TextBlock
                         Style="{StaticResource ResultTextBlockStyle}"
-                        Text="{Binding Path=Results[SelectedIndex].Time, UpdateSourceTrigger=PropertyChanged}"
+                        Text="{Binding Path=SelectedItem.Time, UpdateSourceTrigger=PropertyChanged}"
                         FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular" />
                 </UniformGrid>
             </StackPanel>
@@ -177,7 +195,7 @@
                 Margin="10"
                 Style="{StaticResource DialogFlatButtonStyle}"
                 Content="Ok"
-                Command="{Binding Path=ButtonCommand}" />
+                Command="{Binding Path=CloseCommand}" />
         </Grid>
     </Border>
 </dialogs:DialogBase>

@@ -67,7 +67,7 @@ namespace Wordki.Models
         }
 
         private DateTime creationDate;
-        public DateTime CreationDate
+        public virtual DateTime CreationDate
         {
             get { return creationDate; }
             set

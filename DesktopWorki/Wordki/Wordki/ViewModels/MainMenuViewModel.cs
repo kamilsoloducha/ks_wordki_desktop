@@ -165,22 +165,22 @@ namespace Wordki.ViewModels
         public BuilderCommand ExitCommand { get; set; }
 
 
-        private void Teach(object obj)
+        private void Teach()
         {
             Switcher.Switch(Helpers.Switcher.State.Groups);
         }
 
-        private void Builder(object obj)
+        private void Builder()
         {
             Switcher.Switch(Helpers.Switcher.State.Builder);
         }
 
-        private void Settings(object obj)
+        private void Settings()
         {
             Switcher.Switch(Helpers.Switcher.State.Settings);
         }
 
-        private void Exit(object obj)
+        private void Exit()
         {
             IInteractionProvider provider = new YesNoProvider
             {
