@@ -9,6 +9,7 @@ using Wordki.Views.Dialogs;
 using Wordki.Helpers.Notification;
 using Wordki.Database;
 using Wordki.InteractionProvider;
+using System.Windows.Input;
 
 namespace Wordki.ViewModels
 {
@@ -17,18 +18,16 @@ namespace Wordki.ViewModels
         public Settings Settings { get; set; }
         public IDatabase Database { get; set; }
 
-        public BuilderCommand BackCommand { get; set; }
-        public BuilderCommand DefaultCommand { get; set; }
-        public BuilderCommand SaveCommand { get; set; }
-        public BuilderCommand LoginPasswordChangeCommand { get; set; }
-
-        public BuilderCommand LogoutCommand { get; set; }
-        public BuilderCommand SynchronizeCommand { get; set; }
-        public BuilderCommand ClearDatabaseCommand { get; set; }
-
-        public BuilderCommand AddShortCutCommand { get; set; }
-        public BuilderCommand DeleteShortCutCommand { get; set; }
-        public BuilderCommand EditShortCutCommand { get; set; }
+        public ICommand BackCommand { get; set; }
+        public ICommand DefaultCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
+        public ICommand LoginPasswordChangeCommand { get; set; }
+        public ICommand LogoutCommand { get; set; }
+        public ICommand SynchronizeCommand { get; set; }
+        public ICommand ClearDatabaseCommand { get; set; }
+        public ICommand AddShortCutCommand { get; set; }
+        public ICommand DeleteShortCutCommand { get; set; }
+        public ICommand EditShortCutCommand { get; set; }
 
         private int _themeSelectedIndex;
         private string _fontSizeSelectedIndex;
@@ -162,7 +161,7 @@ namespace Wordki.ViewModels
             Password = "***";
             TestString = "Napis";
             Settings.ShortCuts.CollectionChanged += ShortCutsOnCollectionChanged;
-            ShortKeys = ShortCutsBindings.GetBindings(Settings.ShortCuts, new BuilderCommand(InsertKey));
+            ShortKeys = ShortCutsBindings.GetBindings(Settings.ShortCuts, new Util.BuilderCommand(InsertKey));
         }
 
         public override void Back()
@@ -172,7 +171,7 @@ namespace Wordki.ViewModels
 
         private void ShortCutsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            ShortKeys = ShortCutsBindings.GetBindings(Settings.ShortCuts, new BuilderCommand(InsertKey));
+            ShortKeys = ShortCutsBindings.GetBindings(Settings.ShortCuts, new Util.BuilderCommand(InsertKey));
         }
 
         private void InsertKey(object obj)
@@ -182,18 +181,18 @@ namespace Wordki.ViewModels
 
         private void ActivateCommand()
         {
-            BackCommand = new BuilderCommand(Back);
-            DefaultCommand = new BuilderCommand(Default);
-            SaveCommand = new BuilderCommand(Save);
-            LoginPasswordChangeCommand = new BuilderCommand(LoginPasswordChange);
+            BackCommand = new Util.BuilderCommand(BackAction);
+            DefaultCommand = new Util.BuilderCommand(Default);
+            SaveCommand = new Util.BuilderCommand(Save);
+            LoginPasswordChangeCommand = new Util.BuilderCommand(LoginPasswordChange);
 
-            LogoutCommand = new BuilderCommand(Logout);
-            SynchronizeCommand = new BuilderCommand(Synchronize);
-            ClearDatabaseCommand = new BuilderCommand(ClearDatabase);
+            LogoutCommand = new Util.BuilderCommand(Logout);
+            SynchronizeCommand = new Util.BuilderCommand(Synchronize);
+            ClearDatabaseCommand = new Util.BuilderCommand(ClearDatabase);
 
-            AddShortCutCommand = new BuilderCommand(AddShortCut);
-            DeleteShortCutCommand = new BuilderCommand(DeleteShortCut);
-            EditShortCutCommand = new BuilderCommand(EditShortCut);
+            AddShortCutCommand = new Util.BuilderCommand(AddShortCut);
+            DeleteShortCutCommand = new Util.BuilderCommand(DeleteShortCut);
+            EditShortCutCommand = new Util.BuilderCommand(EditShortCut);
         }
 
         private void EditShortCut(object obj)
@@ -221,7 +220,7 @@ namespace Wordki.ViewModels
             //TextBoxDialog dialog = new TextBoxDialog()
             //{
             //    Message = "Podaj stare hasło.",
-            //    OkCommand = new BuilderCommand(LoginPasswordChangeOk),
+            //    OkCommand = new Util.BuilderCommand(LoginPasswordChangeOk),
             //};
             //dialog.ShowDialog();
         }
@@ -255,7 +254,7 @@ namespace Wordki.ViewModels
             }
         }
 
-        private void Back(object obj)
+        private void BackAction()
         {
             Back();
             Switcher.Back();
@@ -349,9 +348,9 @@ namespace Wordki.ViewModels
         {
             YesNoDialog lDialog = new YesNoDialog();
             //lDialog.Message = "jakaś wiadomość\nktory zajmuje\nwiecej niz jedna linie";
-            //lDialog.PositiveCommand = new BuilderCommand(o => lDialog.Close());
+            //lDialog.PositiveCommand = new Util.BuilderCommand(o => lDialog.Close());
             //lDialog.PositiveLabel = "Tak";
-            //lDialog.NegativeCommand = new BuilderCommand(o => lDialog.Close());
+            //lDialog.NegativeCommand = new Util.BuilderCommand(o => lDialog.Close());
             //lDialog.NegativeLabel = "Nie";
             //lDialog.DialogTitle = "Jakis tytuł";
             lDialog.ShowDialog();

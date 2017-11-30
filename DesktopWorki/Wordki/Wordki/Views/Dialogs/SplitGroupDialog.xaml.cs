@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 using Wordki.Helpers;
 using Wordki.Models;
 
@@ -82,8 +83,8 @@ namespace Wordki.Views.Dialogs {
       }
     }
 
-    public BuilderCommand OkCommand { get; private set; }
-    public BuilderCommand CancelCommand { get; private set; }
+    public ICommand OkCommand { get; private set; }
+    public ICommand CancelCommand { get; private set; }
     public delegate void OkClickListener();
     public delegate void CancelClickListener();
     public OkClickListener OnOkClickListener { get; set; }
@@ -99,8 +100,8 @@ namespace Wordki.Views.Dialogs {
     }
 
     private void ActivateCommands() {
-      OkCommand = new BuilderCommand(Ok);
-      CancelCommand = new BuilderCommand(Cancel);
+      OkCommand = new Util.BuilderCommand(Ok);
+      CancelCommand = new Util.BuilderCommand(Cancel);
     }
 
     private void Cancel(object obj) {

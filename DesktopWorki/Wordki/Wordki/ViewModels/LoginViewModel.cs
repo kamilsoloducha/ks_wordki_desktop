@@ -6,10 +6,8 @@ using System.Security.Cryptography;
 using System.Windows.Input;
 using Util.Threads;
 using Wordki.Database;
-using Wordki.Helpers;
 using Wordki.InteractionProvider;
 using Wordki.Models;
-using Wordki.ViewModels.Dialogs;
 
 namespace Wordki.ViewModels
 {
@@ -39,8 +37,8 @@ namespace Wordki.ViewModels
 
         public LoginViewModel()
         {
-            LoginCommand = new BuilderCommand(Loging);
-            ListViewSelectedChangedCommand = new BuilderCommand(ListViewSelectedChanged);
+            LoginCommand = new Util.BuilderCommand(Loging);
+            ListViewSelectedChangedCommand = new Util.BuilderCommand(ListViewSelectedChanged);
             Users = new ObservableCollection<string>();
         }
 
@@ -94,7 +92,7 @@ namespace Wordki.ViewModels
 
         protected override void ChangeState(object obj)
         {
-            Switcher.Switch(Switcher.State.Register);
+            Switcher.Switch(Helpers.Switcher.State.Register);
         }
 
         #endregion

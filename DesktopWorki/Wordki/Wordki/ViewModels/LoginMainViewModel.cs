@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using Newtonsoft.Json;
 using Wordki.Helpers;
-using Wordki.Models;
 using Wordki.Models.Connector;
 using Wordki.Helpers.Notification;
 using System.Windows.Input;
@@ -53,9 +52,9 @@ namespace Wordki.ViewModels
 
         protected LoginMainViewModel()
         {
-            ExitCommand = new BuilderCommand(Exit);
+            ExitCommand = new Util.BuilderCommand(Exit);
             //LoadedWindowCommand = new BuilderCommand(LoadedWindow);
-            ChangeStateCommand = new BuilderCommand(ChangeState);
+            ChangeStateCommand = new Util.BuilderCommand(ChangeState);
         }
 
         #endregion
@@ -123,7 +122,7 @@ namespace Wordki.ViewModels
             {
                 return;
             }
-            User lUser = JsonConvert.DeserializeObject<User>(response.Message);
+            IUser lUser = JsonConvert.DeserializeObject<IUser>(response.Message);
             lUser.IsLogin = true;
             lUser.IsRegister = true;
             IDatabase database = DatabaseSingleton.Instance;

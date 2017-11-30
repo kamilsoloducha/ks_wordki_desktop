@@ -1,5 +1,4 @@
-﻿using Wordki.Helpers;
-using Wordki.Helpers.Command;
+﻿using System.Windows.Input;
 using Wordki.Models;
 using Wordki.Models.Connector;
 
@@ -24,7 +23,7 @@ namespace Wordki.ViewModels
             }
         }
 
-        public BuilderCommand RegisterCommand { get; set; }
+        public ICommand RegisterCommand { get; set; }
 
         #endregion
 
@@ -32,7 +31,7 @@ namespace Wordki.ViewModels
 
         public RegisterViewModel()
         {
-            RegisterCommand = new BuilderCommand(Register);
+            RegisterCommand = new Util.BuilderCommand(Register);
         }
 
         #endregion

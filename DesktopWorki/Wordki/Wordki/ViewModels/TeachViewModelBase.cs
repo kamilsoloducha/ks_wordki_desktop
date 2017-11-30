@@ -151,7 +151,7 @@ namespace Wordki.ViewModels
             UnknownCommand = new Util.BuilderCommand(Unknown);
             CheckCommand = new Util.BuilderCommand(Check);
             KnownCommand = new Util.BuilderCommand(Known);
-            BackCommand = new BuilderCommand(Back);
+            BackCommand = new Util.BuilderCommand(BackAction);
             CorrectCommand = new Util.BuilderCommand(Correct);
             OnEnterClickCommand = new Util.BuilderCommand(OnEnterClick);
             StartLessonCommand = new Util.BuilderCommand(StartLesson);
@@ -282,7 +282,7 @@ namespace Wordki.ViewModels
             }
         }
 
-        private void Back(object obj)
+        private void BackAction()
         {
             LessonStateEnum lLastState = State.StateEnum;
             using (LessonStateBase lessonState = StateFactory.GetState(Lesson, LessonStateEnum.Pause))

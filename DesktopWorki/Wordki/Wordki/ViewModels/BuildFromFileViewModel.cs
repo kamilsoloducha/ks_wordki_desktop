@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
+using System.Windows.Input;
 using Wordki.Database;
-using Wordki.Helpers;
 using Wordki.Helpers.FileChooser;
 using Wordki.Helpers.GroupCreator;
 using Wordki.Models;
@@ -110,19 +110,19 @@ namespace Wordki.ViewModels
         }
         #endregion
 
-        public BuilderCommand ChooseFileCommand { get; set; }
-        public BuilderCommand CreateGroupCommand { get; set; }
-        public BuilderCommand SaveGroupCommand { get; set; }
-        public BuilderCommand BackCommand { get; set; }
+        public ICommand ChooseFileCommand { get; set; }
+        public ICommand CreateGroupCommand { get; set; }
+        public ICommand SaveGroupCommand { get; set; }
+        public ICommand BackCommand { get; set; }
 
         private object _pairsLock = new object();
 
         public BuildFromFileViewModel()
         {
-            ChooseFileCommand = new BuilderCommand(ChooseFile);
-            CreateGroupCommand = new BuilderCommand(CreateGroup);
-            SaveGroupCommand = new BuilderCommand(SaveGroup);
-            BackCommand = new BuilderCommand(Back);
+            ChooseFileCommand = new Util.BuilderCommand(ChooseFile);
+            CreateGroupCommand = new Util.BuilderCommand(CreateGroup);
+            SaveGroupCommand = new Util.BuilderCommand(SaveGroup);
+            BackCommand = new Util.BuilderCommand(BackAction);
             Pairs = new ObservableCollection<KeyValuePair<string, string>>();
         }
 
@@ -141,7 +141,7 @@ namespace Wordki.ViewModels
             BindingOperations.DisableCollectionSynchronization(Pairs);
         }
 
-        private void Back(object obj)
+        private void BackAction()
         {
             Back();
             Switcher.Back();

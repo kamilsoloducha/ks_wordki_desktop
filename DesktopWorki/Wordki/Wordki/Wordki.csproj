@@ -300,6 +300,8 @@
     <Compile Include="ViewModels\Dialogs\DialogOrganizer\IDialogOrganizer.cs" />
     <Compile Include="ViewModels\Dialogs\DialogWindowViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\LessonResultDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ProgressDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\SearchDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\TextBoxDialogViewModel.cs" />
     <Compile Include="ViewModels\LessonStates\FiszkiStates\AfterEndFiszkiState.cs" />
     <Compile Include="ViewModels\LessonStates\FiszkiStates\BeforeStartFiszkiState.cs" />
@@ -315,8 +317,6 @@
     <Compile Include="ViewModels\LessonStates\TypingStates\CorrectTypingState.cs" />
     <Compile Include="ViewModels\Dialogs\DialogViewModelBase.cs" />
     <Compile Include="ViewModels\Dialogs\InfoDialogViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\Progress\ProgressDialogViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\SearchDialog\SearchDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\TranslationListDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\YesNoDialogViewModel.cs" />
     <Compile Include="ViewModels\GroupManagerViewModel.cs" />

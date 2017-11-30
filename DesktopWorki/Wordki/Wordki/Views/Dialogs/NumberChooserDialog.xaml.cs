@@ -48,15 +48,15 @@ namespace Wordki.Views.Dialogs {
         }
       }
     }
-    public BuilderCommand Button1Command { get; set; }
-    public BuilderCommand Button2Command { get; set; }
-    public BuilderCommand LessCommand { get; set; }
-    public BuilderCommand MoreCommand { get; set; }
+    public ICommand Button1Command { get; set; }
+    public ICommand Button2Command { get; set; }
+    public ICommand LessCommand { get; set; }
+    public ICommand MoreCommand { get; set; }
 
     public NumberChooserDialog() {
       InitializeComponent();
-      LessCommand = new BuilderCommand(Less);
-      MoreCommand = new BuilderCommand(More);
+      LessCommand = new Util.BuilderCommand(Less);
+      MoreCommand = new Util.BuilderCommand(More);
       DataContext = this;
       Owner = App.Current.MainWindow;
       Width = Owner.ActualWidth;

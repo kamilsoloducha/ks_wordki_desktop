@@ -73,7 +73,7 @@ namespace Wordki.ViewModels.Dialogs.Progress
 
         public ProgressDialogViewModel() : base()
         {
-            CancelCommand = new Helpers.BuilderCommand(Cancel);
+            CancelCommand = new Util.BuilderCommand(Cancel);
         }
 
         private void Cancel(object obj)

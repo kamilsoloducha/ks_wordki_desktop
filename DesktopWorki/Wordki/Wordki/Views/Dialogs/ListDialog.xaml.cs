@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using Wordki.Helpers;
 
 namespace Wordki.Views.Dialogs
 {
@@ -99,7 +98,7 @@ namespace Wordki.Views.Dialogs
         public ListDialog()
         {
             InitializeComponent();
-            SelectionChangedCommand = new BuilderCommand(SelectionChanged);
+            SelectionChangedCommand = new Util.BuilderCommand(SelectionChanged);
             DataContext = this;
             Owner = App.Current.MainWindow;
             Width = Owner.ActualWidth;

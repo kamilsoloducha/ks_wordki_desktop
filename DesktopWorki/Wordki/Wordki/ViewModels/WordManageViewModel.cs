@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using System.Windows.Input;
 using Wordki.Database;
 using Wordki.Helpers;
 using Wordki.Models;
@@ -38,10 +39,10 @@ namespace Wordki.ViewModels
         }
 
         public IDatabase Database { get; set; }
-        public BuilderCommand BackCommand { get; set; }
-        public BuilderCommand DeleteItemsCommand { get; set; }
-        public BuilderCommand VisibilityChangeCommnad { get; set; }
-        public BuilderCommand ConnectItemsCommand { get; set; }
+        public ICommand BackCommand { get; set; }
+        public ICommand DeleteItemsCommand { get; set; }
+        public ICommand VisibilityChangeCommnad { get; set; }
+        public ICommand ConnectItemsCommand { get; set; }
 
         public WordManageViewModel()
         {
@@ -70,10 +71,10 @@ namespace Wordki.ViewModels
 
         private void ActivateCommand()
         {
-            DeleteItemsCommand = new BuilderCommand(DeleteItems);
-            VisibilityChangeCommnad = new BuilderCommand(VisibilityChange);
-            BackCommand = new BuilderCommand(Back);
-            ConnectItemsCommand = new BuilderCommand(ConnectItems);
+            DeleteItemsCommand = new Util.BuilderCommand(DeleteItems);
+            VisibilityChangeCommnad = new Util.BuilderCommand(VisibilityChange);
+            BackCommand = new Util.BuilderCommand(BackAction);
+            ConnectItemsCommand = new Util.BuilderCommand(ConnectItems);
         }
 
         private async void ConnectItems(object obj)
@@ -104,7 +105,7 @@ namespace Wordki.ViewModels
             }
         }
 
-        private void Back(object obj)
+        private void BackAction()
         {
             Switcher.Back();
         }
