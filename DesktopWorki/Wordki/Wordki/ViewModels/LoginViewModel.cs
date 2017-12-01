@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Util.Threads;
 using Wordki.Database;
@@ -145,6 +146,21 @@ namespace Wordki.ViewModels
                     Success = true,
                 };
             }
+        }
+
+        public override void Loaded()
+        {
+            base.Loaded();
+            IDatabaseOrganizer organizer = new DatabaseOrganizer(NHibernateHelper.DirectoryPath);
+            Users.Clear();
+            foreach (var user in organizer.GetDatabases())
+            {
+                Users.Add(user);
+            }
+        }
+
+        public override void Unloaded()
+        {
         }
         #endregion
     }

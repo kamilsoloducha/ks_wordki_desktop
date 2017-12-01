@@ -24,6 +24,15 @@ namespace Wordki.ViewModels.Dialogs
             CloseCommand = new Util.BuilderCommand(Close);
         }
 
+        public override void Loaded()
+        {
+
+        }
+
+        public override void Unloaded()
+        {
+
+        }
 
         protected void OnClosingRequest()
         {
@@ -39,7 +48,7 @@ namespace Wordki.ViewModels.Dialogs
             {
                 CloseAction.Invoke();
             }
-            if(ClosingRequest != null)
+            if (ClosingRequest != null)
             {
                 ClosingRequest(this, EventArgs.Empty);
             }

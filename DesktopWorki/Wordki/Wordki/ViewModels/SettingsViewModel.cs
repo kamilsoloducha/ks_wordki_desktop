@@ -355,5 +355,15 @@ namespace Wordki.ViewModels
             //lDialog.DialogTitle = "Jakis tytuł";
             lDialog.ShowDialog();
         }
+
+        public override void Loaded()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Unloaded()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

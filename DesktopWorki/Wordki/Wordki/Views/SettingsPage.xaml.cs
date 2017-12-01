@@ -1,18 +1,9 @@
-﻿using Wordki.Helpers;
-using Wordki.ViewModels;
+﻿using Wordki.ViewModels;
 
 namespace Wordki.Views {
-  /// <summary>
-  /// Interaction logic for SettingsPage.xaml
-  /// </summary>
-  public partial class SettingsPage : ISwitchElement {
-    private readonly IViewModel viewModel;
-    public SettingsPage() {
+  public partial class SettingsPage : PageBase {
+    public SettingsPage() :base(new SettingsViewModel()){
       InitializeComponent();
-      viewModel = new SettingsViewModel();
-      DataContext = viewModel;
     }
-  
-    public IViewModel ViewModel { get { return viewModel; } }
   }
 }

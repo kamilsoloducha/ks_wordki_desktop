@@ -21,7 +21,7 @@ namespace Wordki
 
         public App()
         {
-            Settings.Save();
+            //Settings.Save();
         }
 
         protected override void OnStartup(StartupEventArgs e)

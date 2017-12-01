@@ -1,328 +1,381 @@
-﻿<UserControl x:Class="Wordki.Views.SettingsPage"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:viewModels="clr-namespace:Wordki.ViewModels"
-             xmlns:hintPasswordBox="clr-namespace:Controls.HintPasswordBox;assembly=Controls"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:command="http://www.galasoft.ch/mvvmlight"
-             xmlns:helpers="clr-namespace:Wordki.Helpers"
-             xmlns:models="clr-namespace:Wordki.Models"
-             mc:Ignorable="d" 
-             d:DesignHeight="360" d:DesignWidth="640"
-             d:DataContext="{d:DesignInstance {x:Type viewModels:SettingsViewModel}}"
-             Style="{DynamicResource AppPageStyle}">
+﻿<views:PageBase
+    x:Class="Wordki.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:viewModels="clr-namespace:Wordki.ViewModels"
+    xmlns:hintPasswordBox="clr-namespace:Controls.HintPasswordBox;assembly=Controls"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:command="http://www.galasoft.ch/mvvmlight"
+    xmlns:views="clr-namespace:Wordki.Views"
+    xmlns:helpers="clr-namespace:Wordki.Helpers"
+    xmlns:models="clr-namespace:Wordki.Models"
+    mc:Ignorable="d"
+    d:DesignHeight="360"
+    d:DesignWidth="640"
+    d:DataContext="{d:DesignInstance {x:Type viewModels:SettingsViewModel}}"
+    Style="{DynamicResource AppPageStyle}">
 
-  <UserControl.Resources>
-    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource FlatButtonStyle}">
-      <Setter Property="Padding" Value="2"/>
-      <Setter Property="Margin" Value="2"/>
-    </Style>
-  </UserControl.Resources>
+    <views:PageBase.Resources>
+        <Style
+            TargetType="{x:Type Button}"
+            BasedOn="{StaticResource FlatButtonStyle}">
+            <Setter
+                Property="Padding"
+                Value="2" />
+            <Setter
+                Property="Margin"
+                Value="2" />
+        </Style>
+    </views:PageBase.Resources>
 
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*"/>
-      <ColumnDefinition Width="*"/>
-      <ColumnDefinition Width="*"/>
-    </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="*" />
+        </Grid.ColumnDefinitions>
 
-    <Grid.RowDefinitions>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="Auto"/>
-    </Grid.RowDefinitions>
-
-    <GroupBox
-      Style="{StaticResource AppGroupBoxStyle}"
-      Header="Użytkownik"
-      Grid.Column="0"
-      Grid.Row="0"
-      Margin="2">
-
-      <StackPanel
-        Orientation="Vertical"
-        HorizontalAlignment="Stretch">
-
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
-
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-          </Grid.RowDefinitions>
-
-          <Label
-            Grid.Column="0" Grid.Row="0"
-            Style="{StaticResource AppLabelStyle}"
-            FontSize="20"
-            Content="Nazwa użytkownika:"/>
-
-          <TextBox 
-            Grid.Column="1" Grid.Row="0"
-            Style="{StaticResource AppTextBoxStyle}"
-            FontSize="20"
-            HorizontalContentAlignment="Left"
-            HorizontalAlignment="Stretch"
-            Text="{Binding Path=UserName}"/>
-
-          <Label
-            Grid.Column="0" Grid.Row="1"
-            Style="{StaticResource AppLabelStyle}"
-            FontSize="20"
-            Content="Hasło:"/>
-
-          <hintPasswordBox:HintPasswordBox
-            Grid.Column="1" Grid.Row="1"
-            FontSize="20"
-            HorizontalAlignment="Stretch"
-            Text="{Binding Path=Password}"/>
-
-
-          <Button
-            Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
-            Content="Zapisz"
-            FontSize="15"
-            Command="{Binding Path=LoginPasswordChangeCommand}"/>
-
-          <Label
-            Grid.Column="0" Grid.Row="3"
-            Style="{StaticResource AppLabelStyle}"
-            FontSize="20"
-            Content="Ostatnie logowanie:"/>
-
-          <Label
-            Grid.Column="1" Grid.Row="3"
-            Style="{StaticResource AppLabelStyle}"
-            FontSize="20"
-            Content="{Binding Path=LoginDateTime}"/>
-
-          <Label
-            Grid.Column="0" Grid.Row="4"
-            Style="{StaticResource AppLabelStyle}"
-            FontSize="20"
-            Content="Ostatnia synchronizacja:"/>
-
-          <Label
-            Grid.Column="1" Grid.Row="4"
-            Style="{StaticResource AppLabelStyle}"
-            FontSize="20"
-            Content="{Binding Path=DownloadDateTime}"/>
-
-        </Grid>
-
-        <UniformGrid
-          Columns="2">
-          <Button 
-            Content="Wyloguj"
-            Padding="5,0,5,0"
-            FontSize="15"
-            Command="{Binding LogoutCommand}"/>
-          <Button 
-            Content="Synchronizuj"
-            Padding="5,0,5,0"
-            FontSize="15"
-            Command="{Binding SynchronizeCommand}"/>
-        </UniformGrid>
-      </StackPanel>
-    </GroupBox>
-
-    <GroupBox
-      Style="{StaticResource AppGroupBoxStyle}"
-      Header="Wygląd"
-      Grid.Column="1"
-      Grid.Row="0"
-      Margin="2">
-
-      <StackPanel Orientation="Vertical">
-
-        <StackPanel
-          Orientation="Horizontal"
-          VerticalAlignment="Top">
-          <Label 
-            Style="{StaticResource AppLabelStyle}"
-            Content="Schemat kolorów:"/>
-          <ComboBox
-            Style="{StaticResource AppComboBoxStyle}"
-            SelectedIndex="{Binding Path=ThemeSelectedIndex, UpdateSourceTrigger=PropertyChanged}">
-            <ComboBoxItem>Jasny</ComboBoxItem>
-            <ComboBoxItem>Ciemny</ComboBoxItem>
-          </ComboBox>
-        </StackPanel>
-
-        <StackPanel
-          Orientation="Horizontal"
-          VerticalAlignment="Top">
-
-          <Label
-            Style="{StaticResource AppLabelStyle}" 
-            Content="Rozmiar tekstu:"/>
-
-          <ComboBox
-            Style="{StaticResource AppComboBoxStyle}"
-            IsEditable="true"
-            Text="{Binding Path=FontSizeSelectedIndex}">
-            <ComboBoxItem>5</ComboBoxItem>
-            <ComboBoxItem>7</ComboBoxItem>
-            <ComboBoxItem>10</ComboBoxItem>
-            <ComboBoxItem>12</ComboBoxItem>
-            <ComboBoxItem>15</ComboBoxItem>
-            <ComboBoxItem>17</ComboBoxItem>
-            <ComboBoxItem>20</ComboBoxItem>
-            <ComboBoxItem>25</ComboBoxItem>
-          </ComboBox>
-
-        </StackPanel>
-
-        <TextBox
-          Style="{StaticResource AppTextBoxStyle}"
-          Margin="20"
-          HorizontalAlignment="Center"
-          FontSize="{Binding Path=TempFontSize}"
-          helpers:InputBindingBehavior.InputBindingsSource="{Binding Path=ShortKeys, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-          Text="{Binding Path=TestString}">
-          
-        </TextBox>
-
-      </StackPanel>
-
-    </GroupBox>
-
-    <GroupBox
-      Style="{StaticResource AppGroupBoxStyle}"
-      Header="Skróty klawiszowe"
-      Grid.Column="2"
-      Grid.Row="0"
-      Margin="2">
-      <Grid>
         <Grid.RowDefinitions>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="Auto"/>
+            <RowDefinition
+                Height="*" />
+            <RowDefinition
+                Height="Auto" />
         </Grid.RowDefinitions>
 
-        <DataGrid
-          Name="DataGrid"
-          Grid.Row="0"
-          Style="{StaticResource AppDataGridStyle}"
-          ItemsSource="{Binding Path=Settings.ShortCuts}"
-          AutoGenerateColumns="false"
-          HorizontalGridLinesBrush="{DynamicResource UsedPressedBrush}"
-          CanUserAddRows="false"
-          SelectionMode="Single"
-          FontSize="14"
-          KeyboardNavigation.IsTabStop="False">
-          <i:Interaction.Behaviors>
-            <helpers:ScrollIntoViewBehavior/>
-          </i:Interaction.Behaviors>
-          <DataGrid.Resources>
-            <Style TargetType="{x:Type DataGridCell}">
-              <Setter Property="IsTabStop" Value="False"/>
-            </Style>
-            <Style TargetType="{x:Type DataGridRow}">
-              <Setter Property="IsTabStop" Value="False"/>
-            </Style>
-            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{DynamicResource UsedHoverColor}"/>
-            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="{DynamicResource UsedHoverColor}"/>
-          </DataGrid.Resources>
+        <GroupBox
+            Style="{StaticResource AppGroupBoxStyle}"
+            Header="Użytkownik"
+            Grid.Column="0"
+            Grid.Row="0"
+            Margin="2">
 
-          <DataGrid.Columns>
-            <DataGridTemplateColumn
-            CanUserResize="false"
-            Header="Klawisz"
-            Width="*"
-            HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
-              <DataGridTemplateColumn.CellTemplate>
-                <DataTemplate>
-                  <StackPanel
-                    HorizontalAlignment="Stretch"
-                    Orientation="Vertical">
-                    <TextBlock 
-                      d:DataContext="{d:DesignInstance {x:Type models:ForeignLetter}}"
-                      Style="{StaticResource AppTextBlockStyle}"
-                      HorizontalAlignment="Center"
-                      Margin="1,2"
-                      FontSize="20"
-                      Text="{Binding Path=KeyboardKey, StringFormat='Alt + {0}'}"/>
-                  </StackPanel>
-                </DataTemplate>
-              </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
+            <StackPanel
+                Orientation="Vertical"
+                HorizontalAlignment="Stretch">
 
-            <DataGridTemplateColumn
-              CanUserResize="false"
-              Header="Znak"
-              Width="*"
-              HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
-              <DataGridTemplateColumn.CellTemplate>
-                <DataTemplate>
-                  <StackPanel
-                    HorizontalAlignment="Stretch"
-                    Orientation="Vertical">
-                    <TextBlock 
-                      d:DataContext="{d:DesignInstance {x:Type models:ForeignLetter}}"
-                      Style="{StaticResource AppTextBlockStyle}"
-                      HorizontalAlignment="Center"
-                      Margin="1,2"
-                      FontSize="20"
-                      Text="{Binding Path=ForeignKey}"/>
-                  </StackPanel>
-                </DataTemplate>
-              </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-          </DataGrid.Columns>
-        </DataGrid>
-        
-        <StackPanel
-          Grid.Row="1"
-          Orientation="Horizontal">
-          <Button
-            Style="{StaticResource FlatButtonStyle}"
-            Content="Dodaj"
-            Command="{Binding Path=AddShortCutCommand}"/>
-          <Button
-            Style="{StaticResource FlatButtonStyle}"
-            Content="Usuń"
-            Command="{Binding Path=DeleteShortCutCommand}"
-            CommandParameter="{Binding ElementName=DataGrid, Path=SelectedItem}"/>
-          <Button
-            Style="{StaticResource FlatButtonStyle}"
-            Content="Edytuj"
-            Command="{Binding Path=EditShortCutCommand}"
-            CommandParameter="{Binding ElementName=DataGrid, Path=SelectedItem}"/>
-        </StackPanel>
-      </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition
+                            Width="Auto" />
+                        <ColumnDefinition
+                            Width="*" />
+                    </Grid.ColumnDefinitions>
 
-    </GroupBox>
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+                            Height="Auto" />
+                        <RowDefinition
+                            Height="Auto" />
+                        <RowDefinition
+                            Height="Auto" />
+                        <RowDefinition
+                            Height="Auto" />
+                        <RowDefinition
+                            Height="Auto" />
+                    </Grid.RowDefinitions>
 
-    <WrapPanel
-      Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
-      HorizontalAlignment="Right">
-      <WrapPanel.Resources>
-        <Style x:Key="LocalButonStyle" BasedOn="{StaticResource FlatButtonStyle}" TargetType="{x:Type Button}">
-          <Setter Property="MinWidth" Value="100"/>
-          <Setter Property="Margin" Value="2,5,2,5"/>
-        </Style>
-      </WrapPanel.Resources>
-      <Button
-        Style="{StaticResource LocalButonStyle}"
-        Content="Ok"
-        Command="{Binding Path=SaveCommand}"/>
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Style="{StaticResource AppLabelStyle}"
+                        FontSize="20"
+                        Content="Nazwa użytkownika:" />
 
-      <Button
-        Style="{StaticResource LocalButonStyle}"
-        Content="Przywróć domyślne"
-        Command="{Binding DefaultCommand}"/>
+                    <TextBox
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Style="{StaticResource AppTextBoxStyle}"
+                        FontSize="20"
+                        HorizontalContentAlignment="Left"
+                        HorizontalAlignment="Stretch"
+                        Text="{Binding Path=UserName}" />
 
-      <Button
-        Style="{StaticResource LocalButonStyle}"
-        Content="Anuluj"
-        Command="{Binding BackCommand}"/>
-    </WrapPanel>
-  </Grid>
-</UserControl>
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Style="{StaticResource AppLabelStyle}"
+                        FontSize="20"
+                        Content="Hasło:" />
+
+                    <hintPasswordBox:HintPasswordBox
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        FontSize="20"
+                        HorizontalAlignment="Stretch"
+                        Text="{Binding Path=Password}" />
+
+
+                    <Button
+                        Grid.Column="0"
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        Content="Zapisz"
+                        FontSize="15"
+                        Command="{Binding Path=LoginPasswordChangeCommand}" />
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="3"
+                        Style="{StaticResource AppLabelStyle}"
+                        FontSize="20"
+                        Content="Ostatnie logowanie:" />
+
+                    <Label
+                        Grid.Column="1"
+                        Grid.Row="3"
+                        Style="{StaticResource AppLabelStyle}"
+                        FontSize="20"
+                        Content="{Binding Path=LoginDateTime}" />
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="4"
+                        Style="{StaticResource AppLabelStyle}"
+                        FontSize="20"
+                        Content="Ostatnia synchronizacja:" />
+
+                    <Label
+                        Grid.Column="1"
+                        Grid.Row="4"
+                        Style="{StaticResource AppLabelStyle}"
+                        FontSize="20"
+                        Content="{Binding Path=DownloadDateTime}" />
+
+                </Grid>
+
+                <UniformGrid
+                    Columns="2">
+                    <Button
+                        Content="Wyloguj"
+                        Padding="5,0,5,0"
+                        FontSize="15"
+                        Command="{Binding LogoutCommand}" />
+                    <Button
+                        Content="Synchronizuj"
+                        Padding="5,0,5,0"
+                        FontSize="15"
+                        Command="{Binding SynchronizeCommand}" />
+                </UniformGrid>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox
+            Style="{StaticResource AppGroupBoxStyle}"
+            Header="Wygląd"
+            Grid.Column="1"
+            Grid.Row="0"
+            Margin="2">
+
+            <StackPanel
+                Orientation="Vertical">
+
+                <StackPanel
+                    Orientation="Horizontal"
+                    VerticalAlignment="Top">
+                    <Label
+                        Style="{StaticResource AppLabelStyle}"
+                        Content="Schemat kolorów:" />
+                    <ComboBox
+                        Style="{StaticResource AppComboBoxStyle}"
+                        SelectedIndex="{Binding Path=ThemeSelectedIndex, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBoxItem>Jasny</ComboBoxItem>
+                        <ComboBoxItem>Ciemny</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel
+                    Orientation="Horizontal"
+                    VerticalAlignment="Top">
+
+                    <Label
+                        Style="{StaticResource AppLabelStyle}"
+                        Content="Rozmiar tekstu:" />
+
+                    <ComboBox
+                        Style="{StaticResource AppComboBoxStyle}"
+                        IsEditable="true"
+                        Text="{Binding Path=FontSizeSelectedIndex}">
+                        <ComboBoxItem>5</ComboBoxItem>
+                        <ComboBoxItem>7</ComboBoxItem>
+                        <ComboBoxItem>10</ComboBoxItem>
+                        <ComboBoxItem>12</ComboBoxItem>
+                        <ComboBoxItem>15</ComboBoxItem>
+                        <ComboBoxItem>17</ComboBoxItem>
+                        <ComboBoxItem>20</ComboBoxItem>
+                        <ComboBoxItem>25</ComboBoxItem>
+                    </ComboBox>
+
+                </StackPanel>
+
+                <TextBox
+                    Style="{StaticResource AppTextBoxStyle}"
+                    Margin="20"
+                    HorizontalAlignment="Center"
+                    FontSize="{Binding Path=TempFontSize}"
+                    helpers:InputBindingBehavior.InputBindingsSource="{Binding Path=ShortKeys, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding Path=TestString}">
+
+                </TextBox>
+
+            </StackPanel>
+
+        </GroupBox>
+
+        <GroupBox
+            Style="{StaticResource AppGroupBoxStyle}"
+            Header="Skróty klawiszowe"
+            Grid.Column="2"
+            Grid.Row="0"
+            Margin="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="*" />
+                    <RowDefinition
+                        Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <DataGrid
+                    Name="DataGrid"
+                    Grid.Row="0"
+                    Style="{StaticResource AppDataGridStyle}"
+                    ItemsSource="{Binding Path=Settings.ShortCuts}"
+                    AutoGenerateColumns="false"
+                    HorizontalGridLinesBrush="{DynamicResource UsedPressedBrush}"
+                    CanUserAddRows="false"
+                    SelectionMode="Single"
+                    FontSize="14"
+                    KeyboardNavigation.IsTabStop="False">
+                    <i:Interaction.Behaviors>
+                        <helpers:ScrollIntoViewBehavior />
+                    </i:Interaction.Behaviors>
+                    <DataGrid.Resources>
+                        <Style
+                            TargetType="{x:Type DataGridCell}">
+                            <Setter
+                                Property="IsTabStop"
+                                Value="False" />
+                        </Style>
+                        <Style
+                            TargetType="{x:Type DataGridRow}">
+                            <Setter
+                                Property="IsTabStop"
+                                Value="False" />
+                        </Style>
+                        <SolidColorBrush
+                            x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                            Color="{DynamicResource UsedHoverColor}" />
+                        <SolidColorBrush
+                            x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"
+                            Color="{DynamicResource UsedHoverColor}" />
+                    </DataGrid.Resources>
+
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn
+                            CanUserResize="false"
+                            Header="Klawisz"
+                            Width="*"
+                            HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel
+                                        HorizontalAlignment="Stretch"
+                                        Orientation="Vertical">
+                                        <TextBlock
+                                            d:DataContext="{d:DesignInstance {x:Type models:ForeignLetter}}"
+                                            Style="{StaticResource AppTextBlockStyle}"
+                                            HorizontalAlignment="Center"
+                                            Margin="1,2"
+                                            FontSize="20"
+                                            Text="{Binding Path=KeyboardKey, StringFormat='Alt + {0}'}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn
+                            CanUserResize="false"
+                            Header="Znak"
+                            Width="*"
+                            HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel
+                                        HorizontalAlignment="Stretch"
+                                        Orientation="Vertical">
+                                        <TextBlock
+                                            d:DataContext="{d:DesignInstance {x:Type models:ForeignLetter}}"
+                                            Style="{StaticResource AppTextBlockStyle}"
+                                            HorizontalAlignment="Center"
+                                            Margin="1,2"
+                                            FontSize="20"
+                                            Text="{Binding Path=ForeignKey}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <StackPanel
+                    Grid.Row="1"
+                    Orientation="Horizontal">
+                    <Button
+                        Style="{StaticResource FlatButtonStyle}"
+                        Content="Dodaj"
+                        Command="{Binding Path=AddShortCutCommand}" />
+                    <Button
+                        Style="{StaticResource FlatButtonStyle}"
+                        Content="Usuń"
+                        Command="{Binding Path=DeleteShortCutCommand}"
+                        CommandParameter="{Binding ElementName=DataGrid, Path=SelectedItem}" />
+                    <Button
+                        Style="{StaticResource FlatButtonStyle}"
+                        Content="Edytuj"
+                        Command="{Binding Path=EditShortCutCommand}"
+                        CommandParameter="{Binding ElementName=DataGrid, Path=SelectedItem}" />
+                </StackPanel>
+            </Grid>
+
+        </GroupBox>
+
+        <WrapPanel
+            Grid.Column="0"
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            HorizontalAlignment="Right">
+            <WrapPanel.Resources>
+                <Style
+                    x:Key="LocalButonStyle"
+                    BasedOn="{StaticResource FlatButtonStyle}"
+                    TargetType="{x:Type Button}">
+                    <Setter
+                        Property="MinWidth"
+                        Value="100" />
+                    <Setter
+                        Property="Margin"
+                        Value="2,5,2,5" />
+                </Style>
+            </WrapPanel.Resources>
+            <Button
+                Style="{StaticResource LocalButonStyle}"
+                Content="Ok"
+                Command="{Binding Path=SaveCommand}" />
+
+            <Button
+                Style="{StaticResource LocalButonStyle}"
+                Content="Przywróć domyślne"
+                Command="{Binding DefaultCommand}" />
+
+            <Button
+                Style="{StaticResource LocalButonStyle}"
+                Content="Anuluj"
+                Command="{Binding BackCommand}" />
+        </WrapPanel>
+    </Grid>
+</views:PageBase>

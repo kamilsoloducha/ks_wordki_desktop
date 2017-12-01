@@ -1,4 +1,5 @@
-﻿using Wordki.ViewModels.LessonStates;
+﻿using System;
+using Wordki.ViewModels.LessonStates;
 
 namespace Wordki.ViewModels
 {
@@ -12,6 +13,16 @@ namespace Wordki.ViewModels
             StateFactory = new TypingLessonStateFactory();
             State = StateFactory.GetState(Lesson, LessonStateEnum.BeforeStart);
             State.RefreshView();
+        }
+
+        public override void Loaded()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Unloaded()
+        {
+            throw new NotImplementedException();
         }
 
         protected override void Check(object obj)

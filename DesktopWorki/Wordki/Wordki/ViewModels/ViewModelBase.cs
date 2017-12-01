@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Util.Threads;
 using Wordki.Helpers;
 
 namespace Wordki.ViewModels
@@ -15,9 +16,9 @@ namespace Wordki.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged([CallerMemberName] string name="")
+        public void OnPropertyChanged([CallerMemberName] string name = "")
         {
-            if(PropertyChanged != null)
+            if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
@@ -27,14 +28,8 @@ namespace Wordki.ViewModels
 
         public abstract void InitViewModel();
 
-        public virtual void Loaded()
-        {
-            Console.WriteLine("Loaded");
-        }
+        public abstract void Loaded();
 
-        public virtual void Unloaded()
-        {
-            Console.WriteLine("Unloaded");
-        }
+        public abstract void Unloaded();
     }
 }

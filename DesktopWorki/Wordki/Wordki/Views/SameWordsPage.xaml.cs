@@ -5,13 +5,9 @@ namespace Wordki.Views {
   /// <summary>
   /// Interaction logic for SameWordsPage.xaml
   /// </summary>
-  public partial class SameWordsPage : ISwitchElement {
-    private readonly IViewModel viewModel;
-    public SameWordsPage() {
+  public partial class SameWordsPage : PageBase { 
+    public SameWordsPage() :base(new SameWordsViewModel()){
       InitializeComponent();
-      viewModel = new SameWordsViewModel();
-      DataContext = viewModel;
     }
-    public IViewModel ViewModel { get { return viewModel; } }
   }
 }

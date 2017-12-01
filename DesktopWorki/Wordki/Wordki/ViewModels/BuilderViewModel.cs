@@ -239,7 +239,7 @@ namespace Wordki.ViewModels
             {
                 SetOnLastWord();
             }
-            RefreshView();
+            //RefreshView();
         }
 
         public override void Back()
@@ -789,6 +789,14 @@ namespace Wordki.ViewModels
             {
                 LoggerSingleton.LogError("Błąd Usuwania");
             }
+        }
+
+        public override void Loaded()
+        {
+        }
+
+        public override void Unloaded()
+        {
         }
         #endregion
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -181,5 +182,14 @@ namespace Wordki.ViewModels
             FilePath = fileChooser.Choose();
         }
 
+        public override void Loaded()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Unloaded()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -10,6 +10,7 @@ using Wordki.InteractionProvider;
 using Util;
 using Wordki.ViewModels.Dialogs;
 using System.ComponentModel;
+using System.Threading;
 
 namespace Wordki.ViewModels
 {
@@ -150,8 +151,7 @@ namespace Wordki.ViewModels
 
         public override void InitViewModel()
         {
-            Login = UserManagerSingleton.Instence.User.Name;
-            RefreshInfo();
+            
         }
 
         public override void Back()
@@ -234,6 +234,16 @@ namespace Wordki.ViewModels
                     MaxValue = lList.Sum();
                 });
             });
+        }
+
+        public override void Loaded()
+        {
+            Login = UserManagerSingleton.Instence.User.Name;
+            RefreshInfo();
+        }
+
+        public override void Unloaded()
+        {
         }
     }
 }

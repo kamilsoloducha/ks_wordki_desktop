@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using Wordki.Models;
 using Wordki.Models.Connector;
 
@@ -75,6 +76,16 @@ namespace Wordki.ViewModels
         private void OnRegister(ApiResponse pResponse)
         {
             HandleResponse(pResponse);
+        }
+
+        public override void Loaded()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Unloaded()
+        {
+            throw new NotImplementedException();
         }
     }
 }

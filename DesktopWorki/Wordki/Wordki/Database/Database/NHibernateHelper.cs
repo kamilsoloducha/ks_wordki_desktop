@@ -48,7 +48,7 @@ namespace Wordki.Database
             return FluentNHibernate.Cfg.Fluently.Configure()
               .Database(
                 SQLiteConfiguration.Standard
-                  .ConnectionString($"Data Source={DatabasePath};Version=3;New=True").ShowSql
+                  .ConnectionString($"Data Source={DatabasePath};Version=3;New=True")
               )
               .Mappings(m =>
               {

@@ -145,6 +145,12 @@ namespace Wordki.ViewModels
             });
         }
 
+        public override void Loaded()
+        {
+            UserName = "";
+            Password = "";
+        }
+
         #endregion
 
     }

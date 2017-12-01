@@ -7,21 +7,14 @@ namespace Wordki.Views
     /// <summary>
     /// Interaction logic for TeachPage.xaml
     /// </summary>
-    public partial class TeachPage : ISwitchElement
+    public partial class TeachPage : PageBase
     {
-
-        private readonly IViewModel viewModel;
-
-        public TeachPage(TeachPageType type)
+        public TeachPage(TeachPageType type) : base(GetViewModel(type))
         {
             InitializeComponent();
-            viewModel = GetViewModel(type);
-            DataContext = viewModel;
         }
 
-        public IViewModel ViewModel { get { return viewModel; } }
-
-        private IViewModel GetViewModel(TeachPageType type)
+        private static IViewModel GetViewModel(TeachPageType type)
         {
             switch (type)
             {

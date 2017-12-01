@@ -129,5 +129,15 @@ namespace Wordki.ViewModels
                 return Enumerable.Empty<Word>();
             }
         }
+
+        public override void Loaded()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Unloaded()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

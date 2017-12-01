@@ -1,22 +1,14 @@
-﻿using Wordki.Helpers;
-using Wordki.ViewModels;
+﻿using Wordki.ViewModels;
 
-namespace Wordki.Views {
-  /// <summary>
-  /// Interaction logic for WordsPage.xaml
-  /// </summary>
-  public partial class WordsPage : ISwitchElement {
+namespace Wordki.Views
+{
+    public partial class WordsPage : PageBase
+    {
 
-    private readonly IViewModel viewModel;
+        public WordsPage() : base(new WordManageViewModel())
+        {
+            InitializeComponent();
+        }
 
-    public WordsPage() {
-      InitializeComponent();
-      viewModel = new WordManageViewModel();
-      DataContext = viewModel;
     }
-
-    public IViewModel ViewModel {
-      get { return viewModel; }
-    }
-  }
 }

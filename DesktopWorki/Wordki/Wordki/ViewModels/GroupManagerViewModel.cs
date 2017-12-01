@@ -544,6 +544,15 @@ namespace Wordki.ViewModels
             }
         }
 
+        public override void Loaded()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Unloaded()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class GroupInfo : INotifyPropertyChanged

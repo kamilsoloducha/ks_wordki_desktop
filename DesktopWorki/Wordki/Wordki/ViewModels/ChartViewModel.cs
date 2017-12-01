@@ -505,8 +505,15 @@ namespace Wordki.ViewModels
             return lScreenPlot;
         }
 
+        public override void Loaded()
+        {
+            throw new NotImplementedException();
+        }
 
-
+        public override void Unloaded()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public enum ChartElement

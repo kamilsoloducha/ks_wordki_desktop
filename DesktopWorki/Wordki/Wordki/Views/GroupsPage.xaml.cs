@@ -1,20 +1,13 @@
 ﻿using Wordki.Helpers;
 using Wordki.ViewModels;
 
-namespace Wordki.Views {
-  /// <summary>
-  /// Interaction logic for GroupsPage.xaml
-  /// </summary>
-  public partial class GroupsPage : ISwitchElement {
-    private readonly IViewModel viewModel;
-    public GroupsPage() {
-      InitializeComponent();
-      viewModel = new GroupManagerViewModel();
-      DataContext = viewModel;
+namespace Wordki.Views
+{
+    public partial class GroupsPage : PageBase
+    {
+        public GroupsPage() : base(new GroupManagerViewModel())
+        {
+            InitializeComponent();
+        }
     }
-
-    public IViewModel ViewModel {
-      get { return viewModel; }
-    }
-  }
 }

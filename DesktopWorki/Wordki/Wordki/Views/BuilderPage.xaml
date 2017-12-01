@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<views:PageBase
     x:Class="Wordki.Views.BuilderPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,6 +7,7 @@
     xmlns:helpers="clr-namespace:Wordki.Helpers"
     xmlns:converters="clr-namespace:Wordki.Helpers.Converters"
     xmlns:viewModels="clr-namespace:Wordki.ViewModels"
+    xmlns:views="clr-namespace:Wordki.Views"
     xmlns:models="clr-namespace:Wordki.Models"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:command="http://www.galasoft.ch/mvvmlight"
@@ -17,7 +18,7 @@
     d:DataContext="{d:DesignInstance {x:Type viewModels:BuilderViewModel}}"
     Style="{DynamicResource AppPageStyle}"
     KeyboardNavigation.IsTabStop="False">
-    <UserControl.Resources>
+    <views:PageBase.Resources>
         <Style
             x:Key="WinTextBoxStyle"
             BasedOn="{StaticResource AppTextBoxStyle}"
@@ -53,9 +54,9 @@
         <converters:ObjectToBoolConverter
             x:Key="ObjectToBoolConverter" />
 
-    </UserControl.Resources>
+    </views:PageBase.Resources>
 
-    <UserControl.InputBindings>
+    <views:PageBase.InputBindings>
         <KeyBinding
             Key="Enter"
             Command="{Binding Path=AddWordCommand}" />
@@ -79,7 +80,7 @@
             Modifiers="Alt"
             Key="Delete"
             Command="{Binding Path=RemoveWordCommand}" />
-    </UserControl.InputBindings>
+    </views:PageBase.InputBindings>
 
     <DockPanel>
         <Grid
@@ -615,4 +616,4 @@
             </Grid>
         </Grid>
     </DockPanel>
-</UserControl>
+</views:PageBase>
