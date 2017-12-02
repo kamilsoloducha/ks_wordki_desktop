@@ -58,6 +58,7 @@ namespace Wordki.ViewModels
         public ICommand ShowPlotCommand { get; set; }
         public ICommand FinishLessonCommand { get; set; }
         public ICommand SortDirectionCommand { get; private set; }
+        public ICommand ScrollCommand { get; set; }
 
         public double MaxValue
         {
@@ -184,8 +185,13 @@ namespace Wordki.ViewModels
             AllWordsCommand = new Util.BuilderCommand(AllWords);
             ShowPlotCommand = new Util.BuilderCommand(ShowPlot);
             FinishLessonCommand = new Util.BuilderCommand(FinishLesson);
+            ScrollCommand = new BuilderCommand(Scroll);
         }
 
+        public void Scroll(object obj)
+        {
+
+        }
 
         private void FinishLesson(object obj)
         {
@@ -546,12 +552,10 @@ namespace Wordki.ViewModels
 
         public override void Loaded()
         {
-            throw new NotImplementedException();
         }
 
         public override void Unloaded()
         {
-            throw new NotImplementedException();
         }
     }
 

@@ -95,10 +95,10 @@
                 Content="Ustawienia"
                 Command="{Binding SettingsCommand}" />
 
-            <!--<Button
+            <Button
                 Style="{StaticResource FlatButtonStyle}"
                 Content="Wyjście"
-                Command="{Binding ExitCommand}" />-->
+                Command="{Binding ExitCommand}" />
         </UniformGrid>
 
 

@@ -4,7 +4,7 @@ namespace Wordki.Database
 {
     public class DatabaseSingleton
     {
-        private static bool TEST = false;
+        private static bool TEST = true;
         private static IDatabase _instance;
         private static object obj = new object();
 

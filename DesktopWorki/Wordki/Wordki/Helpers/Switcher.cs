@@ -37,6 +37,7 @@ namespace Wordki.Helpers
 
         private ISwitchElement PageFactory(State pState)
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             ISwitchElement result;
             switch (pState)
             {
@@ -80,6 +81,8 @@ namespace Wordki.Helpers
                     throw new ArgumentOutOfRangeException("pState");
             }
             result.ViewModel.Switcher = this;
+            watch.Stop();
+            Console.WriteLine($"Dla {result.GetType()} czas ładowania: {watch.ElapsedMilliseconds}");
             return result;
         }
 

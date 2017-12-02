@@ -13,6 +13,7 @@
     xmlns:lessons="clr-namespace:Repository.Models.Enums;assembly=Repository"
     xmlns:barChart="clr-namespace:Controls.BarChart;assembly=Controls"
     xmlns:pieChart="clr-namespace:Controls.PieChart;assembly=Controls"
+    xmlns:cmd="http://www.galasoft.ch/mvvmlight"
     mc:Ignorable="d"
     Style="{DynamicResource AppPageStyle}"
     d:DataContext="{d:DesignInstance {x:Type viewModels:GroupManagerViewModel}}">
@@ -206,9 +207,14 @@
             Style="{StaticResource AppDataGridStyle}"
             Margin="10,10,10,0"
             IsReadOnly="True"
+            EnableColumnVirtualization="true"
+            EnableRowVirtualization="true"
             ScrollViewer.CanContentScroll="False"
             SelectedItem="{Binding SelectedItem}"
-            ItemsSource="{Binding ItemsList}"
+            ItemsSource="{Binding ItemsList, IsAsync=True}"
+            ScrollViewer.ScrollChanged="GroupsDataGrid_ScrollChanged"
+            MaxHeight="768"
+            MaxWidth="1000"
             SelectionUnit="FullRow"
             BorderThickness="0"
             HeadersVisibility="Row"
@@ -261,6 +267,12 @@
                         Command="{Binding SelectionChangedCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=GroupsDataGrid}" />
                 </i:EventTrigger>
+                <!--<i:EventTrigger
+                    EventName="ScrollViewer.ScrollChanged">
+                    <cmd:EventToCommand
+                        Command="{Binding ScrollCommand}"
+                        PassEventArgsToCommand="True"/>
+                </i:EventTrigger>-->
             </i:Interaction.Triggers>
 
             <DataGrid.CellStyle>
