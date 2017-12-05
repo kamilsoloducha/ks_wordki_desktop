@@ -131,7 +131,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\CheckUncheckCommand.cs" />
+    <Compile Include="Commands\CheckUncheckAction.cs" />
+    <Compile Include="Commands\ActionsSingleton.cs" />
+    <Compile Include="Commands\SelectLanguageAction.cs" />
+    <Compile Include="Commands\SwapWordAction.cs" />
+    <Compile Include="Commands\SwapWordsInGroupAction.cs" />
     <Compile Include="Database\Database\DatabaseSingleton.cs" />
     <Compile Include="Database\Maps\GroupMap.cs" />
     <Compile Include="Database\Repositories\GroupRepository.cs" />
@@ -170,6 +174,7 @@
     <Compile Include="Helpers\Connector\Requests\TranslationRequest.cs" />
     <Compile Include="Helpers\Connector\Responses\TranslationResponse.cs" />
     <Compile Include="Helpers\Connector\SimpleConnector\SimpleConnector.cs" />
+    <Compile Include="Helpers\Converters\ArithmeticConverter.cs" />
     <Compile Include="Helpers\Converters\DrawerToColorConverter.cs" />
     <Compile Include="Helpers\Converters\ItemIndexToBoolConverter.cs" />
     <Compile Include="Helpers\Converters\LanguageToImageConverter.cs" />
@@ -182,6 +187,8 @@
     <Compile Include="Helpers\Converters\TranslationDirectionToIntConverter.cs" />
     <Compile Include="Helpers\Converters\WordCheckedToBrushConverter.cs" />
     <Compile Include="Helpers\Converters\WordCheckedToStringConverter.cs" />
+    <Compile Include="Helpers\Converters\WordToDrawerConverter.cs" />
+    <Compile Include="Helpers\Converters\WordToIndexConverter.cs" />
     <Compile Include="Helpers\FileChooser\FileChooser.cs" />
     <Compile Include="Helpers\FileChooser\IFileChooser.cs" />
     <Compile Include="Helpers\GroupConnector\GroupConnector.cs" />
@@ -206,9 +213,6 @@
     <Compile Include="Helpers\ResultConnector\ResultConnector.cs" />
     <Compile Include="Helpers\TranslationPusher\ITranslationPusher.cs" />
     <Compile Include="Helpers\TranslationPusher\TranslationPusher.cs" />
-    <Compile Include="Helpers\VirtualizingCollection\AsyncVirtualizingCollection.cs" />
-    <Compile Include="Helpers\VirtualizingCollection\IItemsProvider.cs" />
-    <Compile Include="Helpers\VirtualizingCollection\VirtualizingCollection.cs" />
     <Compile Include="Helpers\WordComparer\IWordComparer.cs" />
     <Compile Include="Helpers\WordComparer\IWordComparerSettings.cs" />
     <Compile Include="Helpers\WordComparer\WordComparer.cs" />
@@ -225,6 +229,9 @@
     <Compile Include="InteractionProvider\InfoProvider\SimpleInfoProvider.cs" />
     <Compile Include="InteractionProvider\InfoProvider\ToastProvider.cs" />
     <Compile Include="InteractionProvider\InteractionProviderBase.cs" />
+    <Compile Include="InteractionProvider\LanguageProvider\ILanguageProvider.cs" />
+    <Compile Include="InteractionProvider\LanguageProvider\LanguageForGroupProvider.cs" />
+    <Compile Include="InteractionProvider\LanguageProvider\LanguageProvider.cs" />
     <Compile Include="InteractionProvider\LessonResultProvider\ILessonResultProvider.cs" />
     <Compile Include="InteractionProvider\LessonResultProvider\LessonResultProvider.cs" />
     <Compile Include="InteractionProvider\ProcessProvider\ProcessProvider.cs" />
@@ -235,7 +242,6 @@
     <Compile Include="InteractionProvider\TranlsationProvider\TranslationProvider.cs" />
     <Compile Include="InteractionProvider\YesNoProvider\IYesNoProvider.cs" />
     <Compile Include="InteractionProvider\YesNoProvider\YesNoProvider.cs" />
-    <Compile Include="Models\GroupItemProvider.cs" />
     <Compile Include="Models\Group\CommonGroup.cs" />
     <Compile Include="Helpers\Connector\ApiConnector.cs" />
     <Compile Include="Helpers\Connector\ApiRequest.cs" />
@@ -304,6 +310,7 @@
     <Compile Include="ViewModels\Dialogs\DialogOrganizer\DialogOrganizerSingleton.cs" />
     <Compile Include="ViewModels\Dialogs\DialogOrganizer\IDialogOrganizer.cs" />
     <Compile Include="ViewModels\Dialogs\DialogWindowViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\LanguageListDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\LessonResultDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ProgressDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\SearchDialogViewModel.cs" />
@@ -362,10 +369,9 @@
     <Compile Include="Views\Dialogs\LessonResultDialog.xaml.cs">
       <DependentUpon>LessonResultDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\ListDialog.xaml.cs">
+    <Compile Include="Views\Dialogs\ListDialogs\ListDialog.xaml.cs">
       <DependentUpon>ListDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\ListDialogs\IListDialog.cs" />
     <Compile Include="Views\Dialogs\ListDialogs\LanguageListDialog.cs" />
     <Compile Include="Views\Dialogs\SearchDialog\SearchDialog.xaml.cs">
       <DependentUpon>SearchDialog.xaml</DependentUpon>
@@ -443,7 +449,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\ListDialog.xaml">
+    <Page Include="Views\Dialogs\ListDialogs\ListDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -717,7 +723,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\LoginCommands\" />
     <Folder Include="Resources\Languages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

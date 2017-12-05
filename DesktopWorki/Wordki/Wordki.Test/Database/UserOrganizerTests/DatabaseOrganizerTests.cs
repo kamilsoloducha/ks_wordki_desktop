@@ -13,13 +13,13 @@ namespace Wordki.Test.Database.UserOrganizerTests
         IDatabaseOrganizer databaseOrganizer;
         IUser user;
         IDatabase database;
-        Utility util = new Utility();
+        
 
         [SetUp]
         public void SetUp()
         {
             databaseOrganizer = new DatabaseOrganizer("");
-            user = util.GetUser();
+            user = Utility.GetUser();
             database = DatabaseSingleton.Instance;
         }
 
@@ -32,7 +32,7 @@ namespace Wordki.Test.Database.UserOrganizerTests
             IUser userFromDatabase = database.GetUserAsync(user.Name, user.Password).Result;
 
             Assert.IsNotNull(userFromDatabase, "Error in add user to Database");
-            util.CheckUser(user, userFromDatabase);
+            Utility.CheckUser(user, userFromDatabase);
         }
 
         [Test]

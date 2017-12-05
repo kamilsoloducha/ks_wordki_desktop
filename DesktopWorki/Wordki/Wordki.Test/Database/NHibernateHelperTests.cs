@@ -15,7 +15,7 @@ namespace Wordki.Test.Database
         private IGroupRepository groupRepo = new GroupRepository();
         private IWordRepository wordRepo = new WordRepository();
         private IResultRepository resultRepo = new ResultRepository();
-        private Utility util = new Utility();
+        
 
         [SetUp]
         public void SetUp()
@@ -28,8 +28,8 @@ namespace Wordki.Test.Database
         [Test]
         public void Clean_all_database_test()
         {
-            userRepo.Save(util.GetUser());
-            groupRepo.Save(util.GetGroups());
+            userRepo.Save(Utility.GetUser());
+            groupRepo.Save(Utility.GetGroups());
 
             NHibernateHelper.ClearDatabase();
 
@@ -42,7 +42,7 @@ namespace Wordki.Test.Database
         [Test]
         public void Refresh_database_all_removed_test()
         {
-            IEnumerable<IGroup> groups = util.GetGroups();
+            IEnumerable<IGroup> groups = Utility.GetGroups();
             foreach(IGroup group in groups)
             {
                 group.State = -1;
@@ -67,7 +67,7 @@ namespace Wordki.Test.Database
         [Test]
         public void Refresh_database_all_updated_check_count_test()
         {
-            IEnumerable<IGroup> groups = util.GetGroups();
+            IEnumerable<IGroup> groups = Utility.GetGroups();
             foreach (IGroup group in groups)
             {
                 group.State = 1;
@@ -84,15 +84,15 @@ namespace Wordki.Test.Database
 
             NHibernateHelper.RefreshDatabase();
 
-            Assert.AreEqual(util.GroupCount, groupRepo.RowCount(), "Error in group number in database");
-            Assert.AreEqual(util.GroupCount * util.WordCount, wordRepo.RowCount(), "Error in word number in database");
-            Assert.AreEqual(util.GroupCount * util.ResultCount, resultRepo.RowCount(), "Error in result number in database");
+            Assert.AreEqual(Utility.GroupCount, groupRepo.RowCount(), "Error in group number in database");
+            Assert.AreEqual(Utility.GroupCount * Utility.WordCount, wordRepo.RowCount(), "Error in word number in database");
+            Assert.AreEqual(Utility.GroupCount * Utility.ResultCount, resultRepo.RowCount(), "Error in result number in database");
         }
 
         [Test]
         public void Refresh_database_all_updated_check_state_test()
         {
-            IEnumerable<IGroup> groups = util.GetGroups();
+            IEnumerable<IGroup> groups = Utility.GetGroups();
             foreach (IGroup group in groups)
             {
                 group.State = 1;

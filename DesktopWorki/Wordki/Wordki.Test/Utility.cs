@@ -12,25 +12,25 @@ using Wordki.Models;
 
 namespace Wordki.Test
 {
-    public class Utility
+    public static class Utility
     {
 
         private static int groupCounter = 1;
         private static int wordCounter = 1;
         private static int resultCounter = 1;
 
-        public int GroupCount { get; set; }
-        public int WordCount { get; set; }
-        public int ResultCount { get; set; }
+        public static int GroupCount { get; set; }
+        public static int WordCount { get; set; }
+        public static int ResultCount { get; set; }
 
-        public Utility()
+        static Utility()
         {
             GroupCount = 10;
             WordCount = 10;
             ResultCount = 10;
         }
 
-        public List<IGroup> GetGroups(int count)
+        public static List<IGroup> GetGroups(int count)
         {
             List<IGroup> groups = new List<IGroup>();
 
@@ -43,17 +43,18 @@ namespace Wordki.Test
             return groups;
         }
 
-        public List<IGroup> GetGroups()
+        public static List<IGroup> GetGroups()
         {
             return GetGroups(GroupCount);
         }
 
-        public Word GetWord(string language1 = "lang1",
+        public static Word GetWord(string language1 = "lang1",
             string language2 = "lang2",
             string language1Comment = "lang1Comment",
             string language2Comment = "lang2Comment",
             byte drawer = 3,
-            bool visible = true)
+            bool visible = true,
+            bool checkedUnchecked = true)
         {
             return new Word()
             {
@@ -64,10 +65,11 @@ namespace Wordki.Test
                 Drawer = drawer,
                 State = 2,
                 Visible = visible,
+                Checked = checkedUnchecked
             };
         }
 
-        public Result GetResult(short correct = 10,
+        public static Result GetResult(short correct = 10,
             short accepted = 10,
             short wrong = 10,
             short invisibilities = 10,
@@ -89,7 +91,7 @@ namespace Wordki.Test
             };
         }
 
-        public IGroup GetGroup(LanguageType language1 = LanguageType.English, LanguageType language2 = LanguageType.Polish, string name = "Name")
+        public static IGroup GetGroup(LanguageType language1 = LanguageType.English, LanguageType language2 = LanguageType.Polish, string name = "Name")
         {
             Group group = new Group()
             {
@@ -115,7 +117,7 @@ namespace Wordki.Test
             return group;
         }
 
-        public IUser GetUser()
+        public static IUser GetUser()
         {
             return new User()
             {
@@ -133,7 +135,7 @@ namespace Wordki.Test
             };
         }
 
-        public void CheckUser(IUser expected, IUser actual)
+        public static void CheckUser(IUser expected, IUser actual)
         {
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.Password, actual.Password);

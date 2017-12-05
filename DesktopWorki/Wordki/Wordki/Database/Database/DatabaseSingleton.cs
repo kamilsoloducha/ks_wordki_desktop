@@ -1,10 +1,12 @@
-﻿using Wordki.Models;
-
-namespace Wordki.Database
+﻿namespace Wordki.Database
 {
     public class DatabaseSingleton
     {
+#if DEBUG
         private static bool TEST = true;
+#else
+        private static bool TEST = false;
+#endif
         private static IDatabase _instance;
         private static object obj = new object();
 

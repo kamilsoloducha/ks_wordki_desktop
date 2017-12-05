@@ -14,14 +14,19 @@ namespace Wordki.Test.Database
 
         private IGroup group;
         private IGroupRepository repo;
-        private Utility util = new Utility() { ResultCount = 0, WordCount = 0, };
+
+        static GroupTests()
+        {
+            Utility.ResultCount = 0;
+            Utility.WordCount = 0;
+        }
 
         [SetUp]
         public void SetUp()
         {
             NHibernateHelper.ResetSession();
             NHibernateHelper.ClearDatabase();
-            group = util.GetGroup();
+            group = Utility.GetGroup();
 
             repo = new GroupRepository();
         }

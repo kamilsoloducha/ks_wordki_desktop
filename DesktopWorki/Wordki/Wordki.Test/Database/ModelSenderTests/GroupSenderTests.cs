@@ -14,14 +14,20 @@ namespace Wordki.Test.Database.ModelSenderTests
     {
 
         private Mock<IGroupRepository> mock;
-        private Utility util = new Utility() { WordCount = 0, ResultCount = 0, GroupCount = 5 };
         private IEnumerable<IGroup> groups;
         private IModelSender<IGroup> modelSender;
+
+        static GroupSenderTests()
+        {
+            Utility.ResultCount = 0;
+            Utility.WordCount = 0;
+            Utility.GroupCount = 0;
+        }
 
         [SetUp]
         public void SetUp()
         {
-            groups = util.GetGroups();
+            groups = Utility.GetGroups();
             mock = new Mock<IGroupRepository>();
         }
 

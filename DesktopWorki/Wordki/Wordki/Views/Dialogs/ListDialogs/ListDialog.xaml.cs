@@ -1,8 +1,9 @@
 ﻿namespace Wordki.Views.Dialogs
 {
-    public partial class InfoDialog : DialogBase
+    public partial class ListDialog : DialogBase
     {
-        public InfoDialog() : base()
+
+        public ListDialog() : base()
         {
             InitializeComponent();
         }

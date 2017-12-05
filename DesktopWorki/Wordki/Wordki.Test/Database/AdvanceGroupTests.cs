@@ -11,7 +11,6 @@ namespace Wordki.Test.Database
     [TestFixture]
     public class AdvanceGroupTests
     {
-        private Utility utility = new Utility() { };
         private IGroupRepository groupRepo;
         private IWordRepository wordRepo;
         private IResultRepository resultRepo;
@@ -29,7 +28,7 @@ namespace Wordki.Test.Database
         [Test, Order(0)]
         public void Save_group_check_count_test()
         {
-            IGroup group = utility.GetGroup();
+            IGroup group = Utility.GetGroup();
             groupRepo.Save(group);
 
             Assert.AreEqual(1, groupRepo.RowCount(), "Error in row count");
@@ -38,34 +37,34 @@ namespace Wordki.Test.Database
         [Test, Order(10)]
         public void Save_groups_check_count_test()
         {
-            IList<IGroup> groups = utility.GetGroups();
+            IList<IGroup> groups = Utility.GetGroups();
             groupRepo.Save(groups);
 
-            Assert.AreEqual(utility.GroupCount, groupRepo.RowCount(), "Error in row count");
+            Assert.AreEqual(Utility.GroupCount, groupRepo.RowCount(), "Error in row count");
         }
 
         [Test, Order(20)]
         public void Save_groups_check_words_test()
         {
-            IList<IGroup> groups = utility.GetGroups();
+            IList<IGroup> groups = Utility.GetGroups();
             groupRepo.Save(groups);
 
-            Assert.AreEqual(utility.GroupCount * utility.WordCount, wordRepo.RowCount(), "Error in row count");
+            Assert.AreEqual(Utility.GroupCount * Utility.WordCount, wordRepo.RowCount(), "Error in row count");
         }
 
         [Test, Order(30)]
         public void Save_groups_check_results_test()
         {
-            IList<IGroup> groups = utility.GetGroups();
+            IList<IGroup> groups = Utility.GetGroups();
             groupRepo.Save(groups);
 
-            Assert.AreEqual(utility.GroupCount * utility.ResultCount, resultRepo.RowCount(), "Error in row count");
+            Assert.AreEqual(Utility.GroupCount * Utility.ResultCount, resultRepo.RowCount(), "Error in row count");
         }
 
         [Test, Order(40)]
         public void Update_group_and_check_test()
         {
-            IList<IGroup> groups = utility.GetGroups();
+            IList<IGroup> groups = Utility.GetGroups();
             groupRepo.Save(groups);
 
             IGroup groupToChange = groups.First();
@@ -82,7 +81,7 @@ namespace Wordki.Test.Database
         [Test, Order(50)]
         public void Update_word_from_groupRepo_test()
         {
-            IList<IGroup> groups = utility.GetGroups();
+            IList<IGroup> groups = Utility.GetGroups();
             groupRepo.Save(groups);
 
             IWord wordToChange = groups.First().Words.First();
@@ -100,7 +99,7 @@ namespace Wordki.Test.Database
         [Test, Order(60)]
         public void Update_result_from_groupRepo_test()
         {
-            IList<IGroup> groups = utility.GetGroups();
+            IList<IGroup> groups = Utility.GetGroups();
             groupRepo.Save(groups);
 
             IResult resultToChange = groups.First().Results.First();

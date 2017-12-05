@@ -2,9 +2,9 @@
 using Repository.Models;
 using System.Linq;
 using System.Collections.Generic;
-using Util.Serializers;
 using Wordki.Models.Lesson;
 using Wordki.Helpers.WordComparer;
+using Util.Serializers;
 
 namespace Wordki.Test.Lessons
 {
@@ -14,7 +14,7 @@ namespace Wordki.Test.Lessons
         ISerializer<Lesson> serializer;
         Lesson lesson;
         IEnumerable<IWord> words;
-        Utility util = new Utility();
+        
 
         [SetUp]
         public void SetUp()
@@ -28,7 +28,7 @@ namespace Wordki.Test.Lessons
                     Path = "C:/test.dat",
                 }
             };
-            words = util.GetGroup().Words;
+            words = Utility.GetGroup().Words;
             lesson = new TypingLesson(words);
             lesson.WordComparer = new WordComparer();
             lesson.WordComparer.Settings = new WordComparerSettings();

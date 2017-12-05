@@ -13,7 +13,7 @@ namespace Wordki.Test.Database
 
         private IUserRepository userRepo;
         private IUser user;
-        private Utility util = new Utility();
+        
 
         [SetUp]
         public void SetUp()
@@ -21,7 +21,7 @@ namespace Wordki.Test.Database
             NHibernateHelper.ResetSession();
             NHibernateHelper.ClearDatabase();
             userRepo = new UserRepository();
-            user = util.GetUser();
+            user = Utility.GetUser();
         }
 
 
@@ -37,7 +37,7 @@ namespace Wordki.Test.Database
         {
             userRepo.Save(user);
             IUser userFromDatabase = userRepo.Get(user.Name, user.Password);
-            util.CheckUser(user, userFromDatabase);
+            Utility.CheckUser(user, userFromDatabase);
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Wordki.Test.Database
             user.TranslationDirection = Repository.Models.Enums.TranslationDirection.FromFirst;
             userRepo.Update(user);
             IUser userFromDatabase = userRepo.Get(user.Name, user.Password);
-            util.CheckUser(user, userFromDatabase);
+            Utility.CheckUser(user, userFromDatabase);
         }
 
         [TearDown]

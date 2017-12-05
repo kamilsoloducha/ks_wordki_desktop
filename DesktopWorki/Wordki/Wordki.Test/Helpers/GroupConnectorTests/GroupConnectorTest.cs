@@ -14,18 +14,18 @@ namespace Wordki.Test.Helpers.GroupConnectorTests
         static int wordCount = 10;
 
         IList<IGroup> groups;
-        Utility util = new Utility()
-        {
-            GroupCount = groupCount,
-            ResultCount = resultCount,
-            WordCount = wordCount,
-        };
         IGroupConnector connector;
+        static GroupConnectorTest()
+        {
+            Utility.GroupCount = groupCount;
+            Utility.ResultCount = resultCount;
+            Utility.WordCount = wordCount;
+        }
 
         [SetUp]
         public void SetUp()
         {
-            groups = util.GetGroups();
+            groups = Utility.GetGroups();
             connector = new GroupConnector();
         }
 
@@ -40,7 +40,7 @@ namespace Wordki.Test.Helpers.GroupConnectorTests
         [Test]
         public void Check_groups_count_before_connection_test()
         {
-            groups = util.GetGroups(1);
+            groups = Utility.GetGroups(1);
             Assert.IsNull(connector.DestinationGroup);
             Assert.False(connector.Connect(groups));
         }

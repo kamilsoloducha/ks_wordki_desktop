@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\BuilderTests\AddGroupTests.cs" />
+    <Compile Include="Commands\CheckUncheckCommandTests\CheckUncheckCommandFixture.cs" />
     <Compile Include="ConvertersTests\CollectionIndexToIndexerEnabledConverterTest.cs" />
     <Compile Include="ConvertersTests\ObjectToBoolConverterTest.cs" />
     <Compile Include="Database\AdvanceGroupTests.cs" />

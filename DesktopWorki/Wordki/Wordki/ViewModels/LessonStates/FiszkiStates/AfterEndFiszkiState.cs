@@ -54,7 +54,7 @@ namespace Wordki.ViewModels.LessonStates
             worker.Dialog = provider;
             worker.AddWork(work);
             worker.Execute();
-            TeachViewModelBase._switcher.Back(true);
+            TeachViewModelBase.switcher.Back(true);
         }
 
         private WorkResult SaveDatabase()

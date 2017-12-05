@@ -28,7 +28,7 @@ namespace Wordki.ViewModels
             
         }
 
-        protected override void Check(object obj)
+        protected override void Check()
         {
             HintLetters = 0;
             Lesson.Check(State.Translation);

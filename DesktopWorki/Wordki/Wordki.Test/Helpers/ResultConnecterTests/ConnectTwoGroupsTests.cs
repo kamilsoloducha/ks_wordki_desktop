@@ -10,12 +10,6 @@ namespace Wordki.Test.Helpers.ResultConnecterTests
     {
 
         IResultConnector connector;
-        Utility util = new Utility()
-        {
-            ResultCount = 10,
-            WordCount = 0,
-        };
-
         [SetUp]
         public void Setup()
         {
@@ -25,9 +19,9 @@ namespace Wordki.Test.Helpers.ResultConnecterTests
         [Test]
         public void Connect_two_groups_one_without_results_test()
         {
-            IGroup dest = util.GetGroup();
-            util.ResultCount = 0;
-            IGroup src = util.GetGroup();
+            IGroup dest = Utility.GetGroup();
+            Utility.ResultCount = 0;
+            IGroup src = Utility.GetGroup();
             connector.Connect(dest, src);
             Assert.AreEqual(0, dest.Results.Count);
         }
@@ -35,9 +29,9 @@ namespace Wordki.Test.Helpers.ResultConnecterTests
         [Test]
         public void Connect_two_groups_with_one_result_test()
         {
-            util.ResultCount = 1;
-            IGroup dest = util.GetGroup();
-            IGroup src = util.GetGroup();
+            Utility.ResultCount = 1;
+            IGroup dest = Utility.GetGroup();
+            IGroup src = Utility.GetGroup();
             connector.Connect(dest, src);
             Assert.AreEqual(1, dest.Results.Count);
         }
@@ -45,11 +39,11 @@ namespace Wordki.Test.Helpers.ResultConnecterTests
         [Test]
         public void Connect_two_groups_with_another_type_lesson_test()
         {
-            util.ResultCount = 0;
-            IGroup dest = util.GetGroup();
-            IGroup src = util.GetGroup();
-            dest.AddResult(util.GetResult(lessonType: LessonType.FiszkiLesson));
-            src.AddResult(util.GetResult(lessonType: LessonType.TypingLesson));
+            Utility.ResultCount = 0;
+            IGroup dest = Utility.GetGroup();
+            IGroup src = Utility.GetGroup();
+            dest.AddResult(Utility.GetResult(lessonType: LessonType.FiszkiLesson));
+            src.AddResult(Utility.GetResult(lessonType: LessonType.TypingLesson));
             connector.Connect(dest, src);
             Assert.AreEqual(0, dest.Results.Count);
         }
@@ -57,13 +51,13 @@ namespace Wordki.Test.Helpers.ResultConnecterTests
         [Test]
         public void Connect_two_groups_with_swap_lesson_type_test()
         {
-            util.ResultCount = 0;
-            IGroup dest = util.GetGroup();
-            IGroup src = util.GetGroup();
-            dest.AddResult(util.GetResult(lessonType: LessonType.FiszkiLesson));
-            dest.AddResult(util.GetResult(lessonType: LessonType.TypingLesson));
-            src.AddResult(util.GetResult(lessonType: LessonType.TypingLesson));
-            src.AddResult(util.GetResult(lessonType: LessonType.FiszkiLesson));
+            Utility.ResultCount = 0;
+            IGroup dest = Utility.GetGroup();
+            IGroup src = Utility.GetGroup();
+            dest.AddResult(Utility.GetResult(lessonType: LessonType.FiszkiLesson));
+            dest.AddResult(Utility.GetResult(lessonType: LessonType.TypingLesson));
+            src.AddResult(Utility.GetResult(lessonType: LessonType.TypingLesson));
+            src.AddResult(Utility.GetResult(lessonType: LessonType.FiszkiLesson));
             connector.Connect(dest, src);
             Assert.AreEqual(2, dest.Results.Count);
         }
@@ -71,10 +65,10 @@ namespace Wordki.Test.Helpers.ResultConnecterTests
         [Test]
         public void Connect_two_groups_with_diffrent_number_of_results_test()
         {
-            util.ResultCount = 2;
-            IGroup dest = util.GetGroup();
-            util.ResultCount = 4;
-            IGroup src = util.GetGroup();
+            Utility.ResultCount = 2;
+            IGroup dest = Utility.GetGroup();
+            Utility.ResultCount = 4;
+            IGroup src = Utility.GetGroup();
             connector.Connect(dest, src);
             Assert.AreEqual(2, dest.Results.Count);
         }

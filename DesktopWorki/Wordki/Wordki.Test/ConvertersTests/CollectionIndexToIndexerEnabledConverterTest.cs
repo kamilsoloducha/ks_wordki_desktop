@@ -14,7 +14,6 @@ namespace Wordki.Test.ConvertersTests
     public class CollectionIndexToIndexerEnabledConverterTest
     {
 
-        Utility util = new Utility();
         ItemIndexToBoolConverter converter;
         List<object> list;
 

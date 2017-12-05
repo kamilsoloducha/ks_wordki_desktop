@@ -42,6 +42,12 @@
             x:Key="WordCheckedToStringConverter" />
         <converters:WordCheckedToBrushConverter
             x:Key="WordCheckedToBrushConverter" />
+        <converters:WordToIndexConverter
+            x:Key="WordToIndexConverter" />
+        <converters:WordToDrawerConverter
+            x:Key="WordToDrawerConverter" />
+        <converters:ArithmeticConverter
+            x:Key="ArithmeticConverter" />
 
         <converters:ItemIndexToBoolConverter
             x:Key="CheckIsFirst"
@@ -280,6 +286,7 @@
                 Style="{StaticResource AppGridSplitterStyle}" />
 
             <DataGrid
+                x:Name="WordsGrid"
                 Grid.Column="4"
                 Grid.Row="0"
                 Style="{StaticResource AppDataGridStyle}"
@@ -441,6 +448,7 @@
                     IsEnabled="{Binding Path=SelectedGroup, Converter={StaticResource ObjectToBoolConverter}}"
                     Content="{Binding Path=SelectedGroup.Language1, FallbackValue='', Converter={StaticResource LanguageTypeToStringConverter}}"
                     Command="{Binding Path=ChangeLanguage1Command}"
+                    CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"
                     IsTabStop="False">
                 </Button>
 
@@ -452,6 +460,7 @@
                     IsEnabled="{Binding Path=SelectedGroup, Converter={StaticResource ObjectToBoolConverter}}"
                     Content="{Binding Path=SelectedGroup.Language2, FallbackValue='', Converter={StaticResource LanguageTypeToStringConverter}}"
                     Command="{Binding Path=ChangeLanguage2Command}"
+                    CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"
                     IsTabStop="False">
                 </Button>
 
@@ -463,6 +472,7 @@
                     Content="Komentarz j. 1"
                     IsEnabled="{Binding Path=SelectedGroup, Converter={StaticResource ObjectToBoolConverter}}"
                     Command="{Binding Path=ChangeLanguage1Command}"
+                    CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"
                     IsTabStop="False">
                 </Button>
 
@@ -474,6 +484,7 @@
                     Content="Komentarz j. 2"
                     IsEnabled="{Binding Path=SelectedGroup, Converter={StaticResource ObjectToBoolConverter}}"
                     Command="{Binding Path=ChangeLanguage2Command}"
+                    CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"
                     IsTabStop="False">
                 </Button>
 
@@ -592,11 +603,11 @@
 
                     <valueDescription:ValueDescription
                         Description="Numer grupy"
-                        Value="{Binding Path=GroupNumber, FallbackValue=''}" />
+                        Value="{Binding ElementName=GroupsGrid, Path=SelectedIndex, Converter={StaticResource ArithmeticConverter}, ConverterParameter=value+1, FallbackValue=''}" />
 
                     <valueDescription:ValueDescription
                         Description="Szuflada"
-                        Value="{Binding Path=Drawer, FallbackValue=''}">
+                        Value="{Binding Path=SelectedWord.Drawer, Converter={StaticResource ArithmeticConverter}, ConverterParameter=value+1, FallbackValue=''}">
                         <valueDescription:ValueDescription.Foreground>
                             <SolidColorBrush
                                 Color="{Binding Path=SelectedWord.Drawer, Converter={StaticResource DrawerToColorConverter}}" />
@@ -605,11 +616,11 @@
 
                     <valueDescription:ValueDescription
                         Description="Numer słowa"
-                        Value="{Binding Path=WordNumber, FallbackValue=''}" />
+                        Value="{Binding ElementName=WordsGrid, Path=SelectedIndex, Converter={StaticResource ArithmeticConverter}, ConverterParameter=value+1, FallbackValue=''}" />
 
                     <valueDescription:ValueDescription
                         Description="Ilość słów"
-                        Value="{Binding Path=SelectedGroup.Words.Count, FallbackValue=''}" />
+                        Value="{Binding ElementName=WordsGrid, Path=Items.Count, FallbackValue='', UpdateSourceTrigger=PropertyChanged}" />
 
                 </UniformGrid>
             </Grid>

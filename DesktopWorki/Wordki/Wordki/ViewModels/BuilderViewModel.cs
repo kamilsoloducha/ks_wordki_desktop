@@ -11,6 +11,7 @@ using System.Windows.Input;
 using Util;
 using Util.Collections;
 using Util.Threads;
+using Wordki.Commands;
 using Wordki.Database;
 using Wordki.Helpers;
 using Wordki.Helpers.Connector;
@@ -21,7 +22,6 @@ using Wordki.InteractionProvider;
 using Wordki.Models;
 using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
-using Wordki.Views.Dialogs.ListDialogs;
 
 namespace Wordki.ViewModels
 {
@@ -56,7 +56,7 @@ namespace Wordki.ViewModels
             get { return previousGroup; }
             set
             {
-                if(previousGroup == value)
+                if (previousGroup == value)
                 {
                     return;
                 }
@@ -123,45 +123,6 @@ namespace Wordki.ViewModels
             }
         }
 
-        private int? _groupNumber;
-        public int? GroupNumber
-        {
-            get { return _groupNumber; }
-            set
-            {
-                if (_groupNumber == value)
-                    return;
-                _groupNumber = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int? _drawer;
-        public int? Drawer
-        {
-            get { return _drawer; }
-            set
-            {
-                if (_drawer == value)
-                    return;
-                _drawer = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int? _wordNumber;
-        public int? WordNumber
-        {
-            get { return _wordNumber; }
-            set
-            {
-                if (_wordNumber == value)
-                    return;
-                _wordNumber = value;
-                OnPropertyChanged();
-            }
-        }
-
         public ICommand PreviousWordCommand { get; set; }
         public ICommand NextWordCommand { get; set; }
         public ICommand PreviousGroupCommand { get; set; }
@@ -188,7 +149,6 @@ namespace Wordki.ViewModels
         public ICommand ChangeLanguage1Command { get; set; }
         public ICommand ChangeLanguage2Command { get; set; }
 
-        public ICommand WordSelectionChangedCommand { get; set; }
         public ICommand GroupSelectionChangedCommand { get; set; }
         public ICommand AddGroupFromFileCommand { get; set; }
         public ICommand TranslateWordCommnad { get; set; }
@@ -206,7 +166,35 @@ namespace Wordki.ViewModels
 
         public BuilderViewModel()
         {
-            ActivateCommands();
+            PreviousWordCommand = new Util.BuilderCommand(PreviousWord);
+            NextWordCommand = new Util.BuilderCommand(NextWord);
+            PreviousGroupCommand = new Util.BuilderCommand(PreviuosGroup);
+            NextGroupCommand = new Util.BuilderCommand(NextGroup);
+
+            AddWordCommand = new Util.BuilderCommand(AddWord);
+            RemoveWordCommand = new Util.BuilderCommand(DeleteWord);
+            AddGroupCommand = new Util.BuilderCommand(AddGroupAction);
+            RemoveGroupCommand = new Util.BuilderCommand(RemoveGroup);
+            CheckUncheckWordCommand = new Util.BuilderCommand((obj) => ActionsSingleton<CheckUncheckAction>.Instance.Action(obj as IWord));
+            TranslateWordCommnad = new Util.BuilderCommand(TranslateWord);
+
+            DownloadGroupsNameCommand = new Util.BuilderCommand(DownloadGroupsName);
+            BackCommand = new Util.BuilderCommand(BackAction);
+
+            SplitGroupCommand = new Util.BuilderCommand(SplitGroup);
+            ConnectGroupCommand = new Util.BuilderCommand(ConnectGroup);
+
+            FindSameWordCommand = new Util.BuilderCommand(FindSame);
+            ShowWordsCommnad = new Util.BuilderCommand(ShowWords);
+            SwapLanguagesCommand = new Util.BuilderCommand((obj) => ActionsSingleton<SwapWordsInGroupAction>.Instance.Action(obj as IGroup));
+            SwapSingleWordCommand = new Util.BuilderCommand((obj) => ActionsSingleton<SwapWordAction>.Instance.Action(obj as IWord));
+
+            ChangeLanguage1Command = new Util.BuilderCommand((obj) => ChangeLanguage(obj as IGroup, 1));
+            ChangeLanguage2Command = new Util.BuilderCommand((obj) => ChangeLanguage(obj as IGroup, 2));
+            AddClipboardGroupCommand = new Util.BuilderCommand(AddClipboardGroup);
+            GroupSelectionChangedCommand = new Util.BuilderCommand(GroupSelectionChanged);
+            AddGroupFromFileCommand = new Util.BuilderCommand(AddGroupFromFile);
+
             Database = DatabaseSingleton.Instance;
             //ClipboardHelper = new ClipboardHelper(App.Current.MainWindow);
 
@@ -249,39 +237,6 @@ namespace Wordki.ViewModels
         }
 
         #region Commands
-        private void ActivateCommands()
-        {
-            PreviousWordCommand = new Util.BuilderCommand(PreviousWord);
-            NextWordCommand = new Util.BuilderCommand(NextWord);
-            PreviousGroupCommand = new Util.BuilderCommand(PreviuosGroup);
-            NextGroupCommand = new Util.BuilderCommand(NextGroup);
-
-            AddWordCommand = new Util.BuilderCommand(AddWord);
-            RemoveWordCommand = new Util.BuilderCommand(DeleteWord);
-            AddGroupCommand = new Util.BuilderCommand(AddGroup);
-            RemoveGroupCommand = new Util.BuilderCommand(RemoveGroup);
-            CheckUncheckWordCommand = new Util.BuilderCommand(CheckUncheckWord);
-            TranslateWordCommnad = new Util.BuilderCommand(TranslateWord);
-
-            DownloadGroupsNameCommand = new Util.BuilderCommand(DownloadGroupsName);
-            BackCommand = new Util.BuilderCommand(BackAction);
-
-            SplitGroupCommand = new Util.BuilderCommand(SplitGroup);
-            ConnectGroupCommand = new Util.BuilderCommand(ConnectGroup);
-
-            FindSameWordCommand = new Util.BuilderCommand(FindSame);
-            ShowWordsCommnad = new Util.BuilderCommand(ShowWords);
-            SwapLanguagesCommand = new Util.BuilderCommand(SwapWords);
-            SwapSingleWordCommand = new Util.BuilderCommand(SwapSingleWord);
-
-            ChangeLanguage1Command = new Util.BuilderCommand(ChangeLanguage1);
-            ChangeLanguage2Command = new Util.BuilderCommand(ChangeLanguage2);
-            AddClipboardGroupCommand = new Util.BuilderCommand(AddClipboardGroup);
-            WordSelectionChangedCommand = new Util.BuilderCommand(WordSelectionChanged);
-            GroupSelectionChangedCommand = new Util.BuilderCommand(GroupSelectionChanged);
-            AddGroupFromFileCommand = new Util.BuilderCommand(AddGroupFromFile);
-        }
-
         private void AddGroupFromFile(object obj)
         {
             Switcher.Switch(Switcher.State.BuildFromFile);
@@ -290,12 +245,6 @@ namespace Wordki.ViewModels
         private void GroupSelectionChanged(object obj)
         {
             SetOnLastWordCurretGroup();
-            RefreshView();
-        }
-
-        private void WordSelectionChanged(object obj)
-        {
-            RefreshView();
         }
 
         private void AddClipboardGroup(object obj)
@@ -321,36 +270,15 @@ namespace Wordki.ViewModels
             //}
         }
 
-        private void SwapWords(object obj)
+        private void ChangeLanguage(IGroup group, int selectedLangugage)
         {
-            if (Database.Groups.Count == 0)
-                return;
-            ILanguageSwaper swaper = new LanguageSwaper();
-            swaper.Swap(SelectedGroup);
+            LanguageForGroupProvider provider = new LanguageForGroupProvider();
+            provider.GroupToChange = group;
+            provider.LanguageToChoose = selectedLangugage;
+            provider.Interact();
         }
 
-        private void SwapSingleWord(object obj)
-        {
-            if (SelectedWord == null)
-            {
-                return;
-            }
-            ILanguageSwaper swaper = new LanguageSwaper();
-            swaper.Swap(SelectedWord);
-            Database.UpdateWordAsync(SelectedWord).ConfigureAwait(false);
-        }
-
-        private void ChangeLanguage2(object obj)
-        {
-            SelectLangauge(2);
-        }
-
-        private void ChangeLanguage1(object obj)
-        {
-            SelectLangauge(1);
-        }
-
-        private void ShowWords(object obj)
+        private void ShowWords()
         {
             if (Database.Groups.Count == 0)
                 return;
@@ -359,7 +287,7 @@ namespace Wordki.ViewModels
             Switcher.Switch(Switcher.State.Words);
         }
 
-        private void FindSame(object obj)
+        private void FindSame()
         {
             Switcher.Switch(Switcher.State.Same);
         }
@@ -398,8 +326,7 @@ namespace Wordki.ViewModels
                 }
                 foreach (Group lGroup in lSpliter.Split(SelectedGroup, factor))
                 {
-
-                    AddGroup(lGroup);
+                    AddGroup_(lGroup);
                 }
                 Database.SaveDatabaseAsync();
                 SetOnLastWord();
@@ -434,7 +361,6 @@ namespace Wordki.ViewModels
             }
             SelectedGroup = connector.DestinationGroup;
             UpdateWords();
-            RefreshView();
         }
 
         private void RemoveGroup(object obj)
@@ -457,20 +383,10 @@ namespace Wordki.ViewModels
                         SelectedGroup = Database.Groups.Count > groupIndex ? Database.Groups[groupIndex] : null;
                         SelectedWord = SelectedGroup != null ? SelectedGroup.Words.LastOrDefault() : null;
                         await Database.DeleteGroupAsync(SelectedGroup);
-                        RefreshView();
                     },
                 },
             };
             provider.Interact();
-        }
-
-        private void CheckUncheckWord(object obj)
-        {
-            if (SelectedWord == null)
-            {
-                return;
-            }
-            SelectedWord.Checked = !SelectedWord.Checked;
         }
 
         public void TranslateWord(object obj)
@@ -492,7 +408,7 @@ namespace Wordki.ViewModels
             worker.Execute();
         }
 
-        private async void AddGroup(object obj)
+        private async void AddGroupAction()
         {
             IGroup group = new Group();
             await Database.AddGroupAsync(group);
@@ -503,7 +419,6 @@ namespace Wordki.ViewModels
             }
             SelectedGroup = group;
             SetOnLastWordCurretGroup();
-            RefreshView();
         }
 
         private void DownloadGroupsName(object obj)
@@ -526,13 +441,12 @@ namespace Wordki.ViewModels
             if (previousWord != null)
             {
                 SelectedWord = previousWord;
-                RefreshView();
             }
         }
 
         private void PreviousWord(object obj)
         {
-            if(SelectedGroup == null)
+            if (SelectedGroup == null)
             {
                 return;
             }
@@ -540,11 +454,10 @@ namespace Wordki.ViewModels
             if (previousWord != null)
             {
                 SelectedWord = previousWord;
-                RefreshView();
             }
         }
 
-        private void PreviuosGroup(object obj)
+        private void PreviuosGroup()
         {
             if (GroupPrevious == null)
             {
@@ -554,7 +467,7 @@ namespace Wordki.ViewModels
             SetOnLastWordCurretGroup();
         }
 
-        private void NextGroup(object obj)
+        private void NextGroup()
         {
             if (GroupNext == null)
             {
@@ -575,7 +488,7 @@ namespace Wordki.ViewModels
         {
             if (SelectedGroup == null)
             {
-                AddGroupCommand.Execute(null);
+                AddGroupAction();
             }
             if (SelectedGroup == null)
             {
@@ -588,7 +501,6 @@ namespace Wordki.ViewModels
             SelectedWord = word;
             Language1IsFocused = false;
             Language1IsFocused = true;
-            RefreshView();
         }
 
 
@@ -597,7 +509,6 @@ namespace Wordki.ViewModels
             if (SelectedWord == null && SelectedGroup != null)
             {
                 RemoveGroup(null);
-                RefreshView();
                 return;
             }
             if (await Database.DeleteWordAsync(SelectedWord))
@@ -609,65 +520,11 @@ namespace Wordki.ViewModels
                     RemoveGroup(null);
                 }
             }
-            RefreshView();
         }
 
-        private void SelectLangauge(int pLanguageIndex)
-        {
-            if (Database.Groups.Count == 0)
-                return;
-            LanguageListDialog lDialog = new LanguageListDialog
-            {
-                Items = LanguageFactory.GetLanguages(),
-                Button1Label = "Wybierz"
-            };
-            lDialog.Button1Command = new Util.BuilderCommand(() =>
-            {
-                LanguageType lSelectedLanguage = (LanguageType)lDialog.SelectedIndex;
-                if (pLanguageIndex == 1)
-                {
-                    SelectedGroup.Language1 = lSelectedLanguage;
-                }
-                else
-                {
-                    SelectedGroup.Language2 = lSelectedLanguage;
-                }
-                lDialog.Close();
-            });
-            lDialog.Button2Label = "Anuluj";
-            lDialog.Button2Command = new Util.BuilderCommand(lDialog.Close);
-            lDialog.ShowDialog();
-        }
         #endregion
 
         #region Method
-
-        private void RefreshView()
-        {
-            SetInfo();
-        }
-
-        private void SetInfo()
-        {
-            if (SelectedGroup != null)
-            {
-                GroupNumber = Database.Groups.IndexOf(SelectedGroup) + 1;
-            }
-            else
-            {
-                GroupNumber = null;
-            }
-            if (SelectedGroup != null && SelectedWord != null)
-            {
-                WordNumber = SelectedGroup.Words.IndexOf(SelectedWord) + 1;
-                Drawer = SelectedWord.Drawer + 1;
-            }
-            else
-            {
-                WordNumber = null;
-                Drawer = null;
-            }
-        }
 
         private void SetOnLastWord()
         {
@@ -676,7 +533,6 @@ namespace Wordki.ViewModels
             {
                 SelectedWord = SelectedGroup.Words.LastOrDefault();
             }
-            RefreshView();
         }
 
         private void SetOnLastWordCurretGroup()
@@ -689,7 +545,6 @@ namespace Wordki.ViewModels
             {
                 SelectedWord = SelectedGroup.Words.LastOrDefault();
             }
-            RefreshView();
         }
 
         private void UpdateWords()

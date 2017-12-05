@@ -11,13 +11,13 @@ namespace Wordki.Test.RepositoryTests
     {
         private ILanguageSwaper swaper;
         private Word word;
-        private Utility utility = new Utility();
+        
         
         [SetUp]
         public void SetUp()
         {
             swaper = new LanguageSwaper();
-            word = utility.GetWord();
+            word = Utility.GetWord();
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Wordki.Test.RepositoryTests
         {
             LanguageType type1 = LanguageType.French;
             LanguageType type2 = LanguageType.Polish;
-            IGroup group = utility.GetGroup(language1: type1, language2: type2);
+            IGroup group = Utility.GetGroup(language1: type1, language2: type2);
             swaper.Swap(group);
             Assert.AreEqual(type1, group.Language2, "Error with swap Language1Type");
             Assert.AreEqual(type2, group.Language1, "Error with swap Language2Type");
@@ -41,7 +41,7 @@ namespace Wordki.Test.RepositoryTests
         [Test]
         public void Swap_group_check_words_test()
         {
-            IGroup group = utility.GetGroup();
+            IGroup group = Utility.GetGroup();
             swaper.Swap(group);
             foreach(Word word in group.Words)
             {
@@ -52,7 +52,7 @@ namespace Wordki.Test.RepositoryTests
         [Test]
         public void Swap_group_check_results_test()
         {
-            IGroup group = utility.GetGroup();
+            IGroup group = Utility.GetGroup();
             swaper.Swap(group);
             foreach (Result result in group.Results)
             {

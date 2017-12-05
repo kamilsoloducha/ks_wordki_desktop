@@ -15,7 +15,7 @@ namespace Wordki.Test.IntegratedViewModelTests.BuilderViewModelTests
     {
 
         BuilderViewModel ViewModel { get; set; }
-        Utility util = new Utility();
+        
 
         [SetUp]
         public void SetUp()
@@ -36,9 +36,9 @@ namespace Wordki.Test.IntegratedViewModelTests.BuilderViewModelTests
         [Test]
         public void Init_view_model_with_group_without_words_test()
         {
-            util.WordCount = 0;
-            util.ResultCount = 0;
-            IGroup group = util.GetGroup();
+            Utility.WordCount = 0;
+            Utility.ResultCount = 0;
+            IGroup group = Utility.GetGroup();
             ViewModel.Database.Groups.Add(group);
             ViewModel.InitViewModel();
 
@@ -50,9 +50,9 @@ namespace Wordki.Test.IntegratedViewModelTests.BuilderViewModelTests
         [Test]
         public void Init_view_model_with_many_groups_without_words_test()
         {
-            util.WordCount = 0;
-            util.ResultCount = 0;
-            IEnumerable<IGroup> groups = util.GetGroups();
+            Utility.WordCount = 0;
+            Utility.ResultCount = 0;
+            IEnumerable<IGroup> groups = Utility.GetGroups();
             foreach(IGroup group in groups)
             {
                 ViewModel.Database.Groups.Add(group);
@@ -66,9 +66,9 @@ namespace Wordki.Test.IntegratedViewModelTests.BuilderViewModelTests
         [Test]
         public void Init_view_model_with_group_with_word_test()
         {
-            util.WordCount = 1;
-            util.ResultCount = 0;
-            IGroup group = util.GetGroup();
+            Utility.WordCount = 1;
+            Utility.ResultCount = 0;
+            IGroup group = Utility.GetGroup();
             ViewModel.Database.Groups.Add(group);
             ViewModel.InitViewModel();
 

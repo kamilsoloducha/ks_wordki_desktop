@@ -14,47 +14,7 @@ namespace Wordki.Database
 
         public MemoryDatabase()
         {
-            Random random = new Random(100);
             Groups = new ObservableCollection<IGroup>();
-            for (int i = 0; i < 10; i++)
-            {
-                IGroup group = new Group()
-                {
-                    Name = $"Group {i}",
-                    Language1 = Repository.Models.Language.LanguageType.Germany,
-                    Language2 = Repository.Models.Language.LanguageType.Russian,
-                };
-                for (int j = 0; j < random.Next(5, 10); j++)
-                {
-                    IResult result = new Result()
-                    {
-                        Accepted = 10,
-                        Correct = 10,
-                        Invisibilities = 10,
-                        LessonType = Repository.Models.Enums.LessonType.TypingLesson,
-                        TimeCount = 300,
-                        TranslationDirection = Repository.Models.Enums.TranslationDirection.FromSecond,
-                        Wrong = 10,
-                    };
-                    group.AddResult(result);
-                }
-
-                for (int j = 0; j < random.Next(3, 4); j++)
-                {
-                    IWord word = new Word()
-                    {
-                        Language1 = $"Słowo {i}",
-                        Language2 = $"Word {i}",
-                        Language1Comment = $"Komentarz {i}",
-                        Language2Comment = $"Comment {i}",
-                        Drawer = (byte)random.Next(4),
-                        Checked = false,
-                        Visible = true
-                    };
-                    group.AddWord(word);
-                }
-                Groups.Add(group);
-            }
         }
 
 
@@ -156,12 +116,52 @@ namespace Wordki.Database
 
         public void LoadDatabase()
         {
+            Random random = new Random(100);
+            Groups.Clear();
+            for (int i = 0; i < 10; i++)
+            {
+                IGroup group = new Group()
+                {
+                    Name = $"Group {i}",
+                    Language1 = Repository.Models.Language.LanguageType.Germany,
+                    Language2 = Repository.Models.Language.LanguageType.Russian,
+                };
+                for (int j = 0; j < random.Next(5, 10); j++)
+                {
+                    IResult result = new Result()
+                    {
+                        Accepted = 10,
+                        Correct = 10,
+                        Invisibilities = 10,
+                        LessonType = Repository.Models.Enums.LessonType.TypingLesson,
+                        TimeCount = 300,
+                        TranslationDirection = Repository.Models.Enums.TranslationDirection.FromSecond,
+                        Wrong = 10,
+                    };
+                    group.AddResult(result);
+                }
 
+                for (int j = 0; j < random.Next(3, 4); j++)
+                {
+                    IWord word = new Word()
+                    {
+                        Language1 = $"Słowo {i}",
+                        Language2 = $"Word {i}",
+                        Language1Comment = $"Komentarz {i}",
+                        Language2Comment = $"Comment {i}",
+                        Drawer = (byte)random.Next(4),
+                        Checked = false,
+                        Visible = true
+                    };
+                    group.AddWord(word);
+                }
+                Groups.Add(group);
+            }
         }
 
         public Task LoadDatabaseAsync()
         {
-            return Task.FromResult(0);
+            return Task.Run(() => LoadDatabase());
         }
 
         public void RefreshDatabase()

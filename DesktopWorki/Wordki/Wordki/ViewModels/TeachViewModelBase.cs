@@ -23,7 +23,7 @@ namespace Wordki.ViewModels
     {
 
         #region Properies
-        public static Switcher _switcher;
+        public static Switcher switcher;
         protected static Lesson Lesson { get; set; }
         protected int HintLetters { get; set; }
         public Settings Settings { get; set; }
@@ -103,15 +103,14 @@ namespace Wordki.ViewModels
             }
         }
 
-        public ICommand UnknownCommand { get; set; }
-        public ICommand CheckCommand { get; set; }
-        public ICommand KnownCommand { get; set; }
-        public ICommand BackCommand { get; set; }
-        public ICommand CorrectCommand { get; set; }
-        public ICommand OnEnterClickCommand { get; set; }
-        public ICommand CheckUncheckCommand { get; set; }
-        public ICommand HintCommand { get; set; }
-        public ICommand SearchCommand { get; set; }
+        public ICommand UnknownCommand { get; }
+        public ICommand CheckCommand { get; }
+        public ICommand KnownCommand { get; }
+        public ICommand BackCommand { get; }
+        public ICommand CorrectCommand { get; }
+        public ICommand OnEnterClickCommand { get; }
+        public ICommand HintCommand { get; }
+        public ICommand CheckUncheckCommand { get; }
         public static ICommand StartLessonCommand { get; set; }
         public static ICommand PauseCommand { get; set; }
         protected LessonStateFactoryBase StateFactory { get; set; }
@@ -119,15 +118,23 @@ namespace Wordki.ViewModels
 
         public TeachViewModelBase()
         {
-            ActivateCommands();
             Settings = Settings.GetSettings();
             HintLetters = 0;
+
+            CheckUncheckCommand = new Util.BuilderCommand((obj) => ActionsSingleton<CheckUncheckAction>.Instance.Action(obj as IWord));
+            UnknownCommand = new Util.BuilderCommand(Unknown);
+            CheckCommand = new Util.BuilderCommand(Check);
+            KnownCommand = new Util.BuilderCommand(Known);
+            BackCommand = new Util.BuilderCommand(BackAction);
+            CorrectCommand = new Util.BuilderCommand(Correct);
+            OnEnterClickCommand = new Util.BuilderCommand(OnEnterClick);
+            HintCommand = new Util.BuilderCommand(Hint);
         }
 
         public override void InitViewModel()
         {
-            _switcher = Switcher;
-            Lesson lLesson = (Lesson)Util.PackageStore.Get(0);
+            switcher = Switcher;
+            Lesson lLesson = Util.PackageStore.Get(0) as Lesson;
             if (lLesson == null)
                 return;
             lLesson.Timer.TimerListeners.Add(this);
@@ -144,27 +151,9 @@ namespace Wordki.ViewModels
             Lesson.Timer.TimerListeners.Remove(this);
         }
 
-        protected abstract void Check(object obj);
+        protected abstract void Check();
 
         #region Commands
-        private void ActivateCommands()
-        {
-            SearchCommand = new Util.BuilderCommand(Search);
-            UnknownCommand = new Util.BuilderCommand(Unknown);
-            CheckCommand = new Util.BuilderCommand(Check);
-            KnownCommand = new Util.BuilderCommand(Known);
-            BackCommand = new Util.BuilderCommand(BackAction);
-            CorrectCommand = new Util.BuilderCommand(Correct);
-            OnEnterClickCommand = new Util.BuilderCommand(OnEnterClick);
-            CheckUncheckCommand = new CheckUncheckCommand();
-            HintCommand = new Util.BuilderCommand(Hint);
-        }
-
-        private void Search(object obj)
-        {
-            ISearchProvider provider = new SearchProvider();
-            provider.Interact();
-        }
 
         private void Hint(object obj)
         {
@@ -188,22 +177,22 @@ namespace Wordki.ViewModels
             CursorOnEnd = false;
         }
 
-        private async void CheckUncheck(object obj)
-        {
-            if (Lesson.SelectedWord == null)
-            {
-                return;
-            }
-            IWord word = Lesson.SelectedWord.Group.Words.FirstOrDefault(x => x.Id == Lesson.SelectedWord.Id);
-            if (word == null)
-            {
-                return;
-            }
-            word.Checked = !word.Checked;
-            await DatabaseSingleton.Instance.UpdateWordAsync(word);
-        }
+        //private async void CheckUncheck(object obj)
+        //{
+        //    if (Lesson.SelectedWord == null)
+        //    {
+        //        return;
+        //    }
+        //    IWord word = Lesson.SelectedWord.Group.Words.FirstOrDefault(x => x.Id == Lesson.SelectedWord.Id);
+        //    if (word == null)
+        //    {
+        //        return;
+        //    }
+        //    word.Checked = !word.Checked;
+        //    await DatabaseSingleton.Instance.UpdateWordAsync(word);
+        //}
 
-        private void Pause(object obj)
+        private void Pause()
         {
             using (LessonStateBase lState = StateFactory.GetState(Lesson, LessonStateEnum.Pause))
             {
@@ -230,7 +219,7 @@ namespace Wordki.ViewModels
             }
         }
 
-        private void StartLesson(object obj)
+        private void StartLesson()
         {
             try
             {
@@ -336,26 +325,26 @@ namespace Wordki.ViewModels
             }
         }
 
-        private void OnEnterClick(object obj)
+        private void OnEnterClick()
         {
             if (Lesson.IsChecked)
             {
                 if (Lesson.IsCorrect)
                 {
-                    Known(null);
+                    Known();
                 }
                 else
                 {
-                    Unknown(null);
+                    Unknown();
                 }
             }
             else
             {
-                Check(null);
+                Check();
             }
         }
 
-        private void Known(object obj)
+        private void Known()
         {
             Lesson.Known();
             CheckNextState();
@@ -363,7 +352,7 @@ namespace Wordki.ViewModels
 
 
 
-        private void Unknown(object obj)
+        private void Unknown()
         {
             Lesson.Unknown();
             CheckNextState();
