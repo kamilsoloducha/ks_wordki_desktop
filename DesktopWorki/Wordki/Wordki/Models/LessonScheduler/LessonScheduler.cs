@@ -25,6 +25,10 @@ namespace Wordki.Models.LessonScheduler
 
         public int GetColor(IGroup group)
         {
+            if (group == null)
+            {
+                return 4;
+            }
             int days = group.Results.Count == 0 ? int.MaxValue : -(int)IntervalTimeCalculator.GetIntervalBetweenTodayMidnight(group.Results.Last().DateTime).TotalDays;
             if (days < 0)
             {

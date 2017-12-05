@@ -62,10 +62,10 @@ namespace Wordki.Test.RepositoryTests
 
         private void CheckSingleWord(Word word)
         {
-            Assert.AreEqual("Language2", word.Language1, "Error in Language1 swap");
-            Assert.AreEqual("Language1", word.Language2, "Error in Language2 swap");
-            Assert.AreEqual("Language2Comment", word.Language1Comment, "Error in Language1Commnet swap");
-            Assert.AreEqual("Language1Comment", word.Language2Comment, "Error in Language2Comment swap");
+            Assert.AreEqual("lang2", word.Language1, "Error in Language1 swap");
+            Assert.AreEqual("lang1", word.Language2, "Error in Language2 swap");
+            Assert.AreEqual("lang2Comment", word.Language1Comment, "Error in Language1Commnet swap");
+            Assert.AreEqual("lang1Comment", word.Language2Comment, "Error in Language2Comment swap");
         }
     }
 }

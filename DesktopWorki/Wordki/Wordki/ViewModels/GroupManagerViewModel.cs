@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Repository.Models;
+using Repository.Models.Enums;
+using Repository.Models.Language;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,20 +12,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using Repository.Models.Enums;
+using Util;
+using Util.Collections;
+using Util.Serializers;
+using Wordki.Database;
 using Wordki.Helpers;
+using Wordki.Helpers.WordComparer;
 using Wordki.Models;
 using Wordki.Models.Lesson;
 using Wordki.Models.LessonScheduler;
-using Repository.Models.Language;
-using Util.Serializers;
-using Util;
-using System.Windows.Input;
-using Repository.Models;
-using Wordki.Database;
-using Util.Collections;
-using Wordki.Helpers.WordComparer;
 using Wordki.ViewModels.Dialogs;
 
 namespace Wordki.ViewModels
@@ -58,7 +58,6 @@ namespace Wordki.ViewModels
         public ICommand ShowPlotCommand { get; set; }
         public ICommand FinishLessonCommand { get; set; }
         public ICommand SortDirectionCommand { get; private set; }
-        public ICommand ScrollCommand { get; set; }
 
         public double MaxValue
         {
@@ -130,6 +129,7 @@ namespace Wordki.ViewModels
                 }
             }
         }
+
         public ObservableCollection<GroupItem> ItemsList
         {
             get { return _itemList; }
@@ -140,18 +140,6 @@ namespace Wordki.ViewModels
                     _itemList = value;
                     OnPropertyChanged();
                 }
-            }
-        }
-
-        private Visibility _endLessonButtonVisibility;
-        public Visibility EndLessonButtonVisibility
-        {
-            get { return _endLessonButtonVisibility; }
-            set
-            {
-                if (_endLessonButtonVisibility == value) return;
-                _endLessonButtonVisibility = value;
-                OnPropertyChanged();
             }
         }
 
@@ -185,12 +173,6 @@ namespace Wordki.ViewModels
             AllWordsCommand = new Util.BuilderCommand(AllWords);
             ShowPlotCommand = new Util.BuilderCommand(ShowPlot);
             FinishLessonCommand = new Util.BuilderCommand(FinishLesson);
-            ScrollCommand = new Util.BuilderCommand(Scroll);
-        }
-
-        public void Scroll(object obj)
-        {
-
         }
 
         private void FinishLesson(object obj)

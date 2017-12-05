@@ -48,15 +48,6 @@
             x:Key="WordToDrawerConverter" />
         <converters:ArithmeticConverter
             x:Key="ArithmeticConverter" />
-
-        <converters:ItemIndexToBoolConverter
-            x:Key="CheckIsFirst"
-            Index="{x:Static converters:CheckingElement.First}" />
-
-        <converters:ItemIndexToBoolConverter
-            x:Key="CheckIsLast"
-            Index="{x:Static converters:CheckingElement.Last}" />
-
         <converters:ObjectToBoolConverter
             x:Key="ObjectToBoolConverter" />
 

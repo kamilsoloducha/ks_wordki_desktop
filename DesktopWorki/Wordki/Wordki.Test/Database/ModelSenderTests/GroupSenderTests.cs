@@ -19,9 +19,9 @@ namespace Wordki.Test.Database.ModelSenderTests
 
         static GroupSenderTests()
         {
-            Utility.ResultCount = 0;
-            Utility.WordCount = 0;
-            Utility.GroupCount = 0;
+            Utility.ResultCount = 10;
+            Utility.WordCount = 10;
+            Utility.GroupCount = 10;
         }
 
         [SetUp]

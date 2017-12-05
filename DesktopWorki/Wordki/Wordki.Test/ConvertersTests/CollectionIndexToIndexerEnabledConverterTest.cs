@@ -21,39 +21,39 @@ namespace Wordki.Test.ConvertersTests
         public void SetUp()
         {
             converter = new ItemIndexToBoolConverter();
-            list = new List<object> { new object(), new object(), new object(), new object(), new object(), new object(), new object() };
+            list = new List<object> { "1", "2", "3", "4", "5", "6", "7" };
         }
 
         [Test]
         public void Is_true_if_search_first_element_test()
         {
             converter.Index = CheckingElement.First;
-            bool result = (bool)converter.Convert(new object[] { list[0], list }, typeof(bool), list, CultureInfo.CurrentUICulture);
-            Assert.IsTrue(result);
+            bool result = (bool)converter.Convert(new object[] { list[0], list }, typeof(bool), null, CultureInfo.CurrentUICulture);
+            Assert.IsFalse(result);
         }
 
         [Test]
         public void Is_false_if_search_a_element_test()
         {
             converter.Index = CheckingElement.First;
-            bool result = (bool)converter.Convert(new object[] { list[2], list }, typeof(bool), list, CultureInfo.CurrentUICulture);
-            Assert.IsFalse(result);
+            bool result = (bool)converter.Convert(new object[] { list[2], list }, typeof(bool), null, CultureInfo.CurrentUICulture);
+            Assert.IsTrue(result);
         }
 
         [Test]
         public void Is_true_if_search_last_element_test()
         {
             converter.Index = CheckingElement.Last;
-            bool result = (bool)converter.Convert(new object[] { list.Last(), list }, typeof(bool), list, CultureInfo.CurrentUICulture);
-            Assert.IsTrue(result);
+            bool result = (bool)converter.Convert(new object[] { list.Last(), list }, typeof(bool), null, CultureInfo.CurrentUICulture);
+            Assert.IsFalse(result);
         }
 
         [Test]
         public void Is_false_if_search_a_element_from_last_test()
         {
             converter.Index = CheckingElement.Last;
-            bool result = (bool)converter.Convert(new object[] { list[2], list }, typeof(bool), list, CultureInfo.CurrentUICulture);
-            Assert.IsFalse(result);
+            bool result = (bool)converter.Convert(new object[] { list[2], list }, typeof(bool), null, CultureInfo.CurrentUICulture);
+            Assert.IsTrue(result);
         }
 
     }

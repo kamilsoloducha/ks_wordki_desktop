@@ -83,7 +83,7 @@
             ItemsSource="{Binding ItemsList}"
             SelectionUnit="FullRow"
             BorderThickness="0"
-            HeadersVisibility="Row"
+            HeadersVisibility="None"
             HorizontalScrollBarVisibility="Hidden"
             HorizontalGridLinesBrush="Transparent"
             KeyboardNavigation.IsTabStop="false">

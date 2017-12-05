@@ -95,7 +95,7 @@ namespace Wordki.Test.Helpers.GroupConnectorTests
             connector.Connect(groups);
             for (int i = 1; i < groups.Count; i++)
             {
-                Assert.AreEqual(0, groups[i].Results.Count);
+                Assert.AreEqual(resultCount, groups[i].Results.Count);
             }
         }
 
