@@ -1,5 +1,4 @@
-﻿using Repository.Helper;
-using Repository.Models;
+﻿using Repository.Models;
 using Repository.Models.Language;
 using System;
 using System.Collections;
@@ -173,7 +172,7 @@ namespace Wordki.ViewModels
 
             AddWordCommand = new Util.BuilderCommand(AddWord);
             RemoveWordCommand = new Util.BuilderCommand(DeleteWord);
-            AddGroupCommand = new Util.BuilderCommand(AddGroupAction);
+            AddGroupCommand = new Util.BuilderCommand(AddGroup);
             RemoveGroupCommand = new Util.BuilderCommand(RemoveGroup);
             CheckUncheckWordCommand = new Util.BuilderCommand((obj) => ActionsSingleton<CheckUncheckAction>.Instance.Action(obj as IWord));
             TranslateWordCommnad = new Util.BuilderCommand(TranslateWord);
@@ -326,7 +325,7 @@ namespace Wordki.ViewModels
                 }
                 foreach (Group lGroup in lSpliter.Split(SelectedGroup, factor))
                 {
-                    AddGroup_(lGroup);
+                    AddGroup(lGroup);
                 }
                 Database.SaveDatabaseAsync();
                 SetOnLastWord();
@@ -408,7 +407,7 @@ namespace Wordki.ViewModels
             worker.Execute();
         }
 
-        private async void AddGroupAction()
+        private async void AddGroup()
         {
             IGroup group = new Group();
             await Database.AddGroupAsync(group);
@@ -423,12 +422,6 @@ namespace Wordki.ViewModels
 
         private void DownloadGroupsName(object obj)
         {
-        }
-
-        private string GroupToDownload { get; set; }
-        private void OnGetCommonGroupNameRequestComplete()
-        {
-
         }
 
         private void NextWord(object obj)
@@ -488,7 +481,7 @@ namespace Wordki.ViewModels
         {
             if (SelectedGroup == null)
             {
-                AddGroupAction();
+                AddGroup();
             }
             if (SelectedGroup == null)
             {
@@ -619,7 +612,7 @@ namespace Wordki.ViewModels
             }
         }
 
-        private async void AddGroup_(IGroup pGroup)
+        private async void AddGroup(IGroup pGroup)
         {
             if (!await Database.AddGroupAsync(pGroup))
             {
