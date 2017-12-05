@@ -177,7 +177,7 @@ namespace Wordki.ViewModels
         {
             StartLessonCommand = new Util.BuilderCommand(StartLesson);
             EditGroupCommand = new Util.BuilderCommand(EditGroup);
-            BackCommand = new Util.BuilderCommand(Back);
+            BackCommand = new Util.BuilderCommand(BackAction);
             ShowWordsCommand = new Util.BuilderCommand(ShowWords);
             SelectionChangedCommand = new Util.BuilderCommand(SelectionChanged);
             DrawerSignClickCommand = new Util.BuilderCommand(DrawerSignClick);
@@ -185,7 +185,7 @@ namespace Wordki.ViewModels
             AllWordsCommand = new Util.BuilderCommand(AllWords);
             ShowPlotCommand = new Util.BuilderCommand(ShowPlot);
             FinishLessonCommand = new Util.BuilderCommand(FinishLesson);
-            ScrollCommand = new BuilderCommand(Scroll);
+            ScrollCommand = new Util.BuilderCommand(Scroll);
         }
 
         public void Scroll(object obj)

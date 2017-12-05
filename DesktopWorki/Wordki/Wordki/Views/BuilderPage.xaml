@@ -112,7 +112,6 @@
                 Grid.RowSpan="2"
                 Grid.ColumnSpan="3"
                 Panel.ZIndex="2"
-                KeyboardNavigation.IsTabStop="False"
                 Style="{StaticResource AppInnerTabControlStyle}">
                 <TabItem
                     Header="Plik"

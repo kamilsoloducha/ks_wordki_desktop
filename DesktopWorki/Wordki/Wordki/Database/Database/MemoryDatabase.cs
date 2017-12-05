@@ -16,7 +16,7 @@ namespace Wordki.Database
         {
             Random random = new Random(100);
             Groups = new ObservableCollection<IGroup>();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
                 IGroup group = new Group()
                 {
@@ -39,7 +39,7 @@ namespace Wordki.Database
                     group.AddResult(result);
                 }
 
-                for (int j = 0; j < random.Next(30, 40); j++)
+                for (int j = 0; j < random.Next(3, 4); j++)
                 {
                     IWord word = new Word()
                     {

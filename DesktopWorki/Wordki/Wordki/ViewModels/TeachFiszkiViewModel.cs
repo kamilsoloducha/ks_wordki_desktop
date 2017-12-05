@@ -20,12 +20,12 @@ namespace Wordki.ViewModels
 
         public override void Loaded()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void Unloaded()
         {
-            throw new NotImplementedException();
+            
         }
 
         protected override void Check(object obj)

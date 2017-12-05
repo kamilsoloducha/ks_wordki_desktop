@@ -40,6 +40,7 @@ namespace Wordki.ViewModels
         public MainViewModel()
         {
             Switcher = new Helpers.Switcher();
+            Switcher.LoadStates();
             Switcher.LockStates.Add(Helpers.Switcher.State.Login);
             Switcher.LockStates.Add(Helpers.Switcher.State.Register);
             Switcher.LockStates.Add(Helpers.Switcher.State.Menu);

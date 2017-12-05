@@ -131,6 +131,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\CheckUncheckCommand.cs" />
     <Compile Include="Database\Database\DatabaseSingleton.cs" />
     <Compile Include="Database\Maps\GroupMap.cs" />
     <Compile Include="Database\Repositories\GroupRepository.cs" />
@@ -205,6 +206,9 @@
     <Compile Include="Helpers\ResultConnector\ResultConnector.cs" />
     <Compile Include="Helpers\TranslationPusher\ITranslationPusher.cs" />
     <Compile Include="Helpers\TranslationPusher\TranslationPusher.cs" />
+    <Compile Include="Helpers\VirtualizingCollection\AsyncVirtualizingCollection.cs" />
+    <Compile Include="Helpers\VirtualizingCollection\IItemsProvider.cs" />
+    <Compile Include="Helpers\VirtualizingCollection\VirtualizingCollection.cs" />
     <Compile Include="Helpers\WordComparer\IWordComparer.cs" />
     <Compile Include="Helpers\WordComparer\IWordComparerSettings.cs" />
     <Compile Include="Helpers\WordComparer\WordComparer.cs" />
@@ -231,6 +235,7 @@
     <Compile Include="InteractionProvider\TranlsationProvider\TranslationProvider.cs" />
     <Compile Include="InteractionProvider\YesNoProvider\IYesNoProvider.cs" />
     <Compile Include="InteractionProvider\YesNoProvider\YesNoProvider.cs" />
+    <Compile Include="Models\GroupItemProvider.cs" />
     <Compile Include="Models\Group\CommonGroup.cs" />
     <Compile Include="Helpers\Connector\ApiConnector.cs" />
     <Compile Include="Helpers\Connector\ApiRequest.cs" />

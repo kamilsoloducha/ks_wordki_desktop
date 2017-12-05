@@ -10,6 +10,11 @@ namespace Wordki.Views
         protected readonly IViewModel viewModel;
         public IViewModel ViewModel { get { return viewModel; } }
 
+        public PageBase()
+        {
+
+        }
+
         public PageBase(IViewModel viewModel)
         {
             this.viewModel = viewModel;

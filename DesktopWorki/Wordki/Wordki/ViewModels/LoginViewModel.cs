@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Util.Threads;
 using Wordki.Database;

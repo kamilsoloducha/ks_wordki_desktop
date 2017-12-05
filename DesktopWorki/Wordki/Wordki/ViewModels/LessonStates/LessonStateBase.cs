@@ -390,6 +390,7 @@ namespace Wordki.ViewModels.LessonStates
             RefreshProgress();
             RefreshResult();
             RefreshStartStopButton();
+            SelectedWord = Lesson.SelectedWord;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

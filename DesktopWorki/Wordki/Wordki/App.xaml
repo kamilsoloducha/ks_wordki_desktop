@@ -459,6 +459,9 @@
             <Setter
                 Property="MinHeight"
                 Value="50" />
+            <Setter
+                Property="KeyboardNavigation.IsTabStop"
+                Value="False" />
         </Style>
         <Style
             x:Key="DialogFlatButtonStyle"
@@ -938,6 +941,9 @@
             <Setter
                 Property="HorizontalAlignment"
                 Value="Stretch" />
+            <Setter
+                Property="KeyboardNavigation.IsTabStop"
+                Value="False" />
         </Style>
         <!-- IMAGE_BUTTON_STYLE  APP-->
         <!-- ######################################################################## -->

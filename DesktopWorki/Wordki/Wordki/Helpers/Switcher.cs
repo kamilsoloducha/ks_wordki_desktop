@@ -23,6 +23,7 @@ namespace Wordki.Helpers
             if (_pageDictionary.ContainsKey(pState))
             {
                 lPage = _pageDictionary[pState];
+                _pageDictionary.Remove(pState);
             }
             else
             {
@@ -37,7 +38,6 @@ namespace Wordki.Helpers
 
         private ISwitchElement PageFactory(State pState)
         {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
             ISwitchElement result;
             switch (pState)
             {
@@ -68,9 +68,9 @@ namespace Wordki.Helpers
                 case State.Words:
                     result = new WordsPage();
                     break;
-                case State.Plot:
-                    result = new PlotPage();
-                    break;
+                //case State.Plot:
+                //    result = new PlotPage();
+                    //break;
                 case State.Same:
                     result = new SameWordsPage();
                     break;
@@ -81,8 +81,6 @@ namespace Wordki.Helpers
                     throw new ArgumentOutOfRangeException("pState");
             }
             result.ViewModel.Switcher = this;
-            watch.Stop();
-            Console.WriteLine($"Dla {result.GetType()} czas ładowania: {watch.ElapsedMilliseconds}");
             return result;
         }
 
@@ -108,6 +106,14 @@ namespace Wordki.Helpers
             Switch(State.Login);
         }
 
+        public void LoadStates()
+        {
+            //foreach(State state in Enum.GetValues(typeof(State)))
+            //{
+            //    Switch(state);
+            //}
+        }
+
         public enum State
         {
             Login,
@@ -119,7 +125,7 @@ namespace Wordki.Helpers
             TeachFiszki,
             Settings,
             Words,
-            Plot,
+            //Plot,
             Same,
             BuildFromFile,
         }

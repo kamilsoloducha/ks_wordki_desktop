@@ -71,135 +71,6 @@
             </TabItem>
         </TabControl>
 
-
-        <!--<ListBox
-            x:Name="GroupsDataGrid"
-            Grid.Column="0"
-            Grid.Row="0"
-            ScrollViewer.CanContentScroll="False"
-            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-            ItemsSource="{Binding ItemsList}"
-            SelectionMode="Multiple"
-            BorderThickness="0">
-
-            <ListBox.ContextMenu>
-                <ContextMenu
-                    Style="{StaticResource AppContextMenuStyle}">
-                    <MenuItem
-                        Header="Edytuj grupę"
-                        Style="{StaticResource AppMenuItemStyle}"
-                        Command="{Binding EditGroupCommand}" />
-                    <MenuItem
-                        Header="Pokaż slowa"
-                        Style="{StaticResource AppMenuItemStyle}"
-                        Command="{Binding ShowWordsCommand}" />
-                    <MenuItem
-                        Header="Tryb wprowadzania"
-                        Style="{StaticResource AppMenuItemStyle}"
-                        Command="{Binding StartTypingLessonCommand}" />
-                    <MenuItem
-                        Header="Tryb intensywny"
-                        Style="{StaticResource AppMenuItemStyle}"
-                        Command="{Binding StartReapetLessonCommand}" />
-                    <MenuItem
-                        Header="Tryb losowych"
-                        Style="{StaticResource AppMenuItemStyle}"
-                        Command="{Binding StartRandomLessonCommand}" />
-                    <MenuItem
-                        Header="Tryb zapamiętanych"
-                        Style="{StaticResource AppMenuItemStyle}"
-                        Command="{Binding StartBestLessonCommand}" />
-                </ContextMenu>
-            </ListBox.ContextMenu>
-
-            <i:Interaction.Triggers>
-                <i:EventTrigger
-                    EventName="SelectionChanged">
-                    <i:InvokeCommandAction
-                        Command="{Binding SelectionChangedCommand}"
-                        CommandParameter="{Binding SelectedItems, ElementName=GroupsDataGrid}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-
-            <i:Interaction.Behaviors>
-                <helpers:ListBoxAtLeastOneSelectedItemBehavior />
-            </i:Interaction.Behaviors>
-
-            <ListBox.ItemContainerStyle>
-                <Style
-                    TargetType="{x:Type ListBoxItem}">
-                    <Setter
-                        Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate
-                                TargetType="{x:Type ListBoxItem}">
-                                <Grid
-                                    x:Name="ItemBackground"
-                                    Margin="0,2"
-                                    Background="#22000000">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition
-                                            Width="*" />
-                                        <ColumnDefinition
-                                            Width="Auto" />
-                                        <ColumnDefinition
-                                            Width="*" />
-                                        <ColumnDefinition
-                                            Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Background="Transparent"
-                                        FontSize="30"
-                                        Margin="20, 10"
-                                        FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
-                                        Text="{Binding Path=Group.Name}" />
-
-                                    <Rectangle
-                                        Grid.Column="1"
-                                        Width="1"
-                                        Margin="4"
-                                        Fill="#AA000000" />
-
-                                    <StackPanel
-                                        Grid.Column="2"
-                                        VerticalAlignment="Center"
-                                        Orientation="Vertical">
-                                        
-                                        <StackPanel
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal">
-                                            <Label
-                                                VerticalAlignment="Bottom"
-                                                FontSize="15"
-                                                Content="Słowa" />
-
-                                            <Label
-                                                VerticalAlignment="Bottom"
-                                                FontSize="30"
-                                                Content="{Binding Path=Group.Words.Count}" />
-                                        </StackPanel>
-                                    </StackPanel>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger
-                                        Property="IsSelected"
-                                        Value="true">
-                                        <Setter
-                                            TargetName="ItemBackground"
-                                            Property="Background"
-                                            Value="Red" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListBox.ItemContainerStyle>
-
-        </ListBox>-->
-
         <DataGrid
             x:Name="GroupsDataGrid"
             Grid.Column="0"
@@ -207,19 +78,15 @@
             Style="{StaticResource AppDataGridStyle}"
             Margin="10,10,10,0"
             IsReadOnly="True"
-            EnableColumnVirtualization="true"
-            EnableRowVirtualization="true"
-            ScrollViewer.CanContentScroll="False"
+            ScrollViewer.CanContentScroll="true"
             SelectedItem="{Binding SelectedItem}"
-            ItemsSource="{Binding ItemsList, IsAsync=True}"
-            ScrollViewer.ScrollChanged="GroupsDataGrid_ScrollChanged"
-            MaxHeight="768"
-            MaxWidth="1000"
+            ItemsSource="{Binding ItemsList}"
             SelectionUnit="FullRow"
             BorderThickness="0"
             HeadersVisibility="Row"
             HorizontalScrollBarVisibility="Hidden"
-            HorizontalGridLinesBrush="Transparent">
+            HorizontalGridLinesBrush="Transparent"
+            KeyboardNavigation.IsTabStop="false">
 
             <DataGrid.ContextMenu>
                 <ContextMenu
@@ -267,12 +134,6 @@
                         Command="{Binding SelectionChangedCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=GroupsDataGrid}" />
                 </i:EventTrigger>
-                <!--<i:EventTrigger
-                    EventName="ScrollViewer.ScrollChanged">
-                    <cmd:EventToCommand
-                        Command="{Binding ScrollCommand}"
-                        PassEventArgsToCommand="True"/>
-                </i:EventTrigger>-->
             </i:Interaction.Triggers>
 
             <DataGrid.CellStyle>
@@ -281,6 +142,9 @@
                     <Setter
                         Property="BorderThickness"
                         Value="0" />
+                    <Setter
+                        Property="KeyboardNavigation.IsTabStop"
+                        Value="False" />
                     <Style.Triggers>
                         <Trigger
                             Property="IsSelected"
@@ -303,7 +167,8 @@
                                 x:Name="ItemBackground"
                                 Margin="0,2"
                                 CornerRadius="10"
-                                Background="#22000000">
+                                Background="#22000000"
+                                KeyboardNavigation.IsTabStop="False">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition
@@ -324,13 +189,13 @@
                                         FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
                                         Text="{Binding Path=Group.Name}" />
 
-                                    <Rectangle
+                                    <!--<Rectangle
                                         Grid.Column="1"
                                         Width="1"
                                         Margin="4"
-                                        Fill="#AA000000" />
+                                        Fill="#AA000000" />-->
 
-                                    <StackPanel
+                                    <!--<StackPanel
                                         Grid.Column="2"
                                         VerticalAlignment="Center"
                                         Orientation="Vertical">
@@ -350,9 +215,9 @@
                                         </StackPanel>
 
 
-                                    </StackPanel>
+                                    </StackPanel>-->
 
-                                    <StackPanel
+                                    <!--<StackPanel
                                         Grid.Column="3"
                                         VerticalAlignment="Center"
                                         Orientation="Horizontal">
@@ -365,7 +230,7 @@
                                             VerticalAlignment="Bottom"
                                             FontSize="30"
                                             Content="{Binding Path=NextRepeat}" />
-                                    </StackPanel>
+                                    </StackPanel>-->
                                 </Grid>
                             </Border>
                         </DataTemplate>

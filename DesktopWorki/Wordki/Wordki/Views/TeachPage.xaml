@@ -88,6 +88,11 @@
             Modifiers="Ctrl"
             Key="F"
             Command="{Binding SearchCommand}" />
+        <KeyBinding
+            Modifiers="Ctrl"
+            Key="Q"
+            Command="{Binding CheckUncheckCommand}" 
+            CommandParameter="{Binding Path=State.SelectedWord}"/>
     </views:PageBase.InputBindings>
 
     <DockPanel>

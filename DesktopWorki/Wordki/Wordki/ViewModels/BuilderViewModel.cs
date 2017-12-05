@@ -699,10 +699,7 @@ namespace Wordki.ViewModels
                 return;
             }
             Words.Clear();
-            foreach (IWord word in SelectedGroup.Words)
-            {
-                Words.Add(word);
-            }
+            Words.AddRange(SelectedGroup.Words);
         }
 
         private WorkResult SendRequestForWordTranslate()

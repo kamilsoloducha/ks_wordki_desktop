@@ -15,6 +15,7 @@ using Wordki.Database;
 using Wordki.InteractionProvider;
 using Wordki.ViewModels.Dialogs;
 using Wordki.ViewModels.LessonStates;
+using Wordki.Commands;
 
 namespace Wordki.ViewModels
 {
@@ -23,7 +24,7 @@ namespace Wordki.ViewModels
 
         #region Properies
         public static Switcher _switcher;
-        protected Lesson Lesson { get; set; }
+        protected static Lesson Lesson { get; set; }
         protected int HintLetters { get; set; }
         public Settings Settings { get; set; }
 
@@ -133,8 +134,9 @@ namespace Wordki.ViewModels
             Timer = "";
             Lesson = lLesson;
 
-
             OnTimerTick(0);
+            StartLessonCommand = new Util.BuilderCommand(StartLesson);
+            PauseCommand = new Util.BuilderCommand(Pause);
         }
 
         public override void Back()
@@ -154,9 +156,7 @@ namespace Wordki.ViewModels
             BackCommand = new Util.BuilderCommand(BackAction);
             CorrectCommand = new Util.BuilderCommand(Correct);
             OnEnterClickCommand = new Util.BuilderCommand(OnEnterClick);
-            StartLessonCommand = new Util.BuilderCommand(StartLesson);
-            PauseCommand = new Util.BuilderCommand(Pause);
-            CheckUncheckCommand = new Util.BuilderCommand(CheckUncheck);
+            CheckUncheckCommand = new CheckUncheckCommand();
             HintCommand = new Util.BuilderCommand(Hint);
         }
 
