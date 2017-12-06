@@ -226,6 +226,27 @@ namespace Wordki.Models
             return StateManager.GetState(State, "LastRepeating") > 0;
         }
 
+        private string comment;
+        public virtual string Comment
+        {
+            get { return comment; }
+            set
+            {
+                if (comment == value)
+                {
+                    return;
+                }
+                comment = value;
+                OnPropertyChanged();
+                State = StateManager.NewState(State);
+            }
+        }
+
+        public virtual bool ShouldSerializeComment()
+        {
+            return StateManager.GetState(State, "Comment") > 0;
+        }
+
 
         public Word()
         {

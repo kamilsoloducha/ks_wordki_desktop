@@ -8,7 +8,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -144,7 +143,7 @@ namespace Wordki.ViewModels
         }
 
         public Settings Settings { get; set; }
-        public IList SelectionList { get; set; }
+        public IList<GroupItem> SelectionList { get; set; }
         public GroupInfo GroupInfo { get; set; }
 
         #endregion
@@ -156,6 +155,7 @@ namespace Wordki.ViewModels
             ActivateCommond();
             Values = new ObservableCollection<double> { 0, 0, 0, 0, 0 };
             ItemsList = new ObservableCollection<GroupItem>();
+            SelectionList = new List<GroupItem>();
             BindingOperations.EnableCollectionSynchronization(ItemsList, _groupsLock);
         }
 
@@ -259,7 +259,8 @@ namespace Wordki.ViewModels
             IList lList = (obj as IList);
             if (lList == null)
                 return;
-            SelectionList = lList;
+            SelectionList.Clear();
+            SelectionList.AddRange(lList.Cast<GroupItem>());
             RefreshInfo();
         }
 
@@ -305,7 +306,6 @@ namespace Wordki.ViewModels
                 });
             });
             SetTranslationDirectionLabel();
-            SetTimeOutLabel();
             SetAllWordsLabel();
             SetEndLessonButton();
         }
@@ -317,53 +317,37 @@ namespace Wordki.ViewModels
 
         private void RefreshInfo()
         {
-            try
+            List<double> lDrawersCount = new List<double>();
+            LanguageType lang1 = SelectedItem.Group.Language1;
+            LanguageType lang2 = SelectedItem.Group.Language2;
+            DateTime lLastRepeat = DateTime.MinValue;
+            for (int i = 0; i < 5; i++)
+                lDrawersCount.Add(0);
+            if (SelectionList == null)
+                return;
+            foreach (GroupItem item in SelectionList)
             {
-                List<double> lDrawersCount = new List<double>();
-                int lVisibilitiesCount = 0;
-                int lWordsCount = 0;
-                int lRepeatsCount = 0;
-                BitmapImage lLanguage1Flag = null;
-                BitmapImage lLanguage2Flag = null;
-                DateTime lLastRepeat = DateTime.MinValue;
-                StringBuilder lGroupNameBuilder = new StringBuilder();
-                for (int i = 0; i < 5; i++)
-                    lDrawersCount.Add(0);
-                if (SelectionList == null)
-                    return;
-                foreach (GroupItem item in SelectionList)
+                lang1 = lang1 != item.Group.Language1 && lang1 != LanguageType.Default ? LanguageType.Default : lang1;
+                lang2 = lang2 != item.Group.Language2 && lang2 != LanguageType.Default ? LanguageType.Default : lang2;
+                foreach (Word lWord in item.Group.Words)
                 {
-                    lLanguage1Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathCircleFlag(LanguageFactory.GetLanguage(item.Group.Language1))));
-                    lLanguage2Flag = new BitmapImage(new Uri(LanguageIconManager.GetPathCircleFlag(LanguageFactory.GetLanguage(item.Group.Language2))));
-                    lGroupNameBuilder.Append(item.Group.Name).Append(" ");
-                    lWordsCount += item.Group.Words.Count;
-                    foreach (Word lWord in item.Group.Words)
-                    {
-                        lDrawersCount[lWord.Drawer]++;
-                        if (lWord.Visible)
-                            lVisibilitiesCount++;
-                    }
-                    DateTime itemDateTime = item.Group.Results.Max(x => x.DateTime);
-                    if (itemDateTime > lLastRepeat)
-                    {
-                        lLastRepeat = itemDateTime;
-                    }
-                    lRepeatsCount += item.Group.Results.Count;
+                    lDrawersCount[lWord.Drawer]++;
                 }
-                MaxValue = lDrawersCount.Sum();
-                Values = new ObservableCollection<double>(lDrawersCount);
-                GroupInfo.
-                    SetValue(lGroupNameBuilder.ToString(), lWordsCount, lRepeatsCount, lLastRepeat, lVisibilitiesCount, lLanguage1Flag, lLanguage2Flag);
+                DateTime itemDateTime = item.Group.Results.Max(x => x.DateTime);
+                if (itemDateTime > lLastRepeat)
+                {
+                    lLastRepeat = itemDateTime;
+                }
             }
-            catch (Exception lException)
-            {
-                LoggerSingleton.LogError("{0} - {1}", "RefreshInfo", lException.Message);
-            }
-        }
-
-        private void SetTimeOutLabel()
-        {
-            TimeOutLabel = UserManagerSingleton.Instence.User.Timeout > 0 ? String.Format("Odliczanie {0} sekund", UserManagerSingleton.Instence.User.Timeout) : "Odliczanie wyłączone";
+            string groupName = SelectionList.Count == 1 ? SelectionList.First().Group.Name : null;
+            int lWordsCount = SelectionList.Sum(x => x.Group.Words.Count);
+            int lVisibilitiesCount = SelectionList.Sum(x => x.Group.Words.Count(y => y.Visible));
+            int lRepeatsCount = SelectionList.Sum(x => x.Group.Results.Count(y => y.TranslationDirection == UserManagerSingleton.Instence.User.TranslationDirection));
+            MaxValue = lDrawersCount.Sum();
+            Values = new ObservableCollection<double>(lDrawersCount);
+            GroupInfo.SetValue(groupName, lWordsCount, lRepeatsCount, lLastRepeat, lVisibilitiesCount,
+                new BitmapImage(new Uri(LanguageIconManager.GetPathCircleFlag(LanguageFactory.GetLanguage(lang1)))),
+                new BitmapImage(new Uri(LanguageIconManager.GetPathCircleFlag(LanguageFactory.GetLanguage(lang2)))));
         }
 
         private void SetTranslationDirectionLabel()
@@ -450,6 +434,29 @@ namespace Wordki.ViewModels
             return result.Take(pCount);
         }
 
+        private IEnumerable<IWord> GetAllToTeach()
+        {
+            IUser user = UserManagerSingleton.Instence.User;
+            ILessonScheduler scheduler = new NewLessonScheduler()
+            {
+                Initializer = new LessonSchedulerInitializer2(new List<int>() { 1, 1, 2, 4, 7 })
+                {
+                    TranslationDirection = user.TranslationDirection,
+                },
+            };
+            foreach (IGroup group in DatabaseSingleton.Instance.Groups)
+            {
+                if (scheduler.GetTimeToLearn(group) > 0)
+                {
+                    continue;
+                }
+                foreach(IWord word in group.Words.Where(x => x.Visible || user.AllWords))
+                {
+                    yield return word;
+                }
+            }
+        }
+
         private void StartLesson(object obj)
         {
             LessonType lLessonType = (LessonType)obj;
@@ -486,6 +493,12 @@ namespace Wordki.ViewModels
                     case LessonType.BestLesson:
                         {
                             lesson = new BestLesson(GetWordListBest(60));
+                            stateToStart = Switcher.State.TeachTyping;
+                        }
+                        break;
+                    case LessonType.AllToTeach:
+                        {
+                            lesson = new TypingLesson(GetAllToTeach());
                             stateToStart = Switcher.State.TeachTyping;
                         }
                         break;

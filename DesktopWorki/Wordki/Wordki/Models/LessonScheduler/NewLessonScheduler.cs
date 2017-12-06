@@ -1,5 +1,6 @@
 ﻿using Repository.Models;
 using System.Linq;
+using System;
 
 namespace Wordki.Models.LessonScheduler
 {
@@ -14,6 +15,10 @@ namespace Wordki.Models.LessonScheduler
 
         public int GetTimeToLearn(IGroup group)
         {
+            if(group == null)
+            {
+                throw new ArgumentNullException("Parameter group equals null");
+            }
             if (group.Results.Count == 0)
             {
                 return 0;

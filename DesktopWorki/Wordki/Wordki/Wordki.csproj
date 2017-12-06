@@ -176,6 +176,7 @@
     <Compile Include="Helpers\Connector\SimpleConnector\SimpleConnector.cs" />
     <Compile Include="Helpers\Converters\ArithmeticConverter.cs" />
     <Compile Include="Helpers\Converters\DrawerToColorConverter.cs" />
+    <Compile Include="Helpers\Converters\GroupToNextRepeatConverter.cs" />
     <Compile Include="Helpers\Converters\ItemIndexToBoolConverter.cs" />
     <Compile Include="Helpers\Converters\LanguageToImageConverter.cs" />
     <Compile Include="Helpers\Converters\LanguageToStringConverter.cs" />
@@ -204,6 +205,8 @@
     <Compile Include="Helpers\Behaviour\InputBindingBehavior.cs" />
     <Compile Include="Helpers\JsonConverters\StringToBoolConverter.cs" />
     <Compile Include="Helpers\JsonConverters\StringToIntConverter.cs" />
+    <Compile Include="Helpers\LessonWordsCreator\AllToTeachCreator.cs" />
+    <Compile Include="Helpers\LessonWordsCreator\ILessonWordsCreator.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\Notification\INotification.cs" />
     <Compile Include="Helpers\Notification\NotificationFactory.cs" />

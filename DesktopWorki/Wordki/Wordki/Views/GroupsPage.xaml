@@ -21,6 +21,8 @@
     <views:PageBase.Resources>
         <converters:DrawerToColorConverter
             x:Key="DrawerToColorConverter" />
+        <converters:GroupToNextRepeatConverter
+            x:Key="GroupToNextRepeatConverter" />
     </views:PageBase.Resources>
 
     <Grid>
@@ -189,13 +191,13 @@
                                         FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
                                         Text="{Binding Path=Group.Name}" />
 
-                                    <!--<Rectangle
+                                    <Rectangle
                                         Grid.Column="1"
                                         Width="1"
                                         Margin="4"
-                                        Fill="#AA000000" />-->
+                                        Fill="#AA000000" />
 
-                                    <!--<StackPanel
+                                    <StackPanel
                                         Grid.Column="2"
                                         VerticalAlignment="Center"
                                         Orientation="Vertical">
@@ -215,9 +217,9 @@
                                         </StackPanel>
 
 
-                                    </StackPanel>-->
+                                    </StackPanel>
 
-                                    <!--<StackPanel
+                                    <StackPanel
                                         Grid.Column="3"
                                         VerticalAlignment="Center"
                                         Orientation="Horizontal">
@@ -229,8 +231,8 @@
                                         <Label
                                             VerticalAlignment="Bottom"
                                             FontSize="30"
-                                            Content="{Binding Path=NextRepeat}" />
-                                    </StackPanel>-->
+                                            Content="{Binding Path=Group, Converter={StaticResource GroupToNextRepeatConverter}}" />
+                                    </StackPanel>
                                 </Grid>
                             </Border>
                         </DataTemplate>
@@ -300,19 +302,20 @@
                             Grid.Column="0"
                             Margin="20"
                             MaxWidth="50"
-                            Source="{Binding GroupInfo.Language1Flag}" />
+                            Source="{Binding Path=GroupInfo.Language1Flag}" />
 
                         <Label
                             Grid.Column="1"
                             FontSize="40"
                             Margin="20"
                             HorizontalAlignment="Center"
-                            Content="{Binding Path=SelectedItem.Group.Name}" />
+                            Content="{Binding Path=GroupInfo.GroupName}" />
+                        
                         <Image
                             Grid.Column="2"
                             Margin="20"
                             MaxWidth="50"
-                            Source="{Binding GroupInfo.Language2Flag}" />
+                            Source="{Binding Path=GroupInfo.Language2Flag}" />
 
                     </Grid>
 

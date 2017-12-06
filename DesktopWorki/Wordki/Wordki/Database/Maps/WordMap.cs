@@ -16,6 +16,9 @@ namespace Wordki.Database
             Map(x => x.Drawer);
             Map(x => x.Visible);
             Map(x => x.Checked);
+            Map(x => x.Comment);
+            Map(x => x.LastRepeating);
+            Map(x => x.RepeatingNumber);
             Map(x => x.State);
             References(x => x.Group).Not.Nullable().Class(typeof(Group));
         }
