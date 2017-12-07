@@ -2,7 +2,6 @@
 using System.Linq;
 using Repository.Models;
 using Wordki.Models.LessonScheduler;
-using Wordki.Database;
 
 namespace Wordki.Helpers
 {
@@ -10,18 +9,16 @@ namespace Wordki.Helpers
     {
         public int Count { get; set; }
 
-
-        private ILessonScheduler lessonScheduler = new NewLessonScheduler()
-        {
-            Initializer = new LessonSchedulerInitializer2(new List<int>() { 1, 1, 2, 4, 7 })
-            {
-                TranslationDirection = UserManagerSingleton.Instence.User.TranslationDirection,
-            },
-        };
+        //private ILessonScheduler lessonScheduler = new NewLessonScheduler()
+        //{
+        //    Initializer = new LessonSchedulerInitializer2(new List<int>() { 1, 1, 2, 4, 7 })
+        //    {
+        //        TranslationDirection = UserManagerSingleton.Instence.User.TranslationDirection,
+        //    },
+        //};
         public ILessonScheduler Scheduler
         {
-            get { return lessonScheduler; }
-            set { lessonScheduler = value; }
+            get;set;
         }
 
         public IList<IGroup> Groups { get; set; }

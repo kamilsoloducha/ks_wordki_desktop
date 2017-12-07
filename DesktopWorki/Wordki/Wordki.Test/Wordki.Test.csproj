@@ -122,6 +122,7 @@
     <Compile Include="Helpers\GroupSplitterTests\GroupSplitterWordCountTest.cs" />
     <Compile Include="Helpers\IntervalTimeCalculatorTests\IntervalTimeCalcuator.cs" />
     <Compile Include="Helpers\LessonSchedulerTests\LessonSchedulerWithSimpleInitializerTest.cs" />
+    <Compile Include="Helpers\LessonWordsCreatorTests\AllToTeachCreatorTests\AllToTeachCreatorFixture.cs" />
     <Compile Include="Helpers\LessonWordsCreatorTests\RandomCreatorTests\RandomCreatorFixture.cs" />
     <Compile Include="Helpers\LessonWordsCreatorTests\SimpleCreatorTests\SimpleCreatorFixture.cs" />
     <Compile Include="Helpers\NewLessonSchedulerTests\NewLessonSchedulerAnyResutsTest.cs" />
