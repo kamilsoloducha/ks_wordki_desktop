@@ -170,7 +170,7 @@ namespace Wordki.ViewModels
 
         }
 
-        public override void InitViewModel()
+        public override void InitViewModel(object parameter = null)
         {
             IDatabase lDatabase = DatabaseSingleton.Instance;
             SelectedLabel = 1;

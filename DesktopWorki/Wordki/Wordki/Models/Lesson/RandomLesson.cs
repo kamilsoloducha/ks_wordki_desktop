@@ -7,13 +7,11 @@ namespace Wordki.Models.Lesson
     [Serializable]
     public class RandomLesson : TypingLesson
     {
-        public RandomLesson(IEnumerable<IWord> pWordsList) : base(pWordsList)
-        {
-        }
+        public RandomLesson() : base() { }
 
-        protected override void CreateWordList()
+        protected override void CreateWordList(IEnumerable<IWord> words)
         {
-            foreach (Word word in AllWordList)
+            foreach (Word word in words)
             {
                 BeginWordsList.Add((IWord)word.Clone());
             }

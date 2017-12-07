@@ -8,7 +8,7 @@ namespace Wordki.Models.Lesson
     {
         private static int MaxCount = 30;
 
-        public WorstLesson(IEnumerable<IGroup> groups) : base(GetWordsToLearn(groups))
+        public WorstLesson() : base()
         {
         }
 

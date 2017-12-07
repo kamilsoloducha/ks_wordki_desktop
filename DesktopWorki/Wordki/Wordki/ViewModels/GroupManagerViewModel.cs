@@ -163,7 +163,7 @@ namespace Wordki.ViewModels
 
         private void ActivateCommond()
         {
-            StartLessonCommand = new Util.BuilderCommand(StartLesson);
+            StartLessonCommand = new Util.BuilderCommand((obj) => StartLesson((LessonType)obj));
             EditGroupCommand = new Util.BuilderCommand(EditGroup);
             BackCommand = new Util.BuilderCommand(BackAction);
             ShowWordsCommand = new Util.BuilderCommand(ShowWords);
@@ -279,7 +279,7 @@ namespace Wordki.ViewModels
 
         #endregion
 
-        public override void InitViewModel()
+        public override void InitViewModel(object parameter = null)
         {
             Task.Run(() =>
             {
@@ -393,121 +393,11 @@ namespace Wordki.ViewModels
             //}
         }
 
-        private IEnumerable<IWord> GetWordListFromSelectedGroups()
+        private void StartLesson(LessonType type)
         {
-            List<IWord> lWords = new List<IWord>();
             try
             {
-                foreach (GroupItem lItem in SelectionList)
-                {
-                    IGroup lGroup = lItem.Group;
-                    lWords.AddRange(lGroup.Words);
-                }
-            }
-            catch (Exception lException)
-            {
-                LoggerSingleton.LogError("{0} - {1}", "GetWordListFromSelectedGroups", lException.Message);
-            }
-            return lWords;
-        }
-
-        private IEnumerable<IWord> GetWordListRandom(int pCount)
-        {
-            var groupList = DatabaseSingleton.Instance.Groups;
-            Random random = new Random();
-            for (int i = 0; i < pCount; i++)
-            {
-                IGroup group = groupList[random.Next(groupList.Count - 1)];
-                yield return group.Words[random.Next(group.Words.Count - 1)];
-            }
-        }
-
-        private IEnumerable<IWord> GetWordListBest(int pCount)
-        {
-            List<IWord> temp = new List<IWord>();
-            foreach (Group group in DatabaseSingleton.Instance.Groups)
-            {
-                temp.AddRange(group.Words);
-            }
-            IEnumerable<IWord> result = temp.Where(x => x.Drawer == 4);
-            result = result.ToList().Shuffle();
-            return result.Take(pCount);
-        }
-
-        private IEnumerable<IWord> GetAllToTeach()
-        {
-            IUser user = UserManagerSingleton.Instence.User;
-            ILessonScheduler scheduler = new NewLessonScheduler()
-            {
-                Initializer = new LessonSchedulerInitializer2(new List<int>() { 1, 1, 2, 4, 7 })
-                {
-                    TranslationDirection = user.TranslationDirection,
-                },
-            };
-            foreach (IGroup group in DatabaseSingleton.Instance.Groups)
-            {
-                if (scheduler.GetTimeToLearn(group) > 0)
-                {
-                    continue;
-                }
-                foreach(IWord word in group.Words.Where(x => x.Visible || user.AllWords))
-                {
-                    yield return word;
-                }
-            }
-        }
-
-        private void StartLesson(object obj)
-        {
-            LessonType lLessonType = (LessonType)obj;
-            try
-            {
-                Lesson lesson;
-                Switcher.State stateToStart;
-                switch (lLessonType)
-                {
-                    case LessonType.FiszkiLesson:
-                        {
-                            lesson = new FiszkiLesson(GetWordListFromSelectedGroups());
-                            stateToStart = Switcher.State.TeachFiszki;
-                        }
-                        break;
-                    case LessonType.TypingLesson:
-                        {
-                            lesson = new TypingLesson(GetWordListFromSelectedGroups());
-                            stateToStart = Switcher.State.TeachTyping;
-                        }
-                        break;
-                    case LessonType.IntensiveLesson:
-                        {
-                            lesson = new IntensiveLesson(GetWordListFromSelectedGroups());
-                            stateToStart = Switcher.State.TeachTyping;
-                        }
-                        break;
-                    case LessonType.RandomLesson:
-                        {
-                            lesson = new RandomLesson(GetWordListRandom(60));
-                            stateToStart = Switcher.State.TeachTyping;
-                        }
-                        break;
-                    case LessonType.BestLesson:
-                        {
-                            lesson = new BestLesson(GetWordListBest(60));
-                            stateToStart = Switcher.State.TeachTyping;
-                        }
-                        break;
-                    case LessonType.AllToTeach:
-                        {
-                            lesson = new TypingLesson(GetAllToTeach());
-                            stateToStart = Switcher.State.TeachTyping;
-                        }
-                        break;
-                    default:
-                        {
-                            LoggerSingleton.LogError("{0} - {1} - {2}", "Blad w startowaniu lekcji", "Blad w przekazanym parametrze", lLessonType);
-                            return;
-                        }
-                }
+                Lesson lesson = LessonFactory.CreateLesson(type);
                 lesson.WordComparer = new WordComparer();
                 lesson.WordComparer.Settings = new WordComparerSettings();
                 lesson.WordComparer.Settings.WordSeparator = ',';
@@ -522,7 +412,12 @@ namespace Wordki.ViewModels
                     Timeout = user.Timeout,
                 };
                 lesson.LessonSettings = lessonSettings;
-                lesson.InitLesson();
+
+                ILessonWordsCreator creator = LessonWordCreatorFactory.Create(type);
+                creator.AllWords = UserManagerSingleton.Instence.User.AllWords;
+                creator.Count = 30;
+                creator.Groups = SelectionList.Select(x => x.Group).ToList();
+                lesson.InitLesson(creator.GetWords());
                 if (lesson.BeginWordsList.Count == 0)
                 {
                     InteractionProvider.IInteractionProvider provider = new InteractionProvider.SimpleInfoProvider
@@ -536,12 +431,11 @@ namespace Wordki.ViewModels
                     provider.Interact();
                     return;
                 }
-                PackageStore.Put(0, lesson);
-                Switcher.Switch(stateToStart);
+                Switcher.Switch(GetStateFromLessonType(type), lesson);
             }
             catch (Exception lException)
             {
-                LoggerSingleton.LogError("{0} - {1} - {2}", "Blad w startowaniu lekcji", lLessonType.ToString(), lException.Message);
+                LoggerSingleton.LogError("{0} - {1} - {2}", "Blad w startowaniu lekcji", type.ToString(), lException.Message);
             }
         }
 
@@ -551,6 +445,49 @@ namespace Wordki.ViewModels
 
         public override void Unloaded()
         {
+        }
+
+        private Switcher.State GetStateFromLessonType(LessonType type)
+        {
+            Switcher.State stateToStart;
+            switch (type)
+            {
+                case LessonType.FiszkiLesson:
+                    {
+                        stateToStart = Switcher.State.TeachFiszki;
+                    }
+                    break;
+                case LessonType.TypingLesson:
+                    {
+                        stateToStart = Switcher.State.TeachTyping;
+                    }
+                    break;
+                case LessonType.IntensiveLesson:
+                    {
+                        stateToStart = Switcher.State.TeachTyping;
+                    }
+                    break;
+                case LessonType.RandomLesson:
+                    {
+                        stateToStart = Switcher.State.TeachTyping;
+                    }
+                    break;
+                case LessonType.BestLesson:
+                    {
+                        stateToStart = Switcher.State.TeachTyping;
+                    }
+                    break;
+                case LessonType.AllToTeach:
+                    {
+                        stateToStart = Switcher.State.TeachTyping;
+                    }
+                    break;
+                default:
+                    {
+                        throw new IndexOutOfRangeException($"There is not possible to choose Switcher.State from type {type}");
+                    }
+            }
+            return stateToStart;
         }
     }
 

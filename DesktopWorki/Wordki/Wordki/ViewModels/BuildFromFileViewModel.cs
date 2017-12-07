@@ -127,7 +127,7 @@ namespace Wordki.ViewModels
             Pairs = new ObservableCollection<KeyValuePair<string, string>>();
         }
 
-        public override void InitViewModel()
+        public override void InitViewModel(object parameter = null)
         {
             FileContent = "";
             FilePath = "";

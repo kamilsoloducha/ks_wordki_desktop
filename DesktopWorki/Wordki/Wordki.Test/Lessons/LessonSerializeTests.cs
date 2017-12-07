@@ -29,7 +29,7 @@ namespace Wordki.Test.Lessons
                 }
             };
             words = Utility.GetGroup().Words;
-            lesson = new TypingLesson(words);
+            lesson = new TypingLesson();
             lesson.WordComparer = new WordComparer();
             lesson.WordComparer.Settings = new WordComparerSettings();
             lesson.WordComparer.Settings.NotCheckers.Add(new LetterCaseNotCheck());
@@ -42,7 +42,7 @@ namespace Wordki.Test.Lessons
                 Timeout = 0,
             };
             lesson.LessonSettings = lessonSettings;
-            lesson.InitLesson();
+            lesson.InitLesson(words);
         }
 
         [Test]

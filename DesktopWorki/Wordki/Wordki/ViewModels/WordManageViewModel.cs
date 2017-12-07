@@ -51,7 +51,7 @@ namespace Wordki.ViewModels
 
         }
 
-        public override void InitViewModel()
+        public override void InitViewModel(object parameter = null)
         {
             try
             {

@@ -151,7 +151,7 @@ namespace Wordki.ViewModels
             Database = DatabaseSingleton.Instance;
         }
 
-        public override void InitViewModel()
+        public override void InitViewModel(object parameter = null)
         {
             ThemeSelectedIndex = Settings.ApplicationStyle == ApplicationStyleEnum.Dark ? 1 : 0;
             FontSizeSelectedIndex = Settings.FontSize.ToString("D");

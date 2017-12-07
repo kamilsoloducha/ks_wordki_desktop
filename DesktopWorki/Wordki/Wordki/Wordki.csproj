@@ -162,10 +162,6 @@
     <Compile Include="Database\Repositories\WordRepository.cs" />
     <Compile Include="Helpers\Behaviour\ListBoxAtLeastOneSelectedItemBehavior.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
-    <Compile Include="Helpers\Command\CommandApiRequest.cs" />
-    <Compile Include="Helpers\Command\ICommand.cs" />
-    <Compile Include="Helpers\Command\SimpleCommand.cs" />
-    <Compile Include="Helpers\Command\SimpleCommandAsync.cs" />
     <Compile Include="Helpers\Connector\IConnector.cs" />
     <Compile Include="Helpers\Connector\IParser.cs" />
     <Compile Include="Helpers\Connector\IResponse.cs" />
@@ -206,7 +202,11 @@
     <Compile Include="Helpers\JsonConverters\StringToBoolConverter.cs" />
     <Compile Include="Helpers\JsonConverters\StringToIntConverter.cs" />
     <Compile Include="Helpers\LessonWordsCreator\AllToTeachCreator.cs" />
+    <Compile Include="Helpers\LessonWordsCreator\BestCreator.cs" />
     <Compile Include="Helpers\LessonWordsCreator\ILessonWordsCreator.cs" />
+    <Compile Include="Helpers\LessonWordsCreator\LessonWordCreatorFactory.cs" />
+    <Compile Include="Helpers\LessonWordsCreator\RandomCreator.cs" />
+    <Compile Include="Helpers\LessonWordsCreator\SimpleCreator.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\Notification\INotification.cs" />
     <Compile Include="Helpers\Notification\NotificationFactory.cs" />
@@ -254,6 +254,7 @@
     <Compile Include="Models\LessonScheduler\LessonScheduleInitializer\LessonSchedulerInitializer.cs" />
     <Compile Include="Models\LessonScheduler\NewLessonScheduler.cs" />
     <Compile Include="Models\Lesson\FiszkiLesson.cs" />
+    <Compile Include="Models\Lesson\LessonFactory.cs" />
     <Compile Include="Models\Lesson\LessonSettings\ILessonSettings.cs" />
     <Compile Include="Models\Lesson\LessonSettings\LessonSettings.cs" />
     <Compile Include="Models\Lesson\WorstLesson.cs" />
@@ -288,7 +289,6 @@
     <Compile Include="Models\Group\Group.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\LessonScheduler\ILessonScheduler.cs" />
-    <Compile Include="Models\Lesson\BestLesson.cs" />
     <Compile Include="Models\GroupItem.cs" />
     <Compile Include="Models\Lesson\IntensiveLesson.cs" />
     <Compile Include="Models\Lesson\Lessons.cs" />

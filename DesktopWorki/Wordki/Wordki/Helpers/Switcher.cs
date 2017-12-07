@@ -16,7 +16,7 @@ namespace Wordki.Helpers
         private readonly Stack<State> _pageQueue = new Stack<State>();
         private readonly Dictionary<State, ISwitchElement> _pageDictionary = new Dictionary<State, ISwitchElement>();
 
-        public void Switch(State pState)
+        public void Switch(State pState, object parameter = null)
         {
             _pageQueue.Push(pState);
             ISwitchElement lPage;
@@ -32,7 +32,7 @@ namespace Wordki.Helpers
             }
             if (OnSwich != null)
             {
-                OnSwich.Invoke(this, new SwitchEventArgs(lPage));
+                OnSwich.Invoke(this, new SwitchEventArgs(lPage, parameter));
             }
         }
 
@@ -130,16 +130,18 @@ namespace Wordki.Helpers
             BuildFromFile,
         }
 
-        public event EventHandler OnSwich;
+        public event EventHandler<SwitchEventArgs> OnSwich;
 
         public class SwitchEventArgs : EventArgs
         {
 
             public ISwitchElement Page { get; private set; }
+            public object Parameter { get; private set; }
 
-            public SwitchEventArgs(ISwitchElement pPage)
+            public SwitchEventArgs(ISwitchElement pPage, object parameter = null)
             {
                 Page = pPage;
+                Parameter = parameter;
             }
         }
     }

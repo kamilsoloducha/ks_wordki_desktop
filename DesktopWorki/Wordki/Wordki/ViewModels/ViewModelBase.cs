@@ -26,7 +26,7 @@ namespace Wordki.ViewModels
 
         public abstract void Back();
 
-        public abstract void InitViewModel();
+        public abstract void InitViewModel(object parameter = null);
 
         public abstract void Loaded();
 

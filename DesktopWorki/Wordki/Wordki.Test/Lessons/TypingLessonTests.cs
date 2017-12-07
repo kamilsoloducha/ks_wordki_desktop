@@ -20,7 +20,7 @@ namespace Wordki.Test.Lessons
         [TestInitialize]
         public void Init()
         {
-            lesson = new TypingLesson(GetWords());
+            lesson = new TypingLesson();
         }
 
 

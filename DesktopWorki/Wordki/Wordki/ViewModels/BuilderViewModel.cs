@@ -156,9 +156,6 @@ namespace Wordki.ViewModels
 
         public ObservableCollection<IWord> Words { get; set; }
 
-
-        //private ClipboardHelper ClipboardHelper { get; set; }
-        //private NotifyIcon NotifyIcon { get; set; }
         public Settings Settings { get; set; }
 
         #endregion
@@ -195,26 +192,13 @@ namespace Wordki.ViewModels
             AddGroupFromFileCommand = new Util.BuilderCommand(AddGroupFromFile);
 
             Database = DatabaseSingleton.Instance;
-            //ClipboardHelper = new ClipboardHelper(App.Current.MainWindow);
-
-            //NotifyIcon = new NotifyIcon();
-            //ContextMenu lContextMenu = new ContextMenu();
-            //lContextMenu.MenuItems.Add(new MenuItem("Powrót", (sender, args) => {
-            //  NotifyIcon.Visible = false;
-            //  ClipboardHelper.CloseCBViewer();
-            //  //Parent.ShowToast("Zakończono tworzenie grupy", ToastLevel.Info);
-            //  App.Current.MainWindow.WindowState = WindowState.Maximized;
-            //}));
-            //NotifyIcon.ContextMenu = lContextMenu;
-            //NotifyIcon.Icon = SystemIcons.Application;//new Icon(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Icons", "Wordki.png"));
-
             BindingOperations.EnableCollectionSynchronization(Database.Groups, _groupsLock);
             Words = new ObservableCollection<IWord>();
             BindingOperations.EnableCollectionSynchronization(Words, _wordLock);
             Settings = Settings.GetSettings();
         }
 
-        public override void InitViewModel()
+        public override void InitViewModel(object parameter = null)
         {
             Group lGroup = PackageStore.Get(0) as Group;
             if (lGroup != null)

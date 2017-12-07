@@ -28,16 +28,17 @@ namespace Wordki.Models.Lesson
             WordList = new Queue<IWord>();
             Timer = new Util.Timer();
             Counter = 1;
+            IsCorrect = false;
         }
 
-        protected abstract void CreateWordList();
+        protected abstract void CreateWordList(IEnumerable<IWord> words);
         protected abstract void CreateResultList();
         public abstract void Known();
         public abstract void Check(string translation);
 
-        public virtual void InitLesson()
+        public virtual void InitLesson(IEnumerable<IWord> words)
         {
-            CreateWordList();
+            CreateWordList(words);
             CreateResultList();
         }
 

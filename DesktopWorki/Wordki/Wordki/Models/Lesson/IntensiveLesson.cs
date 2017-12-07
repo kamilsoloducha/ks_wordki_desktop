@@ -15,8 +15,7 @@ namespace Wordki.Models.Lesson
         private const int Drawers = 5;
         private const int DrawerCount = 6;
 
-        public IntensiveLesson(IEnumerable<IWord> lWordsList)
-          : base(lWordsList)
+        public IntensiveLesson() : base()
         {
             DrawersList = new List<Queue<IWord>>(Drawers);
             for (int i = 0; i < Drawers; i++)
