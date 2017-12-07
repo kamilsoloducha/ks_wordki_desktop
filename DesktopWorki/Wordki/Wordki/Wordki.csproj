@@ -172,6 +172,9 @@
     <Compile Include="Helpers\Connector\SimpleConnector\SimpleConnector.cs" />
     <Compile Include="Helpers\Converters\ArithmeticConverter.cs" />
     <Compile Include="Helpers\Converters\DrawerToColorConverter.cs" />
+    <Compile Include="Helpers\Converters\GroupsToResultsCountConverter.cs" />
+    <Compile Include="Helpers\Converters\GroupsToResultsCountMultiConverter.cs" />
+    <Compile Include="Helpers\Converters\GroupsToWordsCountConverter.cs" />
     <Compile Include="Helpers\Converters\GroupToNextRepeatConverter.cs" />
     <Compile Include="Helpers\Converters\ItemIndexToBoolConverter.cs" />
     <Compile Include="Helpers\Converters\LanguageToImageConverter.cs" />

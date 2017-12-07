@@ -10,7 +10,7 @@ using Wordki.InteractionProvider;
 using Util;
 using Wordki.ViewModels.Dialogs;
 using System.ComponentModel;
-using System.Threading;
+using Util.Collections;
 
 namespace Wordki.ViewModels
 {
@@ -96,18 +96,6 @@ namespace Wordki.ViewModels
             }
         }
 
-        private int _groupCount;
-        public int GroupCount
-        {
-            get { return _groupCount; }
-            set
-            {
-                if (_groupCount == value) return;
-                _groupCount = value;
-                OnPropertyChanged();
-            }
-        }
-
         private int _wordCount;
         public int WordCount
         {
@@ -133,6 +121,7 @@ namespace Wordki.ViewModels
         }
 
         public IResultCalculator ResultCalculator { get; set; }
+        public IDatabase Database { get; set; }
 
         #endregion
 
@@ -142,6 +131,8 @@ namespace Wordki.ViewModels
             BuilderCommand = new BuilderCommand(Builder);
             SettingsCommand = new BuilderCommand(Settings);
             ExitCommand = new BuilderCommand(Exit);
+
+            Database = DatabaseSingleton.Instance;
 
             ResultCalculator = new ResultCalculator
             {
@@ -214,20 +205,15 @@ namespace Wordki.ViewModels
                 {
                     Groups = lDatabase.Groups,
                 };
-                foreach (int drawer in calculator.GetDrawerCount())
-                {
-                    lList.Add(drawer);
-                }
+                lList.AddRange(calculator.GetDrawerCount().Cast<double>());
                 string lTeachTimeToday = Helpers.Util.GetAproximatedTimeFromSeconds(ResultCalculator.GetLessonTimeToday());
                 string lTeachTime = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.Groups.Sum(x => x.Results.Sum(y => y.TimeCount)));
-                int lGroupCount = lDatabase.Groups.Count;
                 int lWordCount = lDatabase.Groups.Sum(x => x.Words.Count);
                 int lResultCount = lDatabase.Groups.Sum(x => x.Results.Count);
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     TeachTimeToday = lTeachTimeToday;
                     TeachTime = lTeachTime;
-                    GroupCount = lGroupCount;
                     WordCount = lWordCount;
                     ResultCount = lResultCount;
                     Values = lList;

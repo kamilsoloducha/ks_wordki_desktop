@@ -164,7 +164,7 @@
                 <valueDescription:ValueDescription
                     Grid.Column="0"
                     Description="Ilość grup"
-                    Value="{Binding Path=GroupCount}" />
+                    Value="{Binding Path=Database.Groups.Count}" />
 
                 <valueDescription:ValueDescription
                     Grid.Column="1"
