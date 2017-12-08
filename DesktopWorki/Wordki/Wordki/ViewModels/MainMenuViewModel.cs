@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
-using Wordki.Models;
-using System.Threading.Tasks;
-using Wordki.Database;
-using System.Windows.Input;
-using Wordki.InteractionProvider;
-using Util;
-using Wordki.ViewModels.Dialogs;
 using System.ComponentModel;
-using System.Threading;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using Util;
+using Wordki.Database;
+using Wordki.InteractionProvider;
+using Wordki.Models;
+using Wordki.ViewModels.Dialogs;
 
 namespace Wordki.ViewModels
 {

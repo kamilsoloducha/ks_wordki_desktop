@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using Util;
 using Util.Collections;
 using Util.Serializers;
+using Wordki.Commands;
 using Wordki.Database;
 using Wordki.Helpers;
 using Wordki.Helpers.WordComparer;
@@ -39,7 +40,6 @@ namespace Wordki.ViewModels
         private GroupItem _selectedItem;
         private string _translationDirectionLabel;
         private string _allWordsLabel;
-        private string _timeOutLabel;
         private ObservableCollection<GroupItem> _itemList;
         private ObservableCollection<double> _values;
         private double _maxValue;
@@ -54,7 +54,6 @@ namespace Wordki.ViewModels
         public ICommand DrawerSignClickCommand { get; set; }
         public ICommand TranslationDirectionChangedCommand { get; set; }
         public ICommand AllWordsCommand { get; set; }
-        public ICommand ShowPlotCommand { get; set; }
         public ICommand FinishLessonCommand { get; set; }
         public ICommand SortDirectionCommand { get; private set; }
 
@@ -116,18 +115,6 @@ namespace Wordki.ViewModels
                 }
             }
         }
-        public string TimeOutLabel
-        {
-            get { return _timeOutLabel; }
-            set
-            {
-                if (_timeOutLabel != value)
-                {
-                    _timeOutLabel = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
 
         public ObservableCollection<GroupItem> ItemsList
         {
@@ -169,9 +156,8 @@ namespace Wordki.ViewModels
             ShowWordsCommand = new Util.BuilderCommand(ShowWords);
             SelectionChangedCommand = new Util.BuilderCommand(SelectionChanged);
             DrawerSignClickCommand = new Util.BuilderCommand(DrawerSignClick);
-            TranslationDirectionChangedCommand = new Util.BuilderCommand(TranslationDirectionChanged);
-            AllWordsCommand = new Util.BuilderCommand(AllWords);
-            ShowPlotCommand = new Util.BuilderCommand(ShowPlot);
+            TranslationDirectionChangedCommand = new Util.BuilderCommand(ActionsSingleton<TranslationDirectionChangeAction>.Instance.Action);
+            AllWordsCommand = new Util.BuilderCommand(ActionsSingleton<AllWordsChangeAction>.Instance.Action);
             FinishLessonCommand = new Util.BuilderCommand(FinishLesson);
         }
 
@@ -201,23 +187,12 @@ namespace Wordki.ViewModels
 
         private void EditGroup(object obj)
         {
-            IGroup lSelectedGroup = SelectedItem.Group;
-            PackageStore.Put(0, lSelectedGroup);
-            Switcher.Switch(Switcher.State.Builder);
+            Switcher.Switch(Switcher.State.Builder, SelectedItem.Group);
         }
 
         private async void AllWords(object obj)
         {
-            IUserManager userManager = UserManagerSingleton.Instence;
-            userManager.User.AllWords = !userManager.User.AllWords;
-            await userManager.UpdateAsync();
             SetAllWordsLabel();
-        }
-
-        private void ShowPlot(object obj)
-        {
-            if (SelectedItem == null) return;
-            PackageStore.Put(0, SelectedItem.Group.Id);
         }
 
         private async void TranslationDirectionChanged(object obj)
@@ -267,8 +242,7 @@ namespace Wordki.ViewModels
         private void ShowWords(object obj)
         {
             if (SelectedItem == null) return;
-            PackageStore.Put(0, SelectedItem.Group.Id);
-            Switcher.Switch(Switcher.State.Words);
+            Switcher.Switch(Switcher.State.Words, SelectedItem.Group);
         }
 
         private void BackAction(object obj)
@@ -409,7 +383,6 @@ namespace Wordki.ViewModels
                 {
                     AllWords = user.AllWords,
                     TranslationDirection = user.TranslationDirection,
-                    Timeout = user.Timeout,
                 };
                 lesson.LessonSettings = lessonSettings;
 

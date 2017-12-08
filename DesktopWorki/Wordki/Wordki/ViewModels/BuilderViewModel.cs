@@ -200,17 +200,15 @@ namespace Wordki.ViewModels
 
         public override void InitViewModel(object parameter = null)
         {
-            Group lGroup = PackageStore.Get(0) as Group;
-            if (lGroup != null)
+            SelectedGroup = parameter as IGroup;
+            if (SelectedGroup != null)
             {
-                SelectedGroup = lGroup;
                 SetOnLastWordCurretGroup();
             }
             else
             {
                 SetOnLastWord();
             }
-            //RefreshView();
         }
 
         public override void Back()
@@ -263,11 +261,7 @@ namespace Wordki.ViewModels
 
         private void ShowWords()
         {
-            if (Database.Groups.Count == 0)
-                return;
-            long lGroupId = SelectedGroup.Id;
-            PackageStore.Put(0, lGroupId);
-            Switcher.Switch(Switcher.State.Words);
+            Switcher.Switch(Switcher.State.Words, SelectedGroup);
         }
 
         private void FindSame()
