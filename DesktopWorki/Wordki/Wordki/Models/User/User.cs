@@ -1,17 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
-using System.IO;
-using System.Text;
 using Newtonsoft.Json;
 using Repository.Models.Enums;
-using Wordki.Helpers;
 using Wordki.Helpers.JsonConverters;
 using Repository.Models;
 
 namespace Wordki.Models
 {
     [Serializable]
-    public class User : IUser
+    public class User : ModelBase<IUser>, IUser
     {
 
         #region Properties
@@ -31,17 +28,39 @@ namespace Wordki.Models
 
         public virtual DateTime DownloadTime { get; set; }
 
+        private TranslationDirection translationDirection;
         [DefaultValue(TranslationDirection.FromFirst)]
         [JsonProperty("translationDirection", NullValueHandling = NullValueHandling.Ignore)]
-        public virtual TranslationDirection TranslationDirection { get; set; }
+        public virtual TranslationDirection TranslationDirection
+        {
+            get { return translationDirection; }
+            set
+            {
+                if (translationDirection == value)
+                {
+                    return;
+                }
+                translationDirection = value;
+                OnPropertyChanged();
+            }
+        }
 
+        private bool allWords;
         [JsonConverter(typeof(StringToBoolConverter))]
         [DefaultValue(true)]
-        public virtual bool AllWords { get; set; }
-
-        [DefaultValue(0)]
-        [JsonProperty("timeOut", NullValueHandling = NullValueHandling.Ignore)]
-        public virtual int Timeout { get; set; }
+        public virtual bool AllWords
+        {
+            get { return allWords; }
+            set
+            {
+                if (allWords == value)
+                {
+                    return;
+                }
+                allWords = value;
+                OnPropertyChanged();
+            }
+        }
 
         public virtual string ApiKey { get; set; }
         public virtual DateTime CreateDateTime { get { return DateTime.Now; } set {  } }
@@ -50,7 +69,7 @@ namespace Wordki.Models
         #endregion
 
         /// <summary>
-        /// Prywatny konstruktor
+        /// 
         /// </summary>
         public User()
         {
@@ -63,33 +82,8 @@ namespace Wordki.Models
             DownloadTime = new DateTime(1990, 9, 24);
             TranslationDirection = TranslationDirection.FromSecond;
             AllWords = false;
-            Timeout = 0;
             ApiKey = "";
         }
 
-        /// <summary>
-        /// Zwraca sciezke do katalogu uzytkownika
-        /// </summary>
-        /// <returns>Sciezka do katalogu uzytkownika</returns>
-        public virtual string GetDirectory()
-        {
-            if (Name == null)
-                return null;
-            string lPath = Path.Combine(Directory.GetCurrentDirectory(), Constants.DataDictionary, Name);
-            if (!Directory.Exists(lPath))
-                Directory.CreateDirectory(lPath);
-            return Path.Combine(Directory.GetCurrentDirectory(), Constants.DataDictionary, Name);
-        }
-
-        public virtual string GetStringFromObject()
-        {
-            StringBuilder lBuilder = new StringBuilder();
-            lBuilder
-              .Append("UserId: ").Append(LocalId).Append(";")
-              .Append("Name: ").Append(Name).Append(";")
-              .Append("Password: ").Append(Password).Append(";")
-              .Append("IsRegister: ").Append(IsRegister);
-            return lBuilder.ToString();
-        }
     }
 }
