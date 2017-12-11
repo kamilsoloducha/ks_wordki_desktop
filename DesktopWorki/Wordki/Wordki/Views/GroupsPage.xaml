@@ -23,6 +23,10 @@
             x:Key="DrawerToColorConverter" />
         <converters:GroupToNextRepeatConverter
             x:Key="GroupToNextRepeatConverter" />
+        <converters:AllWordsToStringConverter
+            x:Key="AllWordsToStringConverter" />
+        <converters:TranslationDirectionToIntConverter
+            x:Key="TranslationDirectionToIntConverter" />
     </views:PageBase.Resources>
 
     <Grid>
@@ -82,7 +86,7 @@
             IsReadOnly="True"
             ScrollViewer.CanContentScroll="true"
             SelectedItem="{Binding SelectedItem}"
-            ItemsSource="{Binding ItemsList}"
+            ItemsSource="{Binding Groups}"
             SelectionUnit="FullRow"
             BorderThickness="0"
             HeadersVisibility="None"
@@ -96,11 +100,13 @@
                     <MenuItem
                         Header="Edytuj grupę"
                         Style="{StaticResource AppMenuItemStyle}"
-                        Command="{Binding EditGroupCommand}" />
+                        Command="{Binding Path=EditGroupCommand}" 
+                        CommandParameter="{Binding ElementName=GroupsDataGrid, Path=SelectedItem}"/>
                     <MenuItem
                         Header="Pokaż slowa"
                         Style="{StaticResource AppMenuItemStyle}"
-                        Command="{Binding ShowWordsCommand}" />
+                        Command="{Binding Path=ShowWordsCommand}"
+                        CommandParameter="{Binding ElementName=GroupsDataGrid, Path=SelectedItem}" />
                     <MenuItem
                         Header="Tryb wprowadzania"
                         Style="{StaticResource AppMenuItemStyle}"
@@ -431,12 +437,12 @@
                 <Button
                     Style="{StaticResource FlatButtonStyle}"
                     Command="{Binding Path=TranslationDirectionChangedCommand}"
-                    Content="{Binding Path=TranslationDirectionLabel}" />
+                    Content="{Binding Path=User, Converter={StaticResource TranslationDirectionToIntConverter}}" />
 
                 <Button
                     Style="{StaticResource FlatButtonStyle}"
                     Command="{Binding Path=AllWordsCommand}"
-                    Content="{Binding Path=AllWordsLabel}" />
+                    Content="{Binding Path=User, Converter={StaticResource AllWordsToStringConverter}}" />
 
             </StackPanel>
 

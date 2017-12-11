@@ -29,7 +29,7 @@ namespace Wordki.Helpers.Converters
                 Console.WriteLine($"Error during cast translationDirection in GroupsToResultsCountMultiConverter." +
                     $"Casted value: {values[1]}");
             }
-            return groups.Sum(x => x.Results.Where(x => x.TranslationDirection == direction).Count());
+            return groups.Sum(x => x.Results.Where(y => y.TranslationDirection == direction).Count());
 
         }
 

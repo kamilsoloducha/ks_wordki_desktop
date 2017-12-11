@@ -187,6 +187,8 @@
     <Compile Include="Helpers\Converters\PassingParametersConverter.cs" />
     <Compile Include="Helpers\Converters\RatioConverter.cs" />
     <Compile Include="Helpers\Converters\TranslationDirectionToIntConverter.cs" />
+    <Compile Include="Helpers\Converters\User\AllWordsToStringConverter.cs" />
+    <Compile Include="Helpers\Converters\User\TranslationDirectionToStringConverter.cs" />
     <Compile Include="Helpers\Converters\WordCheckedToBrushConverter.cs" />
     <Compile Include="Helpers\Converters\WordCheckedToStringConverter.cs" />
     <Compile Include="Helpers\Converters\WordToDrawerConverter.cs" />
@@ -294,7 +296,6 @@
     <Compile Include="Models\Group\Group.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\LessonScheduler\ILessonScheduler.cs" />
-    <Compile Include="Models\GroupItem.cs" />
     <Compile Include="Models\Lesson\IntensiveLesson.cs" />
     <Compile Include="Models\Lesson\Lessons.cs" />
     <Compile Include="Helpers\WordComparer\NotChecker\LetterCaseNotCheck.cs" />
@@ -332,8 +333,6 @@
     <Compile Include="ViewModels\LessonStates\FiszkiStates\WrongFiszkiState.cs" />
     <Compile Include="ViewModels\LessonStates\TypingStates\AfterEndTypingState.cs" />
     <Compile Include="ViewModels\BuilderViewModel.cs" />
-    <Compile Include="ViewModels\BuildFromFileViewModel.cs" />
-    <Compile Include="ViewModels\ChartViewModel.cs" />
     <Compile Include="ViewModels\LessonStates\TypingStates\CorrectTypingState.cs" />
     <Compile Include="ViewModels\Dialogs\DialogViewModelBase.cs" />
     <Compile Include="ViewModels\Dialogs\InfoDialogViewModel.cs" />
@@ -363,9 +362,6 @@
     <Compile Include="ViewModels\LessonStates\TypingStates\WrongTypingState.cs" />
     <Compile Include="Views\BuilderPage.xaml.cs">
       <DependentUpon>BuilderPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BuildFromFilePage.xaml.cs">
-      <DependentUpon>BuildFromFilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\CorrectWordDialog.xaml.cs">
       <DependentUpon>CorrectWordDialog.xaml</DependentUpon>
@@ -415,9 +411,6 @@
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PageBase.cs" />
-    <Compile Include="Views\PlotPage.xaml.cs">
-      <DependentUpon>PlotPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
@@ -438,10 +431,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\BuilderPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BuildFromFilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -502,10 +491,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MenuPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PlotPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
