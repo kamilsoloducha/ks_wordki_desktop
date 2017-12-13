@@ -6,7 +6,7 @@ namespace Wordki.ViewModels
     public class TeachTypingViewModel : TeachViewModelBase
     {
 
-        public override void InitViewModel()
+        public override void InitViewModel(object parameter = null)
         {
             base.InitViewModel();
             EnableTextBox = true;

@@ -43,7 +43,7 @@ namespace Wordki.ViewModels.Dialogs
         public ICommand SearchCommand { get; set; }
         public ICommand MouseDoubleClickCommand { get; set; }
 
-        public override void InitViewModel()
+        public override void InitViewModel(object parameter = null)
         {
             CancelCommand = new BuilderCommand(Cancel);
             SearchCommand = new BuilderCommand(Search);

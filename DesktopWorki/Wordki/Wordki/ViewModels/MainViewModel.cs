@@ -47,11 +47,11 @@ namespace Wordki.ViewModels
             Switcher.LockStates.Add(Helpers.Switcher.State.TeachTyping);
             Switcher.OnSwich += (sender, args) =>
             {
-                Helpers.ISwitchElement page = ((Helpers.Switcher.SwitchEventArgs)args).Page;
+                Helpers.ISwitchElement page = args.Page;
                 if (page != null)
                 {
                     Page = page;
-                    page.ViewModel.InitViewModel();
+                    page.ViewModel.InitViewModel(args.Parameter);
                 }
             };
             SearchWordCommand = new BuilderCommand(SearchWord);

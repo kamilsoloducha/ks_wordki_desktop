@@ -5,8 +5,9 @@ namespace Wordki.Helpers
 {
     public interface ILessonWordsCreator
     {
+        int Count { get; set; }
         bool AllWords { get; set; }
-        IEnumerable<IGroup> Groups { get; set; }
+        IList<IGroup> Groups { get; set; }
         IEnumerable<IWord> GetWords();
 
     }

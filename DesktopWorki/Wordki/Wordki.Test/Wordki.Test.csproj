@@ -122,6 +122,9 @@
     <Compile Include="Helpers\GroupSplitterTests\GroupSplitterWordCountTest.cs" />
     <Compile Include="Helpers\IntervalTimeCalculatorTests\IntervalTimeCalcuator.cs" />
     <Compile Include="Helpers\LessonSchedulerTests\LessonSchedulerWithSimpleInitializerTest.cs" />
+    <Compile Include="Helpers\LessonWordsCreatorTests\AllToTeachCreatorTests\AllToTeachCreatorFixture.cs" />
+    <Compile Include="Helpers\LessonWordsCreatorTests\RandomCreatorTests\RandomCreatorFixture.cs" />
+    <Compile Include="Helpers\LessonWordsCreatorTests\SimpleCreatorTests\SimpleCreatorFixture.cs" />
     <Compile Include="Helpers\NewLessonSchedulerTests\NewLessonSchedulerAnyResutsTest.cs" />
     <Compile Include="Helpers\NotCheckersTests\LetterCaseNotCheckTest.cs" />
     <Compile Include="Helpers\NotCheckersTests\PunctuationNotCheckTest.cs" />
@@ -137,7 +140,9 @@
     <Compile Include="Helpers\WordFinderTests\WordFinderTest.cs" />
     <Compile Include="IntegratedViewModelTests\BuilderViewModelTests\InitViewModelTests.cs" />
     <Compile Include="Lessons\LessonSerializeTests.cs" />
+    <Compile Include="Lessons\LessonUtil.cs" />
     <Compile Include="Lessons\TypingLessonTests.cs" />
+    <Compile Include="Lessons\TypingLesson\CheckInitialization.cs" />
     <Compile Include="RepositoryTest\DirectionSwaperTests.cs" />
     <Compile Include="RepositoryTest\GroupsTests.cs" />
     <Compile Include="RepositoryTest\LanguageSwaperTests.cs" />

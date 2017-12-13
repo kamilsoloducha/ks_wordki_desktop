@@ -10,7 +10,7 @@ namespace Wordki.ViewModels
     public interface IViewModel
     {
         Switcher Switcher { get; set; }
-        void InitViewModel();
+        void InitViewModel(object parameter = null);
         void Back();
         void Loaded();
         void Unloaded();

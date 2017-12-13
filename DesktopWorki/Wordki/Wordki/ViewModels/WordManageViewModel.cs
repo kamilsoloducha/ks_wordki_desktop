@@ -1,18 +1,16 @@
 ﻿using Repository.Models;
 using System;
-using System.Collections;
 using System.Linq;
+using System.Collections;
 using System.Windows.Input;
 using Wordki.Database;
 using Wordki.Helpers;
-using Wordki.Models;
+using System.Collections.Generic;
 
 namespace Wordki.ViewModels
 {
     public class WordManageViewModel : ViewModelBase
     {
-
-
         private IGroup _group;
         public IGroup Group
         {
@@ -25,43 +23,24 @@ namespace Wordki.ViewModels
             }
         }
 
-        private string _name;
-
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                if (_name == value) return;
-                _name = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public IDatabase Database { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand DeleteItemsCommand { get; set; }
         public ICommand VisibilityChangeCommnad { get; set; }
-        public ICommand ConnectItemsCommand { get; set; }
 
         public WordManageViewModel()
         {
-            Database = DatabaseSingleton.Instance;
-            ActivateCommand();
-
+            DeleteItemsCommand = new Util.BuilderCommand(DeleteItems);
+            VisibilityChangeCommnad = new Util.BuilderCommand(VisibilityChange);
+            BackCommand = new Util.BuilderCommand(BackAction);
         }
 
-        public override void InitViewModel()
+        public override void InitViewModel(object parameter = null)
         {
-            try
+            Group = parameter as IGroup;
+            if(Group == null)
             {
-                long lGroupId = (long)Util.PackageStore.Get(0);
-                Group = Database.Groups.FirstOrDefault(x => x.Id == lGroupId);
-                Name = "jakaś nazwa";
-            }
-            catch (Exception lException)
-            {
-                LoggerSingleton.LogError("Blad w czasie inicjalizacji WordManagerViewModel - {0}", lException.Message);
+                Console.WriteLine("The parameter is not IGroup type. Cannot InitViewModel");
+                return;
             }
         }
 
@@ -69,39 +48,16 @@ namespace Wordki.ViewModels
         {
         }
 
-        private void ActivateCommand()
-        {
-            DeleteItemsCommand = new Util.BuilderCommand(DeleteItems);
-            VisibilityChangeCommnad = new Util.BuilderCommand(VisibilityChange);
-            BackCommand = new Util.BuilderCommand(BackAction);
-            ConnectItemsCommand = new Util.BuilderCommand(ConnectItems);
-        }
-
-        private async void ConnectItems(object obj)
-        {
-            if (obj == null)
-            {
-                return;
-            }
-            IEnumerable items = obj as IEnumerable;
-            if (items == null)
-            {
-                return;
-            }
-            //await Database.ConnectWords(items.OfType<IWord>().ToList());
-        }
-
-        private async void VisibilityChange(object obj)
+        private void VisibilityChange(object obj)
         {
             if (obj == null)
                 return;
-            IList lList = (obj as IList);
-            if (lList == null)
+            IList list = (obj as IList);
+            if (list == null)
                 return;
-            foreach (Word lItem in lList)
+            foreach (IWord word in list)
             {
-                lItem.Visible = !lItem.Visible;
-                await Database.UpdateWordAsync(lItem);
+                word.ChangeVisibility();
             }
         }
 
@@ -114,12 +70,14 @@ namespace Wordki.ViewModels
         {
             if (obj == null)
                 return;
-            IList lList = (obj as IList);
-            if (lList == null)
+            IList list = (obj as IList);
+            if (list == null)
                 return;
-            for (int i = lList.Count - 1; i >= 0; i--)
+            IList<IWord> words = list.Cast<IWord>().ToList();
+            IDatabase database = DatabaseSingleton.Instance;
+            for (int i = list.Count - 1; i >= 0; i--)
             {
-                //await Database.DeleteWordAsync(Group, (Word)lList[i]);
+                database.DeleteWord(words[i]);
             }
         }
 

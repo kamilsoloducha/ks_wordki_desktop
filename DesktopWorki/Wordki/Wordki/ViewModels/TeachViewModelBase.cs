@@ -131,16 +131,14 @@ namespace Wordki.ViewModels
             HintCommand = new Util.BuilderCommand(Hint);
         }
 
-        public override void InitViewModel()
+        public override void InitViewModel(object parameter = null)
         {
             switcher = Switcher;
-            Lesson lLesson = Util.PackageStore.Get(0) as Lesson;
-            if (lLesson == null)
+            Lesson = parameter as Lesson;
+            if (Lesson == null)
                 return;
-            lLesson.Timer.TimerListeners.Add(this);
+            Lesson.Timer.TimerListeners.Add(this);
             Timer = "";
-            Lesson = lLesson;
-
             OnTimerTick(0);
             StartLessonCommand = new Util.BuilderCommand(StartLesson);
             PauseCommand = new Util.BuilderCommand(Pause);
@@ -176,21 +174,6 @@ namespace Wordki.ViewModels
             }
             CursorOnEnd = false;
         }
-
-        //private async void CheckUncheck(object obj)
-        //{
-        //    if (Lesson.SelectedWord == null)
-        //    {
-        //        return;
-        //    }
-        //    IWord word = Lesson.SelectedWord.Group.Words.FirstOrDefault(x => x.Id == Lesson.SelectedWord.Id);
-        //    if (word == null)
-        //    {
-        //        return;
-        //    }
-        //    word.Checked = !word.Checked;
-        //    await DatabaseSingleton.Instance.UpdateWordAsync(word);
-        //}
 
         private void Pause()
         {

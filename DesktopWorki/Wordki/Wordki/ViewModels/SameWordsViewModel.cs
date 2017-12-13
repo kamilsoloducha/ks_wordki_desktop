@@ -68,7 +68,7 @@ namespace Wordki.ViewModels
             CreateDataGridCollection();
         }
 
-        public override void InitViewModel()
+        public override void InitViewModel(object parameter = null)
         {
             Database = DatabaseSingleton.Instance;
         }

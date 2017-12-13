@@ -83,7 +83,7 @@ namespace Wordki.ViewModels.Dialogs
             InitViewModel();
         }
 
-        public override void InitViewModel()
+        public override void InitViewModel(object parameter = null)
         {
             PositiveCommand = new BuilderCommand(Positive);
             NegativeCommand = new BuilderCommand(Negative);

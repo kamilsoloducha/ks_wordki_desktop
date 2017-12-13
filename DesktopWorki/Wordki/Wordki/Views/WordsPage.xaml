@@ -32,7 +32,7 @@
             Grid.ColumnSpan="2"
             IsReadOnly="True"
             ScrollViewer.CanContentScroll="True"
-            ItemsSource="{Binding Path=Group.WordsList}"
+            ItemsSource="{Binding Path=Group.Words}"
             Style="{StaticResource AppDataGridStyle}">
 
             <DataGrid.Resources>
@@ -48,12 +48,12 @@
                         Header="Zmień widoczność"
                         Style="{StaticResource AppMenuItemStyle}"
                         Command="{Binding VisibilityChangeCommnad}"
-                        CommandParameter="{Binding SelectedItems, ElementName=WordsDataGrid}" />
+                        CommandParameter="{Binding Path=SelectedItems, ElementName=WordsDataGrid}" />
                     <MenuItem
                         Header="Usuń"
                         Style="{StaticResource AppMenuItemStyle}"
                         Command="{Binding DeleteItemsCommand}"
-                        CommandParameter="{Binding SelectedItems, ElementName=WordsDataGrid}" />
+                        CommandParameter="{Binding Path=SelectedItems, ElementName=WordsDataGrid}" />
                     <MenuItem
                         Header="Połącz"
                         Style="{StaticResource AppMenuItemStyle}"

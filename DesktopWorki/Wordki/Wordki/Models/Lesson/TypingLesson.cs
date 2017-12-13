@@ -11,14 +11,7 @@ namespace Wordki.Models.Lesson
     public class TypingLesson : Lesson
     {
 
-        protected IEnumerable<IWord> AllWordList { get; set; }
-
-        public TypingLesson(IEnumerable<IWord> pWordsList)
-          : base()
-        {
-            AllWordList = pWordsList;
-            IsCorrect = false;
-        }
+        public TypingLesson() : base() { }
 
         public override void Known()
         {
@@ -61,37 +54,30 @@ namespace Wordki.Models.Lesson
             }
         }
 
-        protected override void CreateWordList()
+        protected override void CreateWordList(IEnumerable<IWord> words)
         {
-            foreach (Word word in AllWordList.Where(word => word.Visible || LessonSettings.AllWords))
+            BeginWordsList.AddRange(words.Where(word => word.Visible || LessonSettings.AllWords).Select(x => (IWord)x.Clone()));
+            BeginWordsList.Shuffle();
+            foreach (IWord word in BeginWordsList)
             {
-                BeginWordsList.Add((Word)word.Clone());
-            }
-            BeginWordsList = BeginWordsList.Shuffle();
-            foreach (Word word in BeginWordsList)
-            {
-                WordList.Enqueue(word);
+                WordQueue.Enqueue(word);
             }
         }
 
         protected override void CreateResultList()
         {
-            ResultList = new List<IResult>();
-            foreach (Word word in BeginWordsList)
-            {
-                if (ResultList.Count(x => x.Group == word.Group) != 0) continue;
-                ResultList.Add(new Result(-1,
-                  word.Group,
+            ResultList.AddRange(BeginWordsList.GroupBy(x => x.Group).Select(x =>
+            new Result(-1,
+                  x.Key,
                   0,
                   0,
                   0,
-                  (short)word.Group.Words.Count(x => !x.Visible),
+                  (short)x.Key.Words.Count(y => !y.Visible),
                   0,
                   LessonSettings.TranslationDirection,
                   (LessonType)Enum.Parse(typeof(LessonType), GetType().Name),
                   DateTime.Now,
-                  int.MaxValue));
-            }
+                  int.MaxValue)));
         }
     }
 }

@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
-using Wordki.Models;
-using System.Threading.Tasks;
-using Wordki.Database;
-using System.Windows.Input;
-using Wordki.InteractionProvider;
-using Util;
-using Wordki.ViewModels.Dialogs;
 using System.ComponentModel;
-using System.Threading;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using Util;
+using Util.Collections;
+using Wordki.Database;
+using Wordki.InteractionProvider;
+using Wordki.Models;
+using Wordki.ViewModels.Dialogs;
 
 namespace Wordki.ViewModels
 {
@@ -96,18 +95,6 @@ namespace Wordki.ViewModels
             }
         }
 
-        private int _groupCount;
-        public int GroupCount
-        {
-            get { return _groupCount; }
-            set
-            {
-                if (_groupCount == value) return;
-                _groupCount = value;
-                OnPropertyChanged();
-            }
-        }
-
         private int _wordCount;
         public int WordCount
         {
@@ -133,6 +120,7 @@ namespace Wordki.ViewModels
         }
 
         public IResultCalculator ResultCalculator { get; set; }
+        public IDatabase Database { get; set; }
 
         #endregion
 
@@ -143,13 +131,15 @@ namespace Wordki.ViewModels
             SettingsCommand = new BuilderCommand(Settings);
             ExitCommand = new BuilderCommand(Exit);
 
+            Database = DatabaseSingleton.Instance;
+
             ResultCalculator = new ResultCalculator
             {
                 Groups = DatabaseSingleton.Instance.Groups,
             };
         }
 
-        public override void InitViewModel()
+        public override void InitViewModel(object parameter = null)
         {
             
         }
@@ -214,20 +204,15 @@ namespace Wordki.ViewModels
                 {
                     Groups = lDatabase.Groups,
                 };
-                foreach (int drawer in calculator.GetDrawerCount())
-                {
-                    lList.Add(drawer);
-                }
+                lList.AddRange(calculator.GetDrawerCount().Cast<double>());
                 string lTeachTimeToday = Helpers.Util.GetAproximatedTimeFromSeconds(ResultCalculator.GetLessonTimeToday());
                 string lTeachTime = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.Groups.Sum(x => x.Results.Sum(y => y.TimeCount)));
-                int lGroupCount = lDatabase.Groups.Count;
                 int lWordCount = lDatabase.Groups.Sum(x => x.Words.Count);
                 int lResultCount = lDatabase.Groups.Sum(x => x.Results.Count);
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     TeachTimeToday = lTeachTimeToday;
                     TeachTime = lTeachTime;
-                    GroupCount = lGroupCount;
                     WordCount = lWordCount;
                     ResultCount = lResultCount;
                     Values = lList;

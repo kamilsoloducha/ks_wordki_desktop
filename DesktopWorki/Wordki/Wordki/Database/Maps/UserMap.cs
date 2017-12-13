@@ -17,7 +17,6 @@ namespace Wordki.Database
             Map(x => x.DownloadTime);
             Map(x => x.TranslationDirection);
             Map(x => x.AllWords);
-            Map(x => x.Timeout);
             Map(x => x.ApiKey);
         }
 

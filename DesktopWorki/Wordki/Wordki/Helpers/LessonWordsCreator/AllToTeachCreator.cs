@@ -7,9 +7,21 @@ namespace Wordki.Helpers
 {
     public class AllToTeachCreator : ILessonWordsCreator
     {
+        public int Count { get; set; }
 
-        public ILessonScheduler Scheduler { get; set; }
-        public IEnumerable<IGroup> Groups { get; set; }
+        //private ILessonScheduler lessonScheduler = new NewLessonScheduler()
+        //{
+        //    Initializer = new LessonSchedulerInitializer2(new List<int>() { 1, 1, 2, 4, 7 })
+        //    {
+        //        TranslationDirection = UserManagerSingleton.Instence.User.TranslationDirection,
+        //    },
+        //};
+        public ILessonScheduler Scheduler
+        {
+            get;set;
+        }
+
+        public IList<IGroup> Groups { get; set; }
         public bool AllWords { get; set; }
 
         public IEnumerable<IWord> GetWords()

@@ -11,14 +11,7 @@ namespace Wordki.Models.Lesson
 {
     public class FiszkiLesson : Lesson
     {
-
-        protected IEnumerable<IWord> AllWordList { get; set; }
-
-        public FiszkiLesson(IEnumerable<IWord> pWordsList)
-          : base()
-        {
-            AllWordList = pWordsList;
-        }
+        public FiszkiLesson() : base() { }
 
         public override void Check(string translation)
         {
@@ -59,16 +52,16 @@ namespace Wordki.Models.Lesson
             }
         }
 
-        protected override void CreateWordList()
+        protected override void CreateWordList(IEnumerable<IWord> words)
         {
-            foreach (Word word in AllWordList.Where(word => word.Visible || LessonSettings.AllWords))
+            foreach (Word word in words.Where(word => word.Visible || LessonSettings.AllWords))
             {
                 BeginWordsList.Add((Word)word.Clone());
             }
             BeginWordsList = BeginWordsList.Shuffle();
             foreach (Word word in BeginWordsList)
             {
-                WordList.Enqueue(word);
+                WordQueue.Enqueue(word);
             }
         }
     }

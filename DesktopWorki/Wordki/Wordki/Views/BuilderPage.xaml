@@ -148,7 +148,8 @@
                                 ImageSource="/Resources/Icons/GroupRemove.png"
                                 Content="Usuń grupę" />
                             <helpers:ImageButton
-                                Command="{Binding SplitGroupCommand}"
+                                Command="{Binding Path=SplitGroupCommand}"
+                                CommandParameter="{Binding Path=SelectedGroup}"
                                 Style="{StaticResource FlatButtonStyle}"
                                 ImageSource="/Resources/Icons/GroupSplit.png"
                                 Content="Podziel grupę" />

@@ -19,7 +19,7 @@ namespace Wordki.ViewModels.Dialogs
         {
         }
 
-        public override void InitViewModel()
+        public override void InitViewModel(object parameter = null)
         {
             CloseCommand = new Util.BuilderCommand(Close);
         }

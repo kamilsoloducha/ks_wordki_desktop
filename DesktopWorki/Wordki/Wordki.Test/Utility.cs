@@ -130,7 +130,6 @@ namespace Wordki.Test
                 LastLoginDateTime = new DateTime(1990, 9, 24, 12, 0, 0),
                 Name = "Name",
                 Password = "Password",
-                Timeout = 10,
                 TranslationDirection = TranslationDirection.FromSecond,
             };
         }
@@ -142,7 +141,6 @@ namespace Wordki.Test
             Assert.AreEqual(expected.ApiKey, actual.ApiKey);
             Assert.AreEqual(expected.AllWords, actual.AllWords);
             Assert.AreEqual(expected.TranslationDirection, actual.TranslationDirection);
-            Assert.AreEqual(expected.Timeout, actual.Timeout);
             Assert.AreEqual(expected.LastLoginDateTime, actual.LastLoginDateTime);
 
         }

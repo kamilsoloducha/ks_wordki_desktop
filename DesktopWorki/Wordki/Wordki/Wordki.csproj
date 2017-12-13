@@ -131,11 +131,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\AllWordsChangeAction.cs" />
     <Compile Include="Commands\CheckUncheckAction.cs" />
     <Compile Include="Commands\ActionsSingleton.cs" />
     <Compile Include="Commands\SelectLanguageAction.cs" />
     <Compile Include="Commands\SwapWordAction.cs" />
     <Compile Include="Commands\SwapWordsInGroupAction.cs" />
+    <Compile Include="Commands\TranslationDirectionChangeAction.cs" />
     <Compile Include="Database\Database\DatabaseSingleton.cs" />
     <Compile Include="Database\Maps\GroupMap.cs" />
     <Compile Include="Database\Repositories\GroupRepository.cs" />
@@ -162,10 +164,6 @@
     <Compile Include="Database\Repositories\WordRepository.cs" />
     <Compile Include="Helpers\Behaviour\ListBoxAtLeastOneSelectedItemBehavior.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
-    <Compile Include="Helpers\Command\CommandApiRequest.cs" />
-    <Compile Include="Helpers\Command\ICommand.cs" />
-    <Compile Include="Helpers\Command\SimpleCommand.cs" />
-    <Compile Include="Helpers\Command\SimpleCommandAsync.cs" />
     <Compile Include="Helpers\Connector\IConnector.cs" />
     <Compile Include="Helpers\Connector\IParser.cs" />
     <Compile Include="Helpers\Connector\IResponse.cs" />
@@ -176,6 +174,9 @@
     <Compile Include="Helpers\Connector\SimpleConnector\SimpleConnector.cs" />
     <Compile Include="Helpers\Converters\ArithmeticConverter.cs" />
     <Compile Include="Helpers\Converters\DrawerToColorConverter.cs" />
+    <Compile Include="Helpers\Converters\GroupsToResultsCountConverter.cs" />
+    <Compile Include="Helpers\Converters\GroupsToResultsCountMultiConverter.cs" />
+    <Compile Include="Helpers\Converters\GroupsToWordsCountConverter.cs" />
     <Compile Include="Helpers\Converters\GroupToNextRepeatConverter.cs" />
     <Compile Include="Helpers\Converters\ItemIndexToBoolConverter.cs" />
     <Compile Include="Helpers\Converters\LanguageToImageConverter.cs" />
@@ -186,6 +187,8 @@
     <Compile Include="Helpers\Converters\PassingParametersConverter.cs" />
     <Compile Include="Helpers\Converters\RatioConverter.cs" />
     <Compile Include="Helpers\Converters\TranslationDirectionToIntConverter.cs" />
+    <Compile Include="Helpers\Converters\User\AllWordsToStringConverter.cs" />
+    <Compile Include="Helpers\Converters\User\TranslationDirectionToStringConverter.cs" />
     <Compile Include="Helpers\Converters\WordCheckedToBrushConverter.cs" />
     <Compile Include="Helpers\Converters\WordCheckedToStringConverter.cs" />
     <Compile Include="Helpers\Converters\WordToDrawerConverter.cs" />
@@ -206,7 +209,11 @@
     <Compile Include="Helpers\JsonConverters\StringToBoolConverter.cs" />
     <Compile Include="Helpers\JsonConverters\StringToIntConverter.cs" />
     <Compile Include="Helpers\LessonWordsCreator\AllToTeachCreator.cs" />
+    <Compile Include="Helpers\LessonWordsCreator\BestCreator.cs" />
     <Compile Include="Helpers\LessonWordsCreator\ILessonWordsCreator.cs" />
+    <Compile Include="Helpers\LessonWordsCreator\LessonWordCreatorFactory.cs" />
+    <Compile Include="Helpers\LessonWordsCreator\RandomCreator.cs" />
+    <Compile Include="Helpers\LessonWordsCreator\SimpleCreator.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\Notification\INotification.cs" />
     <Compile Include="Helpers\Notification\NotificationFactory.cs" />
@@ -254,6 +261,7 @@
     <Compile Include="Models\LessonScheduler\LessonScheduleInitializer\LessonSchedulerInitializer.cs" />
     <Compile Include="Models\LessonScheduler\NewLessonScheduler.cs" />
     <Compile Include="Models\Lesson\FiszkiLesson.cs" />
+    <Compile Include="Models\Lesson\LessonFactory.cs" />
     <Compile Include="Models\Lesson\LessonSettings\ILessonSettings.cs" />
     <Compile Include="Models\Lesson\LessonSettings\LessonSettings.cs" />
     <Compile Include="Models\Lesson\WorstLesson.cs" />
@@ -288,8 +296,6 @@
     <Compile Include="Models\Group\Group.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\LessonScheduler\ILessonScheduler.cs" />
-    <Compile Include="Models\Lesson\BestLesson.cs" />
-    <Compile Include="Models\GroupItem.cs" />
     <Compile Include="Models\Lesson\IntensiveLesson.cs" />
     <Compile Include="Models\Lesson\Lessons.cs" />
     <Compile Include="Helpers\WordComparer\NotChecker\LetterCaseNotCheck.cs" />
@@ -327,8 +333,6 @@
     <Compile Include="ViewModels\LessonStates\FiszkiStates\WrongFiszkiState.cs" />
     <Compile Include="ViewModels\LessonStates\TypingStates\AfterEndTypingState.cs" />
     <Compile Include="ViewModels\BuilderViewModel.cs" />
-    <Compile Include="ViewModels\BuildFromFileViewModel.cs" />
-    <Compile Include="ViewModels\ChartViewModel.cs" />
     <Compile Include="ViewModels\LessonStates\TypingStates\CorrectTypingState.cs" />
     <Compile Include="ViewModels\Dialogs\DialogViewModelBase.cs" />
     <Compile Include="ViewModels\Dialogs\InfoDialogViewModel.cs" />
@@ -358,9 +362,6 @@
     <Compile Include="ViewModels\LessonStates\TypingStates\WrongTypingState.cs" />
     <Compile Include="Views\BuilderPage.xaml.cs">
       <DependentUpon>BuilderPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BuildFromFilePage.xaml.cs">
-      <DependentUpon>BuildFromFilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\CorrectWordDialog.xaml.cs">
       <DependentUpon>CorrectWordDialog.xaml</DependentUpon>
@@ -410,9 +411,6 @@
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PageBase.cs" />
-    <Compile Include="Views\PlotPage.xaml.cs">
-      <DependentUpon>PlotPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
@@ -433,10 +431,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\BuilderPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BuildFromFilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -497,10 +491,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MenuPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PlotPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
