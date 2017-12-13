@@ -28,14 +28,6 @@ namespace Wordki.Test.Lessons
         }
 
         [Test]
-        public void Check_lesson_initialization_test()
-        {
-            Assert.AreEqual(wordCount, lesson.BeginWordsList.Count, "BeginWordsList.Count is not expected");
-            Assert.AreEqual(wordCount, lesson.WordQueue.Count, "WordQueue.Count is not expected");
-            Assert.AreEqual(1, lesson.ResultList.Count, "ResultList.Count is not expected");
-        }
-
-        [Test]
         public void Check_correct_word_test()
         {
             lesson.NextWord();

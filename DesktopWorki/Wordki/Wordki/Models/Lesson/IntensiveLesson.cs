@@ -27,25 +27,18 @@ namespace Wordki.Models.Lesson
 
         public override void NextWord()
         {
-            Stopwatch stopWatch = Stopwatch.StartNew();
-            //PrintDrawers();
             IsChecked = false;
             SelectedWord = WordQueue.Count == 0 ? NextWordWithEmptyList() : NextWordWithContainedList();
             Counter = BeginWordsList.Count - WordQueue.Count;
-            stopWatch.Stop();
-            Console.WriteLine("E - NextWord - {0}", stopWatch.ElapsedTicks);
         }
 
         public override void Known()
         {
-            Stopwatch stopWatch = Stopwatch.StartNew();
             MakeKnwon();
             Dequeue();
             if (CurrentDrawer < Drawers - 1)
                 DrawersList[CurrentDrawer + 1].Enqueue(SelectedWord);
             NextWord();
-            stopWatch.Stop();
-            Console.WriteLine("E - Knwon - {0}", stopWatch.ElapsedTicks);
         }
 
         public override void Check(string translation)
@@ -60,18 +53,14 @@ namespace Wordki.Models.Lesson
 
         public override void Unknown()
         {
-            Stopwatch stopWatch = Stopwatch.StartNew();
             MakeUnknwon();
             Dequeue();
             DrawersList[0].Enqueue(SelectedWord);
             NextWord();
-            stopWatch.Stop();
-            Console.WriteLine("E - Unknwon - {0}", stopWatch.ElapsedTicks);
         }
 
         private IWord NextWordWithEmptyList()
         {
-            Stopwatch stopWatch = Stopwatch.StartNew();
             CurrentDrawer = 4;
             for (int i = 0; i < DrawersList.Count - 1; i++)
             {
@@ -80,14 +69,11 @@ namespace Wordki.Models.Lesson
                     CurrentDrawer = i;
                 }
             }
-            stopWatch.Stop();
-            Console.WriteLine("E - NextWordWithEmptyList - {0}", stopWatch.ElapsedTicks);
             return DrawersList[CurrentDrawer].Count > 0 ? DrawersList[CurrentDrawer].Peek() : null;
         }
 
         private IWord NextWordWithContainedList()
         {
-            Stopwatch stopWatch = Stopwatch.StartNew();
             int fullList = -1;
             for (int i = 0; i < DrawersList.Count; i++)
             {
@@ -97,8 +83,6 @@ namespace Wordki.Models.Lesson
                 }
             }
             CurrentDrawer = fullList;
-            stopWatch.Stop();
-            Console.WriteLine("E - NextWordWithContainedList - {0}", stopWatch.ElapsedTicks);
             return fullList < 0 ? WordQueue.Peek() : DrawersList[fullList].Peek();
         }
 
@@ -155,27 +139,6 @@ namespace Wordki.Models.Lesson
         {
             int drawersCount = DrawersList.Sum(x => x.Count);
             return (BeginWordsList.Count - (WordQueue.Count + drawersCount)) * 100d / BeginWordsList.Count;
-        }
-
-        private void PrintDrawers()
-        {
-            Stopwatch stopWatch = Stopwatch.StartNew();
-            LoggerSingleton.LogInfo("WordList:");
-            foreach (Word word in WordQueue)
-            {
-                LoggerSingleton.LogInfo("Słowo: {0} | {1}", word.Language1, word.Language2);
-            }
-            LoggerSingleton.LogInfo("DrawersList:");
-            for (int i = 0; i < Drawers; i++)
-            {
-                LoggerSingleton.LogInfo("szuflada: {0} | słów: {1}", i, DrawersList[i].Count);
-                foreach (Word word in DrawersList[i])
-                {
-                    LoggerSingleton.LogInfo("Słowo: {0} | {1}", word.Language1, word.Language2);
-                }
-            }
-            stopWatch.Stop();
-            Console.WriteLine("E - PrintDrawers - {0}", stopWatch.ElapsedTicks);
         }
     }
 }

@@ -26,6 +26,7 @@ namespace Wordki.Models.Lesson
         {
             BeginWordsList = new List<IWord>();
             WordQueue = new Queue<IWord>();
+            ResultList = new List<IResult>();
             Timer = new Util.Timer();
             Counter = 1;
             IsCorrect = false;
