@@ -63,7 +63,7 @@ namespace Wordki.Models.Lesson
             BeginWordsList = BeginWordsList.Shuffle();
             foreach (Word word in BeginWordsList)
             {
-                WordList.Enqueue(word);
+                WordQueue.Enqueue(word);
             }
         }
 

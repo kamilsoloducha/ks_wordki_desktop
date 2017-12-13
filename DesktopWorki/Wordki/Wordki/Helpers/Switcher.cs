@@ -74,9 +74,6 @@ namespace Wordki.Helpers
                 case State.Same:
                     result = new SameWordsPage();
                     break;
-                case State.BuildFromFile:
-                    result = new BuildFromFilePage();
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException("pState");
             }

@@ -17,7 +17,7 @@ namespace Wordki.Models.Lesson
             }
             foreach (IWord word in BeginWordsList)
             {
-                WordList.Enqueue(word);
+                WordQueue.Enqueue(word);
             }
         }
 

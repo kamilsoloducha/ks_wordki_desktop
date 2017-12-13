@@ -82,10 +82,10 @@ namespace Wordki.Test.Lessons
             Assert.AreEqual(expected.LessonSettings, actual.LessonSettings, "LessonSettings not equal");
             Assert.AreEqual(expected.SelectedWord, actual.SelectedWord, "SelectedWord not equal");
 
-            Assert.AreEqual(expected.WordList.Count, actual.WordList.Count, "WordList not equal");
-            for (int i = 0; i < expected.WordList.Count; i++)
+            Assert.AreEqual(expected.WordQueue.Count, actual.WordQueue.Count, "WordList not equal");
+            for (int i = 0; i < expected.WordQueue.Count; i++)
             {
-                Assert.AreEqual(expected.WordList.ToArray()[i], actual.WordList.ToArray()[i]);
+                Assert.AreEqual(expected.WordQueue.ToArray()[i], actual.WordQueue.ToArray()[i]);
             }
 
             Assert.AreEqual(expected.ResultList.Count, actual.ResultList.Count, "ResultList not equal");

@@ -30,8 +30,8 @@ namespace Wordki.Models.Lesson
             Stopwatch stopWatch = Stopwatch.StartNew();
             //PrintDrawers();
             IsChecked = false;
-            SelectedWord = WordList.Count == 0 ? NextWordWithEmptyList() : NextWordWithContainedList();
-            Counter = BeginWordsList.Count - WordList.Count;
+            SelectedWord = WordQueue.Count == 0 ? NextWordWithEmptyList() : NextWordWithContainedList();
+            Counter = BeginWordsList.Count - WordQueue.Count;
             stopWatch.Stop();
             Console.WriteLine("E - NextWord - {0}", stopWatch.ElapsedTicks);
         }
@@ -99,14 +99,14 @@ namespace Wordki.Models.Lesson
             CurrentDrawer = fullList;
             stopWatch.Stop();
             Console.WriteLine("E - NextWordWithContainedList - {0}", stopWatch.ElapsedTicks);
-            return fullList < 0 ? WordList.Peek() : DrawersList[fullList].Peek();
+            return fullList < 0 ? WordQueue.Peek() : DrawersList[fullList].Peek();
         }
 
         private void Dequeue()
         {
             if (CurrentDrawer < 0)
             {
-                WordList.Dequeue();
+                WordQueue.Dequeue();
             }
             else
             {
@@ -154,14 +154,14 @@ namespace Wordki.Models.Lesson
         public override double GetProgress()
         {
             int drawersCount = DrawersList.Sum(x => x.Count);
-            return (BeginWordsList.Count - (WordList.Count + drawersCount)) * 100d / BeginWordsList.Count;
+            return (BeginWordsList.Count - (WordQueue.Count + drawersCount)) * 100d / BeginWordsList.Count;
         }
 
         private void PrintDrawers()
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
             LoggerSingleton.LogInfo("WordList:");
-            foreach (Word word in WordList)
+            foreach (Word word in WordQueue)
             {
                 LoggerSingleton.LogInfo("Słowo: {0} | {1}", word.Language1, word.Language2);
             }

@@ -11,7 +11,7 @@ namespace Wordki.Models.Lesson
     public abstract class Lesson
     {
         public IList<IResult> ResultList { get; protected set; }
-        public Queue<IWord> WordList { get; protected set; }
+        public Queue<IWord> WordQueue { get; protected set; }
         public IList<IWord> BeginWordsList { get; protected set; }
         public IWord SelectedWord { get; protected set; }
         public bool IsCorrect { get; protected set; }
@@ -25,7 +25,7 @@ namespace Wordki.Models.Lesson
         protected Lesson()
         {
             BeginWordsList = new List<IWord>();
-            WordList = new Queue<IWord>();
+            WordQueue = new Queue<IWord>();
             Timer = new Util.Timer();
             Counter = 1;
             IsCorrect = false;
@@ -47,7 +47,7 @@ namespace Wordki.Models.Lesson
         /// </summary>
         public virtual void NextWord()
         {
-            SelectedWord = (WordList.Count > 0) ? WordList.Dequeue() : null;
+            SelectedWord = (WordQueue.Count > 0) ? WordQueue.Dequeue() : null;
             IsChecked = false;
             if (SelectedWord != null)
                 CurrentDrawer = SelectedWord.Drawer;
@@ -68,7 +68,7 @@ namespace Wordki.Models.Lesson
                 }
             }
             //przesuwamy SelectedWord na poczatek listy
-            WordList.Enqueue(SelectedWord);
+            WordQueue.Enqueue(SelectedWord);
             NextWord();
         }
 
@@ -136,7 +136,7 @@ namespace Wordki.Models.Lesson
 
         public virtual double GetProgress()
         {
-            int remain = WordList.Count + (SelectedWord == null ? 0 : 1);
+            int remain = WordQueue.Count + (SelectedWord == null ? 0 : 1);
             return (BeginWordsList.Count - remain) * 100d / BeginWordsList.Count;
         }
     }
