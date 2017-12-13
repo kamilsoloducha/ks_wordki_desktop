@@ -339,7 +339,7 @@ namespace Wordki.ViewModels
                     lLastRepeat = itemDateTime;
                 }
             }
-            string groupName = SelectionList.Count == 1 ? SelectionList.First().Group.Name : null;
+            string groupName = SelectionList.Count == 1 ? SelectionList.First().Group.Name : " ";
             int lWordsCount = SelectionList.Sum(x => x.Group.Words.Count);
             int lVisibilitiesCount = SelectionList.Sum(x => x.Group.Words.Count(y => y.Visible));
             int lRepeatsCount = SelectionList.Sum(x => x.Group.Results.Count(y => y.TranslationDirection == UserManagerSingleton.Instence.User.TranslationDirection));
