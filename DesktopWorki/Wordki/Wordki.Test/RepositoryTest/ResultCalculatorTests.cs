@@ -9,14 +9,14 @@ namespace Wordki.Test.RepositoryTest
     [TestFixture]
     public class ResultCalculatorTests
     {
-        IResultCalculator calculator;
+        IResultOrganizer calculator;
         IList<IGroup> groups;
         DateTime date = new DateTime(1990, 9, 24, 12, 0, 0);
         [SetUp]
         public void SetUp()
         {
             groups = new List<IGroup>();
-            calculator = new ResultCalculator()
+            calculator = new ResultOrganizer()
             {
                 Groups = groups,
             };

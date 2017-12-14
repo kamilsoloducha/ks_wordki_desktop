@@ -266,8 +266,10 @@
     <Compile Include="Models\Lesson\LessonSettings\LessonSettings.cs" />
     <Compile Include="Models\Lesson\WorstLesson.cs" />
     <Compile Include="Models\Result\IResultCalculator.cs" />
+    <Compile Include="Models\Result\IResultOrganizer.cs" />
     <Compile Include="Database\Repositories\IResultRepository.cs" />
     <Compile Include="Models\Result\ResultCalculator.cs" />
+    <Compile Include="Models\Result\ResultOrganizer.cs" />
     <Compile Include="Models\Settings\ISettings.cs" />
     <Compile Include="Models\Settings\Settings.cs" />
     <Compile Include="Models\Settings\SettingsSingletion.cs" />
@@ -716,6 +718,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Helpers\NewFolder1\" />
     <Folder Include="Resources\Languages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -66,7 +66,7 @@ namespace Wordki.ViewModels
             Switcher.Back();
         }
 
-        private async void DeleteItems(object obj)
+        private void DeleteItems(object obj)
         {
             if (obj == null)
                 return;

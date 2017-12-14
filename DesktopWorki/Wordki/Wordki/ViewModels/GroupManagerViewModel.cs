@@ -214,10 +214,10 @@ namespace Wordki.ViewModels
                     lLastRepeat = itemDateTime;
                 }
             }
-            string groupName = SelectionList.Count == 1 ? SelectionList.First().Group.Name : " ";
-            int lWordsCount = SelectionList.Sum(x => x.Group.Words.Count);
-            int lVisibilitiesCount = SelectionList.Sum(x => x.Group.Words.Count(y => y.Visible));
-            int lRepeatsCount = SelectionList.Sum(x => x.Group.Results.Count(y => y.TranslationDirection == UserManagerSingleton.Instence.User.TranslationDirection));
+            string groupName = SelectedItems.Count == 1 ? SelectedItems.First().Name : " ";
+            int lWordsCount = SelectedItems.Sum(x => x.Words.Count);
+            int lVisibilitiesCount = SelectedItems.Sum(x => x.Words.Count(y => y.Visible));
+            int lRepeatsCount = SelectedItems.Sum(x => x.Results.Count(y => y.TranslationDirection == UserManagerSingleton.Instence.User.TranslationDirection));
             MaxValue = lDrawersCount.Sum();
             Values = new ObservableCollection<double>(lDrawersCount);
             GroupInfo.SetValue(groupName, lWordsCount, lRepeatsCount, lLastRepeat, lVisibilitiesCount,

@@ -1,16 +1,12 @@
-﻿using System;
+﻿using Repository.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Wordki.Models;
 
 namespace Wordki.Helpers.WordFinder
 {
     public interface IWordFinder
     {
 
-        IEnumerable<Word> FindWords();
+        IEnumerable<IWord> FindWords();
 
     }
 }
