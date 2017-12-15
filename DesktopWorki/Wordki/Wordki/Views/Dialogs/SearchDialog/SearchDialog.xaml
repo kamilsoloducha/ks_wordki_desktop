@@ -23,17 +23,9 @@
             Command="{Binding Path=CancelCommand}" />
     </dialogs:DialogBase.InputBindings>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition
-                Height="Auto" />
-            <RowDefinition
-                Height="*" />
-            <RowDefinition
-                Height="Auto" />
-        </Grid.RowDefinitions>
-
-        <!-- ItemContainerStyle="{StaticResource LanguageChooseListBoxStyle}" -->
+    <StackPanel
+        Orientation="Vertical"
+        Margin="200,10,200,10">
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -45,6 +37,7 @@
 
             <TextBox
                 Name="SearchingWord_TextBox"
+                Margin="10"
                 Grid.Column="0"
                 Style="{StaticResource AppTextBoxStyle}"
                 FontSize="30"
@@ -53,78 +46,173 @@
             <Button
                 Grid.Column="1"
                 Style="{StaticResource FlatButtonStyle}"
+                Margin="10"
                 Command="{Binding Path=SearchCommand}"
                 Content="Szukaj" />
-
         </Grid>
 
 
-        <ListBox
-            x:Name="ListBox"
-            Grid.Row="1"
-            Style="{StaticResource AppListBoxStyle}"
-            Height="400"
-            BorderThickness="0"
-            ItemsSource="{Binding Path=Words}"
-            ScrollViewer.CanContentScroll="False">
+        <Grid>
 
-            <i:Interaction.Triggers>
-                <i:EventTrigger
-                    EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction
-                        Command="{Binding Path=MouseDoubleClickCommand}"
-                        CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="2*" />
+                <ColumnDefinition
+                    Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <ListBox.ItemContainerStyle>
-                <Style
-                    TargetType="{x:Type ListBoxItem}">
-                    <Setter
-                        Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate
-                                TargetType="{x:Type ListBoxItem}">
-                                <Grid
-                                    Margin="10">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition
-                                            Width="*" />
-                                        <ColumnDefinition
-                                            Width="Auto" />
-                                        <ColumnDefinition
-                                            Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
-                                        Background="Transparent"
-                                        FontSize="20"
-                                        HorizontalAlignment="Right"
-                                        Text="{Binding Path=Language1}" />
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
-                                        Background="Transparent"
-                                        FontSize="20"
-                                        Text=" - " />
-                                    <TextBlock
-                                        Grid.Column="2"
-                                        FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
-                                        Background="Transparent"
-                                        FontSize="20"
-                                        Text="{Binding Path=Language2}" />
-                                </Grid>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListBox.ItemContainerStyle>
-        </ListBox>
+            <ListBox
+                x:Name="ListBox"
+                Grid.Column="0"
+                Style="{StaticResource AppListBoxStyle}"
+                BorderThickness="0"
+                Height="400"
+                ItemsSource="{Binding Path=Words}"
+                ScrollViewer.CanContentScroll="true">
 
+                <i:Interaction.Triggers>
+                    <i:EventTrigger
+                        EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction
+                            Command="{Binding Path=MouseDoubleClickCommand}"
+                            CommandParameter="{Binding SelectedItems, ElementName=ListBox}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+                <ListBox.ItemContainerStyle>
+                    <Style
+                        TargetType="{x:Type ListBoxItem}">
+                        <Setter
+                            Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate
+                                    TargetType="{x:Type ListBoxItem}">
+
+                                    <Border
+                                        x:Name="BackgroundBorder"
+                                        Background="#FF111111"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0,0,0,1"
+                                        CornerRadius="3"
+                                        Padding="2">
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition
+                                                    Width="Auto" />
+                                                <ColumnDefinition
+                                                    Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel
+                                                Orientation="Vertical"
+                                                Margin="20,0">
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    Background="Transparent"
+                                                    FontSize="20"
+                                                    HorizontalAlignment="Right"
+                                                    Text="{Binding Path=Language1}" />
+                                                <TextBlock
+                                                    Grid.Column="2"
+                                                    Background="Transparent"
+                                                    FontSize="20"
+                                                    Text="{Binding Path=Language2}" />
+                                            </StackPanel>
+                                            
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger
+                                            Property="IsSelected"
+                                            Value="true">
+                                            <Setter
+                                                TargetName="BackgroundBorder"
+                                                Property="Background"
+                                                Value="Red"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+
+
+            <Grid
+                Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="Auto" />
+                    <ColumnDefinition
+                        Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="Auto" />
+                    <RowDefinition
+                        Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Foreground="{StaticResource UsedHoverBrush}"
+                    FontSize="25"
+                    VerticalAlignment="Bottom"
+                    Content="znaleziono:" />
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Foreground="#FFDDDDDD"
+                    FontSize="35"
+                    FontWeight="DemiBold"
+                    Content="{Binding Path=Words.Count}" />
+
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Foreground="{StaticResource UsedHoverBrush}"
+                    FontSize="25"
+                    VerticalAlignment="Bottom"
+                    Content="ilość grup:" />
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Foreground="#FFDDDDDD"
+                    FontSize="35"
+                    FontWeight="DemiBold"
+                    Content="{Binding Path=Words.Count}" />
+
+            </Grid>
+            
+            <StackPanel
+                Grid.Column="1"
+                Orientation="Vertical">
+
+                <StackPanel
+                    Orientation="Horizontal">
+                    
+                </StackPanel>
+
+                <StackPanel
+                    Orientation="Horizontal">
+                    
+                    
+                </StackPanel>
+
+
+            </StackPanel>
+
+
+        </Grid>
 
         <StackPanel
-            Grid.Row="2"
             Orientation="Horizontal"
             HorizontalAlignment="Right"
             Margin="10">
@@ -135,5 +223,5 @@
                 Command="{Binding Path=CancelCommand}" />
 
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </dialogs:DialogBase>

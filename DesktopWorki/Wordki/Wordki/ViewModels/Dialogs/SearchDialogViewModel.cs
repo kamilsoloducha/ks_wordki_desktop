@@ -77,8 +77,10 @@ namespace Wordki.ViewModels.Dialogs
             }
             Task.Run(() =>
             {
+                string searchingWordLowerCase = SearchingWord.ToLower();
                 IDatabase database = DatabaseSingleton.Instance;
-                IEnumerable<IWord> words = database.Groups.SelectMany(x => x.Words).Where(x => x.Language1.Contains(SearchingWord) || x.Language2.Contains(SearchingWord));
+                IEnumerable<IWord> words = database.Groups.SelectMany(x => x.Words).
+                Where(x => x.Language1.ToLower().Contains(searchingWordLowerCase) || x.Language2.ToLower().Contains(searchingWordLowerCase));
                 Words.Clear();
                 foreach (IWord word in words)
                 {

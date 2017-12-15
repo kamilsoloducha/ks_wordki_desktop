@@ -204,7 +204,11 @@ namespace Wordki.ViewModels
                 {
                     Groups = lDatabase.Groups,
                 };
-                lList.AddRange(calculator.GetDrawerCount().Cast<double>());
+                foreach(var item in calculator.GetDrawerCount())
+                {
+                    lList.Add((double)item);
+                }
+                //lList.AddRange(.Cast<double>());
                 string lTeachTimeToday = Helpers.Util.GetAproximatedTimeFromSeconds(ResultCalculator.GetLessonTimeToday());
                 string lTeachTime = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.Groups.Sum(x => x.Results.Sum(y => y.TimeCount)));
                 int lWordCount = lDatabase.Groups.Sum(x => x.Words.Count);
