@@ -1,13 +1,20 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
 using System.Collections.Generic;
-using Repository.Models;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Wordki.Models
 {
     public interface IResultCalculator
     {
-        int GetLessonTime(DateTime start, DateTime end);
+        int GetCorrectCount(IEnumerable<IResult> results);
 
-        int GetLessonTimeToday();
+        int GetAcceptedCount(IEnumerable<IResult> results);
+
+        int GetWrongCount(IEnumerable<IResult> results);
+
+        int GetAnswareCount(IEnumerable<IResult> results);
     }
 }

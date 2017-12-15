@@ -1,9 +1,5 @@
 ﻿using Repository.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wordki.Helpers.WordComparer;
 using Wordki.Models;
 
@@ -23,11 +19,11 @@ namespace Wordki.Helpers.WordFinder
             WordComparer = wordComparer;
         }
 
-        public IEnumerable<Word> FindWords()
+        public IEnumerable<IWord> FindWords()
         {
-            foreach (Word word1 in Words)
+            foreach (IWord word1 in Words)
             {
-                foreach (Word word2 in Words)
+                foreach (IWord word2 in Words)
                 {
                     if (!WordComparer.IsEqual(word1, word2))
                     {

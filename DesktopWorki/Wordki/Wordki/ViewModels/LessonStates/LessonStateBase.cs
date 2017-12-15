@@ -8,12 +8,15 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Media;
 using Wordki.Database;
+using Wordki.Models;
 using Wordki.Models.Lesson;
 
 namespace Wordki.ViewModels.LessonStates
 {
     public abstract class LessonStateBase : INotifyPropertyChanged, IDisposable
     {
+        protected static IResultCalculator ResultCalculator;
+
         protected TranslationDirection _translationDirection;
         protected Lesson Lesson { get; set; }
         public LessonStateEnum StateEnum { get; set; }
@@ -300,6 +303,11 @@ namespace Wordki.ViewModels.LessonStates
 
         #endregion
 
+        static LessonStateBase()
+        {
+            ResultCalculator = new ResultCalculator();
+        }
+
         protected LessonStateBase(Lesson pLesson)
           : this(pLesson, null) { }
 
@@ -367,9 +375,9 @@ namespace Wordki.ViewModels.LessonStates
             {
                 Counter[0] = Lesson.Counter;
             }
-            Results[2] = Lesson.GetCorrect();
-            Results[1] = Lesson.GetAccepted();
-            Results[0] = Lesson.GetWrong();
+            Results[2] = ResultCalculator.GetCorrectCount(Lesson.ResultList);
+            Results[1] = ResultCalculator.GetAcceptedCount(Lesson.ResultList);
+            Results[0] = ResultCalculator.GetWrongCount(Lesson.ResultList);
             MaxResult = (int)Results.Sum();
         }
 

@@ -142,7 +142,11 @@
     <Compile Include="Lessons\LessonSerializeTests.cs" />
     <Compile Include="Lessons\LessonUtil.cs" />
     <Compile Include="Lessons\TypingLessonTests.cs" />
+    <Compile Include="Lessons\TypingLesson\CheckCheckingWord.cs" />
     <Compile Include="Lessons\TypingLesson\CheckInitialization.cs" />
+    <Compile Include="Lessons\TypingLesson\CheckKnownCorrectWord.cs" />
+    <Compile Include="Lessons\TypingLesson\CheckKnownWrongWord.cs" />
+    <Compile Include="Lessons\TypingLesson\CheckUnknownWrongWord.cs" />
     <Compile Include="RepositoryTest\DirectionSwaperTests.cs" />
     <Compile Include="RepositoryTest\GroupsTests.cs" />
     <Compile Include="RepositoryTest\LanguageSwaperTests.cs" />

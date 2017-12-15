@@ -1,41 +1,32 @@
-﻿using Repository.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Repository.Models;
 
 namespace Wordki.Models
 {
     public class ResultCalculator : IResultCalculator
     {
-
-        public IEnumerable<IGroup> Groups { get; set; }
-
-        public int GetLessonTime(DateTime start, DateTime end)
+        public int GetAcceptedCount(IEnumerable<IResult> results)
         {
-            if (Groups == null)
-            {
-                return 0;
-            }
-            int counter = 0;
-            foreach (IGroup group in Groups)
-            {
-                foreach (IResult result in group.Results.Where(x => x.DateTime > start && x.DateTime < end))
-                {
-                    counter += result.TimeCount;
-                }
-            }
-            return counter;
+            return results.Sum(x => x.Accepted);
         }
 
-        public int GetLessonTimeToday()
+        public int GetAnswareCount(IEnumerable<IResult> results)
         {
-            DateTime now = DateTime.Now;
-            DateTime start = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
-            DateTime end = start.AddDays(1);
-            return GetLessonTime(start, end);
+            return results.Sum(x => x.Accepted + x.Correct + x.Wrong);
         }
 
+        public int GetCorrectCount(IEnumerable<IResult> results)
+        {
+            return results.Sum(x => x.Correct);
+        }
+
+        public int GetWrongCount(IEnumerable<IResult> results)
+        {
+            return results.Sum(x => x.Wrong);
+        }
     }
 }

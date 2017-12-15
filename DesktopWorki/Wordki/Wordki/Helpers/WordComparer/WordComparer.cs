@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Wordki.Models;
 
 namespace Wordki.Helpers.WordComparer
 {
@@ -35,7 +35,7 @@ namespace Wordki.Helpers.WordComparer
             return false;
         }
 
-        public bool IsEqual(Word word1, Word word2)
+        public bool IsEqual(IWord word1, IWord word2)
         {
             int isSame = 0;
             if (word1.Id == word2.Id)

@@ -119,7 +119,7 @@ namespace Wordki.ViewModels
             }
         }
 
-        public IResultCalculator ResultCalculator { get; set; }
+        public IResultOrganizer ResultCalculator { get; set; }
         public IDatabase Database { get; set; }
 
         #endregion
@@ -133,7 +133,7 @@ namespace Wordki.ViewModels
 
             Database = DatabaseSingleton.Instance;
 
-            ResultCalculator = new ResultCalculator
+            ResultCalculator = new ResultOrganizer
             {
                 Groups = DatabaseSingleton.Instance.Groups,
             };

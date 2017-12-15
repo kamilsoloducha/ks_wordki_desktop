@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -15,7 +14,6 @@ using Wordki.Helpers.WordConnector;
 using Wordki.Helpers.WordFinder;
 using Wordki.InteractionProvider;
 using Wordki.Models;
-using Wordki.Views.Dialogs;
 
 namespace Wordki.ViewModels
 {
@@ -23,7 +21,7 @@ namespace Wordki.ViewModels
     {
 
         private IDatabase Database { get; set; }
-        public ObservableCollection<Word> DataGridCollection { get; set; }
+        public ObservableCollection<IWord> DataGridCollection { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand ConnectWordsCommand { get; set; }
         public ICommand EditWordCommand { get; set; }
@@ -34,7 +32,7 @@ namespace Wordki.ViewModels
         public SameWordsViewModel()
         {
             ActivateCommand();
-            DataGridCollection = new ObservableCollection<Word>();
+            DataGridCollection = new ObservableCollection<IWord>();
         }
 
         private void ActivateCommand()
@@ -102,8 +100,8 @@ namespace Wordki.ViewModels
             await Task.Run(() =>
             {
                 DataGridCollection.Clear();
-                IEnumerable<Word> lSameWords = FindSameWords();
-                foreach (Word lWord in lSameWords)
+                IEnumerable<IWord> lSameWords = FindSameWords();
+                foreach (IWord lWord in lSameWords)
                 {
                     IGroup lGroup = Database.Groups.FirstOrDefault(x => x.Id == lWord.Group.Id);
                     if (lGroup == null)
@@ -114,7 +112,7 @@ namespace Wordki.ViewModels
             BindingOperations.DisableCollectionSynchronization(Database.Groups);
         }
 
-        private IEnumerable<Word> FindSameWords()
+        private IEnumerable<IWord> FindSameWords()
         {
             try
             {
@@ -126,7 +124,7 @@ namespace Wordki.ViewModels
             catch (Exception lException)
             {
                 LoggerSingleton.LogError("{0} - {1}", "BuilderViewModel.FindSame", lException.Message);
-                return Enumerable.Empty<Word>();
+                return Enumerable.Empty<IWord>();
             }
         }
 

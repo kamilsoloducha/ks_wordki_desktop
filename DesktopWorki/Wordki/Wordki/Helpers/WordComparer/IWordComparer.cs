@@ -1,4 +1,4 @@
-﻿using Wordki.Models;
+﻿using Repository.Models;
 
 namespace Wordki.Helpers.WordComparer
 {
@@ -6,7 +6,7 @@ namespace Wordki.Helpers.WordComparer
     {
         IWordComparerSettings Settings { get; set; }
 
-        bool IsEqual(Word word1, Word word2);
+        bool IsEqual(IWord word1, IWord word2);
 
         bool IsEqual(string word1, string word2);
     }

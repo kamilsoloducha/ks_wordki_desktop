@@ -86,45 +86,6 @@ namespace Wordki.Models.Lesson
             }
         }
 
-        public int GetCorrect()
-        {
-            return ResultList.Sum(lResult => lResult.Correct);
-        }
-
-        public int GetAccepted()
-        {
-            return ResultList.Sum(lResult => lResult.Accepted);
-        }
-
-        public int GetWrong()
-        {
-            return ResultList.Sum(lResult => lResult.Wrong);
-        }
-
-        public virtual int GetMaxResult()
-        {
-            return GetWrong() + GetAccepted() + GetCorrect();
-        }
-
-        public virtual List<int> GetDrawerCount()
-        {
-            List<int> lDrawerCountList = new List<int>();
-            for (int i = 0; i < 5; i++)
-            {
-                lDrawerCountList.Add(0);
-            }
-            foreach (IWord lWord in BeginWordsList)
-            {
-                lDrawerCountList[lWord.Drawer]++;
-            }
-            return lDrawerCountList;
-        }
-
-        public void DeleteSelectedWord()
-        {
-            BeginWordsList.Remove(SelectedWord);
-        }
-
         public virtual int[] GetDrawerValues()
         {
             int[] lTempValues = new int[5];
