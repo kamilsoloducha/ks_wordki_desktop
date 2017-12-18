@@ -709,17 +709,17 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\oazachaosu\Oazachaosu\Repository\Repository.csproj">
-      <Project>{90d846a5-5cb3-4926-8719-88ec170a61aa}</Project>
-      <Name>Repository</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\util\Util\Util\Util.csproj">
+    <Folder Include="Resources\Languages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\c_sharp_util\Util\Util\Util.csproj">
       <Project>{877ccd05-baa6-430a-a317-e1e9da0bbaf2}</Project>
       <Name>Util</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Languages\" />
+    <ProjectReference Include="..\..\..\..\vesper-oazachaosu\Oazachaosu\Repository\Repository.csproj">
+      <Project>{90d846a5-5cb3-4926-8719-88ec170a61aa}</Project>
+      <Name>Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.103\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net45\System.Data.SQLite.Core.targets')" />

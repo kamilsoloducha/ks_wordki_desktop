@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordki", "Wordki\Wordki.csproj", "{47F92EFB-3ACB-4C6F-A80C-53C50A111EE2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordki.Test", "Wordki.Test\Wordki.Test.csproj", "{68D53406-FF9A-4BAB-815E-CBB410739B34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "..\..\..\oazachaosu\Oazachaosu\Repository\Repository.csproj", "{90D846A5-5CB3-4926-8719-88EC170A61AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "..\..\..\vesper-oazachaosu\Oazachaosu\Repository\Repository.csproj", "{90D846A5-5CB3-4926-8719-88EC170A61AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util", "..\..\..\util\Util\Util\Util.csproj", "{877CCD05-BAA6-430A-A317-E1E9DA0BBAF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util", "..\..\..\c_sharp_util\Util\Util\Util.csproj", "{877CCD05-BAA6-430A-A317-E1E9DA0BBAF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +36,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B12DFE2C-68E9-4364-A2C4-CEA2FD3FE16F}
 	EndGlobalSection
 EndGlobal

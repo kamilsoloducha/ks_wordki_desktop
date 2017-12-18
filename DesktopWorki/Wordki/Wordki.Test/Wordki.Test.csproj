@@ -164,13 +164,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\oazachaosu\Oazachaosu\Repository\Repository.csproj">
-      <Project>{90d846a5-5cb3-4926-8719-88ec170a61aa}</Project>
-      <Name>Repository</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\util\Util\Util\Util.csproj">
+    <ProjectReference Include="..\..\..\..\c_sharp_util\Util\Util\Util.csproj">
       <Project>{877ccd05-baa6-430a-a317-e1e9da0bbaf2}</Project>
       <Name>Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\vesper-oazachaosu\Oazachaosu\Repository\Repository.csproj">
+      <Project>{90d846a5-5cb3-4926-8719-88ec170a61aa}</Project>
+      <Name>Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\Wordki\Wordki.csproj">
       <Project>{47f92efb-3acb-4c6f-a80c-53c50a111ee2}</Project>
