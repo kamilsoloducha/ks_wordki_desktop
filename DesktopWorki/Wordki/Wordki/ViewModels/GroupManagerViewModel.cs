@@ -2,6 +2,7 @@
 using Repository.Models.Enums;
 using Repository.Models.Language;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using Util.Collections;
 using Wordki.Commands;
 using Wordki.Database;
 using Wordki.Helpers;
@@ -33,6 +35,7 @@ namespace Wordki.ViewModels
         public ICommand TranslationDirectionChangedCommand { get; set; }
         public ICommand AllWordsCommand { get; set; }
         public ICommand SortDirectionCommand { get; private set; }
+        public ICommand SelectionChangedCommand { get; private set; }
 
         public double MaxValue
         {
@@ -82,12 +85,26 @@ namespace Wordki.ViewModels
                 }
                 selectedItems = value;
                 OnPropertyChanged();
-                RefreshInfo();
             }
         }
 
+        private IUser user;
+        public IUser User
+        {
+            get { return user; }
+            set
+            {
+                if (user == value)
+                {
+                    return;
+                }
+                user = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public GroupInfo GroupInfo { get; set; }
-        public IUser User { get; set; }
         public IDatabase Database { get; set; }
         #endregion
 
@@ -96,6 +113,7 @@ namespace Wordki.ViewModels
             Database = DatabaseSingleton.Instance;
             GroupInfo = new GroupInfo();
             Values = new ObservableCollection<double> { 0, 0, 0, 0, 0 };
+            SelectedItems = new List<IGroup>();
 
             StartLessonCommand = new Util.BuilderCommand((obj) => StartLesson((LessonType)obj));
             EditGroupCommand = new Util.BuilderCommand((obj) => EditGroup(obj as IGroup));
@@ -103,13 +121,14 @@ namespace Wordki.ViewModels
             ShowWordsCommand = new Util.BuilderCommand((obj) => ShowWords(obj as IGroup));
             TranslationDirectionChangedCommand = new Util.BuilderCommand(ActionsSingleton<TranslationDirectionChangeAction>.Instance.Action);
             AllWordsCommand = new Util.BuilderCommand(ActionsSingleton<AllWordsChangeAction>.Instance.Action);
+            SelectionChangedCommand = new Util.BuilderCommand(SelectionChanged);
         }
 
         #region Commands
 
         private void EditGroup(IGroup group)
         {
-            if(group == null)
+            if (group == null)
             {
                 Console.WriteLine("The parameter is equale null. Cannot switch to other state");
                 return;
@@ -131,6 +150,18 @@ namespace Wordki.ViewModels
         {
             Back();
             Switcher.Back();
+        }
+
+        private void SelectionChanged(object obj)
+        {
+            if (obj == null)
+                return;
+            IList lList = (obj as IList);
+            if (lList == null)
+                return;
+            SelectedItems.Clear();
+            SelectedItems.AddRange(lList.Cast<IGroup>());
+            RefreshInfo();
         }
 
         private void StartLesson(LessonType type)
@@ -183,6 +214,10 @@ namespace Wordki.ViewModels
         public override void InitViewModel(object parameter = null)
         {
             User = UserManagerSingleton.Instence.User;
+            if (Database.Groups.Count > 0)
+            {
+                SelectedItem = Database.Groups[0];
+            }
         }
 
         public override void Back()
@@ -192,6 +227,10 @@ namespace Wordki.ViewModels
 
         private void RefreshInfo()
         {
+            if (Database.Groups.Count == 0)
+            {
+                return;
+            }
             List<double> lDrawersCount = new List<double>();
             LanguageType lang1 = SelectedItem.Language1;
             LanguageType lang2 = SelectedItem.Language2;

@@ -9,12 +9,8 @@ namespace Wordki.Helpers.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            IUser user = value as IUser;
-            if(user == null)
-            {
-                throw new ArgumentException("The value parameter is not IUser object");
-            }
-            return user.TranslationDirection == Repository.Models.Enums.TranslationDirection.FromFirst ? "Z pierwszego" : "Z drugiego";
+            Repository.Models.Enums.TranslationDirection direction = (Repository.Models.Enums.TranslationDirection)value;
+            return direction == Repository.Models.Enums.TranslationDirection.FromFirst ? "Z pierwszego" : "Z drugiego";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

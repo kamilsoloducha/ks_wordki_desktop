@@ -10,6 +10,7 @@ using System.Windows.Input;
 using Util;
 using Wordki.Database;
 using Wordki.InteractionProvider;
+using Wordki.Models;
 
 namespace Wordki.ViewModels
 {
@@ -18,6 +19,7 @@ namespace Wordki.ViewModels
 
         public ICommand SearchWordCommand { get; private set; }
         public ICommand BackCommand { get; private set; }
+        public ICommand StyleCommand { get; private set; }
 
         public Helpers.Switcher Switcher { get; private set; }
 
@@ -56,6 +58,7 @@ namespace Wordki.ViewModels
             };
             SearchWordCommand = new BuilderCommand(SearchWord);
             BackCommand = new BuilderCommand(Back);
+            StyleCommand = new BuilderCommand(Settings.ToggleStyle);
         }
 
         private void Back(object obj)

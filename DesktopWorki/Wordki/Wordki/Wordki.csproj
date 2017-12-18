@@ -162,6 +162,7 @@
     <Compile Include="Database\Repositories\UserRepository.cs" />
     <Compile Include="Database\Maps\WordMap.cs" />
     <Compile Include="Database\Repositories\WordRepository.cs" />
+    <Compile Include="Helpers\Behaviour\HideScrollBar.cs" />
     <Compile Include="Helpers\Behaviour\ListBoxAtLeastOneSelectedItemBehavior.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
     <Compile Include="Helpers\Connector\IConnector.cs" />
@@ -718,7 +719,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Helpers\NewFolder1\" />
     <Folder Include="Resources\Languages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

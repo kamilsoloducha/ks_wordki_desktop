@@ -11,9 +11,9 @@ namespace Wordki.Helpers.Converters
     public class GroupToNextRepeatConverter : IValueConverter
     {
 
-        ILessonScheduler scheduler;
+        private static ILessonScheduler scheduler;
 
-        public GroupToNextRepeatConverter()
+        static GroupToNextRepeatConverter()
         {
             scheduler = new NewLessonScheduler()
             {

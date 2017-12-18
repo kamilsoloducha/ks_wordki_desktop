@@ -107,54 +107,6 @@ namespace Wordki.Models
             FontSize = 30;
             ApplicationStyle = ApplicationStyleEnum.Dark;
             FontSizeSensitive = false;
-            ShortCuts = new ObservableCollection<ForeignLetter>()
-            {
-        new ForeignLetter {
-          ForeignKey = "ś",
-          KeyboardKey = 's'
-        },
-        new ForeignLetter {
-          ForeignKey = "ź",
-          KeyboardKey = 'x'
-        },
-        new ForeignLetter {
-          ForeignKey = "ż",
-          KeyboardKey = 'z'
-        },
-        new ForeignLetter {
-          ForeignKey = "ą",
-          KeyboardKey = 'a'
-        },
-        new ForeignLetter {
-          ForeignKey = "ę",
-          KeyboardKey = 'e'
-        },
-        new ForeignLetter {
-          ForeignKey = "ó",
-          KeyboardKey = 'o'
-        },
-        new ForeignLetter {
-          ForeignKey = "ł",
-          KeyboardKey = 'l'
-        },
-        new ForeignLetter {
-          ForeignKey = "ń",
-          KeyboardKey = 'n'
-        }
-      };
-            //foreach (ForeignLetter letter in ShortCuts) {
-
-            //  Console.Write("{0} - {1} - {2}", letter.KeyboardKey, letter.ForeignKey, (int)Convert.ToChar(letter.ForeignKey));
-            //  //Console.Write("{0} - {1}", letter.KeyboardKey, letter.ForeignKey);
-            //  //foreach (byte value in Encoding.UTF8.GetBytes()) {
-            //  //  Console.Write("[ {0} ]", value);
-            //  //}
-            //  Console.WriteLine();
-            //}
-
-            //for (int i = 255; i < 500; i++) {
-            //  Console.WriteLine("{0} - {1}", i, char.ConvertFromUtf32(i));
-            //}
         }
 
         /// <summary>
@@ -172,7 +124,7 @@ namespace Wordki.Models
                     if (_settigns == null)
                         return new Settings();
                 }
-                ChangeStyle(_settigns.ApplicationStyle);
+                //ChangeStyle(_settigns.ApplicationStyle);
             }
             catch (Exception lException)
             {
@@ -244,6 +196,12 @@ namespace Wordki.Models
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(pPropertyName));
             }
+        }
+
+        public static void ToggleStyle()
+        {
+            ApplicationStyleEnum style = GetSettings().ApplicationStyle == ApplicationStyleEnum.Dark ? ApplicationStyleEnum.Light : ApplicationStyleEnum.Dark;
+            ChangeStyle(style);
         }
 
         public static void ChangeStyle(int index)

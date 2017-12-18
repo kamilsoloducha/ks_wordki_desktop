@@ -23,6 +23,10 @@
             Key="F"
             Modifiers="Ctrl"
             Command="{Binding Path=SearchWordCommand}"/>
+        <KeyBinding
+            Key="S"
+            Modifiers="Ctrl"
+            Command="{Binding Path=StyleCommand}" />
     </Window.InputBindings>
 
     <Grid>

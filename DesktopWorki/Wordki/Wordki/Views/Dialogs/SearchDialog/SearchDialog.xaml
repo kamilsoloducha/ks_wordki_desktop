@@ -51,7 +51,6 @@
                 Content="Szukaj" />
         </Grid>
 
-
         <Grid>
 
             <Grid.ColumnDefinitions>

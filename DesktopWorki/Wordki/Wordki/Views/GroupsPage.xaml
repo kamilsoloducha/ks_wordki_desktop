@@ -4,16 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:helpers="clr-namespace:Wordki.Helpers"
     xmlns:converters="clr-namespace:Wordki.Helpers.Converters"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:models="clr-namespace:Wordki.Models"
     xmlns:viewModels="clr-namespace:Wordki.ViewModels"
     xmlns:views="clr-namespace:Wordki.Views"
     xmlns:lessons="clr-namespace:Repository.Models.Enums;assembly=Repository"
-    xmlns:barChart="clr-namespace:Controls.BarChart;assembly=Controls"
     xmlns:pieChart="clr-namespace:Controls.PieChart;assembly=Controls"
-    xmlns:cmd="http://www.galasoft.ch/mvvmlight"
+    xmlns:helpers="clr-namespace:Wordki.Helpers"
     mc:Ignorable="d"
     Style="{DynamicResource AppPageStyle}"
     d:DataContext="{d:DesignInstance {x:Type viewModels:GroupManagerViewModel}}">
@@ -25,8 +23,8 @@
             x:Key="GroupToNextRepeatConverter" />
         <converters:AllWordsToStringConverter
             x:Key="AllWordsToStringConverter" />
-        <converters:TranslationDirectionToIntConverter
-            x:Key="TranslationDirectionToIntConverter" />
+        <converters:TranslationDirectionToStringConverter
+            x:Key="TranslationDirectionToStringConverter" />
     </views:PageBase.Resources>
 
     <Grid>
@@ -81,12 +79,12 @@
             x:Name="GroupsDataGrid"
             Grid.Column="0"
             Grid.Row="0"
-            Style="{StaticResource AppDataGridStyle}"
             Margin="10,10,10,0"
             IsReadOnly="True"
+            Style="{StaticResource AppDataGridStyle}"
             ScrollViewer.CanContentScroll="true"
-            SelectedItem="{Binding SelectedItem}"
-            ItemsSource="{Binding Groups}"
+            SelectedItem="{Binding Path=SelectedItem}"
+            ItemsSource="{Binding Path=Database.Groups}"
             SelectionUnit="FullRow"
             BorderThickness="0"
             HeadersVisibility="None"
@@ -94,14 +92,18 @@
             HorizontalGridLinesBrush="Transparent"
             KeyboardNavigation.IsTabStop="false">
 
+            <i:Interaction.Behaviors>
+                <helpers:ListBoxAtLeastOneSelectedItemBehavior />
+            </i:Interaction.Behaviors>
+
             <DataGrid.ContextMenu>
                 <ContextMenu
                     Style="{StaticResource AppContextMenuStyle}">
                     <MenuItem
                         Header="Edytuj grupę"
                         Style="{StaticResource AppMenuItemStyle}"
-                        Command="{Binding Path=EditGroupCommand}" 
-                        CommandParameter="{Binding ElementName=GroupsDataGrid, Path=SelectedItem}"/>
+                        Command="{Binding Path=EditGroupCommand}"
+                        CommandParameter="{Binding ElementName=GroupsDataGrid, Path=SelectedItem}" />
                     <MenuItem
                         Header="Pokaż slowa"
                         Style="{StaticResource AppMenuItemStyle}"
@@ -153,15 +155,9 @@
                     <Setter
                         Property="KeyboardNavigation.IsTabStop"
                         Value="False" />
-                    <Style.Triggers>
-                        <Trigger
-                            Property="IsSelected"
-                            Value="True">
-                            <Setter
-                                Property="Background"
-                                Value="Transparent" />
-                        </Trigger>
-                    </Style.Triggers>
+                    <Setter 
+                        Property="Background"
+                        Value="Transparent"/>
                 </Style>
             </DataGrid.CellStyle>
 
@@ -175,8 +171,9 @@
                                 x:Name="ItemBackground"
                                 Margin="0,2"
                                 CornerRadius="10"
-                                Background="#22000000"
+                                Background="{StaticResource UsedNormalBrush}"
                                 KeyboardNavigation.IsTabStop="False">
+
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition
@@ -191,17 +188,17 @@
 
                                     <TextBlock
                                         Grid.Column="0"
-                                        Background="Transparent"
+                                        Foreground="{StaticResource UsedNormalFrontBrush}"
                                         FontSize="30"
                                         Margin="20, 10"
                                         FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
-                                        Text="{Binding Path=Group.Name}" />
+                                        Text="{Binding Path=Name}" />
 
                                     <Rectangle
                                         Grid.Column="1"
                                         Width="1"
                                         Margin="4"
-                                        Fill="#AA000000" />
+                                        Fill="{StaticResource UsedHoverBrush}" />
 
                                     <StackPanel
                                         Grid.Column="2"
@@ -213,13 +210,15 @@
                                             Orientation="Horizontal">
                                             <Label
                                                 VerticalAlignment="Bottom"
+                                                Foreground="{StaticResource UsedNormalFrontBrush}"
                                                 FontSize="15"
                                                 Content="Słowa" />
 
                                             <Label
                                                 VerticalAlignment="Bottom"
+                                                Foreground="{StaticResource UsedNormalFrontBrush}"
                                                 FontSize="30"
-                                                Content="{Binding Path=Group.Words.Count}" />
+                                                Content="{Binding Path=Words.Count}" />
                                         </StackPanel>
 
 
@@ -231,16 +230,38 @@
                                         Orientation="Horizontal">
                                         <Label
                                             VerticalAlignment="Bottom"
+                                            Foreground="{StaticResource UsedNormalFrontBrush}"
                                             FontSize="15"
                                             Content="Powtórka za" />
 
                                         <Label
                                             VerticalAlignment="Bottom"
+                                            Foreground="{StaticResource UsedNormalFrontBrush}"
                                             FontSize="30"
-                                            Content="{Binding Path=Group, Converter={StaticResource GroupToNextRepeatConverter}}" />
+                                            Content="{Binding Converter={StaticResource GroupToNextRepeatConverter}}" />
                                     </StackPanel>
                                 </Grid>
+                                <!--<Border.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Path=IsSelected, RelativeSource= {RelativeSource AncestorType={x:Type DataGridRow}}}"
+                                        Value="True">
+                                        <Setter
+                                            TargetName="ItemBackground"
+                                            Property="Background"
+                                            Value="White" />
+                                    </DataTrigger>
+                                </Border.Triggers>-->
                             </Border>
+                            <DataTemplate.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType=DataGridRow}}"
+                                    Value="True">
+                                    <Setter
+                                        Property="Background"
+                                        TargetName="ItemBackground"
+                                        Value="{StaticResource UsedHoverBrush}" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -264,7 +285,7 @@
                         Value="Bottom" />
                     <Setter
                         Property="Foreground"
-                        Value="#DD000000" />
+                        Value="{StaticResource UsedPressedBrush}" />
                     <Setter
                         Property="Padding"
                         Value="0" />
@@ -284,6 +305,9 @@
                     <Setter
                         Property="Padding"
                         Value="0" />
+                    <Setter
+                        Property="Foreground"
+                        Value="{StaticResource UsedPressedBrush}" />
                 </Style>
             </ScrollViewer.Resources>
 
@@ -315,8 +339,9 @@
                             FontSize="40"
                             Margin="20"
                             HorizontalAlignment="Center"
+                            Foreground="{StaticResource UsedNormalFrontBrush}"
                             Content="{Binding Path=GroupInfo.GroupName}" />
-                        
+
                         <Image
                             Grid.Column="2"
                             Margin="20"
@@ -376,7 +401,7 @@
 
                             <Label
                                 Style="{StaticResource LocalValueStyle}"
-                                Content="{Binding Path=SelectedItem.Group.Results.Count}" />
+                                Content="{Binding Path=SelectedItem.Results.Count}" />
 
                         </StackPanel>
 
@@ -437,12 +462,12 @@
                 <Button
                     Style="{StaticResource FlatButtonStyle}"
                     Command="{Binding Path=TranslationDirectionChangedCommand}"
-                    Content="{Binding Path=User, Converter={StaticResource TranslationDirectionToIntConverter}}" />
+                    Content="{Binding Path=User.TranslationDirection, Converter={StaticResource TranslationDirectionToStringConverter}}" />
 
                 <Button
                     Style="{StaticResource FlatButtonStyle}"
                     Command="{Binding Path=AllWordsCommand}"
-                    Content="{Binding Path=User, Converter={StaticResource AllWordsToStringConverter}}" />
+                    Content="{Binding Path=User.AllWords, Converter={StaticResource AllWordsToStringConverter}}" />
 
             </StackPanel>
 

@@ -13,26 +13,25 @@ namespace Wordki.Helpers
         }
 
         public List<State> LockStates { get; private set; }
-        private readonly Stack<State> _pageQueue = new Stack<State>();
-        private readonly Dictionary<State, ISwitchElement> _pageDictionary = new Dictionary<State, ISwitchElement>();
+        private readonly Stack<State> pageStack = new Stack<State>();
+        private readonly Dictionary<State, ISwitchElement> pageDictionary = new Dictionary<State, ISwitchElement>();
 
-        public void Switch(State pState, object parameter = null)
+        public void Switch(State newState, object parameter = null)
         {
-            _pageQueue.Push(pState);
-            ISwitchElement lPage;
-            if (_pageDictionary.ContainsKey(pState))
+            pageStack.Push(newState);
+            ISwitchElement newPage;
+            if (pageDictionary.ContainsKey(newState))
             {
-                lPage = _pageDictionary[pState];
-                _pageDictionary.Remove(pState);
+                newPage = pageDictionary[newState];
             }
             else
             {
-                lPage = PageFactory(pState);
-                _pageDictionary.Add(pState, lPage);
+                newPage = PageFactory(newState);
+                pageDictionary.Add(newState, newPage);
             }
             if (OnSwich != null)
             {
-                OnSwich.Invoke(this, new SwitchEventArgs(lPage, parameter));
+                OnSwich.Invoke(this, new SwitchEventArgs(newPage, parameter));
             }
         }
 
@@ -68,9 +67,6 @@ namespace Wordki.Helpers
                 case State.Words:
                     result = new WordsPage();
                     break;
-                //case State.Plot:
-                //    result = new PlotPage();
-                    //break;
                 case State.Same:
                     result = new SameWordsPage();
                     break;
@@ -83,23 +79,23 @@ namespace Wordki.Helpers
 
         public void Back(bool pForce = false)
         {
-            if (!pForce && LockStates.Contains(_pageQueue.Peek()))
+            if (!pForce && LockStates.Contains(pageStack.Peek()))
             {
                 return;
             }
-            if (_pageQueue.Count == 1)
+            if (pageStack.Count == 1)
             {
                 Reset();
                 return;
             }
-            _pageDictionary[_pageQueue.Pop()].ViewModel.Back();
-            Switch(_pageQueue.Pop());
+            pageDictionary[pageStack.Pop()].ViewModel.Back();
+            Switch(pageStack.Pop());
         }
 
         public void Reset()
         {
-            _pageQueue.Clear();
-            _pageDictionary.Clear();
+            pageStack.Clear();
+            pageDictionary.Clear();
             Switch(State.Login);
         }
 
