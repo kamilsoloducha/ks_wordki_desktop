@@ -1,10 +1,10 @@
 ﻿using NUnit.Framework;
-using Repository.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Wordki.Database;
 using Wordki.Database.Repositories;
 using Wordki.Models;
+using WordkiModel;
 
 namespace Wordki.Test.Database
 {
@@ -84,8 +84,8 @@ namespace Wordki.Test.Database
         public void Update_group_in_database_test()
         {
             repo.Save(group);
-            group.Language1 = Repository.Models.Language.LanguageType.Spanish;
-            group.Language2 = Repository.Models.Language.LanguageType.Russian;
+            group.Language1 = LanguageType.Spanish;
+            group.Language2 = LanguageType.Russian;
             group.Name = "asdf";
             repo.Update(group);
             IGroup groupFromDatabase = repo.Get(group.Id);

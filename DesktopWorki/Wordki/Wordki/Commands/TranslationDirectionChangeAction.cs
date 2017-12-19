@@ -1,4 +1,4 @@
-﻿using Repository.Models.Enums;
+﻿using WordkiModel.Enums;
 using System;
 using Wordki.Database;
 

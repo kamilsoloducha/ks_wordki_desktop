@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using Newtonsoft.Json;
-using Repository.Models;
+using WordkiModel;
 using Wordki.Database;
 using Wordki.Models.Translator;
 

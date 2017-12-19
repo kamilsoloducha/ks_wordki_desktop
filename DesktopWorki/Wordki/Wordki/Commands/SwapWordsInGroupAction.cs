@@ -1,5 +1,4 @@
-﻿using Repository.Helper;
-using Repository.Models;
+﻿using WordkiModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +25,7 @@ namespace Wordki.Commands
             {
                 return;
             }
-            ILanguageSwaper swaper = new LanguageSwaper();
-            swaper.Swap(group);
+            group.SwapLanguage();
         }
     }
 }

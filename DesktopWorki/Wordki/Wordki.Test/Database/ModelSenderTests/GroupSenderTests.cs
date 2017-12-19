@@ -1,11 +1,12 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Repository.Models;
+
 using System.Collections.Generic;
 using System.Linq;
 using Wordki.Database;
 using Wordki.Database.Repositories;
 using Wordki.Models;
+using WordkiModel;
 
 namespace Wordki.Test.Database.ModelSenderTests
 {

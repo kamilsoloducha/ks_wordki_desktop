@@ -1,10 +1,12 @@
 ﻿using NUnit.Framework;
-using Repository.Models;
+
 using System.Linq;
 using System.Collections.Generic;
 using Wordki.Database;
 using Wordki.Models;
 using Wordki.Database.Repositories;
+using WordkiModel;
+using WordkiModel.Enums;
 
 namespace Wordki.Test.Database
 {
@@ -69,8 +71,8 @@ namespace Wordki.Test.Database
 
             IGroup groupToChange = groups.First();
             groupToChange.Name = "asdf";
-            groupToChange.Language1 = Repository.Models.Language.LanguageType.Portuaglese;
-            groupToChange.Language2 = Repository.Models.Language.LanguageType.Portuaglese;
+            groupToChange.Language1 = LanguageType.Portuaglese;
+            groupToChange.Language2 = LanguageType.Portuaglese;
 
             groupRepo.Update(groupToChange);
             IGroup groupFromDatabase = groupRepo.Get(groupToChange.Id);
@@ -107,7 +109,7 @@ namespace Wordki.Test.Database
             resultToChange.Wrong = 1;
             resultToChange.Accepted = 1;
             resultToChange.Invisibilities = 1;
-            resultToChange.TranslationDirection = Repository.Models.Enums.TranslationDirection.FromFirst;
+            resultToChange.TranslationDirection = TranslationDirection.FromFirst;
             resultToChange.State = -1;
 
             groupRepo.Update(groups);

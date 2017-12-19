@@ -1,11 +1,12 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Repository.Models;
+
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Wordki.Database;
 using Wordki.Models;
 using Wordki.ViewModels;
+using WordkiModel;
 
 namespace Wordki.Test.Commands.BuilderTests
 {

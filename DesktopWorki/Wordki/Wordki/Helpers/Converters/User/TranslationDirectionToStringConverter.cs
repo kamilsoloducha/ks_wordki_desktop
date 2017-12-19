@@ -1,7 +1,8 @@
-﻿using Repository.Models;
+﻿using WordkiModel;
 using System;
 using System.Globalization;
 using System.Windows.Data;
+using WordkiModel.Enums;
 
 namespace Wordki.Helpers.Converters
 {
@@ -9,8 +10,8 @@ namespace Wordki.Helpers.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Repository.Models.Enums.TranslationDirection direction = (Repository.Models.Enums.TranslationDirection)value;
-            return direction == Repository.Models.Enums.TranslationDirection.FromFirst ? "Z pierwszego" : "Z drugiego";
+            TranslationDirection direction = (TranslationDirection)value;
+            return direction == TranslationDirection.FromFirst ? "Z pierwszego" : "Z drugiego";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

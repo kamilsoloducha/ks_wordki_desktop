@@ -1,4 +1,4 @@
-﻿using Repository.Models;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Wordki.Helpers.WordComparer;
 using Wordki.Models;
 using Wordki.Models.Lesson;
+using WordkiModel;
+using WordkiModel.Enums;
 
 namespace Wordki.Test.Lessons
 {
@@ -47,7 +49,7 @@ namespace Wordki.Test.Lessons
             return new LessonSettings()
             {
                 AllWords = true,
-                TranslationDirection = Repository.Models.Enums.TranslationDirection.FromFirst,
+                TranslationDirection = TranslationDirection.FromFirst,
             };
         }
 

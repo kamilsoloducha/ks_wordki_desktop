@@ -1,4 +1,4 @@
-﻿using Repository.Models;
+﻿using WordkiModel;
 using System;
 using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;

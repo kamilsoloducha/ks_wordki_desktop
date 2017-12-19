@@ -1,5 +1,4 @@
-﻿using Repository.Models;
-using Repository.Models.Language;
+﻿using WordkiModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
-using Util;
 using Util.Collections;
 using Util.Threads;
 using Wordki.Commands;
@@ -21,6 +19,7 @@ using Wordki.InteractionProvider;
 using Wordki.Models;
 using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
+using WordkiModel.Enums;
 
 namespace Wordki.ViewModels
 {
@@ -554,7 +553,7 @@ namespace Wordki.ViewModels
 
                 ITranslationProvider interactive = new TranslationProvider();
                 interactive.Items = items;
-                interactive.TranslationDirection = Repository.Models.Enums.TranslationDirection.FromFirst;
+                interactive.TranslationDirection = TranslationDirection.FromFirst;
                 interactive.Word = SelectedWord;
                 interactive.Interact();
                 Language2IsFocused = true;

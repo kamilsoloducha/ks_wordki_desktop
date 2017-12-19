@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using Repository.Models;
-using Repository.Models.Language;
+using WordkiModel;
 
 namespace Wordki.Models
 {

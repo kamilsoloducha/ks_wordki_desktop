@@ -1,29 +1,26 @@
 ﻿using NUnit.Framework;
-using Repository.Helper;
-using Repository.Models;
-using Repository.Models.Language;
+using WordkiModel;
 using Wordki.Models;
+using WordkiModel.Enums;
 
 namespace Wordki.Test.RepositoryTests
 {
     [TestFixture]
     public class LanguageSwaperTests
     {
-        private ILanguageSwaper swaper;
         private Word word;
         
         
         [SetUp]
         public void SetUp()
         {
-            swaper = new LanguageSwaper();
             word = Utility.GetWord();
         }
 
         [Test]
         public void Swap_only_one_word_test()
         {
-            swaper.Swap(word);
+            word.SwapLanguage();
             CheckSingleWord(word);
         }
 
@@ -33,7 +30,7 @@ namespace Wordki.Test.RepositoryTests
             LanguageType type1 = LanguageType.French;
             LanguageType type2 = LanguageType.Polish;
             IGroup group = Utility.GetGroup(language1: type1, language2: type2);
-            swaper.Swap(group);
+            group.SwapLanguage();
             Assert.AreEqual(type1, group.Language2, "Error with swap Language1Type");
             Assert.AreEqual(type2, group.Language1, "Error with swap Language2Type");
         }
@@ -42,8 +39,9 @@ namespace Wordki.Test.RepositoryTests
         public void Swap_group_check_words_test()
         {
             IGroup group = Utility.GetGroup();
-            swaper.Swap(group);
-            foreach(Word word in group.Words)
+            group.SwapLanguage();
+
+            foreach (Word word in group.Words)
             {
                 CheckSingleWord(word);
             }
@@ -53,10 +51,11 @@ namespace Wordki.Test.RepositoryTests
         public void Swap_group_check_results_test()
         {
             IGroup group = Utility.GetGroup();
-            swaper.Swap(group);
+            group.SwapLanguage();
+
             foreach (Result result in group.Results)
             {
-                Assert.AreEqual(Repository.Models.Enums.TranslationDirection.FromFirst, result.TranslationDirection);
+                Assert.AreEqual(TranslationDirection.FromFirst, result.TranslationDirection);
             }
         }
 

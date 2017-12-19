@@ -1,5 +1,5 @@
 ﻿using System.Windows.Media;
-using Repository.Models.Enums;
+using WordkiModel.Enums;
 using Wordki.Models.Lesson;
 using Wordki.ViewModels.LessonStates;
 

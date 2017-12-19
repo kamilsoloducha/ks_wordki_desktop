@@ -1,14 +1,9 @@
 ﻿using NUnit.Framework;
-using Repository.Models;
-using Repository.Models.Enums;
-using Repository.Models.Language;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Util;
 using Wordki.Models;
+using WordkiModel;
+using WordkiModel.Enums;
 
 namespace Wordki.Test
 {
@@ -32,6 +27,7 @@ namespace Wordki.Test
 
         public static List<IGroup> GetGroups(int count)
         {
+            
             List<IGroup> groups = new List<IGroup>();
 
             for (int i = 0; i < count; i++)
@@ -65,7 +61,7 @@ namespace Wordki.Test
                 Drawer = drawer,
                 State = 2,
                 Visible = visible,
-                Checked = checkedUnchecked
+                Selected = checkedUnchecked
             };
         }
 

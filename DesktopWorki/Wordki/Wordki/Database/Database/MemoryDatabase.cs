@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Repository.Models;
+using WordkiModel;
 using Wordki.Models;
 using System.Collections.ObjectModel;
 using System;
+using WordkiModel.Enums;
 
 namespace Wordki.Database
 {
@@ -123,8 +124,8 @@ namespace Wordki.Database
                 IGroup group = new Group()
                 {
                     Name = $"Group {i}",
-                    Language1 = Repository.Models.Language.LanguageType.Germany,
-                    Language2 = Repository.Models.Language.LanguageType.Russian,
+                    Language1 = LanguageType.Germany,
+                    Language2 = LanguageType.Russian,
                 };
                 for (int j = 0; j < random.Next(5, 10); j++)
                 {
@@ -133,9 +134,9 @@ namespace Wordki.Database
                         Accepted = 10,
                         Correct = 10,
                         Invisibilities = 10,
-                        LessonType = Repository.Models.Enums.LessonType.TypingLesson,
+                        LessonType = LessonType.TypingLesson,
                         TimeCount = 300,
-                        TranslationDirection = Repository.Models.Enums.TranslationDirection.FromSecond,
+                        TranslationDirection = TranslationDirection.FromSecond,
                         Wrong = 10,
                     };
                     group.AddResult(result);
@@ -150,7 +151,7 @@ namespace Wordki.Database
                         Language1Comment = $"Komentarz {i}",
                         Language2Comment = $"Comment {i}",
                         Drawer = (byte)random.Next(4),
-                        Checked = false,
+                        Selected = false,
                         Visible = true
                     };
                     group.AddWord(word);

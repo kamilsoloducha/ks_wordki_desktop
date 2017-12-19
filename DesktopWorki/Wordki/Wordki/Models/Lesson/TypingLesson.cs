@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Repository.Models.Enums;
-using Repository.Models;
+using WordkiModel.Enums;
+using WordkiModel;
 using Util.Collections;
 
 namespace Wordki.Models.Lesson

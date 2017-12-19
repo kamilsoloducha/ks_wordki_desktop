@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Repository.Models.Enums;
+using WordkiModel.Enums;
 using Wordki.Helpers;
-using Repository.Models;
+using WordkiModel;
 
 namespace Wordki.Models.Lesson
 {

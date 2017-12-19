@@ -4,7 +4,7 @@ using Wordki.Helpers;
 using Wordki.Models.Connector;
 using Wordki.Helpers.Notification;
 using System.Windows.Input;
-using Repository.Models;
+using WordkiModel;
 using System;
 using Wordki.Database;
 

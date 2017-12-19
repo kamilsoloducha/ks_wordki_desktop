@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Repository.Models.Language;
+using WordkiModel;
 
 namespace Wordki.Models
 {

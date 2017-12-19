@@ -1,6 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
-using Repository.Models;
+using WordkiModel;
 
 namespace Wordki.Models
 {
@@ -161,26 +161,26 @@ namespace Wordki.Models
         public virtual int State { get; set; }
 
 
-        private bool _checked;
-        public virtual bool Checked
+        private bool selected;
+        public virtual bool Selected
         {
-            get { return _checked; }
+            get { return selected; }
             set
             {
-                if (_checked == value)
+                if (selected == value)
                 {
                     return;
                 }
-                _checked = value;
+                selected = value;
                 OnPropertyChanged();
                 State = StateManager.NewState(State);
             }
         }
 
 
-        public virtual bool ShouldSerializeChecked()
+        public virtual bool ShouldSerializeSelected()
         {
-            return StateManager.GetState(State, "Checked") > 0;
+            return StateManager.GetState(State, "Selected") > 0;
         }
 
         private ushort _repeatingNumber;
@@ -258,7 +258,7 @@ namespace Wordki.Models
             _language1Comment = "";
             _language2Comment = "";
             _visible = true;
-            _checked = false;
+            selected = false;
             _repeatingNumber = 0;
             State = int.MaxValue;
         }
@@ -273,7 +273,7 @@ namespace Wordki.Models
                 && word.Language1.Equals(Language1)
                 && word.Language2.Equals(Language2)
                 && word.Visible == Visible
-                && word.Checked == Checked;
+                && word.Selected == Selected;
         }
 
     }

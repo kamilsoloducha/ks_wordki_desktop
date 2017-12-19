@@ -1,6 +1,6 @@
 ﻿using Remotion.Linq.Collections;
-using Repository.Models;
-using Repository.Models.Enums;
+using WordkiModel;
+using WordkiModel.Enums;
 using System;
 using System.ComponentModel;
 using System.Linq;

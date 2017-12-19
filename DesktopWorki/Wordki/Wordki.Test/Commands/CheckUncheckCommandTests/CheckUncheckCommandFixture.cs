@@ -1,11 +1,7 @@
 ﻿using NUnit.Framework;
-using Repository.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wordki.Commands;
+using WordkiModel;
 
 namespace Wordki.Test.Commands.CheckUncheckCommandTests
 {
@@ -32,7 +28,7 @@ namespace Wordki.Test.Commands.CheckUncheckCommandTests
         {
             IWord word = Utility.GetWord(checkedUnchecked: true);
             action(word);
-            Assert.AreEqual(false, word.Checked);
+            Assert.AreEqual(false, word.Selected);
         }
 
         [Test]
@@ -40,7 +36,7 @@ namespace Wordki.Test.Commands.CheckUncheckCommandTests
         {
             IWord word = Utility.GetWord(checkedUnchecked: false);
             action(word);
-            Assert.AreEqual(true, word.Checked);
+            Assert.AreEqual(true, word.Selected);
         }
 
     }

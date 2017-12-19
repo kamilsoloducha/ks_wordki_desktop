@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Repository.Models.Language;
 using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
+using WordkiModel;
 
 namespace Wordki.InteractionProvider
 {

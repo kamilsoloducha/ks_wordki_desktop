@@ -1,10 +1,11 @@
 ﻿using NHibernate;
 using NUnit.Framework;
-using Repository.Models;
+
 using System.Linq;
 using Wordki.Database;
 using Wordki.Database.Repositories;
 using Wordki.Models;
+using WordkiModel;
 
 namespace Wordki.Test.Database
 {
@@ -27,8 +28,8 @@ namespace Wordki.Test.Database
             {
                 Id = 1,
                 Name = "test",
-                Language1 = Repository.Models.Language.LanguageType.English,
-                Language2 = Repository.Models.Language.LanguageType.Germany,
+                Language1 = LanguageType.English,
+                Language2 = LanguageType.Germany,
                 State = 1,
                 UserId = 1,
             };

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Repository.Models;
+using WordkiModel;
 
 namespace Wordki.Database
 {

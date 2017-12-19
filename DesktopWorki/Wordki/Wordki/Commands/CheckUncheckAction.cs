@@ -1,4 +1,4 @@
-﻿using Repository.Models;
+﻿using WordkiModel;
 using System;
 
 namespace Wordki.Commands
@@ -19,7 +19,7 @@ namespace Wordki.Commands
             {
                 return;
             }
-            word.Checked = !word.Checked;
+            word.ChagnedSelected();
             await Database.DatabaseSingleton.Instance.UpdateWordAsync(word);
         }
     }

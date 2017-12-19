@@ -1,5 +1,4 @@
-﻿using Repository.Models;
-using Repository.Models.Language;
+﻿using WordkiModel;
 using System;
 
 namespace Wordki.Commands

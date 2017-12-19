@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Repository.Models;
-using Repository.Models.Enums;
+using WordkiModel;
+using WordkiModel.Enums;
 using System.Text;
 
 namespace Wordki.Helpers.TranslationPusher

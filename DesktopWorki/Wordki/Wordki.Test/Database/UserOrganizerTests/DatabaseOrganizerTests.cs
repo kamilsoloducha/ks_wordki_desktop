@@ -1,8 +1,9 @@
 ﻿using NUnit.Framework;
-using Repository.Models;
+
 using System;
 using System.IO;
 using Wordki.Database;
+using WordkiModel;
 
 namespace Wordki.Test.Database.UserOrganizerTests
 {

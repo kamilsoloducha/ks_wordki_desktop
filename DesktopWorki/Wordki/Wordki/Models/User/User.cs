@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using Newtonsoft.Json;
-using Repository.Models.Enums;
+using WordkiModel.Enums;
 using Wordki.Helpers.JsonConverters;
-using Repository.Models;
+using WordkiModel;
 
 namespace Wordki.Models
 {

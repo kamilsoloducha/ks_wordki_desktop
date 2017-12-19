@@ -1,9 +1,11 @@
 ﻿using NUnit.Framework;
-using Repository.Models;
+
 using System;
 using Wordki.Database;
 using Wordki.Database.Repositories;
 using Wordki.Models;
+using WordkiModel;
+using WordkiModel.Enums;
 
 namespace Wordki.Test.Database
 {
@@ -47,7 +49,7 @@ namespace Wordki.Test.Database
             user.AllWords = false;
             user.DownloadTime = new DateTime(2000,1,1);
             user.Password = "fdsa";
-            user.TranslationDirection = Repository.Models.Enums.TranslationDirection.FromFirst;
+            user.TranslationDirection = TranslationDirection.FromFirst;
             userRepo.Update(user);
             IUser userFromDatabase = userRepo.Get(user.Name, user.Password);
             Utility.CheckUser(user, userFromDatabase);

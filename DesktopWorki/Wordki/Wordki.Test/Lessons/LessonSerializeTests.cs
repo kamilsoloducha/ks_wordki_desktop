@@ -1,10 +1,12 @@
 ﻿using NUnit.Framework;
-using Repository.Models;
+
 using System.Linq;
 using System.Collections.Generic;
 using Wordki.Models.Lesson;
 using Wordki.Helpers.WordComparer;
 using Util.Serializers;
+using WordkiModel;
+using WordkiModel.Enums;
 
 namespace Wordki.Test.Lessons
 {
@@ -38,7 +40,7 @@ namespace Wordki.Test.Lessons
             ILessonSettings lessonSettings = new LessonSettings()
             {
                 AllWords = true,
-                TranslationDirection = Repository.Models.Enums.TranslationDirection.FromFirst,
+                TranslationDirection = TranslationDirection.FromFirst,
                 Timeout = 0,
             };
             lesson.LessonSettings = lessonSettings;

@@ -6,8 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Wordki.Models;
 using Wordki.Database;
-using Repository.Models;
+
 using Wordki.Database.Repositories;
+using WordkiModel;
+using WordkiModel.Enums;
 
 namespace Resultki.Test.Database
 {
@@ -28,8 +30,8 @@ namespace Resultki.Test.Database
             {
                 Id = 1,
                 Name = "test",
-                Language1 = Repository.Models.Language.LanguageType.English,
-                Language2 = Repository.Models.Language.LanguageType.Germany,
+                Language1 = LanguageType.English,
+                Language2 = LanguageType.Germany,
                 State = 1,
                 UserId = 1,
             };
@@ -41,9 +43,9 @@ namespace Resultki.Test.Database
                 Correct = 10,
                 DateTime = DateTime.Now,
                 Invisibilities = 10,
-                LessonType = Repository.Models.Enums.LessonType.FiszkiLesson,
+                LessonType = LessonType.FiszkiLesson,
                 TimeCount = 10,
-                TranslationDirection = Repository.Models.Enums.TranslationDirection.FromFirst,
+                TranslationDirection = TranslationDirection.FromFirst,
                 State = 1,
                 UserId = 1,
             };
@@ -177,9 +179,9 @@ namespace Resultki.Test.Database
             result.Correct = 20;
             result.DateTime = DateTime.Now;
             result.Invisibilities = 20;
-            result.LessonType = Repository.Models.Enums.LessonType.IntensiveLesson;
+            result.LessonType = LessonType.IntensiveLesson;
             result.TimeCount = 20;
-            result.TranslationDirection = Repository.Models.Enums.TranslationDirection.FromSecond;
+            result.TranslationDirection = TranslationDirection.FromSecond;
         }
 
         private void CheckResultEquality(IResult resultExpected, IResult resultActual)

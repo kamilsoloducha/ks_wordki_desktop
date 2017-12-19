@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
-using Repository.Models;
-using Repository.Models.Enums;
+using WordkiModel;
+using WordkiModel.Enums;
 
 namespace Wordki.Models
 {

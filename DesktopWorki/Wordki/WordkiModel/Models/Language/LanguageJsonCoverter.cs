@@ -1,23 +1,23 @@
 ﻿using System;
 using Newtonsoft.Json;
-namespace WordkiRepository.JsonConverters
-{
-    class StringToIntConverter : JsonConverter
-    {
 
+namespace WordkiModel
+{
+    public class LanguageJsonCoverter : JsonConverter
+    {
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(string);
+            return objectType == typeof(ILanguage);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            return LanguageFactory.GetLanguage((LanguageType)((Int64)reader.Value));
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteValue(value.ToString());
+            writer.WriteValue((int)((ILanguage)value).Type);
         }
     }
 }

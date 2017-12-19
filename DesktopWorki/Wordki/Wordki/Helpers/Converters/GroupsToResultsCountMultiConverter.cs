@@ -1,5 +1,5 @@
-﻿using Repository.Models;
-using Repository.Models.Enums;
+﻿using WordkiModel;
+using WordkiModel.Enums;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Repository.Models;
-using Repository.Models.Enums;
+using WordkiModel;
+using WordkiModel.Enums;
 using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
 using Wordki.Helpers.TranslationPusher;

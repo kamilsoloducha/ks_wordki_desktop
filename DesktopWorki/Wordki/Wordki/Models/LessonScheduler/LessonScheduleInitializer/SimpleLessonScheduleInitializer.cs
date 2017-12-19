@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Repository.Models.Enums;
+using WordkiModel.Enums;
 
 namespace Wordki.Models.LessonScheduler
 {

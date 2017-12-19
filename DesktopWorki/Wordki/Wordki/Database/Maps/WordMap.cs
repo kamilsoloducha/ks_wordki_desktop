@@ -15,7 +15,7 @@ namespace Wordki.Database
             Map(x => x.Language2Comment);
             Map(x => x.Drawer);
             Map(x => x.Visible);
-            Map(x => x.Checked);
+            Map(x => x.Selected);
             Map(x => x.Comment);
             Map(x => x.LastRepeating);
             Map(x => x.RepeatingNumber);

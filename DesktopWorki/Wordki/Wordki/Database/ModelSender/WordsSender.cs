@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Repository.Models;
+using WordkiModel;
 using Wordki.Models;
 using Wordki.Database.Repositories;
 

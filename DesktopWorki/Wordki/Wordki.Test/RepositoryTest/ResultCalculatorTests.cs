@@ -1,8 +1,9 @@
 ﻿using NUnit.Framework;
-using Repository.Models;
+
 using System;
 using System.Collections.Generic;
 using Wordki.Models;
+using WordkiModel;
 
 namespace Wordki.Test.RepositoryTest
 {

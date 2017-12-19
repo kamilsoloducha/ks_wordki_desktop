@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Repository.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Wordki.Models;
 using Wordki.ViewModels;
+using WordkiModel;
 
 namespace Wordki.Test.IntegratedViewModelTests.BuilderViewModelTests
 {

@@ -1,4 +1,4 @@
-﻿using Repository.Models;
+﻿using WordkiModel;
 
 namespace Wordki.Helpers.WordComparer
 {

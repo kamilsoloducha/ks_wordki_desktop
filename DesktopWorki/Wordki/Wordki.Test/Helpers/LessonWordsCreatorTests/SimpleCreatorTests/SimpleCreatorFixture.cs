@@ -1,11 +1,12 @@
 ﻿using NUnit.Framework;
-using Repository.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wordki.Helpers;
+using WordkiModel;
 
 namespace Wordki.Test.Helpers.LessonWordsCreatorTests.SimpleCreatorTests
 {

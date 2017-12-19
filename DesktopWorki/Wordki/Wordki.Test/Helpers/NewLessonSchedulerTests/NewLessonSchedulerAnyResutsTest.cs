@@ -1,7 +1,9 @@
 ﻿using NUnit.Framework;
-using Repository.Models;
+
 using Wordki.Models;
 using Wordki.Models.LessonScheduler;
+using WordkiModel;
+using WordkiModel.Enums;
 
 namespace Wordki.Test.Helpers.NewLessonSchedulerTests
 {
@@ -18,7 +20,7 @@ namespace Wordki.Test.Helpers.NewLessonSchedulerTests
         {
             initializer = new LessonSchedulerInitializer2(days)
             {
-                TranslationDirection = Repository.Models.Enums.TranslationDirection.FromFirst,
+                TranslationDirection = TranslationDirection.FromFirst,
             };
             lessonScheduler = new NewLessonScheduler()
             {

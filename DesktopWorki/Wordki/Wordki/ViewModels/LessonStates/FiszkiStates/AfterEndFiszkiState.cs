@@ -2,7 +2,7 @@
 using System.Linq;
 using Wordki.Helpers;
 using Wordki.Models.Lesson;
-using Repository.Models;
+using WordkiModel;
 using Wordki.Database;
 using Util.Threads;
 using Wordki.InteractionProvider;

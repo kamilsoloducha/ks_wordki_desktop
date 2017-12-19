@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Repository.Models;
+using WordkiModel;
 using System.Windows.Input;
 using Wordki.Models;
 using Wordki.Database;
@@ -64,7 +64,7 @@ namespace Wordki.ViewModels.Dialogs
             originalWord.Language2 = word.Language2;
             originalWord.Language1Comment = word.Language1Comment;
             originalWord.Language2Comment = word.Language2Comment;
-            originalWord.Checked = word.Checked;
+            originalWord.Selected = word.Selected;
             originalWord.Visible = word.Visible;
             database.UpdateWordAsync(originalWord);
             if (CorrectWord != null)

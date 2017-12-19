@@ -2,8 +2,8 @@
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
-using Repository.Models.Language;
 using Wordki.Models;
+using WordkiModel;
 
 namespace Wordki.Helpers.Converters
 {

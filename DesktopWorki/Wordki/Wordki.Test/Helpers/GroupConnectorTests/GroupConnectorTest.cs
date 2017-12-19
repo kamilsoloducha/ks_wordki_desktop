@@ -1,7 +1,8 @@
 ﻿using NUnit.Framework;
-using Repository.Models;
+
 using System.Collections.Generic;
 using Wordki.Helpers.GroupConnector;
+using WordkiModel;
 
 namespace Wordki.Test.Helpers.GroupConnectorTests
 {
@@ -32,7 +33,7 @@ namespace Wordki.Test.Helpers.GroupConnectorTests
         [Test]
         public void Check_language_type_before_connection_groups_test()
         {
-            groups[0].Language1 = Repository.Models.Language.LanguageType.Germany;
+            groups[0].Language1 = LanguageType.Germany;
             Assert.IsNull(connector.DestinationGroup);
             Assert.False(connector.Connect(groups));
         }

@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Repository.Models;
+
 using System;
 using Wordki.Models;
 using Wordki.Models.LessonScheduler;
+using WordkiModel;
 
 namespace Wordki.Test.Helpers.LessonSchedulerTests
 {

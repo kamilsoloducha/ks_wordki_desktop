@@ -716,9 +716,9 @@
       <Project>{877ccd05-baa6-430a-a317-e1e9da0bbaf2}</Project>
       <Name>Util</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\vesper-oazachaosu\Oazachaosu\Repository\Repository.csproj">
-      <Project>{90d846a5-5cb3-4926-8719-88ec170a61aa}</Project>
-      <Name>Repository</Name>
+    <ProjectReference Include="..\WordkiModel\WordkiModel.csproj">
+      <Project>{9738782d-9fd7-4524-83e8-4162fef69b51}</Project>
+      <Name>WordkiModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

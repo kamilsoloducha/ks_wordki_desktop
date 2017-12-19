@@ -2,7 +2,7 @@
 using NHibernate.Linq;
 using System.Linq;
 using System.Collections.Generic;
-using Repository.Models;
+using WordkiModel;
 using System.Threading.Tasks;
 using Wordki.Database.Repositories;
 

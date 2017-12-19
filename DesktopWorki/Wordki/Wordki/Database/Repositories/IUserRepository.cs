@@ -1,4 +1,4 @@
-﻿using Repository.Models;
+﻿using WordkiModel;
 using System.Threading.Tasks;
 
 namespace Wordki.Database.Repositories

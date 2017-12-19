@@ -1,4 +1,4 @@
-﻿using Repository.Models.Enums;
+﻿using WordkiModel.Enums;
 using System;
 using System.Globalization;
 using System.Windows.Data;

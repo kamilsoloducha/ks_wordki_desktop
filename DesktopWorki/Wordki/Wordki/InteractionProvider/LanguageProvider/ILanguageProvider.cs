@@ -1,5 +1,5 @@
-﻿using Repository.Models.Language;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using WordkiModel;
 
 namespace Wordki.InteractionProvider
 {

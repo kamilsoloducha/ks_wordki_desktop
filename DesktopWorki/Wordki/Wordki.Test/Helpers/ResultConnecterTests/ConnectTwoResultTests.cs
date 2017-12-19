@@ -1,7 +1,8 @@
 ﻿using NUnit.Framework;
-using Repository.Models;
+
 using Wordki.Helpers.ResultConnector;
 using Wordki.Models;
+using WordkiModel;
 
 namespace Wordki.Test.Helpers.ResultConnecterTests
 {

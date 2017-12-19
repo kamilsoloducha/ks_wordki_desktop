@@ -1,7 +1,8 @@
 ﻿using NUnit.Framework;
-using Repository.Models;
+
 using System.Linq;
 using Wordki.Models.Lesson;
+using WordkiModel;
 
 namespace Wordki.Test.Lessons
 {

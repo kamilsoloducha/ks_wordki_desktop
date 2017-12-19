@@ -1,4 +1,4 @@
-﻿using Repository.Models;
+﻿using WordkiModel;
 using System.Collections.Generic;
 
 namespace Wordki.Helpers.GroupConnector

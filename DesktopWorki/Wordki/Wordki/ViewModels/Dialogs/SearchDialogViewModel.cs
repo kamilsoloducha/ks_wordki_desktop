@@ -1,4 +1,4 @@
-﻿using Repository.Models;
+﻿using WordkiModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Util;
 using Wordki.Database;
 using System;
+using Wordki.Commands;
 
 namespace Wordki.ViewModels.Dialogs
 {
@@ -47,20 +48,9 @@ namespace Wordki.ViewModels.Dialogs
         {
             CancelCommand = new BuilderCommand(Cancel);
             SearchCommand = new BuilderCommand(Search);
-            MouseDoubleClickCommand = new BuilderCommand(CheckUncheckWord);
+            MouseDoubleClickCommand = new BuilderCommand((obj) => ActionsSingleton<CheckUncheckAction>.Instance.Action(obj as IWord));
             Words = new ObservableCollection<IWord>();
             BindingOperations.EnableCollectionSynchronization(Words, _wordsLock);
-        }
-
-        private void CheckUncheckWord(object obj)
-        {
-            IWord word = obj as IWord;
-            if(word == null)
-            {
-                return;
-            }
-            word.Checked = !word.Checked;
-            DatabaseSingleton.Instance.UpdateWord(word);
         }
 
         private void Cancel(object obj)

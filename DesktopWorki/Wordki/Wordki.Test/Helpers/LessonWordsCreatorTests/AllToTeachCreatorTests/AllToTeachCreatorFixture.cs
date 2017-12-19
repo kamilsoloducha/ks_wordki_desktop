@@ -1,10 +1,12 @@
 ﻿using NUnit.Framework;
-using Repository.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Wordki.Helpers;
 using Wordki.Models.LessonScheduler;
+using WordkiModel;
+using WordkiModel.Enums;
 
 namespace Wordki.Test.Helpers.LessonWordsCreatorTests.AllToTeachCreatorTests
 {
@@ -67,7 +69,7 @@ namespace Wordki.Test.Helpers.LessonWordsCreatorTests.AllToTeachCreatorTests
             {
                 Initializer = new LessonSchedulerInitializer2(new List<int>() { 1, 1, 2, 4, 7 })
                 {
-                    TranslationDirection = Repository.Models.Enums.TranslationDirection.FromFirst,
+                    TranslationDirection = TranslationDirection.FromFirst,
                 },
             };
         }
