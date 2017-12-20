@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace Wordki.Views.Dialogs
+﻿namespace Wordki.Views.Dialogs
 {
     /// <summary>
     /// Interaction logic for SearchDialog.xaml

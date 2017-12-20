@@ -1,6 +1,4 @@
-﻿using Util.Threads;
-
-namespace Wordki.Views.Dialogs
+﻿namespace Wordki.Views.Dialogs
 {
     /// <summary>
     /// Interaction logic for ProcessDialog.xaml

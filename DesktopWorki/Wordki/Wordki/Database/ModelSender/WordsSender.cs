@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using WordkiModel;
-using Wordki.Models;
 using Wordki.Database.Repositories;
 
 namespace Wordki.Database

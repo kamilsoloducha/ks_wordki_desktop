@@ -1,5 +1,4 @@
-﻿using System;
-namespace Wordki.Helpers.Notification
+﻿namespace Wordki.Helpers.Notification
 {
     public interface INotification
     {

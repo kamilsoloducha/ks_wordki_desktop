@@ -1,0 +1,17 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Wordki.Styles">
+
+    <Color
+        x:Key="colorExample"
+        A="0xff"
+        R="0x99"
+        G="0x99"
+        B="0x99" />
+    
+    <SolidColorBrush
+        x:Key="Backgroundasdf"
+        Color="{StaticResource colorExample}" />
+
+</ResourceDictionary>

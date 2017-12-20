@@ -3,7 +3,6 @@
 using System.Linq;
 using System.Collections.Generic;
 using Wordki.Database;
-using Wordki.Models;
 using Wordki.Database.Repositories;
 using WordkiModel;
 using WordkiModel.Enums;

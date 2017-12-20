@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
 using Newtonsoft.Json;
 using WordkiModel;
 using Wordki.Database;
-using Wordki.Models.Translator;
 
 namespace Wordki.Models.Connector
 {

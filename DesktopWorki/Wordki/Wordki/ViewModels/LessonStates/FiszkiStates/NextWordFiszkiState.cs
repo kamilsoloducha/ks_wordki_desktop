@@ -2,7 +2,6 @@
 using System.Windows.Media;
 using Wordki.Models;
 using Wordki.Models.Lesson;
-using Wordki.ViewModels.LessonStates;
 
 namespace Wordki.ViewModels.LessonStates
 {

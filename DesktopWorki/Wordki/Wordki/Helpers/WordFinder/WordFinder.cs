@@ -1,7 +1,6 @@
 ﻿using WordkiModel;
 using System.Collections.Generic;
 using Wordki.Helpers.WordComparer;
-using Wordki.Models;
 
 namespace Wordki.Helpers.WordFinder
 {

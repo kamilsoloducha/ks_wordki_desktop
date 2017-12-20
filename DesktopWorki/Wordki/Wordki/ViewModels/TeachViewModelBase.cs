@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using WordkiModel.Enums;
 using Wordki.Helpers;
 using Wordki.Models;
 using Wordki.Models.Lesson;
-using Wordki.Views.Dialogs;
 using WordkiModel;
 using Wordki.Database;
 using Wordki.InteractionProvider;

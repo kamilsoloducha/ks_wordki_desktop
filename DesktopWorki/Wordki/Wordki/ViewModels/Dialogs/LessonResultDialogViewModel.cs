@@ -1,13 +1,8 @@
 ﻿using WordkiModel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Data;
 using Wordki.InteractionProvider;
-using System.Globalization;
-using System.Collections;
 using System.Windows.Input;
-using System.Collections.ObjectModel;
 using Util.Collections;
 
 namespace Wordki.ViewModels.Dialogs

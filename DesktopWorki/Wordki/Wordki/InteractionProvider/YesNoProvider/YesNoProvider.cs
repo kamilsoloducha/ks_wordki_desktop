@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows;
-using Wordki.ViewModels.Dialogs;
+﻿using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
 
 namespace Wordki.InteractionProvider

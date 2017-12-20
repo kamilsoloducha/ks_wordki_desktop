@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using WordkiModel.Enums;
 
 namespace Wordki.Models.LessonScheduler

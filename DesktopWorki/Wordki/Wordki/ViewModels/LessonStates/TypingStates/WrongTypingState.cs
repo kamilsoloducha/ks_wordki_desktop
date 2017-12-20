@@ -1,7 +1,6 @@
 ﻿using System.Windows.Media;
 using WordkiModel.Enums;
 using Wordki.Models.Lesson;
-using Wordki.ViewModels.LessonStates;
 
 namespace Wordki.ViewModels.LessonStates
 {

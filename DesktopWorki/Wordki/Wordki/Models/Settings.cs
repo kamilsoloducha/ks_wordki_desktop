@@ -75,30 +75,6 @@ namespace Wordki.Models
             }
         }
 
-        private ObservableCollection<ForeignLetter> _shortCuts;
-        public ObservableCollection<ForeignLetter> ShortCuts
-        {
-            get { return _shortCuts; }
-            set
-            {
-                if (_shortCuts == value) return;
-                _shortCuts = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private ForeignLetter _selectedShortCut;
-        public ForeignLetter SelectedShortCut
-        {
-            get { return _selectedShortCut; }
-            set
-            {
-                if (_selectedShortCut == value) return;
-                _selectedShortCut = value;
-                OnPropertyChanged();
-            }
-        }
-
         public ApplicationStyleEnum ApplicationStyle { get; set; }
         #endregion
 
@@ -223,6 +199,7 @@ namespace Wordki.Models
             switch (pStyleEnum)
             {
                 case ApplicationStyleEnum.Light:
+
                     App.Current.Resources["UsedNormalBrush"] = App.Current.Resources["LightNormalBrush"];
                     App.Current.Resources["UsedHoverBrush"] = App.Current.Resources["LightHoverBrush"];
                     App.Current.Resources["UsedPressedBrush"] = App.Current.Resources["LightPressedBrush"];

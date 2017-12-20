@@ -7,7 +7,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Util;
 using Wordki.Database;
-using System;
 using Wordki.Commands;
 
 namespace Wordki.ViewModels.Dialogs

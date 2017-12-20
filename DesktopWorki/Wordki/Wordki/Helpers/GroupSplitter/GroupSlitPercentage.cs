@@ -1,6 +1,5 @@
 ﻿using WordkiModel;
 using System.Collections.Generic;
-using Wordki.Models;
 
 namespace Wordki.Helpers.GroupSplitter
 {

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Input;
 using Util;
 using Wordki.Database;
@@ -58,7 +54,20 @@ namespace Wordki.ViewModels
             };
             SearchWordCommand = new BuilderCommand(SearchWord);
             BackCommand = new BuilderCommand(Back);
-            StyleCommand = new BuilderCommand(Settings.ToggleStyle);
+            StyleCommand = new BuilderCommand(ChangeStyle);
+        }
+
+        private void ChangeStyle(object obj)
+        {
+            ResourceDictionary dict = App.Current.Resources.MergedDictionaries[0];
+            if (dict.Source.ToString().Contains("Dark"))
+            {
+                dict.Source = new Uri("..\\Styles\\LightStyle.xaml", UriKind.Relative);
+            }
+            else
+            {
+                dict.Source = new Uri("..\\Styles\\DarkStyle.xaml", UriKind.Relative);
+            }
         }
 
         private void Back(object obj)

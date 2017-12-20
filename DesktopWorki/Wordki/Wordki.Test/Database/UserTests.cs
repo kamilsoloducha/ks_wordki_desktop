@@ -3,7 +3,6 @@
 using System;
 using Wordki.Database;
 using Wordki.Database.Repositories;
-using Wordki.Models;
 using WordkiModel;
 using WordkiModel.Enums;
 

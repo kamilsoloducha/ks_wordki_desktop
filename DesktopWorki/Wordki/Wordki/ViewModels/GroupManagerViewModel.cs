@@ -258,9 +258,7 @@ namespace Wordki.ViewModels
             int lRepeatsCount = SelectedItems.Sum(x => x.Results.Count(y => y.TranslationDirection == UserManagerSingleton.Instence.User.TranslationDirection));
             MaxValue = lDrawersCount.Sum();
             Values = new ObservableCollection<double>(lDrawersCount);
-            GroupInfo.SetValue(groupName, lWordsCount, lRepeatsCount, lLastRepeat, lVisibilitiesCount,
-                new BitmapImage(new Uri(LanguageIconManager.GetPathCircleFlag(LanguageFactory.GetLanguage(lang1)))),
-                new BitmapImage(new Uri(LanguageIconManager.GetPathCircleFlag(LanguageFactory.GetLanguage(lang2)))));
+            GroupInfo.SetValue(groupName, lWordsCount, lRepeatsCount, lLastRepeat, lVisibilitiesCount, LanguageFactory.GetLanguage(lang1).Flag, LanguageFactory.GetLanguage(lang2).Flag);
         }
 
         public override void Loaded()

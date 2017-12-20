@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Wordki.Database;
 using Wordki.Database.Repositories;
-using Wordki.Models;
 using WordkiModel;
 
 namespace Wordki.Test.Database.ModelSenderTests

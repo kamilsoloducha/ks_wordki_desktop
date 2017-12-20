@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using NHibernate;
 using WordkiModel;
-using Wordki.Models;
 using Wordki.Database.Repositories;
 
 namespace Wordki.Database

@@ -34,6 +34,7 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -61,15 +62,33 @@
     <Compile Include="PropertyIndexAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\FlagsCircle\de.png" />
-    <Content Include="Resources\FlagsCircle\es.png" />
-    <Content Include="Resources\FlagsCircle\fr.png" />
-    <Content Include="Resources\FlagsCircle\it.png" />
-    <Content Include="Resources\FlagsCircle\pl.png" />
-    <Content Include="Resources\FlagsCircle\pt.png" />
-    <Content Include="Resources\FlagsCircle\ru.png" />
-    <Content Include="Resources\FlagsCircle\uk.png" />
-    <Content Include="Resources\FlagsCircle\unknown.png" />
+    <Content Include="Resources\FlagsCircle\de.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\FlagsCircle\es.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\FlagsCircle\fr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\FlagsCircle\it.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\FlagsCircle\pl.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\FlagsCircle\pt.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\FlagsCircle\ru.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\FlagsCircle\uk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\FlagsCircle\unknown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

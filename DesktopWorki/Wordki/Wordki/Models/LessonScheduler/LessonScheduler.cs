@@ -1,5 +1,4 @@
 ﻿using WordkiModel;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Wordki.Models.LessonScheduler

@@ -2,10 +2,10 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
-using Wordki.Helpers;
 
-namespace Wordki.Views.Dialogs {
-  public partial class NumberChooserDialog : Window, INotifyPropertyChanged {
+namespace Wordki.Views.Dialogs
+{
+    public partial class NumberChooserDialog : Window, INotifyPropertyChanged {
 
     private string _button1Label;
     private string _button2Label;

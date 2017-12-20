@@ -295,9 +295,7 @@
     <Compile Include="Helpers\GroupSplitter\GroupSplitWordCount.cs" />
     <Compile Include="Helpers\GroupSplitter\SplitterEnum.cs" />
     <Compile Include="Helpers\Switcher.cs" />
-    <Compile Include="Models\ForeignLetter.cs" />
     <Compile Include="Models\Group\Group.cs" />
-    <Compile Include="Models\Language.cs" />
     <Compile Include="Models\LessonScheduler\ILessonScheduler.cs" />
     <Compile Include="Models\Lesson\IntensiveLesson.cs" />
     <Compile Include="Models\Lesson\Lessons.cs" />
@@ -311,7 +309,6 @@
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Result\Result.cs" />
     <Compile Include="Models\Settings.cs" />
-    <Compile Include="Models\ShortCutsBindings.cs" />
     <Compile Include="Models\StateManager\IStateManager.cs" />
     <Compile Include="Models\StateManager\StateManager.cs" />
     <Compile Include="Models\User\User.cs" />
@@ -433,6 +430,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Styles\ControlsStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\DarkStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\LightStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BuilderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -532,33 +541,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Content Include="Resources\Icons\FlagsCircle\de.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Icons\FlagsCircle\es.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Icons\FlagsCircle\fr.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Icons\FlagsCircle\it.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Icons\FlagsCircle\pl.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Icons\FlagsCircle\pt.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Icons\FlagsCircle\ru.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Icons\FlagsCircle\uk.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Icons\FlagsCircle\unknown.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Resources\Icons\FlagsCircle\de.png" />
+    <Content Include="Resources\Icons\FlagsCircle\es.png" />
+    <Content Include="Resources\Icons\FlagsCircle\fr.png" />
+    <Content Include="Resources\Icons\FlagsCircle\it.png" />
+    <Content Include="Resources\Icons\FlagsCircle\pl.png" />
+    <Content Include="Resources\Icons\FlagsCircle\pt.png" />
+    <Content Include="Resources\Icons\FlagsCircle\ru.png" />
+    <Content Include="Resources\Icons\FlagsCircle\uk.png" />
+    <Content Include="Resources\Icons\FlagsCircle\unknown.png" />
     <Content Include="Resources\signs.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

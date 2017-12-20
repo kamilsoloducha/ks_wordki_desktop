@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using Wordki.InteractionProvider;
 using WordkiModel;
 
 namespace Wordki.ViewModels.Dialogs

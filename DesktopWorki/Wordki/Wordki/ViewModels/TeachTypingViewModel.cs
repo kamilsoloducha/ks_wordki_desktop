@@ -1,5 +1,4 @@
-﻿using System;
-using Wordki.ViewModels.LessonStates;
+﻿using Wordki.ViewModels.LessonStates;
 
 namespace Wordki.ViewModels
 {

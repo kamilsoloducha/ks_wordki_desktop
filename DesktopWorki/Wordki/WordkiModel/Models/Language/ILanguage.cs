@@ -1,4 +1,6 @@
-﻿namespace WordkiModel
+﻿using System.Windows.Media.Imaging;
+
+namespace WordkiModel
 {
     public interface ILanguage
     {
@@ -8,6 +10,6 @@
         string Description { get; }
         string Name { get; }
         string ShortName { get; }
-
+        BitmapImage Flag { get; }
     }
 }

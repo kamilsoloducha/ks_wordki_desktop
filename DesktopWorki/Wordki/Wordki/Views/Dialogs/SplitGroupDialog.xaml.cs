@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
-using Wordki.Helpers;
 using Wordki.Models;
 
-namespace Wordki.Views.Dialogs {
-  /// <summary>
-  /// Interaction logic for SplitGroupDialog.xaml
-  /// </summary>
-  public partial class SplitGroupDialog : Window {
+namespace Wordki.Views.Dialogs
+{
+    /// <summary>
+    /// Interaction logic for SplitGroupDialog.xaml
+    /// </summary>
+    public partial class SplitGroupDialog : Window {
 
     public SplitGroupViewModel ViewModel { get; private set; }
 

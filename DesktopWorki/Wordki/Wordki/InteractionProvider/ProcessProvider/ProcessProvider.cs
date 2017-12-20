@@ -1,5 +1,4 @@
-﻿using System;
-using Util.Threads;
+﻿using Util.Threads;
 using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
 

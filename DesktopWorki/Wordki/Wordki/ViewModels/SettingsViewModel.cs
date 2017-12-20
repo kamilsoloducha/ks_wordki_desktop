@@ -25,9 +25,6 @@ namespace Wordki.ViewModels
         public ICommand LogoutCommand { get; set; }
         public ICommand SynchronizeCommand { get; set; }
         public ICommand ClearDatabaseCommand { get; set; }
-        public ICommand AddShortCutCommand { get; set; }
-        public ICommand DeleteShortCutCommand { get; set; }
-        public ICommand EditShortCutCommand { get; set; }
 
         private int _themeSelectedIndex;
         private string _fontSizeSelectedIndex;
@@ -132,18 +129,6 @@ namespace Wordki.ViewModels
             }
         }
 
-        private ObservableCollection<System.Windows.Input.KeyBinding> _shortKeys;
-        public ObservableCollection<System.Windows.Input.KeyBinding> ShortKeys
-        {
-            get { return _shortKeys; }
-            set
-            {
-                if (_shortKeys == value) return;
-                _shortKeys = value;
-                OnPropertyChanged();
-            }
-        }
-
         public SettingsViewModel()
         {
             ActivateCommand();
@@ -160,23 +145,10 @@ namespace Wordki.ViewModels
             DownloadDateTime = UserManagerSingleton.Instence.User.DownloadTime.ToString("HH:mm:ss dd/MM/yyyy");
             Password = "***";
             TestString = "Napis";
-            Settings.ShortCuts.CollectionChanged += ShortCutsOnCollectionChanged;
-            ShortKeys = ShortCutsBindings.GetBindings(Settings.ShortCuts, new Util.BuilderCommand(InsertKey));
         }
 
         public override void Back()
         {
-            Settings.ShortCuts.CollectionChanged -= ShortCutsOnCollectionChanged;
-        }
-
-        private void ShortCutsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            ShortKeys = ShortCutsBindings.GetBindings(Settings.ShortCuts, new Util.BuilderCommand(InsertKey));
-        }
-
-        private void InsertKey(object obj)
-        {
-            TestString += obj as string;
         }
 
         private void ActivateCommand()
@@ -189,30 +161,6 @@ namespace Wordki.ViewModels
             LogoutCommand = new Util.BuilderCommand(Logout);
             SynchronizeCommand = new Util.BuilderCommand(Synchronize);
             ClearDatabaseCommand = new Util.BuilderCommand(ClearDatabase);
-
-            AddShortCutCommand = new Util.BuilderCommand(AddShortCut);
-            DeleteShortCutCommand = new Util.BuilderCommand(DeleteShortCut);
-            EditShortCutCommand = new Util.BuilderCommand(EditShortCut);
-        }
-
-        private void EditShortCut(object obj)
-        {
-
-        }
-
-        private void DeleteShortCut(object obj)
-        {
-            ForeignLetter foreignLetter = obj as ForeignLetter;
-            if (foreignLetter == null)
-            {
-                return;
-            }
-            Settings.ShortCuts.Remove(foreignLetter);
-        }
-
-        private void AddShortCut(object obj)
-        {
-
         }
 
         private void LoginPasswordChange(object obj)
