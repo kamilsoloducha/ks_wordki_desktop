@@ -1,12 +1,11 @@
 ﻿using WordkiModel;
 using System.Threading.Tasks;
-using Wordki.Database.Repositories;
 
 namespace Wordki.Database
 {
     public class UserManager : IUserManager
     {
-        private IUserRepository _userRepo;
+        private IDatabase database;
         private IUser _user;
         public IUser User
         {
@@ -18,7 +17,7 @@ namespace Wordki.Database
 
         public UserManager()
         {
-            _userRepo = new UserRepository();
+            database = DatabaseSingleton.Instance;
         }
 
         public void Set(IUser user)
@@ -33,12 +32,13 @@ namespace Wordki.Database
 
         public void Update()
         {
-            _userRepo.Update(_user);
+            database.UpdateUser(_user);
+            
         }
 
         public Task UpdateAsync()
         {
-            return _userRepo.UpdateAsync(_user);
+            return database.UpdateUserAsync(_user);
         }
     }
 }

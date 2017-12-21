@@ -31,231 +31,6 @@
                         Top="0"
                         Right="0"
                         Bottom="0" />
-                    <Color
-                        x:Key="DrawerColor1"
-                        A="255"
-                        R="255"
-                        G="0"
-                        B="0" />
-                    <Color
-                        x:Key="DrawerColor2"
-                        A="255"
-                        R="255"
-                        G="128"
-                        B="0" />
-                    <Color
-                        x:Key="DrawerColor3"
-                        A="255"
-                        R="255"
-                        G="255"
-                        B="0" />
-                    <Color
-                        x:Key="DrawerColor4"
-                        A="255"
-                        R="128"
-                        G="255"
-                        B="0" />
-                    <Color
-                        x:Key="DrawerColor5"
-                        A="255"
-                        R="0"
-                        G="255"
-                        B="0" />
-                    <Color
-                        x:Key="DrawerColor6"
-                        A="255"
-                        R="128"
-                        G="128"
-                        B="128" />
-                    <x:ArrayExtension
-                        Type="{x:Type Color}"
-                        x:Key="DrawerColors">
-                        <Color
-                            A="255"
-                            R="255"
-                            G="0"
-                            B="0" />
-                        <Color
-                            A="255"
-                            R="255"
-                            G="128"
-                            B="0" />
-                        <Color
-                            A="255"
-                            R="255"
-                            G="255"
-                            B="0" />
-                        <Color
-                            A="255"
-                            R="128"
-                            G="255"
-                            B="0" />
-                        <Color
-                            A="255"
-                            R="0"
-                            G="255"
-                            B="0" />
-                        <Color
-                            A="255"
-                            R="128"
-                            G="128"
-                            B="128" />
-                    </x:ArrayExtension>
-                    <x:ArrayExtension
-                        Type="{x:Type Color}"
-                        x:Key="ResultColors">
-                        <Color
-                            A="255"
-                            R="255"
-                            G="0"
-                            B="0" />
-                        <Color
-                            A="255"
-                            R="255"
-                            G="255"
-                            B="0" />
-                        <Color
-                            A="255"
-                            R="0"
-                            G="255"
-                            B="0" />
-                    </x:ArrayExtension>
-                    <!--jasne-->
-                    <Color
-                        x:Key="LightNormalColor">#FFFFFFFF</Color>
-                    <SolidColorBrush
-                        x:Key="LightNormalBrush"
-                        Color="{StaticResource LightNormalColor}" />
-
-                    <Color
-                        x:Key="LightHoverColor">#FFF0F0F0</Color>
-                    <SolidColorBrush
-                        x:Key="LightHoverBrush"
-                        Color="{StaticResource LightHoverColor}" />
-
-                    <Color
-                        x:Key="LightPressedColor">#FFE4E4E4</Color>
-                    <SolidColorBrush
-                        x:Key="LightPressedBrush"
-                        Color="{StaticResource LightPressedColor}" />
-
-                    <Color
-                        x:Key="LightNormalFrontColor">#FF3C3C3C</Color>
-                    <SolidColorBrush
-                        x:Key="LightNormalFrontBrush"
-                        Color="{StaticResource LightNormalFrontColor}" />
-
-                    <Color
-                        x:Key="LightUnableFrontColor">#FFFFFFFF</Color>
-                    <SolidColorBrush
-                        x:Key="LightUnableFrontBrush"
-                        Color="{StaticResource LightUnableFrontColor}" />
-
-                    <Color
-                        x:Key="LightAdditional1Color">#FF87D683</Color>
-                    <SolidColorBrush
-                        x:Key="LightAdditional1Brush"
-                        Color="{StaticResource LightAdditional1Color}" />
-
-                    <Color
-                        x:Key="LightAdditional2Color">#FF33702C</Color>
-                    <SolidColorBrush
-                        x:Key="LightAdditional2Brush"
-                        Color="{StaticResource LightAdditional2Color}" />
-
-                    <!--ciemne-->
-                    <Color
-                        x:Key="DarkNormalColor">#FF000000</Color>
-                    <SolidColorBrush
-                        x:Key="DarkNormalBrush"
-                        Color="{StaticResource DarkNormalColor}" />
-
-                    <Color
-                        x:Key="DarkHoverColor">#FF333333</Color>
-                    <SolidColorBrush
-                        x:Key="DarkHoverBrush"
-                        Color="{StaticResource DarkHoverColor}" />
-
-                    <Color
-                        x:Key="DarkPressedColor">#FF444444</Color>
-                    <SolidColorBrush
-                        x:Key="DarkPressedBrush"
-                        Color="{StaticResource DarkPressedColor}" />
-
-                    <Color
-                        x:Key="DarkNormalFrontColor">#FFE4E4E4</Color>
-                    <SolidColorBrush
-                        x:Key="DarkNormalFrontBrush"
-                        Color="{StaticResource DarkNormalFrontColor}" />
-
-                    <Color
-                        x:Key="DarkUnableFrontColor">#FF000000</Color>
-                    <SolidColorBrush
-                        x:Key="DarkUnableFrontBrush"
-                        Color="{StaticResource DarkUnableFrontColor}" />
-
-                    <Color
-                        x:Key="DarkAdditional1Color">#FF33702C</Color>
-                    <SolidColorBrush
-                        x:Key="DarkAdditional1Brush"
-                        Color="{StaticResource DarkAdditional1Color}" />
-
-                    <Color
-                        x:Key="DarkAdditional2Color">#FF87D683</Color>
-                    <SolidColorBrush
-                        x:Key="DarkAdditional2Brush"
-                        Color="{StaticResource DarkAdditional2Color}" />
-                    <!--uzywany-->
-                    <Color
-                        x:Key="UsedNormalColor">#FF000000</Color>
-                    <SolidColorBrush
-                        x:Key="UsedNormalBrush"
-                        Color="#FF000000" />
-                    <Color
-                        x:Key="UsedHoverColor">#FF333333</Color>
-                    <SolidColorBrush
-                        x:Key="UsedHoverBrush"
-                        Color="#FF333333" />
-                    <Color
-                        x:Key="UsedPressedColor">#FF444444</Color>
-                    <SolidColorBrush
-                        x:Key="UsedPressedBrush"
-                        Color="#FF444444" />
-                    <Color
-                        x:Key="UsedNormalFrontColor">#FFE4E4E4</Color>
-                    <SolidColorBrush
-                        x:Key="UsedNormalFrontBrush"
-                        Color="#FFE4E4E4" />
-                    <Color
-                        x:Key="UsedUnableFrontColor">#FF000000</Color>
-                    <SolidColorBrush
-                        x:Key="UsedUnableFrontBrush"
-                        Color="#FF000000" />
-                    <Color
-                        x:Key="UsedAdditional1Color">#FF33702C</Color>
-                    <SolidColorBrush
-                        x:Key="UsedAdditional1Brush"
-                        Color="#FF33702C" />
-                    <Color
-                        x:Key="UsedAdditional2Color">#FF87D683</Color>
-                    <SolidColorBrush
-                        x:Key="UsedAdditional2Brush"
-                        Color="#FF87D683" />
-                    <SolidColorBrush
-                        x:Key="Drawer1"
-                        Color="{StaticResource DrawerColor1}" />
-                    <SolidColorBrush
-                        x:Key="Drawer2"
-                        Color="{StaticResource DrawerColor2}" />
-                    <SolidColorBrush
-                        x:Key="Drawer3"
-                        Color="{StaticResource DrawerColor3}" />
-                    <SolidColorBrush
-                        x:Key="Drawer4"
-                        Color="{StaticResource DrawerColor4}" />
-                    <SolidColorBrush
-                        x:Key="Drawer5"
-                        Color="{StaticResource DrawerColor5}" />
                     <Style
                         x:Key="DarkButton"
                         TargetType="{x:Type Button}">
@@ -370,7 +145,7 @@
                                     TargetType="{x:Type Button}">
                                     <Border
                                         Name="ButtonBorder"
-                                        Background="{DynamicResource Backgroundasdf}"
+                                        Background="{TemplateBinding Background}"
                                         Width="{TemplateBinding Width}"
                                         Height="{TemplateBinding Height}"
                                         Padding="{TemplateBinding Padding}"
@@ -383,7 +158,6 @@
                                                 <BeginStoryboard>
                                                     <Storyboard>
                                                         <ColorAnimation
-                                                            From="{DynamicResource colorExample}"
                                                             To="{DynamicResource UsedHoverColor}"
                                                             Duration="0:0:0.25"
                                                             Storyboard.TargetName="ButtonBorder"
@@ -396,8 +170,7 @@
                                                 <BeginStoryboard>
                                                     <Storyboard>
                                                         <ColorAnimation
-                                                            From="{DynamicResource UsedHoverColor}"
-                                                            To="{DynamicResource colorExample}"
+                                                            To="{TemplateBinding Background}"
                                                             Duration="0:0:0.25"
                                                             Storyboard.TargetName="ButtonBorder"
                                                             Storyboard.TargetProperty="Background.Color" />

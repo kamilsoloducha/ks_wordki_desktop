@@ -12,17 +12,21 @@ namespace Wordki.Helpers.Converters
     {
 
         private static ILessonScheduler scheduler;
+        private static ILessonScheduleInitializer schedulerInitializer;
 
         static GroupToNextRepeatConverter()
         {
+            schedulerInitializer = new LessonSchedulerInitializer2(new List<int>() { 1, 1, 2, 4, 7 });
             scheduler = new NewLessonScheduler()
             {
-                Initializer = new LessonSchedulerInitializer2(new List<int>() { 1, 1, 2, 4, 7 })
-                {
-                    TranslationDirection = UserManagerSingleton.Instence.User.TranslationDirection,
-                },
+                Initializer = schedulerInitializer,
             };
         }
+
+        //public GroupToNextRepeatConverter()
+        //{
+
+        //}
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -31,6 +35,7 @@ namespace Wordki.Helpers.Converters
             {
                 return 0;
             }
+            schedulerInitializer.TranslationDirection = UserManagerSingleton.Instence.User.TranslationDirection;
             return Math.Max(scheduler.GetTimeToLearn(group), 0);
         }
 

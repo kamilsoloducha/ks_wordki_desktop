@@ -7,7 +7,7 @@ namespace Wordki.ViewModels
 
         public override void InitViewModel(object parameter = null)
         {
-            base.InitViewModel();
+            base.InitViewModel(parameter);
             EnableTextBox = true;
             StateFactory = new TypingLessonStateFactory();
             State = StateFactory.GetState(Lesson, LessonStateEnum.BeforeStart);

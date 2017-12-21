@@ -171,7 +171,7 @@
                                 x:Name="ItemBackground"
                                 Margin="0,2"
                                 CornerRadius="10"
-                                Background="{StaticResource UsedNormalBrush}"
+                                Background="{DynamicResource UsedNormalBrush}"
                                 KeyboardNavigation.IsTabStop="False">
 
                                 <Grid>
@@ -188,7 +188,7 @@
 
                                     <TextBlock
                                         Grid.Column="0"
-                                        Foreground="{StaticResource UsedNormalFrontBrush}"
+                                        Foreground="{DynamicResource UsedNormalFrontBrush}"
                                         FontSize="30"
                                         Margin="20, 10"
                                         FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular"
@@ -198,7 +198,7 @@
                                         Grid.Column="1"
                                         Width="1"
                                         Margin="4"
-                                        Fill="{StaticResource UsedHoverBrush}" />
+                                        Fill="{DynamicResource UsedHoverBrush}" />
 
                                     <StackPanel
                                         Grid.Column="2"
@@ -210,13 +210,13 @@
                                             Orientation="Horizontal">
                                             <Label
                                                 VerticalAlignment="Bottom"
-                                                Foreground="{StaticResource UsedNormalFrontBrush}"
+                                                Foreground="{DynamicResource UsedNormalFrontBrush}"
                                                 FontSize="15"
                                                 Content="Słowa" />
 
                                             <Label
                                                 VerticalAlignment="Bottom"
-                                                Foreground="{StaticResource UsedNormalFrontBrush}"
+                                                Foreground="{DynamicResource UsedNormalFrontBrush}"
                                                 FontSize="30"
                                                 Content="{Binding Path=Words.Count}" />
                                         </StackPanel>
@@ -230,13 +230,13 @@
                                         Orientation="Horizontal">
                                         <Label
                                             VerticalAlignment="Bottom"
-                                            Foreground="{StaticResource UsedNormalFrontBrush}"
+                                            Foreground="{DynamicResource UsedNormalFrontBrush}"
                                             FontSize="15"
                                             Content="Powtórka za" />
 
                                         <Label
                                             VerticalAlignment="Bottom"
-                                            Foreground="{StaticResource UsedNormalFrontBrush}"
+                                            Foreground="{DynamicResource UsedNormalFrontBrush}"
                                             FontSize="30"
                                             Content="{Binding Converter={StaticResource GroupToNextRepeatConverter}}" />
                                     </StackPanel>
@@ -259,7 +259,7 @@
                                     <Setter
                                         Property="Background"
                                         TargetName="ItemBackground"
-                                        Value="{StaticResource UsedHoverBrush}" />
+                                        Value="{DynamicResource UsedHoverBrush}" />
                                 </DataTrigger>
                             </DataTemplate.Triggers>
                         </DataTemplate>
