@@ -9,8 +9,6 @@
     <Compile Include="..\WordkiModel\Models\Enums\TranslationDirection.cs" Link="Models\Enums\TranslationDirection.cs" />
     <Compile Include="..\WordkiModel\Models\Group\IGroup.cs" Link="Models\Group\IGroup.cs" />
     <Compile Include="..\WordkiModel\Models\Language\ILanguage.cs" Link="Models\Language\ILanguage.cs" />
-    <Compile Include="..\WordkiModel\Models\Language\LanguageFacory.cs" Link="Models\Language\LanguageFacory.cs" />
-    <Compile Include="..\WordkiModel\Models\Language\LanguageJsonCoverter.cs" Link="Models\Language\LanguageJsonCoverter.cs" />
     <Compile Include="..\WordkiModel\Models\Language\LanguageType.cs" Link="Models\Language\LanguageType.cs" />
     <Compile Include="..\WordkiModel\Models\Result\IResult.cs" Link="Models\Result\IResult.cs" />
     <Compile Include="..\WordkiModel\Models\User\IUser.cs" Link="Models\User\IUser.cs" />

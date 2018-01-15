@@ -24,7 +24,9 @@ namespace Wordki.Helpers.Connector.Requests
         public ApiRequestBase(IUser user)
         {
             Headers = new Dictionary<string, string>();
-            Url = $"http://localhost:5001/{Path}";
+            Headers.Add(TagDateTime, user.DownloadTime.ToShortDateString());
+            Headers.Add(TagApiKey, user.ApiKey);
+            Url = $"https://localhost:44326/{Path}";
         }
     }
 }

@@ -4,7 +4,6 @@ using System.Collections.Specialized;
 using System.Security.Cryptography;
 using Wordki.Helpers;
 using Wordki.Models;
-using Wordki.Models.Connector;
 using Wordki.Views.Dialogs;
 using Wordki.Helpers.Notification;
 using Wordki.Database;
@@ -190,17 +189,17 @@ namespace Wordki.ViewModels
             }
         }
 
-        private void UpdateLoginPasswordComplete(ApiResponse pResponse)
-        {
-            if (pResponse.IsError)
-            {
-                System.Windows.Application.Current.Dispatcher.Invoke(() => NotificationFactory.Create().Show("Błąd"));
-            }
-            else
-            {
-                System.Windows.Application.Current.Dispatcher.Invoke(() => NotificationFactory.Create().Show("Zmieniono"));
-            }
-        }
+        //private void UpdateLoginPasswordComplete(ApiResponse pResponse)
+        //{
+        //    if (pResponse.IsError)
+        //    {
+        //        System.Windows.Application.Current.Dispatcher.Invoke(() => NotificationFactory.Create().Show("Błąd"));
+        //    }
+        //    else
+        //    {
+        //        System.Windows.Application.Current.Dispatcher.Invoke(() => NotificationFactory.Create().Show("Zmieniono"));
+        //    }
+        //}
 
         private void BackAction()
         {

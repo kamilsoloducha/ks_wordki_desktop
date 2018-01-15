@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using Newtonsoft.Json;
 using Wordki.Helpers;
-using Wordki.Models.Connector;
 using Wordki.Helpers.Notification;
 using System.Windows.Input;
 using WordkiModel;
@@ -116,24 +115,24 @@ namespace Wordki.ViewModels
             Start();
         }
 
-        protected void HandleResponse(ApiResponse response)
-        {
-            if (response.IsError)
-            {
-                return;
-            }
-            IUser lUser = JsonConvert.DeserializeObject<IUser>(response.Message);
-            lUser.IsLogin = true;
-            lUser.IsRegister = true;
-            IDatabase database = DatabaseSingleton.Instance;
-            //User dbUser = database.GetUserAsync(lUser.LocalId);
-            //if (dbUser == null)
-            //{
-                //database.AddUser(lUser);
-            //}
-            //UserManager.GetInstance().User = lUser;
-            StartWithUser(lUser);
-        }
+        //protected void HandleResponse(ApiResponse response)
+        //{
+        //    if (response.IsError)
+        //    {
+        //        return;
+        //    }
+        //    IUser lUser = JsonConvert.DeserializeObject<IUser>(response.Message);
+        //    lUser.IsLogin = true;
+        //    lUser.IsRegister = true;
+        //    IDatabase database = DatabaseSingleton.Instance;
+        //    //User dbUser = database.GetUserAsync(lUser.LocalId);
+        //    //if (dbUser == null)
+        //    //{
+        //        //database.AddUser(lUser);
+        //    //}
+        //    //UserManager.GetInstance().User = lUser;
+        //    StartWithUser(lUser);
+        //}
 
         private void Start()
         {

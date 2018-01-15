@@ -1,4 +1,7 @@
-﻿using System.Windows.Media.Imaging;
+﻿#if NETSTANDARD2_0
+#else
+using System.Windows.Media.Imaging;
+#endif
 
 namespace WordkiModel
 {
@@ -10,6 +13,11 @@ namespace WordkiModel
         string Description { get; }
         string Name { get; }
         string ShortName { get; }
+#if NETSTANDARD2_0
+#else
         BitmapImage Flag { get; }
+#endif
+
+
     }
 }

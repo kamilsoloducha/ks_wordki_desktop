@@ -9,7 +9,7 @@ namespace Wordki.Helpers.Connector.Requests
 {
     public class GetWordsRequest : ApiRequestBase
     {
-        protected override string Path { get { return "/Words/Get/"; } }
+        protected override string Path { get { return "/Words/"; } }
 
         public GetWordsRequest(IUser user) : base(user)
         {

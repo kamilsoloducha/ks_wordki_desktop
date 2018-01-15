@@ -139,6 +139,7 @@
     <Compile Include="Commands\SwapWordsInGroupAction.cs" />
     <Compile Include="Commands\TranslationDirectionChangeAction.cs" />
     <Compile Include="Database\Database\DatabaseSingleton.cs" />
+    <Compile Include="Database\Handlers.cs" />
     <Compile Include="Database\Maps\GroupMap.cs" />
     <Compile Include="Database\Repositories\GroupRepository.cs" />
     <Compile Include="Database\Database\IDatabase.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="Helpers\Connector\IParser.cs" />
     <Compile Include="Helpers\Connector\IResponse.cs" />
     <Compile Include="Helpers\Connector\IRequest.cs" />
+    <Compile Include="Helpers\Connector\Parsers\ApiResponeParser.cs" />
     <Compile Include="Helpers\Connector\Parsers\TranslationParser.cs" />
     <Compile Include="Helpers\Connector\Requests\ApiRequest\ApiRequestBase.cs" />
     <Compile Include="Helpers\Connector\Requests\ApiRequest\GetGroupsRequest.cs" />
@@ -261,9 +263,7 @@
     <Compile Include="InteractionProvider\YesNoProvider\IYesNoProvider.cs" />
     <Compile Include="InteractionProvider\YesNoProvider\YesNoProvider.cs" />
     <Compile Include="Models\Group\CommonGroup.cs" />
-    <Compile Include="Helpers\Connector\ApiConnector.cs" />
-    <Compile Include="Helpers\Connector\ApiRequest.cs" />
-    <Compile Include="Helpers\Connector\ApiResponse.cs" />
+    <Compile Include="Helpers\Connector\Responses\ApiResponse.cs" />
     <Compile Include="Models\Group\FakeGroup.cs" />
     <Compile Include="Database\Repositories\IGroupRepository.cs" />
     <Compile Include="Models\LessonScheduler\LessonScheduleInitializer\LessonSchedulerInitializer.cs" />
