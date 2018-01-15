@@ -15,12 +15,10 @@ namespace WordkiModel
         string Name { get; set; }
 
         [JsonProperty(PropertyName = "Language1", DefaultValueHandling = DefaultValueHandling.Populate)]
-        [JsonConverter(typeof(LanguageJsonCoverter))]
         [PropertyIndex(3)]
         LanguageType Language1 { get; set; }
 
         [JsonProperty(PropertyName = "Language2", DefaultValueHandling = DefaultValueHandling.Populate)]
-        [JsonConverter(typeof(LanguageJsonCoverter))]
         [PropertyIndex(4)]
         LanguageType Language2 { get; set; }
 

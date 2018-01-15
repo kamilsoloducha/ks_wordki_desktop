@@ -5,10 +5,7 @@ using System;
 namespace WordkiModel
 {
     public interface IWord
-#if CORE
-#else
         : ICloneable
-#endif
     {
         [JsonProperty(PropertyName = "Id")]
         [PropertyIndex(0)]

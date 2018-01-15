@@ -170,6 +170,13 @@
     <Compile Include="Helpers\Connector\IResponse.cs" />
     <Compile Include="Helpers\Connector\IRequest.cs" />
     <Compile Include="Helpers\Connector\Parsers\TranslationParser.cs" />
+    <Compile Include="Helpers\Connector\Requests\ApiRequest\ApiRequestBase.cs" />
+    <Compile Include="Helpers\Connector\Requests\ApiRequest\GetGroupsRequest.cs" />
+    <Compile Include="Helpers\Connector\Requests\ApiRequest\GetResultsRequest.cs" />
+    <Compile Include="Helpers\Connector\Requests\ApiRequest\GetWordsRequest.cs" />
+    <Compile Include="Helpers\Connector\Requests\ApiRequest\PostGroupsRequest.cs" />
+    <Compile Include="Helpers\Connector\Requests\ApiRequest\PostResultsRequest.cs" />
+    <Compile Include="Helpers\Connector\Requests\ApiRequest\PostWordsRequest.cs" />
     <Compile Include="Helpers\Connector\Requests\TranslationRequest.cs" />
     <Compile Include="Helpers\Connector\Responses\TranslationResponse.cs" />
     <Compile Include="Helpers\Connector\SimpleConnector\SimpleConnector.cs" />
