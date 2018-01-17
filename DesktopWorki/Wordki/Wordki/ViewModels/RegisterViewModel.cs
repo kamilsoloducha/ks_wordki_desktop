@@ -1,4 +1,7 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
+using Util.Threads;
+using Wordki.Helpers.Connector;
 using Wordki.Models;
 
 namespace Wordki.ViewModels
@@ -51,6 +54,7 @@ namespace Wordki.ViewModels
                 return;
             if (!Password.Equals(RepeatPassword))
             {
+                Console.WriteLine("Password and repetition is not same.");
                 //Parent.ShowToast("Wprowadzone hasła nie są identyczne", ToastLevel.Alert);
                 return;
             }
@@ -59,7 +63,9 @@ namespace Wordki.ViewModels
                 Name = UserName,
                 Password = Password
             };
-            //CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
+            //BackgroundWorkQueue queue = new BackgroundWorkQueue();
+            //queue.AddWork
+            ////CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
             //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestRegister(user)) { OnCompleteCommand = OnRegister });
             //lQueue.Execute();
         }

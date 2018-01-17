@@ -1,6 +1,6 @@
 ﻿namespace Wordki.Helpers.Connector
 {
-    public class TranslationResponse : IResponse
+    public class TranslationResponse
     {
 
         public Models.Translator.Root TranslationWord { get; set; }

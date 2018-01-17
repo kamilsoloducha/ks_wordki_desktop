@@ -25,10 +25,10 @@ namespace Wordki.Test
                 DownloadTime = new DateTime(1990, 1, 1),
             };
             IRequest request = new GetWordsRequest(user);
-            IConnector<ApiResponse<List<Word>>> connector = new SimpleConnector<ApiResponse<List<Word>>>();
-            connector.Parser = new ApiResponeParser<List<Word>>();
-            ApiResponse<List<Word>> response = null;
-            response = connector.SendRequest(request);
+            //IConnector<ApiResponse<List<Word>>> connector = new SimpleConnector<ApiResponse<List<Word>>>();
+            //connector.Parser = new ApiResponeParser<List<Word>>();
+            //ApiResponse<List<Word>> response = null;
+            //response = connector.SendRequest(request);
 
         }
 

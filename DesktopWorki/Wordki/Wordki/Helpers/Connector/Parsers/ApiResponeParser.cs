@@ -6,8 +6,7 @@ namespace Wordki.Helpers.Connector
     {
         public ApiResponse<T> Parse(string message)
         {
-            ApiResponse<T> response = JsonConvert.DeserializeObject<ApiResponse<T>>(message);
-            return response;
+            return JsonConvert.DeserializeObject<ApiResponse<T>>(message);
         }
     }
 }

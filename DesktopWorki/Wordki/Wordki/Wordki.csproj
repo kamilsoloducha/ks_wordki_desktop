@@ -168,7 +168,6 @@
     <Compile Include="Helpers\BindingProxy.cs" />
     <Compile Include="Helpers\Connector\IConnector.cs" />
     <Compile Include="Helpers\Connector\IParser.cs" />
-    <Compile Include="Helpers\Connector\IResponse.cs" />
     <Compile Include="Helpers\Connector\IRequest.cs" />
     <Compile Include="Helpers\Connector\Parsers\ApiResponeParser.cs" />
     <Compile Include="Helpers\Connector\Parsers\TranslationParser.cs" />
@@ -182,6 +181,7 @@
     <Compile Include="Helpers\Connector\Requests\TranslationRequest.cs" />
     <Compile Include="Helpers\Connector\Responses\TranslationResponse.cs" />
     <Compile Include="Helpers\Connector\SimpleConnector\SimpleConnector.cs" />
+    <Compile Include="Helpers\Connector\Work\RequestWork.cs" />
     <Compile Include="Helpers\Converters\ArithmeticConverter.cs" />
     <Compile Include="Helpers\Converters\DrawerToColorConverter.cs" />
     <Compile Include="Helpers\Converters\GroupsToResultsCountConverter.cs" />

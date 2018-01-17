@@ -1,6 +1,6 @@
 ﻿namespace Wordki.Helpers.Connector
 {
-    public interface IConnector<T> where T : IResponse
+    public interface IConnector<T>
     {
 
         IParser<T> Parser { get; set; }
