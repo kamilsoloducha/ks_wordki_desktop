@@ -6,13 +6,13 @@ using System.Text;
 
 namespace Wordki.Helpers.Connector
 {
-    public class SimpleConnector<T> : IConnector<T> where T : IResponse
+    public class SimpleConnector<T> : IConnector<T>
     {
         public IParser<T> Parser { get; set; }
 
         public T SendRequest(IRequest request)
         {
-            IResponse response = null;
+            T response = default(T);
             byte[] lData = null;
             HttpWebRequest lRequest;
             try
@@ -68,7 +68,7 @@ namespace Wordki.Helpers.Connector
             var lResponseStream = lWebResponse.GetResponseStream();
             if (lResponseStream == null)
             {
-                response = default(IResponse);
+                response = default(T);
             }
             if (lResponseStream != null)
                 response = Parser.Parse(new StreamReader(lResponseStream, Encoding.UTF8).ReadToEnd());
