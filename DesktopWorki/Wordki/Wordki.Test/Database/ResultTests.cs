@@ -39,7 +39,7 @@ namespace Resultki.Test.Database
                 Wrong = 10,
                 Correct = 10,
                 DateTime = DateTime.Now,
-                Invisibilities = 10,
+                Invisible = 10,
                 LessonType = LessonType.FiszkiLesson,
                 TimeCount = 10,
                 TranslationDirection = TranslationDirection.FromFirst,
@@ -175,7 +175,7 @@ namespace Resultki.Test.Database
             result.Wrong = 20;
             result.Correct = 20;
             result.DateTime = DateTime.Now;
-            result.Invisibilities = 20;
+            result.Invisible = 20;
             result.LessonType = LessonType.IntensiveLesson;
             result.TimeCount = 20;
             result.TranslationDirection = TranslationDirection.FromSecond;

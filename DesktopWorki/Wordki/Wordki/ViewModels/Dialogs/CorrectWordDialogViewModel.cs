@@ -59,8 +59,8 @@ namespace Wordki.ViewModels.Dialogs
             originalWord.Language2 = word.Language2;
             originalWord.Language1Comment = word.Language1Comment;
             originalWord.Language2Comment = word.Language2Comment;
-            originalWord.Selected = word.Selected;
-            originalWord.Visible = word.Visible;
+            originalWord.IsSelected = word.IsSelected;
+            originalWord.IsVisible = word.IsVisible;
             database.UpdateWordAsync(originalWord);
             if (CorrectWord != null)
             {

@@ -28,7 +28,7 @@ namespace Wordki.Test.Commands.CheckUncheckCommandTests
         {
             IWord word = Utility.GetWord(checkedUnchecked: true);
             action(word);
-            Assert.AreEqual(false, word.Selected);
+            Assert.AreEqual(false, word.IsSelected);
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace Wordki.Test.Commands.CheckUncheckCommandTests
         {
             IWord word = Utility.GetWord(checkedUnchecked: false);
             action(word);
-            Assert.AreEqual(true, word.Selected);
+            Assert.AreEqual(true, word.IsSelected);
         }
 
     }

@@ -56,7 +56,7 @@ namespace Wordki.Models.Lesson
 
         protected override void CreateWordList(IEnumerable<IWord> words)
         {
-            BeginWordsList.AddRange(words.Where(word => word.Visible || LessonSettings.AllWords).Select(x => (IWord)x.Clone()));
+            BeginWordsList.AddRange(words.Where(word => word.IsVisible || LessonSettings.AllWords).Select(x => (IWord)x.Clone()));
             BeginWordsList.Shuffle();
             foreach (IWord word in BeginWordsList)
             {
@@ -72,7 +72,7 @@ namespace Wordki.Models.Lesson
                   0,
                   0,
                   0,
-                  (short)x.Key.Words.Count(y => !y.Visible),
+                  (short)x.Key.Words.Count(y => !y.IsVisible),
                   0,
                   LessonSettings.TranslationDirection,
                   (LessonType)Enum.Parse(typeof(LessonType), GetType().Name),

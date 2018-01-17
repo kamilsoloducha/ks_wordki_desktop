@@ -5,7 +5,7 @@ namespace WordkiModel
 {
     public interface IUser
     {
-        long LocalId { get; set; }
+        long Id { get; set; }
         string Name { get; set; }
         string Password { get; set; }
         string ApiKey { get; set; }

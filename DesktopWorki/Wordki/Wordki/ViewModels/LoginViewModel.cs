@@ -128,7 +128,7 @@ namespace Wordki.ViewModels
                 IDatabaseOrganizer databaseOrganizer = DatabaseOrganizerSingleton.Get();
                 user = new User()
                 {
-                    LocalId = DateTime.Now.Ticks,
+                    Id = DateTime.Now.Ticks,
                     Name = UserName,
                     Password = GetHashedPassword(),
                     CreateDateTime = DateTime.Now,

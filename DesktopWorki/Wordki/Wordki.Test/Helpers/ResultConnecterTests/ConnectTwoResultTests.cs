@@ -23,14 +23,14 @@ namespace Wordki.Test.Helpers.ResultConnecterTests
                 Accepted = 10,
                 Correct = 10,
                 Wrong = 10,
-                Invisibilities = 10,
+                Invisible = 10,
             };
             src = new Result
             {
                 Accepted = 2,
                 Correct = 2,
                 Wrong = 2,
-                Invisibilities = 2,
+                Invisible = 2,
             };
         }
 
@@ -56,7 +56,7 @@ namespace Wordki.Test.Helpers.ResultConnecterTests
         public void Connect_two_result_check_invisibilites_test()
         {
             connector.Connect(dest, src);
-            Assert.AreEqual(12, dest.Invisibilities);
+            Assert.AreEqual(12, dest.Invisible);
         }
     }
 }

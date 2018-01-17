@@ -32,7 +32,7 @@ namespace Wordki.Helpers
                 {
                     continue;
                 }
-                foreach (IWord word in group.Words.Where(x => x.Visible || AllWords))
+                foreach (IWord word in group.Words.Where(x => x.IsVisible || AllWords))
                 {
                     yield return word;
                 }

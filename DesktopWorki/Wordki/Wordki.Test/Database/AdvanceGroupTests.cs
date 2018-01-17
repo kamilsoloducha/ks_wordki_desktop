@@ -107,7 +107,7 @@ namespace Wordki.Test.Database
             resultToChange.Correct = 1;
             resultToChange.Wrong = 1;
             resultToChange.Accepted = 1;
-            resultToChange.Invisibilities = 1;
+            resultToChange.Invisible = 1;
             resultToChange.TranslationDirection = TranslationDirection.FromFirst;
             resultToChange.State = -1;
 

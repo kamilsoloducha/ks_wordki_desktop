@@ -28,7 +28,7 @@ namespace Wordki.Models
         public virtual short Correct { get; set; }
         public virtual short Accepted { get; set; }
         public virtual short Wrong { get; set; }
-        public virtual short Invisibilities { get; set; }
+        public virtual short Invisible { get; set; }
         public virtual short TimeCount { get; set; }
 
         private TranslationDirection _translationDirection;
@@ -61,7 +61,7 @@ namespace Wordki.Models
             Correct = 0;
             Accepted = 0;
             Wrong = 0;
-            Invisibilities = 0;
+            Invisible = 0;
             TimeCount = 0;
             TranslationDirection = TranslationDirection.FromFirst;
             LessonType = LessonType.Unknown;
@@ -80,7 +80,7 @@ namespace Wordki.Models
             TimeCount = pTime;
             TranslationDirection = pTranslationDirection;
             LessonType = pLessonType;
-            Invisibilities = pUnvisibilities;
+            Invisible = pUnvisibilities;
             State = pState;
             Thread.Sleep(1);
         }

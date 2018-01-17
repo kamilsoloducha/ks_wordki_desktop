@@ -49,7 +49,7 @@ namespace Wordki.Helpers.WordConnector
             lSameWordDataGridItem.Language2 = lLanguage2.ToString();
             lSameWordDataGridItem.Language1Comment = lLanguage1Comment.ToString();
             lSameWordDataGridItem.Language2Comment = lLanguage2Comment.ToString();
-            lSameWordDataGridItem.Visible = true;
+            lSameWordDataGridItem.IsVisible = true;
             lSameWordDataGridItem.Drawer = 0;
             lSameWordDataGridItem.State = int.MaxValue;
         }

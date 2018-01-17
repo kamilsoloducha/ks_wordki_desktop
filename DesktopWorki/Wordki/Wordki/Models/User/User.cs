@@ -17,7 +17,7 @@ namespace Wordki.Models
         public virtual string Password { get; set; }
 
         [JsonProperty("LocalId")]
-        public virtual long LocalId { get; set; }
+        public virtual long Id { get; set; }
 
         public virtual bool IsLogin { get; set; }
 
@@ -73,7 +73,7 @@ namespace Wordki.Models
         /// </summary>
         public User()
         {
-            LocalId = 0;
+            Id = 0;
             Name = "";
             Password = "";
             IsLogin = false;

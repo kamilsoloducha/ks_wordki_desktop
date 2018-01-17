@@ -73,7 +73,7 @@ namespace Wordki.ViewModels.LessonStates
                 if (wordFromGroup != null)
                 {
                     wordFromGroup.Drawer = word.Drawer;
-                    wordFromGroup.RepeatingNumber++;
+                    wordFromGroup.RepeatingCounter++;
                     wordFromGroup.LastRepeating = now;
                 }
                 database.UpdateWord(word);

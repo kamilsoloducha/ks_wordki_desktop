@@ -12,7 +12,7 @@ namespace Wordki.Database
             Map(x => x.Correct);
             Map(x => x.Wrong);
             Map(x => x.DateTime);
-            Map(x => x.Invisibilities);
+            Map(x => x.Invisible);
             Map(x => x.LessonType);
             Map(x => x.TimeCount);
             Map(x => x.TranslationDirection);

@@ -85,7 +85,7 @@ namespace Wordki.Models
                     value = 4;
                 if (_drawer == 4)
                 {
-                    Visible = value != 4;
+                    IsVisible = value != 4;
                 }
                 if (value != _drawer)
                 {
@@ -140,7 +140,7 @@ namespace Wordki.Models
         }
 
         private bool _visible;
-        public virtual bool Visible
+        public virtual bool IsVisible
         {
             get { return _visible; }
             set
@@ -162,7 +162,7 @@ namespace Wordki.Models
 
 
         private bool selected;
-        public virtual bool Selected
+        public virtual bool IsSelected
         {
             get { return selected; }
             set
@@ -184,7 +184,7 @@ namespace Wordki.Models
         }
 
         private ushort _repeatingNumber;
-        public virtual ushort RepeatingNumber
+        public virtual ushort RepeatingCounter
         {
             get { return _repeatingNumber; }
             set
@@ -269,11 +269,11 @@ namespace Wordki.Models
             return word != null
                 && word.Id == Id
                 && word.Drawer == Drawer
-                && word.Visible == Visible
+                && word.IsVisible == IsVisible
                 && word.Language1.Equals(Language1)
                 && word.Language2.Equals(Language2)
-                && word.Visible == Visible
-                && word.Selected == Selected;
+                && word.IsVisible == IsVisible
+                && word.IsSelected == IsSelected;
         }
 
     }

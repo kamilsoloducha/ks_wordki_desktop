@@ -102,7 +102,7 @@ namespace Wordki.Database
             IUser user = new User();
             user.Name = name;
             user.Password = password;
-            user.LocalId = 1;
+            user.Id = 1;
             return user;
         }
 
@@ -111,7 +111,7 @@ namespace Wordki.Database
             IUser user = new User();
             user.Name = name;
             user.Password = password;
-            user.LocalId = 1;
+            user.Id = 1;
             return Task.FromResult(user);
         }
 
@@ -133,7 +133,7 @@ namespace Wordki.Database
                     {
                         Accepted = 10,
                         Correct = 10,
-                        Invisibilities = 10,
+                        Invisible = 10,
                         LessonType = LessonType.TypingLesson,
                         TimeCount = 300,
                         TranslationDirection = TranslationDirection.FromSecond,
@@ -151,8 +151,8 @@ namespace Wordki.Database
                         Language1Comment = $"Komentarz {i}",
                         Language2Comment = $"Comment {i}",
                         Drawer = (byte)random.Next(4),
-                        Selected = false,
-                        Visible = true
+                        IsSelected = false,
+                        IsVisible = true
                     };
                     group.AddWord(word);
                 }

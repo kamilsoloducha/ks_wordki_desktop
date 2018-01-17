@@ -5,7 +5,7 @@
 
         public static void ChangeVisibility(this IWord word)
         {
-            word.Visible = !word.Visible;
+            word.IsVisible = !word.IsVisible;
         }
 
         public static void ResetDrawer(this IWord word)
@@ -20,7 +20,7 @@
 
         public static void ChagnedSelected(this IWord word)
         {
-            word.Selected = !word.Selected;
+            word.IsSelected = !word.IsSelected;
         }
 
         public static void SwapLanguage(this IWord word)

@@ -45,6 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\GroupDTO.cs" />
+    <Compile Include="DTO\ResultDTO.cs" />
+    <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="DTO\WordDTO.cs" />
     <Compile Include="Models\Enums\LessonType.cs" />
     <Compile Include="Models\Enums\TranslationDirection.cs" />
     <Compile Include="Models\Group\GroupExtensions.cs" />

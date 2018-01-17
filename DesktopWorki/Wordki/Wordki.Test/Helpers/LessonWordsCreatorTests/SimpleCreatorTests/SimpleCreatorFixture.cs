@@ -41,7 +41,7 @@ namespace Wordki.Test.Helpers.LessonWordsCreatorTests.SimpleCreatorTests
         public void Try_to_get_words_from_groups_if_not_all_words_test()
         {
             creator.AllWords = false;
-            groups[0].Words[0].Visible = false;
+            groups[0].Words[0].IsVisible = false;
             IList<IWord> list = creator.GetWords().ToList();
             Assert.AreEqual(groupCount * Utility.WordCount -1, list.Count);
         }

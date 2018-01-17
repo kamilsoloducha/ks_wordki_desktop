@@ -60,8 +60,8 @@ namespace Wordki.Test
                 Language2Comment = language2Comment,
                 Drawer = drawer,
                 State = 2,
-                Visible = visible,
-                Selected = checkedUnchecked
+                IsVisible = visible,
+                IsSelected = checkedUnchecked
             };
         }
 
@@ -78,7 +78,7 @@ namespace Wordki.Test
                 Correct = correct,
                 Accepted = accepted,
                 Wrong = wrong,
-                Invisibilities = invisibilities,
+                Invisible = invisibilities,
                 DateTime = new DateTime(1990, 9, 24, 12, 0, 0),
                 LessonType = lessonType,
                 TimeCount = timeCount,
@@ -117,7 +117,7 @@ namespace Wordki.Test
         {
             return new User()
             {
-                LocalId = 1,
+                Id = 1,
                 AllWords = true,
                 ApiKey = "asdffdsaasdffdsa",
                 DownloadTime = new DateTime(1990, 9, 24, 12, 0, 0),

@@ -69,7 +69,7 @@ namespace Wordki.Helpers.ResultConnector
             dest.Correct += src.Correct;
             dest.Wrong += src.Wrong;
             dest.Accepted += src.Accepted;
-            dest.Invisibilities += src.Invisibilities;
+            dest.Invisible += src.Invisible;
             dest.TimeCount += src.TimeCount;
         }
 

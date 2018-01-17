@@ -41,7 +41,7 @@ namespace Wordki.Models.Lesson
                   0,
                   0,
                   0,
-                  (short)word.Group.Words.Count(x => !x.Visible),
+                  (short)word.Group.Words.Count(x => !x.IsVisible),
                   0,
                   LessonSettings.TranslationDirection,
                   (LessonType)Enum.Parse(typeof(LessonType), GetType().Name),
@@ -52,7 +52,7 @@ namespace Wordki.Models.Lesson
 
         protected override void CreateWordList(IEnumerable<IWord> words)
         {
-            foreach (Word word in words.Where(word => word.Visible || LessonSettings.AllWords))
+            foreach (Word word in words.Where(word => word.IsVisible || LessonSettings.AllWords))
             {
                 BeginWordsList.Add((Word)word.Clone());
             }
