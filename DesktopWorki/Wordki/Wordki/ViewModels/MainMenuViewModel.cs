@@ -5,7 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Util;
+using Util.Threads;
 using Wordki.Database;
+using Wordki.Helpers.Connector.Requests;
+using Wordki.Helpers.Connector.Work;
 using Wordki.InteractionProvider;
 using Wordki.Models;
 using Wordki.ViewModels.Dialogs;
@@ -178,7 +181,8 @@ namespace Wordki.ViewModels
                     YesAction = ExitAction,
                     Message = "Czy chcesz wyjść z programu?",
                     NegativeLabel = "Nie",
-                    PositiveLabel = "Tak"
+                    PositiveLabel = "Tak",
+                    
                 }
             };
             provider.Interact();
@@ -186,10 +190,26 @@ namespace Wordki.ViewModels
 
         private void ExitAction()
         {
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += (s, e) => DatabaseSingleton.Instance.RefreshDatabase();
-            worker.RunWorkerAsync();
-            Application.Current.Dispatcher.Invoke(() => Application.Current.Shutdown());
+            BackgroundWorkQueue queue = new BackgroundWorkQueue();
+            queue.OnCompleted = () =>
+            {
+                DatabaseSingleton.Instance.RefreshDatabase();
+                Application.Current.Shutdown();
+            };
+            queue.OnFailed = Application.Current.Shutdown;
+            queue.AddWork(new ApiWork<string>
+            {
+                Request = new PostGroupsRequest(UserManagerSingleton.Instence.User, new GroupsSender().GetModelToSend()),
+            });
+            queue.AddWork(new ApiWork<string>
+            {
+                Request = new PostWordsRequest(UserManagerSingleton.Instence.User, new WordsSender().GetModelToSend()),
+            });
+            queue.AddWork(new ApiWork<string>
+            {
+                Request = new PostResultsRequest(UserManagerSingleton.Instence.User, new ResultsSender().GetModelToSend()),
+            });
+            queue.Execute();
         }
         #endregion
 

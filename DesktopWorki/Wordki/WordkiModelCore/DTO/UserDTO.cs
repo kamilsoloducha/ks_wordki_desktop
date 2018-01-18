@@ -7,11 +7,11 @@ namespace WordkiModelCore.DTO
     {
         [JsonProperty("Id")]
         public long Id { get; set; }
-        [JsonProperty("ApiKey")]
+        [JsonProperty("AK")]
         public string ApiKey { get; set; }
-        [JsonProperty("Name")]
+        [JsonProperty("N")]
         public string Name { get; set; }
-        [JsonProperty("Password")]
+        [JsonProperty("Pw")]
         public string Password { get; set; }
     }
 }

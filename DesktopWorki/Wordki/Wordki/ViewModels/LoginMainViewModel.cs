@@ -134,7 +134,7 @@ namespace Wordki.ViewModels
         //    StartWithUser(lUser);
         //}
 
-        private void Start()
+        protected void Start()
         {
             LoggerSingleton.LogInfo("Loguje użytkownika: {0}", UserManagerSingleton.Instence.User.Name);
             Application.Current.Dispatcher.Invoke(() =>

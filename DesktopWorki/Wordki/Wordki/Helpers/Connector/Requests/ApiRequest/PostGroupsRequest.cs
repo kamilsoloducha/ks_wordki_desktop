@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Repository.Model.DTOConverters;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WordkiModel;
 
 namespace Wordki.Helpers.Connector.Requests
@@ -11,9 +9,10 @@ namespace Wordki.Helpers.Connector.Requests
     {
         protected override string Path { get { return "Groups/Post/"; } }
 
-        public PostGroupsRequest(IUser user) : base(user)
+        public PostGroupsRequest(IUser user, IEnumerable<IGroup> groups) : base(user)
         {
             Method = "POST";
+            Message = JsonConvert.SerializeObject(new { user.ApiKey, Data = GroupConverter.GetDTOsFromGroups(groups) });
         }
     }
 }

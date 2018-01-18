@@ -4,15 +4,15 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace Wordki.Helpers.Connector
+namespace Wordki.Helpers.Connector.SimpleConnector
 {
-    public class SimpleConnector<T> : IConnector<T>
+    public class ApiConnector
     {
-        public IParser<T> Parser { get; set; }
 
-        public T SendRequest(IRequest request)
+        public HttpWebResponse Response { get; private set; }
+
+        public string SendRequest(IRequest request)
         {
-            T response = default(T);
             byte[] lData = null;
             HttpWebRequest lRequest;
             try
@@ -21,10 +21,9 @@ namespace Wordki.Helpers.Connector
                 lRequest.Timeout = 10000;
                 lRequest.ReadWriteTimeout = 10000;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                LoggerSingleton.LogError("Błąd połączenia - {0}", e.Message);
-                return default(T);
+                return string.Empty;
             }
             lRequest.Method = request.Method;
             if (request.Headers != null)
@@ -49,30 +48,24 @@ namespace Wordki.Helpers.Connector
                         lStreamWriter.Write(lData, 0, lData.Length);
                     }
                 }
-                catch (WebException exception)
+                catch (WebException)
                 {
-                    LoggerSingleton.LogError("Błąd połączenia z serwerem: {0}", exception.Message);
-                    return default(T);
+                    return string.Empty;
                 }
             }
-            HttpWebResponse lWebResponse;
             try
             {
-                lWebResponse = (HttpWebResponse)lRequest.GetResponse();
+                Response = (HttpWebResponse)lRequest.GetResponse();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                LoggerSingleton.LogInfo("Błąd połączenia z serwerem - {0}", e.Message);
-                return default(T);
+                return string.Empty;
             }
-            var lResponseStream = lWebResponse.GetResponseStream();
-            if (lResponseStream == null)
-            {
-                response = default(T);
-            }
+            var lResponseStream = Response.GetResponseStream();
             if (lResponseStream != null)
-                response = Parser.Parse(new StreamReader(lResponseStream, Encoding.UTF8).ReadToEnd());
-            return (T)response;
+                return new StreamReader(lResponseStream, Encoding.UTF8).ReadToEnd();
+            return string.Empty;
         }
+
     }
 }
