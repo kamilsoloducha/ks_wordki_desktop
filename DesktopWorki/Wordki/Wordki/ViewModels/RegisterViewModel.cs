@@ -2,7 +2,10 @@
 using System.Windows.Input;
 using Util.Threads;
 using Wordki.Helpers.Connector;
+using Wordki.Helpers.Connector.Requests;
+using Wordki.Helpers.Connector.Work;
 using Wordki.Models;
+using WordkiModel.DTO;
 
 namespace Wordki.ViewModels
 {
@@ -63,11 +66,16 @@ namespace Wordki.ViewModels
                 Name = UserName,
                 Password = Password
             };
-            //BackgroundWorkQueue queue = new BackgroundWorkQueue();
-            //queue.AddWork
-            ////CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-            //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestRegister(user)) { OnCompleteCommand = OnRegister });
-            //lQueue.Execute();
+        }
+
+        private void OnFailed(ApiResponse<UserDTO> response)
+        {
+
+        }
+
+        public void OnSuccess(ApiResponse<UserDTO> response)
+        {
+
         }
 
         protected override void ChangeState(object obj)

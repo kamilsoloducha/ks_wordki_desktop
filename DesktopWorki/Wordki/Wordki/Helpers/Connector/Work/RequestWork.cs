@@ -10,9 +10,9 @@ namespace Wordki.Helpers.Connector.Work
         public Action<T> OnCompletedFunc { get; set; }
         public Action<T> OnFailedFunc { get; set; }
 
-        IConnector<T> Connector { get; set; }
-        IRequest Request { get; set; }
-        T Response { get; set; }
+        public SimpleConnector<T> Connector { get; set; }
+        public IRequest Request { get; set; }
+        private T Response { get; set; }
 
         public virtual bool Execute()
         {
