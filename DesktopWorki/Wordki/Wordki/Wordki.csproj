@@ -177,9 +177,11 @@
     <Compile Include="Helpers\Connector\Requests\ApiRequest\GetWordsRequest.cs" />
     <Compile Include="Helpers\Connector\Requests\ApiRequest\PostGroupsRequest.cs" />
     <Compile Include="Helpers\Connector\Requests\ApiRequest\PostResultsRequest.cs" />
+    <Compile Include="Helpers\Connector\Requests\ApiRequest\PostUsersRequest.cs" />
     <Compile Include="Helpers\Connector\Requests\ApiRequest\PostWordsRequest.cs" />
     <Compile Include="Helpers\Connector\Requests\TranslationRequest.cs" />
     <Compile Include="Helpers\Connector\Responses\TranslationResponse.cs" />
+    <Compile Include="Helpers\Connector\SimpleConnector\ApiConnector.cs" />
     <Compile Include="Helpers\Connector\SimpleConnector\SimpleConnector.cs" />
     <Compile Include="Helpers\Connector\Work\RequestWork.cs" />
     <Compile Include="Helpers\Converters\ArithmeticConverter.cs" />

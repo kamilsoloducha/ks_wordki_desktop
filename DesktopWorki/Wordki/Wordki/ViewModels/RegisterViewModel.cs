@@ -1,8 +1,14 @@
-﻿using System;
+﻿using Repository.Model.DTOConverters;
+using System;
 using System.Windows.Input;
 using Util.Threads;
+using Wordki.Database;
 using Wordki.Helpers.Connector;
+using Wordki.Helpers.Connector.Requests;
+using Wordki.Helpers.Connector.Work;
 using Wordki.Models;
+using WordkiModel;
+using WordkiModel.DTO;
 
 namespace Wordki.ViewModels
 {
@@ -55,19 +61,32 @@ namespace Wordki.ViewModels
             if (!Password.Equals(RepeatPassword))
             {
                 Console.WriteLine("Password and repetition is not same.");
-                //Parent.ShowToast("Wprowadzone hasła nie są identyczne", ToastLevel.Alert);
                 return;
             }
-            User user = new User
+            IUser user = new User
             {
                 Name = UserName,
                 Password = Password
             };
-            //BackgroundWorkQueue queue = new BackgroundWorkQueue();
-            //queue.AddWork
-            ////CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-            //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestRegister(user)) { OnCompleteCommand = OnRegister });
-            //lQueue.Execute();
+            ApiWork<UserDTO> registerRequest = new ApiWork<UserDTO>
+            {
+                Request = new PostUsersRequest(user),
+                OnCompletedFunc = RegisterComplete,
+                OnFailedFunc = RegisterFailed
+            };
+            BackgroundWorkQueue queue = new BackgroundWorkQueue();
+            queue.AddWork(registerRequest);
+            queue.Execute();
+        }
+
+        private void RegisterFailed()
+        {
+        }
+
+        private void RegisterComplete(UserDTO userDTO)
+        {
+            IUser user = UserConverter.GetModelFromDTO(userDTO);
+            StartWithUser(user);
         }
 
         protected override void ChangeState(object obj)
