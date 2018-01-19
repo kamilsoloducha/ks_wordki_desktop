@@ -21,8 +21,9 @@ namespace Wordki.Helpers.Connector.SimpleConnector
                 lRequest.Timeout = 10000;
                 lRequest.ReadWriteTimeout = 10000;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return string.Empty;
             }
             lRequest.Method = request.Method;
@@ -57,8 +58,9 @@ namespace Wordki.Helpers.Connector.SimpleConnector
             {
                 Response = (HttpWebResponse)lRequest.GetResponse();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return string.Empty;
             }
             var lResponseStream = Response.GetResponseStream();
