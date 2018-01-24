@@ -21,3 +21,12 @@
 /DesktopWorki/Wordki/WordkiModelCore/.vs/WordkiModelCore/v15
 /DesktopWorki/Wordki/WordkiModelCore/bin/Debug/netstandard2.0
 /DesktopWorki/Wordki/WordkiModelCore/obj
+/packages
+/.vs/Wordki/v15
+/src/Wordki.App/bin/Debug
+/src/Wordki.App/Library
+/src/Wordki.App/obj/Debug
+/src/Wordki.Model/bin/Debug
+/src/Wordki.Model/obj/Debug
+/tests/Wordki.Test/bin/Debug
+/tests/Wordki.Test/obj/Debug
