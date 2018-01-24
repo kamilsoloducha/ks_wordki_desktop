@@ -4,7 +4,7 @@ using WordkiModel;
 using Wordki.Models;
 using System.Collections.ObjectModel;
 using System;
-using WordkiModel.Enums;
+using Oazachaosu.Core.Common;
 
 namespace Wordki.Database
 {

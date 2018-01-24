@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Oazachaosu.Core.Common;
+using System.Collections.Generic;
 using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
 using WordkiModel;

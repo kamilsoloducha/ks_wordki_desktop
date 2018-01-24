@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
-
+using Oazachaosu.Core.Common;
 using Wordki.Models;
 using Wordki.Models.LessonScheduler;
 using WordkiModel;
-using WordkiModel.Enums;
+
 
 namespace Wordki.Test.Helpers.NewLessonSchedulerTests
 {

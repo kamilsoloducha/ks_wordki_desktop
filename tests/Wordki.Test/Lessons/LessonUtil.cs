@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Oazachaosu.Core.Common;
+using System.Collections.Generic;
 using Wordki.Helpers.WordComparer;
 using Wordki.Models;
 using Wordki.Models.Lesson;
 using WordkiModel;
-using WordkiModel.Enums;
+
 
 namespace Wordki.Test.Lessons
 {

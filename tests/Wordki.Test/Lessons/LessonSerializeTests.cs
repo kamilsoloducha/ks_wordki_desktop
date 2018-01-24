@@ -6,7 +6,7 @@ using Wordki.Models.Lesson;
 using Wordki.Helpers.WordComparer;
 using Util.Serializers;
 using WordkiModel;
-using WordkiModel.Enums;
+using Oazachaosu.Core.Common;
 
 namespace Wordki.Test.Lessons
 {

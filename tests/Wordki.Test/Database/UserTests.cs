@@ -1,10 +1,10 @@
 ﻿using NUnit.Framework;
-
+using Oazachaosu.Core.Common;
 using System;
 using Wordki.Database;
 using Wordki.Database.Repositories;
 using WordkiModel;
-using WordkiModel.Enums;
+
 
 namespace Wordki.Test.Database
 {

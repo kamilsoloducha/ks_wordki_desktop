@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
-
-using WordkiModel.Enums;
+using Oazachaosu.Core.Common;
 using Wordki.Helpers.ResultConnector;
 using WordkiModel;
 

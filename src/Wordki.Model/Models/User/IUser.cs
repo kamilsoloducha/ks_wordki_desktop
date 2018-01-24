@@ -1,5 +1,5 @@
-﻿using System;
-using WordkiModel.Enums;
+﻿using Oazachaosu.Core.Common;
+using System;
 
 namespace WordkiModel
 {

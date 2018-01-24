@@ -1,6 +1,6 @@
 ﻿using NHibernate;
 using NUnit.Framework;
-
+using Oazachaosu.Core.Common;
 using System.Linq;
 using Wordki.Database;
 using Wordki.Database.Repositories;

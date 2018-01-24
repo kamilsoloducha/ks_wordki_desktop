@@ -1,11 +1,12 @@
 ﻿using NUnit.Framework;
+using Oazachaosu.Core.Common;
 using System.Collections.Generic;
 using System.Linq;
 using Wordki.Helpers.WordComparer;
 using Wordki.Models;
 using Wordki.Models.Lesson;
 using WordkiModel;
-using WordkiModel.Enums;
+
 
 namespace Wordki.Test.Lessons
 {

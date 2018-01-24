@@ -19,7 +19,7 @@ using Wordki.InteractionProvider;
 using Wordki.Models;
 using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
-using WordkiModel.Enums;
+using Oazachaosu.Core.Common;
 
 namespace Wordki.ViewModels
 {

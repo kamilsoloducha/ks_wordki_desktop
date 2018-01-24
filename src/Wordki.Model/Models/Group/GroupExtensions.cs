@@ -1,4 +1,6 @@
-﻿namespace WordkiModel
+﻿using Oazachaosu.Core.Common;
+
+namespace WordkiModel
 {
     public static class GroupExtensions
     {

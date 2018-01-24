@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Oazachaosu.Core.Common;
+using System;
 using System.Threading;
 using WordkiModel;
-using WordkiModel.Enums;
+
 
 namespace Wordki.Models
 {

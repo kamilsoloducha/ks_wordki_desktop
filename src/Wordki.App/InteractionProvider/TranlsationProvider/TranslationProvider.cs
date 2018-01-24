@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WordkiModel;
-using WordkiModel.Enums;
+
 using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
 using Wordki.Helpers.TranslationPusher;
+using Oazachaosu.Core.Common;
 
 namespace Wordki.InteractionProvider
 {

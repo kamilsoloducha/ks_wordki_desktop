@@ -1,4 +1,5 @@
-﻿using Repository.Model.DTOConverters;
+﻿using Oazachaosu.Core.Common;
+using Repository.Model.DTOConverters;
 using System;
 using System.Windows.Input;
 using Util.Threads;
@@ -8,7 +9,6 @@ using Wordki.Helpers.Connector.Requests;
 using Wordki.Helpers.Connector.Work;
 using Wordki.Models;
 using WordkiModel;
-using WordkiModel.DTO;
 
 namespace Wordki.ViewModels
 {

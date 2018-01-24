@@ -1,7 +1,5 @@
-﻿#if NETSTANDARD2_0
-#else
+﻿using Oazachaosu.Core.Common;
 using System.Windows.Media.Imaging;
-#endif
 
 namespace WordkiModel
 {
@@ -13,11 +11,7 @@ namespace WordkiModel
         string Description { get; }
         string Name { get; }
         string ShortName { get; }
-#if NETSTANDARD2_0
-#else
         BitmapImage Flag { get; }
-#endif
-
 
     }
 }

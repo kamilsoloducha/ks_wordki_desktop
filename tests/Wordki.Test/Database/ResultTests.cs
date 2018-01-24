@@ -6,7 +6,7 @@ using Wordki.Database;
 
 using Wordki.Database.Repositories;
 using WordkiModel;
-using WordkiModel.Enums;
+using Oazachaosu.Core.Common;
 
 namespace Resultki.Test.Database
 {

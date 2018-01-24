@@ -58,6 +58,9 @@
     <StartupObject>Wordki.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Controls">
       <HintPath>lib\Controls.dll</HintPath>
     </Reference>
@@ -81,6 +84,7 @@
       <HintPath>..\..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -112,6 +116,8 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -163,6 +169,7 @@
     <Compile Include="Database\Repositories\UserRepository.cs" />
     <Compile Include="Database\Maps\WordMap.cs" />
     <Compile Include="Database\Repositories\WordRepository.cs" />
+    <Compile Include="Helpers\AutoMapper\AutoMapperConfig.cs" />
     <Compile Include="Helpers\Behaviour\HideScrollBar.cs" />
     <Compile Include="Helpers\Behaviour\ListBoxAtLeastOneSelectedItemBehavior.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
@@ -719,6 +726,10 @@
     <ProjectReference Include="..\..\..\c_sharp_util\Util\Util\Util.csproj">
       <Project>{877ccd05-baa6-430a-a317-e1e9da0bbaf2}</Project>
       <Name>Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wordki.Model.Common\Wordki.Model.Common.csproj">
+      <Project>{bcef7acc-dbb4-4c67-b734-b0f46a5141e1}</Project>
+      <Name>Wordki.Model.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Wordki.Model\Wordki.Model.csproj">
       <Project>{9738782d-9fd7-4524-83e8-4162fef69b51}</Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Oazachaosu.Core.Common;
+using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using WordkiModel;

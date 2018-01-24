@@ -169,6 +169,10 @@
       <Project>{877ccd05-baa6-430a-a317-e1e9da0bbaf2}</Project>
       <Name>Util</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\Wordki.Model.Common\Wordki.Model.Common.csproj">
+      <Project>{bcef7acc-dbb4-4c67-b734-b0f46a5141e1}</Project>
+      <Name>Wordki.Model.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Wordki.Model\Wordki.Model.csproj">
       <Project>{9738782d-9fd7-4524-83e8-4162fef69b51}</Project>
       <Name>WordkiModel</Name>

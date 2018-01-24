@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using Newtonsoft.Json;
-using WordkiModel.Enums;
+using Oazachaosu.Core.Common;
 using Wordki.Helpers.JsonConverters;
 using WordkiModel;
 

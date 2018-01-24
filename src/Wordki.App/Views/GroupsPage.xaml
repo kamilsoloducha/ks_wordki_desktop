@@ -9,7 +9,7 @@
     xmlns:models="clr-namespace:Wordki.Models"
     xmlns:viewModels="clr-namespace:Wordki.ViewModels"
     xmlns:views="clr-namespace:Wordki.Views"
-    xmlns:lessons="clr-namespace:WordkiModel.Enums;assembly=WordkiModel"
+    xmlns:lessons="clr-namespace:Oazachaosu.Core.Common;assembly=Wordki.Model.Common"
     xmlns:pieChart="clr-namespace:Controls.PieChart;assembly=Controls"
     xmlns:helpers="clr-namespace:Wordki.Helpers"
     mc:Ignorable="d"

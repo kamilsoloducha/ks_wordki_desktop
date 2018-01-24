@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
@@ -45,18 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\GroupDTO.cs" />
-    <Compile Include="DTO\ResultDTO.cs" />
-    <Compile Include="DTO\UserDTO.cs" />
-    <Compile Include="DTO\WordDTO.cs" />
-    <Compile Include="Models\Enums\LessonType.cs" />
-    <Compile Include="Models\Enums\TranslationDirection.cs" />
     <Compile Include="Models\Group\GroupExtensions.cs" />
     <Compile Include="Models\Group\IGroup.cs" />
     <Compile Include="Models\Language\ILanguage.cs" />
     <Compile Include="Models\Language\LanguageFacory.cs" />
     <Compile Include="Models\Language\LanguageJsonCoverter.cs" />
-    <Compile Include="Models\Language\LanguageType.cs" />
     <Compile Include="Models\Result\IResult.cs" />
     <Compile Include="Models\Result\ResultExtensions.cs" />
     <Compile Include="Models\User\IUser.cs" />
@@ -96,6 +89,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wordki.Model.Common\Wordki.Model.Common.csproj">
+      <Project>{bcef7acc-dbb4-4c67-b734-b0f46a5141e1}</Project>
+      <Name>Wordki.Model.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

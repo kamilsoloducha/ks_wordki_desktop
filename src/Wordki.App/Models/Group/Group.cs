@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Oazachaosu.Core.Common;
 using WordkiModel;
 
 namespace Wordki.Models

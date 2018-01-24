@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using WordkiModel;
+﻿using Oazachaosu.Core.Common;
+using System.Collections.Generic;
 
 namespace Wordki.InteractionProvider
 {

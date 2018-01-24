@@ -1,5 +1,6 @@
-﻿using System.Windows.Media;
-using WordkiModel.Enums;
+﻿using Oazachaosu.Core.Common;
+using System.Windows.Media;
+
 using Wordki.Models.Lesson;
 
 namespace Wordki.ViewModels.LessonStates

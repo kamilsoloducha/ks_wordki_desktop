@@ -1,6 +1,6 @@
 ﻿using Remotion.Linq.Collections;
 using WordkiModel;
-using WordkiModel.Enums;
+
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -10,6 +10,7 @@ using System.Windows.Media;
 using Wordki.Database;
 using Wordki.Models;
 using Wordki.Models.Lesson;
+using Oazachaosu.Core.Common;
 
 namespace Wordki.ViewModels.LessonStates
 {

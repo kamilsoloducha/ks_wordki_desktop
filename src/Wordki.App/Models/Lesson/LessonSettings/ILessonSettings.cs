@@ -1,4 +1,6 @@
-﻿using WordkiModel.Enums;
+﻿
+
+using Oazachaosu.Core.Common;
 
 namespace Wordki.Models.Lesson
 {

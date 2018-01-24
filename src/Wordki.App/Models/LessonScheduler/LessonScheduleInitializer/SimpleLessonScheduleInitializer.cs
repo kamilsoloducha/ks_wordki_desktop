@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using WordkiModel.Enums;
+﻿using Oazachaosu.Core.Common;
+using System.Collections.Generic;
+
 
 namespace Wordki.Models.LessonScheduler
 {

@@ -1,4 +1,4 @@
-﻿using WordkiModel.Enums;
+﻿using Oazachaosu.Core.Common;
 using System;
 
 namespace Wordki.Helpers

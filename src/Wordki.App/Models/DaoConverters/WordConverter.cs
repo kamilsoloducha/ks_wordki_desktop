@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Oazachaosu.Core.Common;
+using System.Collections.Generic;
 using Wordki.Models;
 using WordkiModel;
-using WordkiModel.DTO;
+
 
 namespace Repository.Model.DTOConverters
 {

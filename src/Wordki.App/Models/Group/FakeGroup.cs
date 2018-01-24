@@ -1,6 +1,7 @@
 ﻿using WordkiModel;
 using System;
 using System.Collections.Generic;
+using Oazachaosu.Core.Common;
 
 namespace Wordki.Models
 {

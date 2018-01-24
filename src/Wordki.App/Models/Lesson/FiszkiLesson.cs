@@ -1,9 +1,10 @@
 ﻿using WordkiModel;
-using WordkiModel.Enums;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Util.Collections;
+using Oazachaosu.Core.Common;
 
 namespace Wordki.Models.Lesson
 {

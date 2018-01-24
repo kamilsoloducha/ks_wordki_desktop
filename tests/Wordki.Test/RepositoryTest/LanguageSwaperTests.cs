@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using WordkiModel;
 using Wordki.Models;
-using WordkiModel.Enums;
+using Oazachaosu.Core.Common;
 
 namespace Wordki.Test.RepositoryTests
 {

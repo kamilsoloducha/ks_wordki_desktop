@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Oazachaosu.Core.Common;
+using System;
 using System.Globalization;
 using System.Windows.Data;
-using WordkiModel.Enums;
+
 
 namespace Wordki.Helpers.Converters
 {

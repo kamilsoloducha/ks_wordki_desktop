@@ -1,12 +1,12 @@
 ﻿using NUnit.Framework;
-
+using Oazachaosu.Core.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Wordki.Helpers;
 using Wordki.Models.LessonScheduler;
 using WordkiModel;
-using WordkiModel.Enums;
+
 
 namespace Wordki.Test.Helpers.LessonWordsCreatorTests.AllToTeachCreatorTests
 {

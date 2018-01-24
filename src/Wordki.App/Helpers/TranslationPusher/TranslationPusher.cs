@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using WordkiModel;
-using WordkiModel.Enums;
+
 using System.Text;
+using Oazachaosu.Core.Common;
 
 namespace Wordki.Helpers.TranslationPusher
 {

@@ -1,9 +1,10 @@
 ﻿using NUnit.Framework;
+using Oazachaosu.Core.Common;
 using System;
 using System.Collections.Generic;
 using Wordki.Models;
 using WordkiModel;
-using WordkiModel.Enums;
+
 
 namespace Wordki.Test
 {

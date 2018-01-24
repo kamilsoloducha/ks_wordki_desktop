@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Input;
-using WordkiModel.Enums;
+
 using Wordki.Helpers;
 using Wordki.Models;
 using Wordki.Models.Lesson;
@@ -11,6 +11,7 @@ using Wordki.InteractionProvider;
 using Wordki.ViewModels.Dialogs;
 using Wordki.ViewModels.LessonStates;
 using Wordki.Commands;
+using Oazachaosu.Core.Common;
 
 namespace Wordki.ViewModels
 {

@@ -1,6 +1,6 @@
 ﻿using WordkiModel;
-using WordkiModel.Enums;
 using System.Collections.Generic;
+using Oazachaosu.Core.Common;
 
 namespace Wordki.InteractionProvider
 {

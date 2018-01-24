@@ -1,6 +1,6 @@
-﻿using Wordki.Models;
+﻿using Oazachaosu.Core.Common;
+using Wordki.Models;
 using WordkiModel;
-using WordkiModel.DTO;
 
 namespace Repository.Model.DTOConverters
 {
