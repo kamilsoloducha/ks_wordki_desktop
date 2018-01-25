@@ -281,29 +281,48 @@ namespace Wordki.ViewModels
 
         private void AddResultToDatabase(IEnumerable<ResultDTO> obj)
         {
+            IMapper mapper = AutoMapperConfig.Instance;
+            IDatabase database = DatabaseSingleton.Instance;
+            foreach (ResultDTO resultDto in obj)
+            {
+                IResult result = mapper.Map<ResultDTO, IResult>(resultDto);
+                IGroup group = database.Groups.FirstOrDefault(x => x.Id == resultDto.GroupId);
+                if (result.State < 0)
+                {
+                    database.DeleteResult(result);
+                }
+                if (group.Words.Any(x => x.Id == result.Id))
+                {
+                    database.UpdateResult(result);
+                }
+                else
+                {
+                    database.AddResult(result);
+                }
+            }
         }
 
         private void AddWordToDatabase(IEnumerable<WordDTO> obj)
         {
-            //IMapper mapper = AutoMapperConfig.Instance;
-            //IDatabase database = DatabaseSingleton.Instance;
-            //foreach (WordDTO wordDto in obj)
-            //{
-            //    IWord word = mapper.Map<WordDTO, IWord>(wordDto);
-            //    IGroup group = database.Groups.FirstOrDefault(x => x.Id == wordDto.GroupId);
-            //    if (wordDto.State < 0)
-            //    {
-            //        database.DeleteWord(word);
-            //    }
-            //    if (group.Words.Any(x => x.Id == word.Id))
-            //    {
-            //        database.UpdateGroup(group);
-            //    }
-            //    else
-            //    {
-            //        database.AddGroup(group);
-            //    }
-            //}
+            IMapper mapper = AutoMapperConfig.Instance;
+            IDatabase database = DatabaseSingleton.Instance;
+            foreach (WordDTO wordDto in obj)
+            {
+                IWord word = mapper.Map<WordDTO, IWord>(wordDto);
+                IGroup group = database.Groups.FirstOrDefault(x => x.Id == wordDto.GroupId);
+                if (wordDto.State < 0)
+                {
+                    database.DeleteWord(word);
+                }
+                if (group.Words.Any(x => x.Id == word.Id))
+                {
+                    database.UpdateWord(word);
+                }
+                else
+                {
+                    database.AddWord(word);
+                }
+            }
         }
 
         private void AddGroupToDatabase(IEnumerable<GroupDTO> obj)
