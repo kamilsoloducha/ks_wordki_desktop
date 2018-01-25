@@ -271,10 +271,6 @@
     <Compile Include="InteractionProvider\TranlsationProvider\TranslationProvider.cs" />
     <Compile Include="InteractionProvider\YesNoProvider\IYesNoProvider.cs" />
     <Compile Include="InteractionProvider\YesNoProvider\YesNoProvider.cs" />
-    <Compile Include="Models\DaoConverters\GroupConverter.cs" />
-    <Compile Include="Models\DaoConverters\ResultConverter.cs" />
-    <Compile Include="Models\DaoConverters\UserConverter.cs" />
-    <Compile Include="Models\DaoConverters\WordConverter.cs" />
     <Compile Include="Models\Group\CommonGroup.cs" />
     <Compile Include="Helpers\Connector\Responses\ApiResponse.cs" />
     <Compile Include="Models\Group\FakeGroup.cs" />

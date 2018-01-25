@@ -143,7 +143,7 @@ namespace Wordki.ViewModels
 
         public override void InitViewModel(object parameter = null)
         {
-            
+
         }
 
         public override void Back()
@@ -182,7 +182,7 @@ namespace Wordki.ViewModels
                     Message = "Czy chcesz wyjść z programu?",
                     NegativeLabel = "Nie",
                     PositiveLabel = "Tak",
-                    
+
                 }
             };
             provider.Interact();
@@ -194,7 +194,7 @@ namespace Wordki.ViewModels
             queue.OnCompleted = () =>
             {
                 DatabaseSingleton.Instance.RefreshDatabase();
-                Application.Current.Shutdown();
+                Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
             };
             queue.OnFailed = Application.Current.Shutdown;
             queue.AddWork(new ApiWork<string>
@@ -223,7 +223,7 @@ namespace Wordki.ViewModels
                 {
                     Groups = lDatabase.Groups,
                 };
-                foreach(var item in calculator.GetDrawerCount())
+                foreach (var item in calculator.GetDrawerCount())
                 {
                     lList.Add((double)item);
                 }

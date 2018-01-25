@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Repository.Model.DTOConverters;
+using Oazachaosu.Core.Common;
 using System.Collections.Generic;
+using Wordki.Helpers.AutoMapper;
 using WordkiModel;
 
 namespace Wordki.Helpers.Connector.Requests
@@ -12,7 +13,7 @@ namespace Wordki.Helpers.Connector.Requests
         public PostGroupsRequest(IUser user, IEnumerable<IGroup> groups) : base(user)
         {
             Method = "POST";
-            Message = JsonConvert.SerializeObject(new { user.ApiKey, Data = GroupConverter.GetDTOsFromGroups(groups) });
+            Message = JsonConvert.SerializeObject(new { user.ApiKey, Data = AutoMapperConfig.Instance.Map<IEnumerable<IGroup>, IEnumerable<GroupDTO>>(groups) });
         }
     }
 }

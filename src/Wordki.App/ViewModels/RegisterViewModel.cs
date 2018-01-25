@@ -1,9 +1,9 @@
 ﻿using Oazachaosu.Core.Common;
-using Repository.Model.DTOConverters;
 using System;
 using System.Windows.Input;
 using Util.Threads;
 using Wordki.Database;
+using Wordki.Helpers.AutoMapper;
 using Wordki.Helpers.Connector;
 using Wordki.Helpers.Connector.Requests;
 using Wordki.Helpers.Connector.Work;
@@ -85,7 +85,7 @@ namespace Wordki.ViewModels
 
         private void RegisterComplete(UserDTO userDTO)
         {
-            IUser user = UserConverter.GetModelFromDTO(userDTO);
+            IUser user = AutoMapperConfig.Instance.Map<UserDTO, IUser>(userDTO);
             StartWithUser(user);
         }
 

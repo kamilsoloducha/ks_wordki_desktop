@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,7 +46,6 @@
     <Compile Include="Models\Group\IGroup.cs" />
     <Compile Include="Models\Language\ILanguage.cs" />
     <Compile Include="Models\Language\LanguageFacory.cs" />
-    <Compile Include="Models\Language\LanguageJsonCoverter.cs" />
     <Compile Include="Models\Result\IResult.cs" />
     <Compile Include="Models\Result\ResultExtensions.cs" />
     <Compile Include="Models\User\IUser.cs" />

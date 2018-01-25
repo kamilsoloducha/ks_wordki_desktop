@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
-using Repository.Model.DTOConverters;
+using Oazachaosu.Core.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wordki.Helpers.AutoMapper;
 using WordkiModel;
 
 namespace Wordki.Helpers.Connector.Requests
@@ -16,7 +17,7 @@ namespace Wordki.Helpers.Connector.Requests
         public PostWordsRequest(IUser user, IEnumerable<IWord> words) : base(user)
         {
             Method = "POST";
-            Message = JsonConvert.SerializeObject(new { user.ApiKey, Data = WordConverter.GetDTOsFromWords(words) });
+            Message = JsonConvert.SerializeObject(new { user.ApiKey, Data = AutoMapperConfig.Instance.Map<IEnumerable<IWord>, IEnumerable<WordDTO>>(words) });
         }
     }
 }

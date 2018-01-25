@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
 using NUnit.Framework;
+using Oazachaosu.Core.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Util.Collections;
 using Util.Threads;
+using Wordki.Helpers.AutoMapper;
 using Wordki.Helpers.Connector;
 using Wordki.Helpers.Connector.Requests;
 using Wordki.Helpers.Connector.SimpleConnector;
@@ -22,6 +24,9 @@ namespace Wordki.Test
         [Test]
         public void test1()
         {
+            IGroup group = Utility.GetGroup();
+            string message = JsonConvert.SerializeObject(AutoMapperConfig.Instance.Map<IGroup, GroupDTO>(group));
+
             IUser user = new User()
             {
                 ApiKey = "1",

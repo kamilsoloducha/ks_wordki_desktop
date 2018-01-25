@@ -1,5 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
 using Oazachaosu.Core.Common;
 
 namespace WordkiModel

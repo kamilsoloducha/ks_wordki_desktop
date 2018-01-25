@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Repository.Model.DTOConverters;
+using Oazachaosu.Core.Common;
 using WordkiModel;
 
 namespace Wordki.Helpers.Connector.Requests
@@ -11,7 +11,7 @@ namespace Wordki.Helpers.Connector.Requests
         public PostUsersRequest(IUser user) : base(user)
         {
             Method = "POST";
-            Message = JsonConvert.SerializeObject(UserConverter.GetDTOFromModel(user));
+            Message = JsonConvert.SerializeObject(AutoMapper.AutoMapperConfig.Instance.Map<IUser, UserDTO>(user));
         }
     }
 }

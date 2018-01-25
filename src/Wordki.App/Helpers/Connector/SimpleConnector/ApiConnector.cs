@@ -58,9 +58,17 @@ namespace Wordki.Helpers.Connector.SimpleConnector
             {
                 Response = (HttpWebResponse)lRequest.GetResponse();
             }
+            catch(WebException webException)
+            {
+                Response = webException.Response as HttpWebResponse;
+            }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return string.Empty;
+            }
+            if(Response == null)
+            {
                 return string.Empty;
             }
             var lResponseStream = Response.GetResponseStream();

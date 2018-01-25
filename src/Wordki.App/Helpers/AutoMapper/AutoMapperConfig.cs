@@ -7,7 +7,25 @@ namespace Wordki.Helpers.AutoMapper
     public static class AutoMapperConfig
     {
 
-        public static IMapper Initialize()
+        private static IMapper instance;
+        private static object lockObj = new object();
+
+        public static IMapper Instance
+        {
+            get
+            {
+                lock (lockObj)
+                {
+                    if(instance == null)
+                    {
+                        instance = Initialize();
+                    }
+                }
+                return instance;
+            }
+        }
+
+        private static IMapper Initialize()
         {
             return new MapperConfiguration(cfg =>
             {
