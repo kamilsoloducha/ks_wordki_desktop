@@ -66,6 +66,7 @@ namespace Wordki.ViewModels
             {
                 return;
             }
+            //test
             IUser user = new User
             {
                 Name = UserName,
