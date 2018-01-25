@@ -1,4 +1,8 @@
-﻿using System;
+﻿using AutoMapper;
+using Oazachaosu.Core.Common;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -7,11 +11,13 @@ using System.Windows;
 using Util;
 using Util.Threads;
 using Wordki.Database;
+using Wordki.Helpers.AutoMapper;
 using Wordki.Helpers.Connector.Requests;
 using Wordki.Helpers.Connector.Work;
 using Wordki.InteractionProvider;
 using Wordki.Models;
 using Wordki.ViewModels.Dialogs;
+using WordkiModel;
 
 namespace Wordki.ViewModels
 {
@@ -227,7 +233,6 @@ namespace Wordki.ViewModels
                 {
                     lList.Add((double)item);
                 }
-                //lList.AddRange(.Cast<double>());
                 string lTeachTimeToday = Helpers.Util.GetAproximatedTimeFromSeconds(ResultCalculator.GetLessonTimeToday());
                 string lTeachTime = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.Groups.Sum(x => x.Results.Sum(y => y.TimeCount)));
                 int lWordCount = lDatabase.Groups.Sum(x => x.Words.Count);
@@ -247,7 +252,84 @@ namespace Wordki.ViewModels
         public override void Loaded()
         {
             Login = UserManagerSingleton.Instence.User.Name;
+            BackgroundWorkQueue queue = new BackgroundWorkQueue();
+            queue.OnCompleted = () =>
+            {
+            };
+            queue.AddWork(new ApiWork<IEnumerable<GroupDTO>>
+            {
+                Request = new GetGroupsRequest(UserManagerSingleton.Instence.User),
+                OnCompletedFunc = AddGroupToDatabase,
+                OnFailedFunc = OnFailed
+            });
+            queue.AddWork(new ApiWork<IEnumerable<WordDTO>>
+            {
+                Request = new GetWordsRequest(UserManagerSingleton.Instence.User),
+                OnCompletedFunc = AddWordToDatabase,
+                OnFailedFunc = OnFailed
+            });
+            queue.AddWork(new ApiWork<IEnumerable<ResultDTO>>
+            {
+                Request = new GetResultsRequest(UserManagerSingleton.Instence.User),
+                OnCompletedFunc = AddResultToDatabase,
+                OnFailedFunc = OnFailed
+            });
+            queue.Execute();
+
             RefreshInfo();
+        }
+
+        private void AddResultToDatabase(IEnumerable<ResultDTO> obj)
+        {
+        }
+
+        private void AddWordToDatabase(IEnumerable<WordDTO> obj)
+        {
+            //IMapper mapper = AutoMapperConfig.Instance;
+            //IDatabase database = DatabaseSingleton.Instance;
+            //foreach (WordDTO wordDto in obj)
+            //{
+            //    IWord word = mapper.Map<WordDTO, IWord>(wordDto);
+            //    IGroup group = database.Groups.FirstOrDefault(x => x.Id == wordDto.GroupId);
+            //    if (wordDto.State < 0)
+            //    {
+            //        database.DeleteWord(word);
+            //    }
+            //    if (group.Words.Any(x => x.Id == word.Id))
+            //    {
+            //        database.UpdateGroup(group);
+            //    }
+            //    else
+            //    {
+            //        database.AddGroup(group);
+            //    }
+            //}
+        }
+
+        private void AddGroupToDatabase(IEnumerable<GroupDTO> obj)
+        {
+            IEnumerable<IGroup> groups = AutoMapperConfig.Instance.Map<IEnumerable<GroupDTO>, IEnumerable<IGroup>>(obj);
+            IDatabase database = DatabaseSingleton.Instance;
+            foreach (IGroup group in groups)
+            {
+                if (group.State < 0)
+                {
+                    database.DeleteGroup(group);
+                }
+                if (database.Groups.Any(x => x.Id == group.Id))
+                {
+                    database.UpdateGroup(group);
+                }
+                else
+                {
+                    database.AddGroup(group);
+                }
+            }
+        }
+
+        private void OnFailed(ErrorDTO obj)
+        {
+
         }
 
         public override void Unloaded()
