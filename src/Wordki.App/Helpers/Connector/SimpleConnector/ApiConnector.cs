@@ -8,8 +8,28 @@ namespace Wordki.Helpers.Connector.SimpleConnector
 {
     public class ApiConnector
     {
+        /// <summary>
+        /// Response from api server. It is set when there is some response from server.
+        /// In other case response equal null and its mean that something goes wrong
+        /// and the whole operation is failed.
+        /// </summary>
+        private HttpWebResponse response;
 
-        public HttpWebResponse Response { get; private set; }
+        /// <summary>
+        /// Return value of operation success. If there is good response from server
+        /// true value is return. In another case false is return.
+        /// </summary>
+        public bool IsSuccess
+        {
+            get
+            {
+                if (response != null)
+                {
+                    return response.StatusCode == HttpStatusCode.OK;
+                }
+                return false;
+            }
+        }
 
         public string SendRequest(IRequest request)
         {
@@ -56,22 +76,22 @@ namespace Wordki.Helpers.Connector.SimpleConnector
             }
             try
             {
-                Response = (HttpWebResponse)lRequest.GetResponse();
+                response = (HttpWebResponse)lRequest.GetResponse();
             }
-            catch(WebException webException)
+            catch (WebException webException)
             {
-                Response = webException.Response as HttpWebResponse;
+                response = webException.Response as HttpWebResponse;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return string.Empty;
             }
-            if(Response == null)
+            if (response == null)
             {
                 return string.Empty;
             }
-            var lResponseStream = Response.GetResponseStream();
+            var lResponseStream = response.GetResponseStream();
             if (lResponseStream != null)
                 return new StreamReader(lResponseStream, Encoding.UTF8).ReadToEnd();
             return string.Empty;

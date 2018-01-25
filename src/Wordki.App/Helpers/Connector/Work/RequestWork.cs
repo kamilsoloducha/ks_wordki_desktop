@@ -10,6 +10,7 @@ namespace Wordki.Helpers.Connector.Work
     public class ApiWork<T> : IWork
     {
         private ApiConnector connector;
+        private string message;
 
         public Func<bool> InitializeFunc { get; set; }
         public Action OnCanceledFunc { get; set; }
@@ -17,7 +18,6 @@ namespace Wordki.Helpers.Connector.Work
         public Action<ErrorDTO> OnFailedFunc { get; set; }
 
         public IRequest Request { get; set; }
-        public T Object { get; private set; }
 
         public ApiWork()
         {
@@ -29,13 +29,16 @@ namespace Wordki.Helpers.Connector.Work
             try
             {
                 string messageBack = connector.SendRequest(Request);
-                Object = JsonConvert.DeserializeObject<T>(messageBack);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine($"Exception was thrown.\n" +
+                    $"Message: '{e.Message}'\n" +
+                    $"Type: '{e.GetType()}'\n" +
+                    $"StackTrace: '{e.StackTrace}'");
                 return false;
             }
-            return true;
+            return connector.IsSuccess;
         }
 
         public bool Initialize()
@@ -62,7 +65,8 @@ namespace Wordki.Helpers.Connector.Work
             {
                 return;
             }
-            OnCompletedFunc.Invoke(Object);
+            T obj = JsonConvert.DeserializeObject<T>(message);
+            OnCompletedFunc.Invoke(obj);
         }
 
         public void OnFailed()
@@ -71,7 +75,8 @@ namespace Wordki.Helpers.Connector.Work
             {
                 return;
             }
-            OnFailedFunc.Invoke();
+            ErrorDTO error = JsonConvert.DeserializeObject<ErrorDTO>(message);
+            OnFailedFunc.Invoke(error);
         }
 
     }
