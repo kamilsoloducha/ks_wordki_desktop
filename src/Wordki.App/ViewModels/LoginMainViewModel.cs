@@ -6,6 +6,8 @@ using System.Windows.Input;
 using WordkiModel;
 using System;
 using Wordki.Database;
+using Wordki.InteractionProvider;
+using Wordki.ViewModels.Dialogs;
 
 namespace Wordki.ViewModels
 {
@@ -148,6 +150,19 @@ namespace Wordki.ViewModels
         {
             UserName = "";
             Password = "";
+        }
+
+        protected void ShowInfoDialog(string message)
+        {
+            IInfoProvider infoProvider = new SimpleInfoProvider
+            {
+                ViewModel = new InfoDialogViewModel
+                {
+                    ButtonLabel = "Ok",
+                    Message = message,
+                }
+            };
+            infoProvider.Interact();
         }
 
         #endregion

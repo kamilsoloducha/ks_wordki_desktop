@@ -28,7 +28,11 @@ namespace Wordki.Helpers.Connector.Work
         {
             try
             {
-                string messageBack = connector.SendRequest(Request);
+                Console.WriteLine($"Wysyła request; '{Request.Url}'");
+                Console.WriteLine($"Message: '{Request.Message}'");
+                Console.WriteLine($"Method: '{Request.Method}'");
+                message = connector.SendRequest(Request);
+                Console.WriteLine($"Odpowiedz: '{message}'");
             }
             catch (Exception e)
             {

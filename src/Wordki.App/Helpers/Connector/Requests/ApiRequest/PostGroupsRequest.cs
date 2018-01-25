@@ -8,7 +8,7 @@ namespace Wordki.Helpers.Connector.Requests
 {
     public class PostGroupsRequest : ApiRequestBase
     {
-        protected override string Path { get { return "Groups/Post/"; } }
+        protected override string Path { get { return "Groups/"; } }
 
         public PostGroupsRequest(IUser user, IEnumerable<IGroup> groups) : base(user)
         {

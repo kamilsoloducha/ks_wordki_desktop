@@ -32,3 +32,7 @@
 /tests/Wordki.Test/obj/Debug
 /src/Wordki.Model.Common/bin/Debug
 /src/Wordki.Model.Common/obj/Debug
+/src/Wordki.App/obj/Release
+/src/Wordki.Model/obj/Release
+/src/Wordki.Model.Common/obj/Release
+/tests/Wordki.Test/obj/Release

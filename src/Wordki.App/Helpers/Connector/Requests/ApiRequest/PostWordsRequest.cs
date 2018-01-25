@@ -12,7 +12,7 @@ namespace Wordki.Helpers.Connector.Requests
 {
     public class PostWordsRequest : ApiRequestBase
     {
-        protected override string Path { get { return "Words/Post/"; } }
+        protected override string Path { get { return "Words/"; } }
 
         public PostWordsRequest(IUser user, IEnumerable<IWord> words) : base(user)
         {

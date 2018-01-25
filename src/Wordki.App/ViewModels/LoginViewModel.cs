@@ -1,4 +1,4 @@
-﻿using WordkiModel;
+﻿using Oazachaosu.Core.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,8 +6,11 @@ using System.Security.Cryptography;
 using System.Windows.Input;
 using Util.Threads;
 using Wordki.Database;
-using Wordki.InteractionProvider;
+using Wordki.Helpers.AutoMapper;
+using Wordki.Helpers.Connector.Requests;
+using Wordki.Helpers.Connector.Work;
 using Wordki.Models;
+using WordkiModel;
 
 namespace Wordki.ViewModels
 {
@@ -72,22 +75,7 @@ namespace Wordki.ViewModels
 
         public void Loging(object obj)
         {
-            SimpleWork work = new SimpleWork();
-            work.WorkFunc += LoginAction;
-            BackgroundQueueWithProgressDialog worker = new BackgroundQueueWithProgressDialog();
-            ProcessProvider provider = new ProcessProvider()
-            {
-                ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
-                {
-                    ButtonLabel = "Anuluj",
-                    DialogTitle = "Zapisuje",
-                    CanCanceled = true,
-                }
-            };
-            worker.Dialog = provider;
-            worker.AddWork(work);
-            worker.Execute();
-            return;
+            LoginAction();
         }
 
         protected override void ChangeState(object obj)
@@ -111,7 +99,7 @@ namespace Wordki.ViewModels
             if (UserName == null)
                 return new WorkResult();
             NHibernateHelper.DatabaseName = UserName;
-            IUser user = DatabaseSingleton.Instance.GetUser(UserName, GetHashedPassword());
+            IUser user = DatabaseSingleton.Instance.GetUser(UserName, Password);
             if (user != null)
             {
                 StartWithUser(user);
@@ -119,32 +107,47 @@ namespace Wordki.ViewModels
                 {
                     Success = true,
                 };
-                //CommandQueue<ICommand> lQueue = new CommandQueue<ICommand>();
-                //lQueue.MainQueue.AddLast(new CommandApiRequest(new ApiRequestLogin(user as User)) { OnCompleteCommand = OnLogin });
-                //lQueue.Execute();
             }
             else
             {
-                IDatabaseOrganizer databaseOrganizer = DatabaseOrganizerSingleton.Get();
-                user = new User()
+                user = new User
                 {
-                    Id = DateTime.Now.Ticks,
                     Name = UserName,
-                    Password = GetHashedPassword(),
-                    CreateDateTime = DateTime.Now,
-
+                    Password = Password,
                 };
-                if (!databaseOrganizer.AddDatabase(user))
+                ApiWork<UserDTO> loginRequest = new ApiWork<UserDTO>
                 {
-                    Console.WriteLine("Błąd dodawania bazy danych");
-                    return new WorkResult();
-                }
-                StartWithUser(user);
+                    Request = new GetUserRequest(user),
+                    OnCompletedFunc = LoginComplete,
+                    OnFailedFunc = LoginFailed
+                };
+                BackgroundWorkQueue queue = new BackgroundWorkQueue();
+                queue.AddWork(loginRequest);
+                queue.Execute();
                 return new WorkResult()
                 {
                     Success = true,
                 };
             }
+        }
+
+        private void LoginFailed(ErrorDTO error)
+        {
+            Console.WriteLine($"Error: {error.Code} \n" +
+                $"{error.Message}");
+            ShowInfoDialog($"Wystąpił błąd serwera w trakcie wykonywania żądania: '{error.Message}'.\nKod błędu: '{error.Code}'");
+        }
+
+        private void LoginComplete(UserDTO userDTO)
+        {
+            IUser user = AutoMapperConfig.Instance.Map<UserDTO, User>(userDTO);
+            IDatabaseOrganizer databaseOrganizer = DatabaseOrganizerSingleton.Get();
+            if (!databaseOrganizer.AddDatabase(user))
+            {
+                Console.WriteLine("Błąd dodawania bazy danych");
+                return;
+            }
+            StartWithUser(user);
         }
 
         public override void Loaded()

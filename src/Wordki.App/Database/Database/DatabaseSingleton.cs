@@ -2,7 +2,7 @@
 {
     public class DatabaseSingleton
     {
-#if DEBUG
+#if TEST
         private static bool TEST = true;
 #else
         private static bool TEST = false;

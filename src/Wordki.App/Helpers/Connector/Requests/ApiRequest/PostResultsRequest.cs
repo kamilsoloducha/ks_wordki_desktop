@@ -8,7 +8,7 @@ namespace Wordki.Helpers.Connector.Requests
 {
     public class PostResultsRequest : ApiRequestBase
     {
-        protected override string Path { get { return "Results/Post/"; } }
+        protected override string Path { get { return "Results/"; } }
 
         public PostResultsRequest(IUser user, IEnumerable<IResult> resutls) : base(user)
         {

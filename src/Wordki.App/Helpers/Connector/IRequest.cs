@@ -5,13 +5,13 @@ namespace Wordki.Helpers.Connector
     public interface IRequest
     {
 
-        string Url { get; set; }
+        string Url { get; }
 
-        string Method { get; set; }
+        string Method { get; }
 
         Dictionary<string, string> Headers { get; }
 
-        string Message { get; set; }
+        string Message { get; }
 
     }
 }

@@ -28,9 +28,7 @@ namespace Wordki.Database
                 }
                 NHibernateHelper.ResetSession();
                 NHibernateHelper.DatabaseName = user.Name;
-                Task<bool> task = Database.AddUserAsync(user);
-                task.Wait();
-                return task.Result;
+                return Database.AddUser(user);
             }
             catch (Exception)
             {
@@ -62,9 +60,7 @@ namespace Wordki.Database
             {
                 NHibernateHelper.DatabaseName = user.Name;
                 NHibernateHelper.ResetSession();
-                Task<IUser> task = Database.GetUserAsync(user.Name, user.Password);
-                task.Wait();
-                return task.Result != null;
+                return Database.GetUser(user.Name, user.Password) != null;
             }
             catch (Exception)
             {

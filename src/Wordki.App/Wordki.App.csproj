@@ -41,7 +41,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;TEST, DEBUG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -181,6 +181,7 @@
     <Compile Include="Helpers\Connector\Requests\ApiRequest\ApiRequestBase.cs" />
     <Compile Include="Helpers\Connector\Requests\ApiRequest\GetGroupsRequest.cs" />
     <Compile Include="Helpers\Connector\Requests\ApiRequest\GetResultsRequest.cs" />
+    <Compile Include="Helpers\Connector\Requests\ApiRequest\GetUserRequest.cs" />
     <Compile Include="Helpers\Connector\Requests\ApiRequest\GetWordsRequest.cs" />
     <Compile Include="Helpers\Connector\Requests\ApiRequest\PostGroupsRequest.cs" />
     <Compile Include="Helpers\Connector\Requests\ApiRequest\PostResultsRequest.cs" />

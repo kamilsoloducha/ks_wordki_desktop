@@ -82,21 +82,9 @@ namespace Wordki.ViewModels
             queue.Execute();
         }
 
-        private void ShowInfoDialog(string message)
-        {
-            IInfoProvider infoProvider = new SimpleInfoProvider
-            {
-                ViewModel = new InfoDialogViewModel
-                {
-                    ButtonLabel = "Ok",
-                    Message = message,
-                }
-            };
-        }
-
         private void RegisterFailed(ErrorDTO error)
         {
-            ShowInfoDialog($"Wystąpił błąd serwera w trakcie wykonywania żądania: '{error.Message}'.\nKod błędu: '{error.ErroCode}'");
+            ShowInfoDialog($"Wystąpił błąd serwera w trakcie wykonywania żądania: '{error.Message}'.\nKod błędu: '{error.Code}'");
         }
 
         private void RegisterComplete(UserDTO userDTO)

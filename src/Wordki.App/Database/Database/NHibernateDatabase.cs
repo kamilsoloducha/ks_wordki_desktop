@@ -124,7 +124,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             return true;
@@ -138,7 +138,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             return true;
@@ -153,7 +153,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return null;
             }
             return result;
@@ -168,7 +168,7 @@ namespace Wordki.Database
             }
             catch (Exception e )
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return null;
             }
             return result;
@@ -182,7 +182,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             return true;
@@ -196,7 +196,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             return true;
@@ -213,7 +213,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             Groups.Add(group);
@@ -228,7 +228,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             Groups.Add(group);
@@ -247,7 +247,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             return true;
@@ -265,7 +265,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             return true;
@@ -288,7 +288,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             Groups.Remove(group);
@@ -313,7 +313,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             Groups.Remove(group);
@@ -331,7 +331,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             return true;
@@ -345,7 +345,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             return true;
@@ -362,7 +362,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             return true;
@@ -380,7 +380,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             return true;
@@ -395,7 +395,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             word.Group.Words.Remove(word);
@@ -411,7 +411,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             word.Group.Words.Remove(word);
@@ -429,7 +429,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             return true;
@@ -443,7 +443,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             return true;
@@ -461,7 +461,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             return true;
@@ -479,7 +479,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             return true;
@@ -494,7 +494,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             result.Group.Results.Remove(result);
@@ -510,7 +510,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
-                Helpers.LoggerSingleton.LogError(e.StackTrace);
+                Helpers.LoggerSingleton.LogError($"Error message: '{e.Message}', StackTrace: '{e.StackTrace}'");
                 return false;
             }
             result.Group.Results.Remove(result);

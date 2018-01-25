@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Oazachaosu.Core.Common;
+using Wordki.Models;
 using WordkiModel;
 
 namespace Wordki.Helpers.AutoMapper
@@ -37,6 +38,14 @@ namespace Wordki.Helpers.AutoMapper
                 cfg.CreateMap<WordDTO, IWord>();
                 cfg.CreateMap<IResult, ResultDTO>();
                 cfg.CreateMap<ResultDTO, IResult>();
+                cfg.CreateMap<User, UserDTO>();
+                cfg.CreateMap<UserDTO, User>();
+                cfg.CreateMap<Group, GroupDTO>();
+                cfg.CreateMap<GroupDTO, Group>();
+                cfg.CreateMap<Word, WordDTO>();
+                cfg.CreateMap<WordDTO, Word>();
+                cfg.CreateMap<Result, ResultDTO>();
+                cfg.CreateMap<ResultDTO, Result>();
             }).CreateMapper();
         }
 
