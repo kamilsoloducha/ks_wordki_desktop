@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Oazachaosu.Core.Common;
 using System;
 using Util.Threads;
 using Wordki.Helpers.Connector.SimpleConnector;
@@ -13,7 +14,7 @@ namespace Wordki.Helpers.Connector.Work
         public Func<bool> InitializeFunc { get; set; }
         public Action OnCanceledFunc { get; set; }
         public Action<T> OnCompletedFunc { get; set; }
-        public Action OnFailedFunc { get; set; }
+        public Action<ErrorDTO> OnFailedFunc { get; set; }
 
         public IRequest Request { get; set; }
         public T Object { get; private set; }

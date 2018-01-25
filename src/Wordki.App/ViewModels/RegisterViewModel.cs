@@ -2,12 +2,12 @@
 using System;
 using System.Windows.Input;
 using Util.Threads;
-using Wordki.Database;
 using Wordki.Helpers.AutoMapper;
-using Wordki.Helpers.Connector;
 using Wordki.Helpers.Connector.Requests;
 using Wordki.Helpers.Connector.Work;
+using Wordki.InteractionProvider;
 using Wordki.Models;
+using Wordki.ViewModels.Dialogs;
 using WordkiModel;
 
 namespace Wordki.ViewModels
@@ -54,13 +54,16 @@ namespace Wordki.ViewModels
 
         private void Register(object obj)
         {
-            if (Password == null)
-                return;
-            if (RepeatPassword == null)
-                return;
-            if (!Password.Equals(RepeatPassword))
+            if (!CheckPassword(Password))
             {
-                Console.WriteLine("Password and repetition is not same.");
+                return;
+            }
+            if (!CheckPasswordRepeat(Password, RepeatPassword))
+            {
+                return;
+            }
+            if (!CheckUserName(UserName))
+            {
                 return;
             }
             IUser user = new User
@@ -79,8 +82,21 @@ namespace Wordki.ViewModels
             queue.Execute();
         }
 
-        private void RegisterFailed()
+        private void ShowInfoDialog(string message)
         {
+            IInfoProvider infoProvider = new SimpleInfoProvider
+            {
+                ViewModel = new InfoDialogViewModel
+                {
+                    ButtonLabel = "Ok",
+                    Message = message,
+                }
+            };
+        }
+
+        private void RegisterFailed(ErrorDTO error)
+        {
+            ShowInfoDialog($"Wystąpił błąd serwera w trakcie wykonywania żądania: '{error.Message}'.\nKod błędu: '{error.ErroCode}'");
         }
 
         private void RegisterComplete(UserDTO userDTO)
@@ -96,11 +112,6 @@ namespace Wordki.ViewModels
 
         #endregion
 
-        //private void OnRegister(ApiResponse pResponse)
-        //{
-        //    //HandleResponse(pResponse);
-        //}
-
         public override void Loaded()
         {
             
@@ -109,6 +120,41 @@ namespace Wordki.ViewModels
         public override void Unloaded()
         {
             
+        }
+
+        private bool CheckPassword(string password)
+        {
+            if (string.IsNullOrEmpty(password))
+            {
+                ShowInfoDialog("Hasło nie może być puste!");
+                return false;
+            }
+            return true;
+        }
+
+        private bool CheckPasswordRepeat(string password, string passwordRepeat)
+        {
+            if (string.IsNullOrEmpty(RepeatPassword))
+            {
+                ShowInfoDialog("Powtórz hasło!");
+                return false;
+            }
+            if (!Password.Equals(RepeatPassword))
+            {
+                ShowInfoDialog("Hasła nie są identyczne!");
+                return false;
+            }
+            return true;
+        }
+
+        private bool CheckUserName(string userName)
+        {
+            if (string.IsNullOrEmpty(userName))
+            {
+                ShowInfoDialog("Nazwa użytkwonika nie może być pusta!");
+                return false;
+            }
+            return true;
         }
     }
 }

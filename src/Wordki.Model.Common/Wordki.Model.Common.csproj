@@ -44,6 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\vesper-oazachaosu\src\Oazachaosu.Core.Common\ErrorCode.cs">
+      <Link>ErrorCode.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\vesper-oazachaosu\src\Oazachaosu.Core.Common\ErrorDTO.cs">
+      <Link>ErrorDTO.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\vesper-oazachaosu\src\Oazachaosu.Core.Common\GroupDTO.cs">
       <Link>GroupDTO.cs</Link>
     </Compile>
