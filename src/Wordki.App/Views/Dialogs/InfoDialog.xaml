@@ -8,9 +8,6 @@
     xmlns:dialogs="clr-namespace:Wordki.Views.Dialogs"
     xmlns:viewModels="clr-namespace:Wordki.ViewModels.Dialogs"
     mc:Ignorable="d"
-    Title="TwoTextBoxDialog"
-    Height="170"
-    Width="480"
     WindowStartupLocation="CenterOwner"
     Style="{StaticResource AppDialogStyle}"
     d:DataContext="{d:DesignInstance {x:Type viewModels:InfoDialogViewModel}}">
