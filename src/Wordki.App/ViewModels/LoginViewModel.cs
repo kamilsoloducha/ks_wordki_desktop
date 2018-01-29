@@ -9,6 +9,7 @@ using Wordki.Database;
 using Wordki.Helpers.AutoMapper;
 using Wordki.Helpers.Connector.Requests;
 using Wordki.Helpers.Connector.Work;
+using Wordki.InteractionProvider;
 using Wordki.Models;
 using WordkiModel;
 
@@ -32,15 +33,17 @@ namespace Wordki.ViewModels
             }
         }
 
-        public ICommand ListViewSelectedChangedCommand { get; set; }
-        public ICommand RemoveUserCommand { get; set; }
-        public ICommand LoginCommand { get; set; }
+        public ICommand ListViewSelectedChangedCommand { get; }
+        public ICommand RemoveUserCommand { get; }
+        public ICommand LoginCommand { get; }
+        public ICommand LoginLocalCommand { get; }
 
         #endregion
 
         public LoginViewModel()
         {
-            LoginCommand = new Util.BuilderCommand(Loging);
+            LoginCommand = new Util.BuilderCommand(Login);
+            LoginLocalCommand = new Util.BuilderCommand(LoginLocal);
             ListViewSelectedChangedCommand = new Util.BuilderCommand(ListViewSelectedChanged);
             Users = new ObservableCollection<string>();
         }
@@ -73,9 +76,68 @@ namespace Wordki.ViewModels
             UserName = user;
         }
 
-        public void Loging(object obj)
+        private void LoginLocal()
         {
-            LoginAction();
+            if (!CheckPassword(Password))
+            {
+                return;
+            }
+            if (!CheckUserName(UserName))
+            {
+                return;
+            }
+            NHibernateHelper.DatabaseName = UserName;
+            IUser user = DatabaseSingleton.Instance.GetUser(UserName, Password);
+            if (user == null)
+            {
+                user = new User()
+                {
+                    Name = UserName,
+                    Password = Password,
+                    CreateDateTime = DateTime.Now,
+                    IsAdmin = false,
+                    AllWords = true,
+                    IsRegister = false,
+                };
+                DatabaseSingleton.Instance.AddUser(user);
+            }
+            StartWithUser(user);
+        }
+
+        private void Login()
+        {
+            if (!CheckPassword(Password))
+            {
+                return;
+            }
+            if (!CheckUserName(UserName))
+            {
+                return;
+            }
+            IUser user = new User
+            {
+                Name = UserName,
+                Password = Password,
+            };
+            ApiWork<UserDTO> loginRequest = new ApiWork<UserDTO>
+            {
+                Request = new GetUserRequest(user),
+                OnCompletedFunc = LoginComplete,
+                OnFailedFunc = LoginFailed
+            };
+            BackgroundQueueWithProgressDialog queue = new BackgroundQueueWithProgressDialog();
+            ProcessProvider provider = new ProcessProvider()
+            {
+                ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
+                {
+                    ButtonLabel = "Anuluj",
+                    DialogTitle = "Trwa logowanie do aplikacji...",
+                    CanCanceled = true,
+                }
+            };
+            queue.Dialog = provider;
+            queue.AddWork(loginRequest);
+            queue.Execute();
         }
 
         protected override void ChangeState(object obj)
@@ -92,45 +154,6 @@ namespace Wordki.ViewModels
             return Util.MD5Hash.GetMd5Hash(MD5.Create(), Password);
         }
 
-        private WorkResult LoginAction()
-        {
-            if (Password == null)
-                return new WorkResult();
-            if (UserName == null)
-                return new WorkResult();
-            NHibernateHelper.DatabaseName = UserName;
-            IUser user = DatabaseSingleton.Instance.GetUser(UserName, Password);
-            if (user != null)
-            {
-                StartWithUser(user);
-                return new WorkResult()
-                {
-                    Success = true,
-                };
-            }
-            else
-            {
-                user = new User
-                {
-                    Name = UserName,
-                    Password = Password,
-                };
-                ApiWork<UserDTO> loginRequest = new ApiWork<UserDTO>
-                {
-                    Request = new GetUserRequest(user),
-                    OnCompletedFunc = LoginComplete,
-                    OnFailedFunc = LoginFailed
-                };
-                BackgroundWorkQueue queue = new BackgroundWorkQueue();
-                queue.AddWork(loginRequest);
-                queue.Execute();
-                return new WorkResult()
-                {
-                    Success = true,
-                };
-            }
-        }
-
         private void LoginFailed(ErrorDTO error)
         {
             Console.WriteLine($"Error: {error.Code} \n" +
@@ -141,6 +164,7 @@ namespace Wordki.ViewModels
         private void LoginComplete(UserDTO userDTO)
         {
             IUser user = AutoMapperConfig.Instance.Map<UserDTO, User>(userDTO);
+            NHibernateHelper.DatabaseName = UserName;
             IDatabaseOrganizer databaseOrganizer = DatabaseOrganizerSingleton.Get();
             if (!databaseOrganizer.AddDatabase(user))
             {

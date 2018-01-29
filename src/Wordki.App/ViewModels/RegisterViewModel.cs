@@ -1,5 +1,4 @@
 ﻿using Oazachaosu.Core.Common;
-using System;
 using System.Windows.Input;
 using Util.Threads;
 using Wordki.Helpers.AutoMapper;
@@ -7,7 +6,6 @@ using Wordki.Helpers.Connector.Requests;
 using Wordki.Helpers.Connector.Work;
 using Wordki.InteractionProvider;
 using Wordki.Models;
-using Wordki.ViewModels.Dialogs;
 using WordkiModel;
 
 namespace Wordki.ViewModels
@@ -77,7 +75,17 @@ namespace Wordki.ViewModels
                 OnCompletedFunc = RegisterComplete,
                 OnFailedFunc = RegisterFailed
             };
-            BackgroundWorkQueue queue = new BackgroundWorkQueue();
+            BackgroundQueueWithProgressDialog queue = new BackgroundQueueWithProgressDialog();
+            ProcessProvider provider = new ProcessProvider()
+            {
+                ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
+                {
+                    ButtonLabel = "Anuluj",
+                    DialogTitle = "Rejestrowanie użytkownika w chmurze...",
+                    CanCanceled = true,
+                }
+            };
+            queue.Dialog = provider;
             queue.AddWork(registerRequest);
             queue.Execute();
         }
@@ -90,6 +98,7 @@ namespace Wordki.ViewModels
         private void RegisterComplete(UserDTO userDTO)
         {
             IUser user = AutoMapperConfig.Instance.Map<UserDTO, IUser>(userDTO);
+            user.IsRegister = true;
             StartWithUser(user);
         }
 
@@ -110,16 +119,6 @@ namespace Wordki.ViewModels
             
         }
 
-        private bool CheckPassword(string password)
-        {
-            if (string.IsNullOrEmpty(password))
-            {
-                ShowInfoDialog("Hasło nie może być puste!");
-                return false;
-            }
-            return true;
-        }
-
         private bool CheckPasswordRepeat(string password, string passwordRepeat)
         {
             if (string.IsNullOrEmpty(RepeatPassword))
@@ -130,16 +129,6 @@ namespace Wordki.ViewModels
             if (!Password.Equals(RepeatPassword))
             {
                 ShowInfoDialog("Hasła nie są identyczne!");
-                return false;
-            }
-            return true;
-        }
-
-        private bool CheckUserName(string userName)
-        {
-            if (string.IsNullOrEmpty(userName))
-            {
-                ShowInfoDialog("Nazwa użytkwonika nie może być pusta!");
                 return false;
             }
             return true;

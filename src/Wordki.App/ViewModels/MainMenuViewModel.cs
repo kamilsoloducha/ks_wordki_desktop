@@ -196,7 +196,22 @@ namespace Wordki.ViewModels
 
         private void ExitAction()
         {
-            BackgroundWorkQueue queue = new BackgroundWorkQueue();
+            if (!UserManagerSingleton.Instence.User.IsRegister)
+            {
+                Application.Current.Shutdown();
+                return;
+            }
+            BackgroundQueueWithProgressDialog queue = new BackgroundQueueWithProgressDialog();
+            ProcessProvider provider = new ProcessProvider()
+            {
+                ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
+                {
+                    ButtonLabel = "Anuluj",
+                    DialogTitle = "Zapisywanie zmian w chmurze...",
+                    CanCanceled = true,
+                }
+            };
+            queue.Dialog = provider;
             queue.OnCompleted = () =>
             {
                 DatabaseSingleton.Instance.RefreshDatabase();
@@ -252,9 +267,25 @@ namespace Wordki.ViewModels
         public override void Loaded()
         {
             Login = UserManagerSingleton.Instence.User.Name;
-            BackgroundWorkQueue queue = new BackgroundWorkQueue();
+            if (!UserManagerSingleton.Instence.User.IsRegister)
+            {
+                RefreshInfo();
+                return;
+            }
+            BackgroundQueueWithProgressDialog queue = new BackgroundQueueWithProgressDialog();
+            ProcessProvider provider = new ProcessProvider()
+            {
+                ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
+                {
+                    ButtonLabel = "Anuluj",
+                    DialogTitle = "Wczytywanie danych z chmury...",
+                    CanCanceled = true,
+                }
+            };
+            queue.Dialog = provider;
             queue.OnCompleted = () =>
             {
+                RefreshInfo();
             };
             queue.AddWork(new ApiWork<IEnumerable<GroupDTO>>
             {
@@ -275,8 +306,6 @@ namespace Wordki.ViewModels
                 OnFailedFunc = OnFailed
             });
             queue.Execute();
-
-            RefreshInfo();
         }
 
         private void AddResultToDatabase(IEnumerable<ResultDTO> obj)

@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using Newtonsoft.Json;
 using Wordki.Helpers;
 using Wordki.Helpers.Notification;
 using System.Windows.Input;
@@ -13,7 +12,7 @@ namespace Wordki.ViewModels
 {
     public abstract class LoginMainViewModel : ViewModelBase
     {
-        
+
         #region Properties
         private string _userName;
         public string UserName
@@ -163,6 +162,26 @@ namespace Wordki.ViewModels
                 }
             };
             infoProvider.Interact();
+        }
+
+        protected bool CheckPassword(string password)
+        {
+            if (string.IsNullOrEmpty(password))
+            {
+                ShowInfoDialog("Hasło nie może być puste!");
+                return false;
+            }
+            return true;
+        }
+
+        protected bool CheckUserName(string userName)
+        {
+            if (string.IsNullOrEmpty(userName))
+            {
+                ShowInfoDialog("Nazwa użytkwonika nie może być pusta!");
+                return false;
+            }
+            return true;
         }
 
         #endregion

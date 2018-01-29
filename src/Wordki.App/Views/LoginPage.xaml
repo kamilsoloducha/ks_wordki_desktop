@@ -13,8 +13,8 @@
     xmlns:converters="clr-namespace:Wordki.Helpers.Converters"
     xmlns:models="clr-namespace:Wordki.Models"
     mc:Ignorable="d"
-    d:DesignHeight="600"
-    d:DesignWidth="600"
+    d:DesignHeight="720"
+    d:DesignWidth="1366"
     Style="{DynamicResource AppPageStyle}"
     KeyboardNavigation.IsTabStop="False"
     d:DataContext="{d:DesignInstance {x:Type viewModels:LoginViewModel}}">
@@ -168,22 +168,27 @@
             Grid.Column="1"
             Grid.ColumnSpan="2"
             Grid.Row="5"
-            Columns="2"
+            Columns="3"
             Margin="20, 10">
 
             <Button
                 Style="{StaticResource FlatButtonStyle}"
-                Content="Zaloguj"
+                Content="Zaloguj w chmurze"
                 Command="{Binding LoginCommand}"
+                Padding="20">
+            </Button>
+
+            <Button
+                Style="{StaticResource FlatButtonStyle}"
+                Content="Zaloguj lokalnie"
+                Command="{Binding LoginLocalCommand}"
                 Padding="20" />
 
             <Button
                 Style="{StaticResource FlatButtonStyle}"
                 Content="Wyjdź"
                 Command="{Binding ExitCommand}"
-                Padding="20">
-
-            </Button>
+                Padding="20" />
 
         </UniformGrid>
 

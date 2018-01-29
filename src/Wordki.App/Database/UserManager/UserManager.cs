@@ -25,7 +25,7 @@ namespace Wordki.Database
             _user = user;
         }
 
-        public void UnSet()
+        public void Unset()
         {
             _user = null;
         }

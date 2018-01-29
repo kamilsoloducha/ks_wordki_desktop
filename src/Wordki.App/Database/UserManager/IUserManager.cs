@@ -9,7 +9,7 @@ namespace Wordki.Database
         IUser User { get; }
 
         void Set(IUser user);
-        void UnSet();
+        void Unset();
         void Update();
         Task UpdateAsync();
 
