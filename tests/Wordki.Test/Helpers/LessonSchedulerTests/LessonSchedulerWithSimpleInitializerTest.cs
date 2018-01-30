@@ -4,6 +4,7 @@ using System;
 using Wordki.Models;
 using Wordki.Models.LessonScheduler;
 using WordkiModel;
+using WordkiModel.Extensions;
 
 namespace Wordki.Test.Helpers.LessonSchedulerTests
 {

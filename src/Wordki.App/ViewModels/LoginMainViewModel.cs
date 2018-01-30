@@ -7,6 +7,8 @@ using System;
 using Wordki.Database;
 using Wordki.InteractionProvider;
 using Wordki.ViewModels.Dialogs;
+using Oazachaosu.Core.Common;
+using Wordki.Helpers.AutoMapper;
 
 namespace Wordki.ViewModels
 {
@@ -106,6 +108,13 @@ namespace Wordki.ViewModels
 
         #region Methods
 
+
+        protected void OnUserRequestCompete(UserDTO userDto)
+        {
+            IUser user = new UserHandler(AutoMapperConfig.Instance, DatabaseOrganizerSingleton.Instance).Handle(userDto);
+            StartWithUser(user);
+        }
+
         protected void StartWithUser(IUser user)
         {
             IUserManager userManager = UserManagerSingleton.Instence;
@@ -116,31 +125,10 @@ namespace Wordki.ViewModels
             Start();
         }
 
-        //protected void HandleResponse(ApiResponse response)
-        //{
-        //    if (response.IsError)
-        //    {
-        //        return;
-        //    }
-        //    IUser lUser = JsonConvert.DeserializeObject<IUser>(response.Message);
-        //    lUser.IsLogin = true;
-        //    lUser.IsRegister = true;
-        //    IDatabase database = DatabaseSingleton.Instance;
-        //    //User dbUser = database.GetUserAsync(lUser.LocalId);
-        //    //if (dbUser == null)
-        //    //{
-        //        //database.AddUser(lUser);
-        //    //}
-        //    //UserManager.GetInstance().User = lUser;
-        //    StartWithUser(lUser);
-        //}
-
         protected void Start()
         {
-            LoggerSingleton.LogInfo("Loguje użytkownika: {0}", UserManagerSingleton.Instence.User.Name);
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Application.Current.Dispatcher.Invoke(() => NotificationFactory.Create().Show("Zalogowano"));
                 Switcher.Switch(Switcher.State.Menu);
             });
         }

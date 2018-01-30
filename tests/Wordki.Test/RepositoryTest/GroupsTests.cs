@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Wordki.Models;
 using WordkiModel;
+using WordkiModel.Extensions;
 
 namespace Wordki.Test.RepositoryTest
 {

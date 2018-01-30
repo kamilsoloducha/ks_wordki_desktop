@@ -26,8 +26,5 @@ namespace WordkiModel
 
         IList<IWord> Words { get; set; }
         IList<IResult> Results { get; set; }
-
-        void AddWord(IWord word);
-        void AddResult(IResult result);
     }
 }

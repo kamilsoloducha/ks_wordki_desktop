@@ -24,24 +24,15 @@
     <Border
         Style="{DynamicResource DialogBorderStyle}">
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition
-                    Height="*" />
-                <RowDefinition
-                    Height="Auto" />
-            </Grid.RowDefinitions>
-
+        <StackPanel>
             <TextBlock
                 Style="{DynamicResource AppTextBlockStyle}"
-                Grid.Row="1"
                 FontSize="15"
-                Margin="10"
+                Margin="0,50,0,0"
                 VerticalAlignment="Center"
                 Text="{Binding Path=Message, UpdateSourceTrigger=PropertyChanged}" />
 
             <Button
-                Grid.Row="2"
                 Margin="10"
                 HorizontalAlignment="Right"
                 helpers:FocusExtension.IsFocused="True"
@@ -50,6 +41,6 @@
                 Command="{Binding Path=CloseCommand}">
 
             </Button>
-        </Grid>
+        </StackPanel>
     </Border>
 </dialogs:DialogBase>

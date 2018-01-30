@@ -6,7 +6,7 @@ using System.Linq;
 using Wordki.Helpers;
 using Wordki.Models.LessonScheduler;
 using WordkiModel;
-
+using WordkiModel.Extensions;
 
 namespace Wordki.Test.Helpers.LessonWordsCreatorTests.AllToTeachCreatorTests
 {

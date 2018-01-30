@@ -122,7 +122,7 @@ namespace Wordki.ViewModels
             ApiWork<UserDTO> loginRequest = new ApiWork<UserDTO>
             {
                 Request = new GetUserRequest(user),
-                OnCompletedFunc = LoginComplete,
+                OnCompletedFunc = OnUserRequestCompete,
                 OnFailedFunc = LoginFailed
             };
             BackgroundQueueWithProgressDialog queue = new BackgroundQueueWithProgressDialog();
@@ -159,19 +159,6 @@ namespace Wordki.ViewModels
             Console.WriteLine($"Error: {error.Code} \n" +
                 $"{error.Message}");
             ShowInfoDialog($"Wystąpił błąd serwera w trakcie wykonywania żądania: '{error.Message}'.\nKod błędu: '{error.Code}'");
-        }
-
-        private void LoginComplete(UserDTO userDTO)
-        {
-            IUser user = AutoMapperConfig.Instance.Map<UserDTO, User>(userDTO);
-            NHibernateHelper.DatabaseName = UserName;
-            IDatabaseOrganizer databaseOrganizer = DatabaseOrganizerSingleton.Get();
-            if (!databaseOrganizer.AddDatabase(user))
-            {
-                Console.WriteLine("Błąd dodawania bazy danych");
-                return;
-            }
-            StartWithUser(user);
         }
 
         public override void Loaded()

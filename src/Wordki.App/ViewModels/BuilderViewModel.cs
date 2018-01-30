@@ -20,6 +20,7 @@ using Wordki.Models;
 using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
 using Oazachaosu.Core.Common;
+using WordkiModel.Extensions;
 
 namespace Wordki.ViewModels
 {

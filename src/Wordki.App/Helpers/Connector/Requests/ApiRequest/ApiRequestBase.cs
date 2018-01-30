@@ -12,6 +12,7 @@ namespace Wordki.Helpers.Connector.Requests
             get
             {
                 return $"https://localhost:44326/{Path}";
+                //return $"http://oazachaosu.pl/{Path}";
             }
         }
         public virtual string Method { get; set; }

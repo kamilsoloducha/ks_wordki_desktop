@@ -145,7 +145,14 @@
     <Compile Include="Commands\SwapWordsInGroupAction.cs" />
     <Compile Include="Commands\TranslationDirectionChangeAction.cs" />
     <Compile Include="Database\Database\DatabaseSingleton.cs" />
-    <Compile Include="Database\Handlers.cs" />
+    <Compile Include="Database\DTOHandlers\GroupHandler.cs" />
+    <Compile Include="Database\DTOHandlers\IGroupHandler.cs" />
+    <Compile Include="Database\DTOHandlers\IRegisterHandler.cs" />
+    <Compile Include="Database\DTOHandlers\IResultHandler.cs" />
+    <Compile Include="Database\DTOHandlers\IWordHandler.cs" />
+    <Compile Include="Database\DTOHandlers\UserHandler.cs" />
+    <Compile Include="Database\DTOHandlers\ResultHandler.cs" />
+    <Compile Include="Database\DTOHandlers\WordHandler.cs" />
     <Compile Include="Database\Maps\GroupMap.cs" />
     <Compile Include="Database\Repositories\GroupRepository.cs" />
     <Compile Include="Database\Database\IDatabase.cs" />
@@ -179,6 +186,7 @@
     <Compile Include="Helpers\Connector\Parsers\ApiResponeParser.cs" />
     <Compile Include="Helpers\Connector\Parsers\TranslationParser.cs" />
     <Compile Include="Helpers\Connector\Requests\ApiRequest\ApiRequestBase.cs" />
+    <Compile Include="Helpers\Connector\Requests\ApiRequest\GetDateTimeRequest.cs" />
     <Compile Include="Helpers\Connector\Requests\ApiRequest\GetGroupsRequest.cs" />
     <Compile Include="Helpers\Connector\Requests\ApiRequest\GetResultsRequest.cs" />
     <Compile Include="Helpers\Connector\Requests\ApiRequest\GetUserRequest.cs" />

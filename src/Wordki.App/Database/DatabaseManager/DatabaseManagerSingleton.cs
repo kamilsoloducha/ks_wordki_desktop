@@ -6,16 +6,19 @@
         private static IDatabaseOrganizer _instance;
         private static object _lock = new object();
 
-        public static IDatabaseOrganizer Get()
+        public static IDatabaseOrganizer Instance
         {
-            lock (_lock)
+            get
             {
-                if (_instance == null)
+                lock (_lock)
                 {
-                    _instance = new DatabaseOrganizer(NHibernateHelper.DirectoryPath);
+                    if (_instance == null)
+                    {
+                        _instance = new DatabaseOrganizer(NHibernateHelper.DirectoryPath);
+                    }
                 }
+                return _instance;
             }
-            return _instance;
         }
 
 

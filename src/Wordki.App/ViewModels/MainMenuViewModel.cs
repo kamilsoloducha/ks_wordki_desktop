@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Oazachaosu.Core.Common;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,12 +15,13 @@ using Wordki.Helpers.Connector.Work;
 using Wordki.InteractionProvider;
 using Wordki.Models;
 using Wordki.ViewModels.Dialogs;
-using WordkiModel;
 
 namespace Wordki.ViewModels
 {
     public class MainMenuViewModel : ViewModelBase
     {
+
+        private bool isLoadFromCloud = false;
 
         #region Properies
 
@@ -267,6 +266,11 @@ namespace Wordki.ViewModels
         public override void Loaded()
         {
             Login = UserManagerSingleton.Instence.User.Name;
+            if (isLoadFromCloud)
+            {
+                RefreshInfo();
+                return;
+            }
             if (!UserManagerSingleton.Instence.User.IsRegister)
             {
                 RefreshInfo();
@@ -287,92 +291,37 @@ namespace Wordki.ViewModels
             {
                 RefreshInfo();
             };
+            IMapper mapper = AutoMapperConfig.Instance;
+            IDatabase database = DatabaseSingleton.Instance;
             queue.AddWork(new ApiWork<IEnumerable<GroupDTO>>
             {
                 Request = new GetGroupsRequest(UserManagerSingleton.Instence.User),
-                OnCompletedFunc = AddGroupToDatabase,
+                OnCompletedFunc = new GroupHandler(mapper, database).Handle,
                 OnFailedFunc = OnFailed
             });
             queue.AddWork(new ApiWork<IEnumerable<WordDTO>>
             {
                 Request = new GetWordsRequest(UserManagerSingleton.Instence.User),
-                OnCompletedFunc = AddWordToDatabase,
+                OnCompletedFunc = new WordHandler(mapper, database).Handle,
                 OnFailedFunc = OnFailed
             });
             queue.AddWork(new ApiWork<IEnumerable<ResultDTO>>
             {
                 Request = new GetResultsRequest(UserManagerSingleton.Instence.User),
-                OnCompletedFunc = AddResultToDatabase,
+                OnCompletedFunc = new ResultHandler(mapper, database).Handle,
+                OnFailedFunc = OnFailed
+            });
+            queue.AddWork(new ApiWork<DateTime>
+            {
+                Request = new GetDateTimeRequest(UserManagerSingleton.Instence.User),
+                OnCompletedFunc = async (dt) =>
+                {
+                    UserManagerSingleton.Instence.User.DownloadTime = dt;
+                    await UserManagerSingleton.Instence.UpdateAsync();
+                },
                 OnFailedFunc = OnFailed
             });
             queue.Execute();
-        }
-
-        private void AddResultToDatabase(IEnumerable<ResultDTO> obj)
-        {
-            IMapper mapper = AutoMapperConfig.Instance;
-            IDatabase database = DatabaseSingleton.Instance;
-            foreach (ResultDTO resultDto in obj)
-            {
-                IResult result = mapper.Map<ResultDTO, IResult>(resultDto);
-                IGroup group = database.Groups.FirstOrDefault(x => x.Id == resultDto.GroupId);
-                if (result.State < 0)
-                {
-                    database.DeleteResult(result);
-                }
-                if (group.Words.Any(x => x.Id == result.Id))
-                {
-                    database.UpdateResult(result);
-                }
-                else
-                {
-                    database.AddResult(result);
-                }
-            }
-        }
-
-        private void AddWordToDatabase(IEnumerable<WordDTO> obj)
-        {
-            IMapper mapper = AutoMapperConfig.Instance;
-            IDatabase database = DatabaseSingleton.Instance;
-            foreach (WordDTO wordDto in obj)
-            {
-                IWord word = mapper.Map<WordDTO, IWord>(wordDto);
-                IGroup group = database.Groups.FirstOrDefault(x => x.Id == wordDto.GroupId);
-                if (wordDto.State < 0)
-                {
-                    database.DeleteWord(word);
-                }
-                if (group.Words.Any(x => x.Id == word.Id))
-                {
-                    database.UpdateWord(word);
-                }
-                else
-                {
-                    database.AddWord(word);
-                }
-            }
-        }
-
-        private void AddGroupToDatabase(IEnumerable<GroupDTO> obj)
-        {
-            IEnumerable<IGroup> groups = AutoMapperConfig.Instance.Map<IEnumerable<GroupDTO>, IEnumerable<IGroup>>(obj);
-            IDatabase database = DatabaseSingleton.Instance;
-            foreach (IGroup group in groups)
-            {
-                if (group.State < 0)
-                {
-                    database.DeleteGroup(group);
-                }
-                if (database.Groups.Any(x => x.Id == group.Id))
-                {
-                    database.UpdateGroup(group);
-                }
-                else
-                {
-                    database.AddGroup(group);
-                }
-            }
         }
 
         private void OnFailed(ErrorDTO obj)

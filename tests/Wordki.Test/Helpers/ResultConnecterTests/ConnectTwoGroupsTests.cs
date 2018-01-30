@@ -2,6 +2,7 @@
 using Oazachaosu.Core.Common;
 using Wordki.Helpers.ResultConnector;
 using WordkiModel;
+using WordkiModel.Extensions;
 
 namespace Wordki.Test.Helpers.ResultConnecterTests
 {

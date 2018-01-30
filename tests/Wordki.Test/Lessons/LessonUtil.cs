@@ -4,7 +4,7 @@ using Wordki.Helpers.WordComparer;
 using Wordki.Models;
 using Wordki.Models.Lesson;
 using WordkiModel;
-
+using WordkiModel.Extensions;
 
 namespace Wordki.Test.Lessons
 {

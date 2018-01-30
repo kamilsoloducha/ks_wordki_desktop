@@ -1,6 +1,7 @@
 ﻿using WordkiModel;
 using System.Linq;
 using System.Collections.Generic;
+using WordkiModel.Extensions;
 
 namespace Wordki.Helpers.ResultConnector
 {

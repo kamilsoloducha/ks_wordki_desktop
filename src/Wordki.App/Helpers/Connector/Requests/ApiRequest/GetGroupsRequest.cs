@@ -11,7 +11,7 @@ namespace Wordki.Helpers.Connector.Requests
         public GetGroupsRequest(IUser user) : base(user)
         {
             Method = "GET";
-            path = $"Groups/1990-01-01/{user.ApiKey}";
+            path = $"Groups/{user.DownloadTime}/{user.ApiKey}";
         }
     }
 }

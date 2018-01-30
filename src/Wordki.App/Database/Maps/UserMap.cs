@@ -8,7 +8,7 @@ namespace Wordki.Database
 
         public UserMap()
         {
-            Id(x => x.Id);
+            Id(x => x.Id).GeneratedBy.Assigned();
             Map(x => x.Name);
             Map(x => x.Password);
             Map(x => x.IsLogin);

@@ -5,6 +5,7 @@ using Wordki.Models;
 using System.Collections.ObjectModel;
 using System;
 using Oazachaosu.Core.Common;
+using WordkiModel.Extensions;
 
 namespace Wordki.Database
 {

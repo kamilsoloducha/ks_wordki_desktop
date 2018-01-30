@@ -2,6 +2,7 @@
 using System.Linq;
 using WordkiModel;
 using Wordki.Helpers.ResultConnector;
+using WordkiModel.Extensions;
 
 namespace Wordki.Helpers.GroupConnector
 {

@@ -42,6 +42,15 @@ namespace Wordki.Test.Database
         }
 
         [Test]
+        public void Save_user_with_set_id()
+        {
+            user.Id = 10;
+            userRepo.Save(user);
+            IUser userFromDatabase = userRepo.Get(user.Name, user.Password);
+            Assert.AreEqual(user.Id, userFromDatabase.Id);
+        }
+
+        [Test]
         public void Update_user_test()
         {
             userRepo.Save(user);

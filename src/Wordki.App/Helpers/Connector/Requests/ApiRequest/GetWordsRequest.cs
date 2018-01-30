@@ -10,7 +10,7 @@ namespace Wordki.Helpers.Connector.Requests
         public GetWordsRequest(IUser user) : base(user)
         {
             Method = "GET";
-            path = $"Words/1990-01-01/{user.ApiKey}";
+            path = $"Words/{user.DownloadTime}/{user.ApiKey}";
         }
     }
 }

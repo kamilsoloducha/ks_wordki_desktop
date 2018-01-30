@@ -1,7 +1,6 @@
 ﻿using Oazachaosu.Core.Common;
 using System.Windows.Input;
 using Util.Threads;
-using Wordki.Helpers.AutoMapper;
 using Wordki.Helpers.Connector.Requests;
 using Wordki.Helpers.Connector.Work;
 using Wordki.InteractionProvider;
@@ -72,7 +71,7 @@ namespace Wordki.ViewModels
             ApiWork<UserDTO> registerRequest = new ApiWork<UserDTO>
             {
                 Request = new PostUsersRequest(user),
-                OnCompletedFunc = RegisterComplete,
+                OnCompletedFunc = OnUserRequestCompete,
                 OnFailedFunc = RegisterFailed
             };
             BackgroundQueueWithProgressDialog queue = new BackgroundQueueWithProgressDialog();
@@ -93,13 +92,6 @@ namespace Wordki.ViewModels
         private void RegisterFailed(ErrorDTO error)
         {
             ShowInfoDialog($"Wystąpił błąd serwera w trakcie wykonywania żądania: '{error.Message}'.\nKod błędu: '{error.Code}'");
-        }
-
-        private void RegisterComplete(UserDTO userDTO)
-        {
-            IUser user = AutoMapperConfig.Instance.Map<UserDTO, IUser>(userDTO);
-            user.IsRegister = true;
-            StartWithUser(user);
         }
 
         protected override void ChangeState(object obj)
