@@ -95,7 +95,6 @@ namespace Wordki.ViewModels
                     Name = UserName,
                     Password = Password,
                     CreateDateTime = DateTime.Now,
-                    IsAdmin = false,
                     AllWords = true,
                     IsRegister = false,
                 };

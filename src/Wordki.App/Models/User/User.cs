@@ -1,8 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
-using Newtonsoft.Json;
 using Oazachaosu.Core.Common;
-using Wordki.Helpers.JsonConverters;
 using WordkiModel;
 
 namespace Wordki.Models
@@ -12,13 +9,12 @@ namespace Wordki.Models
     {
 
         #region Properties
+
         public virtual string Name { get; set; }
 
         public virtual string Password { get; set; }
 
         public virtual long Id { get; set; }
-
-        public virtual bool IsLogin { get; set; }
 
         public virtual bool IsRegister { get; set; }
 
@@ -56,19 +52,14 @@ namespace Wordki.Models
 
         public virtual string ApiKey { get; set; }
         public virtual DateTime CreateDateTime { get { return DateTime.Now; } set {  } }
-        public virtual bool IsAdmin { get { return false; } set { } }
 
         #endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
         public User()
         {
             Id = 0;
             Name = "";
             Password = "";
-            IsLogin = false;
             IsRegister = false;
             DownloadTime = new DateTime(1990, 9, 24);
             TranslationDirection = TranslationDirection.FromSecond;

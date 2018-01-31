@@ -122,7 +122,6 @@ namespace Wordki.Test
                 AllWords = true,
                 ApiKey = "asdffdsaasdffdsa",
                 DownloadTime = new DateTime(1990, 9, 24, 12, 0, 0),
-                IsLogin = true,
                 IsRegister = true,
                 Name = "Name",
                 Password = "Password",

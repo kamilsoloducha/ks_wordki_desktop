@@ -11,7 +11,6 @@ namespace Wordki.Database
             Id(x => x.Id).GeneratedBy.Assigned();
             Map(x => x.Name);
             Map(x => x.Password);
-            Map(x => x.IsLogin);
             Map(x => x.IsRegister);
             Map(x => x.DownloadTime);
             Map(x => x.TranslationDirection);
