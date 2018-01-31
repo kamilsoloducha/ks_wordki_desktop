@@ -122,6 +122,11 @@ namespace Wordki.Models
                    group.Language2 == Language2;
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public virtual void AddWord(IWord word)
         {
             word.Group = this;

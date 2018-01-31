@@ -68,7 +68,7 @@ namespace Wordki.Test.Database.UserOrganizerTests
                 Directory.Delete(NHibernateHelper.DirectoryPath, true);
             }catch(Exception e)
             {
-
+                Console.WriteLine(e.Message);
             }
         }
     }

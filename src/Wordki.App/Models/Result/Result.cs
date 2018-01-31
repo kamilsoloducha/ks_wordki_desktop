@@ -103,5 +103,10 @@ namespace Wordki.Models
                 && result.LessonType == LessonType
                 && result.State == State;
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

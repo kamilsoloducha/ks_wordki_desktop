@@ -1,7 +1,6 @@
-﻿using Remotion.Linq.Collections;
-using WordkiModel;
-
+﻿using Oazachaosu.Core.Common;
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -10,7 +9,7 @@ using System.Windows.Media;
 using Wordki.Database;
 using Wordki.Models;
 using Wordki.Models.Lesson;
-using Oazachaosu.Core.Common;
+using WordkiModel;
 
 namespace Wordki.ViewModels.LessonStates
 {
@@ -405,10 +404,7 @@ namespace Wordki.ViewModels.LessonStates
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string pPropertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(pPropertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(pPropertyName));
         }
 
         protected string GetNewLabel()

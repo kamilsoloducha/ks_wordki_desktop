@@ -1,4 +1,5 @@
-﻿using Wordki.ViewModels;
+﻿using NLog;
+using Wordki.ViewModels;
 
 namespace Wordki.Views
 {

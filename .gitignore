@@ -36,3 +36,7 @@
 /src/Wordki.Model/obj/Release
 /src/Wordki.Model.Common/obj/Release
 /tests/Wordki.Test/obj/Release
+/src/Wordki.App/bin/Release
+/src/Wordki.Model/bin/Release
+/src/Wordki.Model.Common/bin/Release
+/tests/Wordki.Test/bin/Release

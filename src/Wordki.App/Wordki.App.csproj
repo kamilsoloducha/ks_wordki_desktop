@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wordki</RootNamespace>
     <AssemblyName>Wordki</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -36,7 +36,7 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -58,6 +58,9 @@
     <StartupObject>Wordki.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Antlr3.Runtime.3.5.1\lib\net40-client\Antlr3.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
@@ -80,9 +83,8 @@
       <HintPath>..\..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Iesi.Collections.4.0.2\lib\net461\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -93,13 +95,21 @@
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NHibernate, Version=4.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NHibernate.4.1.1.4000\lib\net40\NHibernate.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NHibernate, Version=5.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NHibernate.5.0.3\lib\net461\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=3.8.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NUnit.3.8.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Remotion.Linq, Version=2.1.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Remotion.Linq.2.1.2\lib\net45\Remotion.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq.EagerFetching, Version=2.1.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Remotion.Linq.EagerFetching.2.1.0\lib\net45\Remotion.Linq.EagerFetching.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations">
@@ -108,15 +118,20 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite, Version=1.0.105.2, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Data.SQLite.Core.1.0.105.2\lib\net451\System.Data.SQLite.dll</HintPath>
+    <Reference Include="System.Data.SQLite, Version=1.0.107.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Data.SQLite.Core.1.0.107.0\lib\net46\System.Data.SQLite.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.105.2, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Data.SQLite.Linq.1.0.105.2\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.107.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Data.SQLite.EF6.1.0.107.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.107.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Data.SQLite.Linq.1.0.107.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -280,6 +295,9 @@
     <Compile Include="InteractionProvider\TranlsationProvider\TranslationProvider.cs" />
     <Compile Include="InteractionProvider\YesNoProvider\IYesNoProvider.cs" />
     <Compile Include="InteractionProvider\YesNoProvider\YesNoProvider.cs" />
+    <Compile Include="Models\AppSettings\AppSettings.cs" />
+    <Compile Include="Models\AppSettings\AppSettingsSingletion.cs" />
+    <Compile Include="Models\AppSettings\IAppSettings.cs" />
     <Compile Include="Models\Group\CommonGroup.cs" />
     <Compile Include="Helpers\Connector\Responses\ApiResponse.cs" />
     <Compile Include="Models\Group\FakeGroup.cs" />
@@ -582,6 +600,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="nlog.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="debug.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -597,9 +622,10 @@
     <Resource Include="Resources\Fonts\Coiny\Coiny-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
+    <Content Include="App.config">
       <SubType>Designer</SubType>
-    </None>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Icons\Flags\fr.gif">
@@ -747,8 +773,8 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\System.Data.SQLite.Core.1.0.105.2\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\System.Data.SQLite.Core.1.0.105.2\build\net451\System.Data.SQLite.Core.targets'))" />
     <Error Condition="!Exists('..\..\packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props'))" />
+    <Error Condition="!Exists('..\..\packages\System.Data.SQLite.Core.1.0.107.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\System.Data.SQLite.Core.1.0.107.0\build\net46\System.Data.SQLite.Core.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -764,5 +790,5 @@
     <Move SourceFiles="@(MoveToLibFolder)" DestinationFolder="$(OutputPath)lib" OverwriteReadOnlyFiles="true" />
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Import Project="..\..\packages\System.Data.SQLite.Core.1.0.105.2\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\..\packages\System.Data.SQLite.Core.1.0.105.2\build\net451\System.Data.SQLite.Core.targets')" />
+  <Import Project="..\..\packages\System.Data.SQLite.Core.1.0.107.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\..\packages\System.Data.SQLite.Core.1.0.107.0\build\net46\System.Data.SQLite.Core.targets')" />
 </Project>

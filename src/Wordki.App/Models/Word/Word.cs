@@ -276,6 +276,11 @@ namespace Wordki.Models
                 && word.IsSelected == IsSelected;
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
     }
 
 

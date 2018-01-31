@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Windows;
+using Wordki.Models.AppSettings;
 
 namespace Wordki
 {
     public partial class App : Application
     {
+
         public App()
         {
-
             AppDomain.CurrentDomain.UnhandledException += OnUnhaldedException;
 
+            NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration("nlog.config", true);
+            string tep = AppSettingsSingletion.Instance.ApiHost;
         }
 
         private void OnUnhaldedException(object sender, UnhandledExceptionEventArgs e)

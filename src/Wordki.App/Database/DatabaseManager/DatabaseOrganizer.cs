@@ -3,12 +3,13 @@ using WordkiModel;
 using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NLog;
 
 namespace Wordki.Database
 {
     public class DatabaseOrganizer : IDatabaseOrganizer
     {
-
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         public IDatabase Database { get; set; }
         private string _mainPath;
 
@@ -30,8 +31,9 @@ namespace Wordki.Database
                 NHibernateHelper.DatabaseName = user.Name;
                 return Database.AddUser(user);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                logger.Error(e, e.Message);
                 return false;
             }
         }
@@ -50,6 +52,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
+                logger.Error(e, e.Message);
                 return false;
             }
         }
@@ -62,8 +65,9 @@ namespace Wordki.Database
                 NHibernateHelper.ResetSession();
                 return Database.GetUser(user.Name, user.Password) != null;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                logger.Error(e, e.Message);
                 return false;
             }
         }
@@ -94,8 +98,9 @@ namespace Wordki.Database
                 NHibernateHelper.ResetSession();
                 return await Database.GetUserAsync(user.Name, user.Password) != null;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                logger.Error(e, e.Message);
                 return false;
             }
         }
@@ -112,8 +117,9 @@ namespace Wordki.Database
                 NHibernateHelper.DatabaseName = user.Name;
                 return await Database.AddUserAsync(user);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                logger.Error(e, e.Message);
                 return false;
             }
         }
@@ -132,6 +138,7 @@ namespace Wordki.Database
             }
             catch (Exception e)
             {
+                logger.Error(e, e.Message);
                 return false;
             }
         }

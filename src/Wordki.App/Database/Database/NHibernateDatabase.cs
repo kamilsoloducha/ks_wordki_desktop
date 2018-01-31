@@ -91,6 +91,7 @@ namespace Wordki.Database
 
         public async Task RefreshDatabaseAsync()
         {
+            await Task.CompletedTask;
         }
 
         public void RefreshDatabase()
