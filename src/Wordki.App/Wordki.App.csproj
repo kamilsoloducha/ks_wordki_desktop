@@ -50,7 +50,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -296,7 +296,7 @@
     <Compile Include="InteractionProvider\YesNoProvider\IYesNoProvider.cs" />
     <Compile Include="InteractionProvider\YesNoProvider\YesNoProvider.cs" />
     <Compile Include="Models\AppSettings\AppSettings.cs" />
-    <Compile Include="Models\AppSettings\AppSettingsSingletion.cs" />
+    <Compile Include="Models\AppSettings\AppSettingsSingleton.cs" />
     <Compile Include="Models\AppSettings\IAppSettings.cs" />
     <Compile Include="Models\Group\CommonGroup.cs" />
     <Compile Include="Helpers\Connector\Responses\ApiResponse.cs" />
@@ -314,9 +314,6 @@
     <Compile Include="Database\Repositories\IResultRepository.cs" />
     <Compile Include="Models\Result\ResultCalculator.cs" />
     <Compile Include="Models\Result\ResultOrganizer.cs" />
-    <Compile Include="Models\Settings\ISettings.cs" />
-    <Compile Include="Models\Settings\Settings.cs" />
-    <Compile Include="Models\Settings\SettingsSingletion.cs" />
     <Compile Include="Models\Translator\Discription.cs" />
     <Compile Include="Models\Translator\Package.cs" />
     <Compile Include="Models\Translator\RequestBag.cs" />
@@ -605,6 +602,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="debug.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="release.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config">

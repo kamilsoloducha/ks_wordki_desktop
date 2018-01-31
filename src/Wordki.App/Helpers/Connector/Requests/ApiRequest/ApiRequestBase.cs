@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Wordki.Models.AppSettings;
 using WordkiModel;
 
 namespace Wordki.Helpers.Connector.Requests
@@ -11,8 +12,7 @@ namespace Wordki.Helpers.Connector.Requests
         {
             get
             {
-                return $"https://localhost:44326/{Path}";
-                //return $"http://oazachaosu.pl/{Path}";
+                return $"{AppSettingsSingleton.Instance.ApiHost}/{Path}";
             }
         }
         public virtual string Method { get; set; }

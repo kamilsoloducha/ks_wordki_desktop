@@ -16,21 +16,15 @@ namespace Wordki.Models
 
         public virtual string Password { get; set; }
 
-        [JsonProperty("LocalId")]
         public virtual long Id { get; set; }
 
         public virtual bool IsLogin { get; set; }
 
         public virtual bool IsRegister { get; set; }
 
-        [JsonProperty("lastLoginDate", NullValueHandling = NullValueHandling.Ignore)]
-        public virtual DateTime LastLoginDateTime { get; set; }
-
         public virtual DateTime DownloadTime { get; set; }
 
         private TranslationDirection translationDirection;
-        [DefaultValue(TranslationDirection.FromFirst)]
-        [JsonProperty("translationDirection", NullValueHandling = NullValueHandling.Ignore)]
         public virtual TranslationDirection TranslationDirection
         {
             get { return translationDirection; }
@@ -46,8 +40,6 @@ namespace Wordki.Models
         }
 
         private bool allWords;
-        [JsonConverter(typeof(StringToBoolConverter))]
-        [DefaultValue(true)]
         public virtual bool AllWords
         {
             get { return allWords; }
@@ -78,7 +70,6 @@ namespace Wordki.Models
             Password = "";
             IsLogin = false;
             IsRegister = false;
-            LastLoginDateTime = new DateTime();
             DownloadTime = new DateTime(1990, 9, 24);
             TranslationDirection = TranslationDirection.FromSecond;
             AllWords = false;

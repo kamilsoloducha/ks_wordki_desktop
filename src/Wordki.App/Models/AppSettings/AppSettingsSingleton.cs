@@ -3,7 +3,7 @@ using System.Configuration;
 
 namespace Wordki.Models.AppSettings
 {
-    public static class AppSettingsSingletion
+    public static class AppSettingsSingleton
     {
         private static object lockObj = new object();
 
@@ -18,7 +18,11 @@ namespace Wordki.Models.AppSettings
                     {
                         ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap
                         {
+#if RELEASE
+                            ExeConfigFilename = "release.config",
+#else
                             ExeConfigFilename = "debug.config",
+#endif
                         };
                         Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
                         AppSettingsSection section = (AppSettingsSection)config.GetSection("appSettings");

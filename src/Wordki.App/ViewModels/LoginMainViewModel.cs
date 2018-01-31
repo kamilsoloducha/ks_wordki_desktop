@@ -119,7 +119,6 @@ namespace Wordki.ViewModels
         {
             IUserManager userManager = UserManagerSingleton.Instence;
             userManager.Set(user);
-            user.LastLoginDateTime = DateTime.Now;
             userManager.Update();
             DatabaseSingleton.Instance.LoadDatabase();
             Start();

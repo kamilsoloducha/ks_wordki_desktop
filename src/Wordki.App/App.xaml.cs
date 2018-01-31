@@ -12,7 +12,7 @@ namespace Wordki
             AppDomain.CurrentDomain.UnhandledException += OnUnhaldedException;
 
             NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration("nlog.config", true);
-            string tep = AppSettingsSingletion.Instance.ApiHost;
+            string tep = AppSettingsSingleton.Instance.ApiHost;
         }
 
         private void OnUnhaldedException(object sender, UnhandledExceptionEventArgs e)

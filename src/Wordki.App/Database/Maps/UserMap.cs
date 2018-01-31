@@ -13,7 +13,6 @@ namespace Wordki.Database
             Map(x => x.Password);
             Map(x => x.IsLogin);
             Map(x => x.IsRegister);
-            Map(x => x.LastLoginDateTime);
             Map(x => x.DownloadTime);
             Map(x => x.TranslationDirection);
             Map(x => x.AllWords);

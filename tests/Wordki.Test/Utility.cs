@@ -124,7 +124,6 @@ namespace Wordki.Test
                 DownloadTime = new DateTime(1990, 9, 24, 12, 0, 0),
                 IsLogin = true,
                 IsRegister = true,
-                LastLoginDateTime = new DateTime(1990, 9, 24, 12, 0, 0),
                 Name = "Name",
                 Password = "Password",
                 TranslationDirection = TranslationDirection.FromSecond,
@@ -138,7 +137,6 @@ namespace Wordki.Test
             Assert.AreEqual(expected.ApiKey, actual.ApiKey);
             Assert.AreEqual(expected.AllWords, actual.AllWords);
             Assert.AreEqual(expected.TranslationDirection, actual.TranslationDirection);
-            Assert.AreEqual(expected.LastLoginDateTime, actual.LastLoginDateTime);
 
         }
 

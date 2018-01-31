@@ -10,7 +10,6 @@ namespace WordkiModel
         string Password { get; set; }
         string ApiKey { get; set; }
         DateTime CreateDateTime { get; set; }
-        DateTime LastLoginDateTime { get; set; }
         bool IsAdmin { get; set; }
         bool IsLogin { get; set; }
         bool IsRegister { get; set; }
