@@ -218,12 +218,12 @@ namespace Wordki.ViewModels
 
         #region Commands
 
-        private void GroupSelectionChanged(object obj)
+        private void GroupSelectionChanged()
         {
             SetOnLastWordCurretGroup();
         }
 
-        private void AddClipboardGroup(object obj)
+        private void AddClipboardGroup()
         {
             //if (!ClipboardHelper.IsRunning) {
             //  NotifyIcon.Visible = true;
@@ -367,7 +367,7 @@ namespace Wordki.ViewModels
             provider.Interact();
         }
 
-        public void TranslateWord(object obj)
+        public void TranslateWord()
         {
             SimpleWork work = new SimpleWork();
             work.WorkFunc += SendRequestForWordTranslate;
@@ -452,7 +452,7 @@ namespace Wordki.ViewModels
             Switcher.Back();
         }
 
-        private void AddWord(object obj)
+        private void AddWord()
         {
             if (SelectedGroup == null)
             {
@@ -472,7 +472,7 @@ namespace Wordki.ViewModels
         }
 
 
-        private async void DeleteWord(object obj)
+        private async void DeleteWord()
         {
             if (SelectedWord == null && SelectedGroup != null)
             {

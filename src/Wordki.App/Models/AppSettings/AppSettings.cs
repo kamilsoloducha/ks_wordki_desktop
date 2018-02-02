@@ -6,5 +6,6 @@
         public string ApiHost { get; set; }
         public bool DatabaseLog { get; set; }
         public bool DatabaseSeed { get; set; }
+        public bool MemoryDatabase { get; set; }
     }
 }

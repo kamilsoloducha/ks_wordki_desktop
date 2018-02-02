@@ -1,16 +1,20 @@
 ﻿using System.IO;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
+using Wordki.Models.AppSettings;
 
 namespace Wordki.Database
 {
     public static class NHibernateHelper
     {
-#if DEBUG
-        public static string DirectoryPath = "Wordki";
-#else
-        public static string DirectoryPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "Wordki");
-#endif
+        public static string DirectoryPath
+        {
+            get
+            {
+                return AppSettingsSingleton.Instance.Debug ? "Wordki" : Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "Wordki");
+            }
+        }
+
         public static string DatabaseName = "database";
         public static string DatabasePath { get { return Path.Combine(DirectoryPath, $"{DatabaseName}.db"); } }
 

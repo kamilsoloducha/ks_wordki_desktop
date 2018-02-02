@@ -172,12 +172,6 @@ namespace Wordki.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(pPropertyName));
         }
 
-        public static void ToggleStyle()
-        {
-            ApplicationStyleEnum style = GetSettings().ApplicationStyle == ApplicationStyleEnum.Dark ? ApplicationStyleEnum.Light : ApplicationStyleEnum.Dark;
-            ChangeStyle(style);
-        }
-
         public static void ChangeStyle(int index)
         {
             switch (index)

@@ -6,5 +6,6 @@
         bool Debug { get; set; }
         bool DatabaseLog { get; set; }
         bool DatabaseSeed { get; set; }
+        bool MemoryDatabase { get; set; }
     }
 }
