@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -8,6 +9,8 @@ namespace Wordki.Helpers.Connector
 {
     public class SimpleConnector<T> : IConnector<T>
     {
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         public IParser<T> Parser { get; set; }
 
         public T SendRequest(IRequest request)
@@ -23,7 +26,7 @@ namespace Wordki.Helpers.Connector
             }
             catch (Exception e)
             {
-                LoggerSingleton.LogError("Błąd połączenia - {0}", e.Message);
+                logger.Error(e, $"Błąd połączenia - {e.Message}");
                 return default(T);
             }
             lRequest.Method = request.Method;
@@ -51,7 +54,7 @@ namespace Wordki.Helpers.Connector
                 }
                 catch (WebException exception)
                 {
-                    LoggerSingleton.LogError("Błąd połączenia z serwerem: {0}", exception.Message);
+                    logger.Error(exception, $"Błąd połączenia z serwerem - {exception.Message}");
                     return default(T);
                 }
             }
@@ -62,7 +65,7 @@ namespace Wordki.Helpers.Connector
             }
             catch (Exception e)
             {
-                LoggerSingleton.LogInfo("Błąd połączenia z serwerem - {0}", e.Message);
+                logger.Error(e, $"Błąd połączenia z serwerem - {e.Message}");
                 return default(T);
             }
             var lResponseStream = lWebResponse.GetResponseStream();

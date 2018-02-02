@@ -21,11 +21,14 @@ using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
 using Oazachaosu.Core.Common;
 using WordkiModel.Extensions;
+using NLog;
 
 namespace Wordki.ViewModels
 {
     public class BuilderViewModel : ViewModelBase
     {
+
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly object _groupsLock = new object();
         private readonly object _wordLock = new object();
@@ -245,9 +248,11 @@ namespace Wordki.ViewModels
 
         private void ChangeLanguage(IGroup group, int selectedLangugage)
         {
-            LanguageForGroupProvider provider = new LanguageForGroupProvider();
-            provider.GroupToChange = group;
-            provider.LanguageToChoose = selectedLangugage;
+            LanguageForGroupProvider provider = new LanguageForGroupProvider
+            {
+                GroupToChange = group,
+                LanguageToChoose = selectedLangugage
+            };
             provider.Interact();
         }
 
@@ -354,7 +359,7 @@ namespace Wordki.ViewModels
                     {
                         int groupIndex = Database.Groups.IndexOf(SelectedGroup);
                         SelectedGroup = Database.Groups.Count > groupIndex ? Database.Groups[groupIndex] : null;
-                        SelectedWord = SelectedGroup != null ? SelectedGroup.Words.LastOrDefault() : null;
+                        SelectedWord = SelectedGroup?.Words.LastOrDefault();
                         await Database.DeleteGroupAsync(SelectedGroup);
                     },
                 },
@@ -528,8 +533,10 @@ namespace Wordki.ViewModels
                 To = LanguageFactory.GetLanguage(SelectedGroup.Language2).Code,
                 Word = SelectedWord.Language1
             });
-            IConnector<TranslationResponse> connector = new SimpleConnector<TranslationResponse>();
-            connector.Parser = new TranslationParser();
+            IConnector<TranslationResponse> connector = new SimpleConnector<TranslationResponse>
+            {
+                Parser = new TranslationParser()
+            };
             TranslationResponse response = null;
             try
             {
@@ -537,7 +544,6 @@ namespace Wordki.ViewModels
             }
             catch (Exception e)
             {
-                LoggerSingleton.LogError(e.Message);
                 return new WorkResult();
             }
             if (response != null)
@@ -552,10 +558,12 @@ namespace Wordki.ViewModels
                     items.Add(item.Translation.Text);
                 }
 
-                ITranslationProvider interactive = new TranslationProvider();
-                interactive.Items = items;
-                interactive.TranslationDirection = TranslationDirection.FromFirst;
-                interactive.Word = SelectedWord;
+                ITranslationProvider interactive = new TranslationProvider
+                {
+                    Items = items,
+                    TranslationDirection = TranslationDirection.FromFirst,
+                    Word = SelectedWord
+                };
                 interactive.Interact();
                 Language2IsFocused = true;
             }
@@ -570,7 +578,7 @@ namespace Wordki.ViewModels
         {
             if (!await Database.UpdateWordAsync(pWord))
             {
-                LoggerSingleton.LogError("Błąd Updatu");
+                logger.Error("Błąd Updatu");
             }
         }
 
@@ -578,7 +586,7 @@ namespace Wordki.ViewModels
         {
             if (!await Database.AddWordAsync(pWord))
             {
-                LoggerSingleton.LogError("Błąd Dodania");
+                logger.Error("Błąd Dodania");
             }
         }
 
@@ -586,7 +594,7 @@ namespace Wordki.ViewModels
         {
             if (!await Database.AddGroupAsync(pGroup))
             {
-                LoggerSingleton.LogError("Błąd Dodania");
+                logger.Error("Błąd Dodania");
             }
         }
 
@@ -594,7 +602,7 @@ namespace Wordki.ViewModels
         {
             if (!await Database.UpdateGroupAsync(pGroup))
             {
-                LoggerSingleton.LogError("Błąd Updatu");
+                logger.Error("Błąd Updatu");
             }
         }
 
@@ -602,7 +610,7 @@ namespace Wordki.ViewModels
         {
             if (!await Database.DeleteGroupAsync(pGroup))
             {
-                LoggerSingleton.LogError("Błąd Usuwania");
+                logger.Error("Błąd Usuwania");
             }
         }
 

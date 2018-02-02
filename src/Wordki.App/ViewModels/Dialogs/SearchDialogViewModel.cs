@@ -61,7 +61,6 @@ namespace Wordki.ViewModels.Dialogs
         {
             if (SearchingWord == null)
             {
-                Helpers.LoggerSingleton.LogError("Serching word is null");
                 return;
             }
             Task.Run(() =>

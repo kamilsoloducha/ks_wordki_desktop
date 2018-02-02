@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using NLog;
 using Oazachaosu.Core.Common;
 using System;
 using Util.Threads;
@@ -9,6 +10,8 @@ namespace Wordki.Helpers.Connector.Work
 
     public class ApiWork<T> : IWork
     {
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         private ApiConnector connector;
         private string message;
 
@@ -28,19 +31,18 @@ namespace Wordki.Helpers.Connector.Work
         {
             try
             {
-                Console.WriteLine($"Wysyła request; '{Request.Url}'");
-                Console.WriteLine($"Message: '{Request.Message}'");
-                Console.WriteLine($"Method: '{Request.Method}'");
+                logger.Info($"Wysyła request; '{Request.Url}'\n" +
+                    $"Message: '{Request.Message}'\n" +
+                    $"Method: '{Request.Method}'");
                 message = connector.SendRequest(Request);
-                Console.WriteLine($"Odpowiedz: '{message}'");
+                logger.Info($"Odpowiedz: '{message}'");
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Exception was thrown.\n" +
+                logger.Error($"Exception was thrown.\n" +
                     $"Message: '{e.Message}'\n" +
                     $"Type: '{e.GetType()}'\n" +
                     $"StackTrace: '{e.StackTrace}'");
-                return false;
             }
             return connector.IsSuccess;
         }
@@ -80,6 +82,14 @@ namespace Wordki.Helpers.Connector.Work
                 return;
             }
             ErrorDTO error = JsonConvert.DeserializeObject<ErrorDTO>(message);
+            if (error == null)
+            {
+                error = new ErrorDTO
+                {
+                    Code = ErrorCode.Undefined,
+                    Message = "Error message does not contain any usefull information"
+                };
+            }
             OnFailedFunc.Invoke(error);
         }
 

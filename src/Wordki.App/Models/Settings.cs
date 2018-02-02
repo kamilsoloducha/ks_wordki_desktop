@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using NLog;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using Util.Serializers;
-using Wordki.Helpers;
 
 namespace Wordki.Models
 {
     [Serializable]
     public class Settings : INotifyPropertyChanged
     {
+
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private const string FileName = "Settings.dat";
         private const string DirectoryPath = "Settings";
@@ -104,7 +105,7 @@ namespace Wordki.Models
             }
             catch (Exception lException)
             {
-                LoggerSingleton.LogError("{0} - {1}", "Settings.GetSettings", lException.Message);
+                logger.Error("{0} - {1}", "Settings.GetSettings", lException.Message);
             }
             if (_settigns != null)
                 return _settigns;
@@ -137,7 +138,7 @@ namespace Wordki.Models
             }
             catch (Exception lException)
             {
-                LoggerSingleton.LogError("Blad w {0} - {1}", "LoadSettings", lException.Message);
+                logger.Error("Blad w {0} - {1}", "LoadSettings", lException.Message);
             }
             if (_settigns != null)
                 return true;
@@ -168,10 +169,7 @@ namespace Wordki.Models
 
         protected void OnPropertyChanged([CallerMemberName] string pPropertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(pPropertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(pPropertyName));
         }
 
         public static void ToggleStyle()

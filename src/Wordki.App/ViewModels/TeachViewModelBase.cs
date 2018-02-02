@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Input;
-
 using Wordki.Helpers;
 using Wordki.Models;
 using Wordki.Models.Lesson;
@@ -12,11 +11,14 @@ using Wordki.ViewModels.Dialogs;
 using Wordki.ViewModels.LessonStates;
 using Wordki.Commands;
 using Oazachaosu.Core.Common;
+using NLog;
 
 namespace Wordki.ViewModels
 {
     public abstract partial class TeachViewModelBase : ViewModelBase, Util.Timer.ITimerListener
     {
+
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         #region Properies
         public static Switcher switcher;
@@ -209,7 +211,7 @@ namespace Wordki.ViewModels
             }
             catch (Exception lException)
             {
-                LoggerSingleton.LogError("{0} - {1}", "TeachViewModel.StartLesson", lException.Message);
+                logger.Error("{0} - {1}", "TeachViewModel.StartLesson", lException.Message);
             }
         }
 
