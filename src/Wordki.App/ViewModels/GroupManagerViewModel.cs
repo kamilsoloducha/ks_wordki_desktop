@@ -88,6 +88,8 @@ namespace Wordki.ViewModels
             }
         }
 
+        public ObservableCollection<IGroup> SelectedItems2 { get; set; }
+
         private IUser user;
         public IUser User
         {
@@ -113,8 +115,12 @@ namespace Wordki.ViewModels
             Database = DatabaseSingleton.Instance;
             GroupInfo = new GroupInfo();
             Values = new ObservableCollection<double> { 0, 0, 0, 0, 0 };
+            SelectedItems2 = new ObservableCollection<IGroup>();
+            if (Database.Groups.Count > 0)
+            {
+                SelectedItems2.Add(Database.Groups[0]);
+            }
             SelectedItems = new List<IGroup>();
-
             StartLessonCommand = new Util.BuilderCommand((obj) => StartLesson((LessonType)obj));
             EditGroupCommand = new Util.BuilderCommand((obj) => EditGroup(obj as IGroup));
             BackCommand = new Util.BuilderCommand(BackAction);
@@ -239,7 +245,7 @@ namespace Wordki.ViewModels
                 lDrawersCount.Add(0);
             if (SelectedItems == null)
                 return;
-            foreach (Group item in SelectedItems)
+            foreach (Group item in SelectedItems2)
             {
                 lang1 = lang1 != item.Language1 && lang1 != LanguageType.Default ? LanguageType.Default : lang1;
                 lang2 = lang2 != item.Language2 && lang2 != LanguageType.Default ? LanguageType.Default : lang2;
@@ -247,10 +253,13 @@ namespace Wordki.ViewModels
                 {
                     lDrawersCount[lWord.Drawer]++;
                 }
-                DateTime itemDateTime = item.Results.Max(x => x.DateTime);
-                if (itemDateTime > lLastRepeat)
+                if (item.Results.Count > 0)
                 {
-                    lLastRepeat = itemDateTime;
+                    DateTime itemDateTime = item.Results.Max(x => x.DateTime);
+                    if (itemDateTime > lLastRepeat)
+                    {
+                        lLastRepeat = itemDateTime;
+                    }
                 }
             }
             string groupName = SelectedItems.Count == 1 ? SelectedItems.First().Name : " ";
