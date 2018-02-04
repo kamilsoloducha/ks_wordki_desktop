@@ -81,21 +81,41 @@ namespace Wordki.ViewModels
             {
                 return;
             }
-            NHibernateHelper.DatabaseName = UserName;
-            IUser user = DatabaseSingleton.Instance.GetUser(UserName, Password);
-            if (user == null)
+            SimpleWork loginRequest = new SimpleWork()
             {
-                user = new User()
+                WorkFunc = () =>
                 {
-                    Name = UserName,
-                    Password = Password,
-                    CreateDateTime = DateTime.Now,
-                    AllWords = true,
-                    IsRegister = false,
-                };
-                DatabaseSingleton.Instance.AddUser(user);
-            }
-            StartWithUser(user);
+                    NHibernateHelper.DatabaseName = UserName;
+                    IUser user = DatabaseSingleton.Instance.GetUser(UserName, Password);
+                    if (user == null)
+                    {
+                        user = new User()
+                        {
+                            Name = UserName,
+                            Password = Password,
+                            CreateDateTime = DateTime.Now,
+                            AllWords = true,
+                            IsRegister = false,
+                        };
+                        DatabaseSingleton.Instance.AddUser(user);
+                    }
+                    StartWithUser(user);
+                    return new WorkResult();
+                },
+            };
+            BackgroundQueueWithProgressDialog queue = new BackgroundQueueWithProgressDialog();
+            ProcessProvider provider = new ProcessProvider()
+            {
+                ViewModel = new Dialogs.Progress.ProgressDialogViewModel()
+                {
+                    ButtonLabel = "Anuluj",
+                    DialogTitle = "Trwa logowanie do aplikacji...",
+                    CanCanceled = true,
+                }
+            };
+            queue.Dialog = provider;
+            queue.AddWork(loginRequest);
+            queue.Execute();
         }
 
         private void Login()
