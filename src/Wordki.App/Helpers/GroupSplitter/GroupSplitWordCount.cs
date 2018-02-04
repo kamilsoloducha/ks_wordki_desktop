@@ -11,12 +11,10 @@ namespace Wordki.Helpers.GroupSplitter
         {
             if (group == null || group.Words.Count == 0)
             {
-                LoggerSingleton.LogError("Bład pozialu grupy - nie ma nic do podzielenia");
                 yield break;
             }
             if (factor >= group.Words.Count || factor <= 0)
             {
-                LoggerSingleton.LogError($"Blad podzialu grupy - {factor}");
                 yield break;
             }
             int iterator = 0;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -8,6 +9,9 @@ namespace Wordki.Helpers.Connector.SimpleConnector
 {
     public class ApiConnector
     {
+
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Response from api server. It is set when there is some response from server.
         /// In other case response equal null and its mean that something goes wrong

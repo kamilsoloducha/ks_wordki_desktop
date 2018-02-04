@@ -1,5 +1,4 @@
 ﻿using WordkiModel;
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,11 +17,15 @@ using Wordki.Models;
 using Wordki.Models.Lesson;
 using Wordki.ViewModels.Dialogs;
 using Oazachaosu.Core.Common;
+using NLog;
 
 namespace Wordki.ViewModels
 {
     public class GroupManagerViewModel : ViewModelBase
     {
+
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         private ObservableCollection<double> _values;
         private double _maxValue;
 
@@ -175,9 +178,13 @@ namespace Wordki.ViewModels
             try
             {
                 Lesson lesson = LessonFactory.CreateLesson(type);
-                lesson.WordComparer = new WordComparer();
-                lesson.WordComparer.Settings = new WordComparerSettings();
-                lesson.WordComparer.Settings.WordSeparator = ',';
+                lesson.WordComparer = new WordComparer
+                {
+                    Settings = new WordComparerSettings
+                    {
+                        WordSeparator = ','
+                    }
+                };
                 lesson.WordComparer.Settings.NotCheckers.Add(new LetterCaseNotCheck());
                 lesson.WordComparer.Settings.NotCheckers.Add(new SpaceNotCheck());
                 lesson.WordComparer.Settings.NotCheckers.Add(new Utf8NotCheck());
@@ -211,7 +218,7 @@ namespace Wordki.ViewModels
             }
             catch (Exception lException)
             {
-                LoggerSingleton.LogError("{0} - {1} - {2}", "Blad w startowaniu lekcji", type.ToString(), lException.Message);
+                logger.Error("{0} - {1} - {2}", "Blad w startowaniu lekcji", type.ToString(), lException.Message);
             }
         }
 
@@ -331,10 +338,7 @@ namespace Wordki.ViewModels
 
         protected void OnPropertyChanged([CallerMemberName] string pPropertyname = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(pPropertyname));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(pPropertyname));
         }
 
         #endregion

@@ -257,7 +257,6 @@
     <Compile Include="Helpers\LessonWordsCreator\LessonWordCreatorFactory.cs" />
     <Compile Include="Helpers\LessonWordsCreator\RandomCreator.cs" />
     <Compile Include="Helpers\LessonWordsCreator\SimpleCreator.cs" />
-    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\Notification\INotification.cs" />
     <Compile Include="Helpers\Notification\NotificationFactory.cs" />
     <Compile Include="Helpers\Notification\ToastNotification.cs" />

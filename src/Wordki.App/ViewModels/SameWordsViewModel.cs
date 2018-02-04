@@ -123,7 +123,6 @@ namespace Wordki.ViewModels
             }
             catch (Exception lException)
             {
-                LoggerSingleton.LogError("{0} - {1}", "BuilderViewModel.FindSame", lException.Message);
                 return Enumerable.Empty<IWord>();
             }
         }

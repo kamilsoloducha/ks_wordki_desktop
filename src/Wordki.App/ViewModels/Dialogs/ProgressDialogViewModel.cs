@@ -73,12 +73,8 @@ namespace Wordki.ViewModels.Dialogs.Progress
 
         private void Cancel(object obj)
         {
-            if (OnCanceled != null)
-            {
-                OnCanceled();
-            }
+            OnCanceled?.Invoke();
             OnClosingRequest();
-            LoggerSingleton.LogInfo("Cancel");
         }
 
     }

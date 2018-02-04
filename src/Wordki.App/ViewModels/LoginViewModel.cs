@@ -6,7 +6,6 @@ using System.Security.Cryptography;
 using System.Windows.Input;
 using Util.Threads;
 using Wordki.Database;
-using Wordki.Helpers.AutoMapper;
 using Wordki.Helpers.Connector.Requests;
 using Wordki.Helpers.Connector.Work;
 using Wordki.InteractionProvider;
@@ -78,10 +77,6 @@ namespace Wordki.ViewModels
 
         private void LoginLocal()
         {
-            if (!CheckPassword(Password))
-            {
-                return;
-            }
             if (!CheckUserName(UserName))
             {
                 return;
