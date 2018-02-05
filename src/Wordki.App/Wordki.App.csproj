@@ -155,7 +155,16 @@
     <Compile Include="Commands\AllWordsChangeAction.cs" />
     <Compile Include="Commands\CheckUncheckAction.cs" />
     <Compile Include="Commands\ActionsSingleton.cs" />
+    <Compile Include="Commands\Helpers\IGroupSelectable.cs" />
+    <Compile Include="Commands\Helpers\IWordSelectable.cs" />
+    <Compile Include="Commands\RemoveGroupAction.cs" />
     <Compile Include="Commands\SelectLanguageAction.cs" />
+    <Compile Include="Commands\SelectLastGroupAction.cs" />
+    <Compile Include="Commands\SelectLastWordAction.cs" />
+    <Compile Include="Commands\SelectNextGroupAction.cs" />
+    <Compile Include="Commands\SelectNextWordAction.cs" />
+    <Compile Include="Commands\SelectPreviousGroupAction.cs" />
+    <Compile Include="Commands\SelectPreviousWordAction.cs" />
     <Compile Include="Commands\SwapWordAction.cs" />
     <Compile Include="Commands\SwapWordsInGroupAction.cs" />
     <Compile Include="Commands\TranslationDirectionChangeAction.cs" />
@@ -751,6 +760,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Languages\" />
+    <Folder Include="Wordki\Database\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\c_sharp_util\Util\Util\Util.csproj">

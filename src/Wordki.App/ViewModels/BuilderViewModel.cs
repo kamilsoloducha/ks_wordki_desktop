@@ -25,7 +25,7 @@ using NLog;
 
 namespace Wordki.ViewModels
 {
-    public class BuilderViewModel : ViewModelBase
+    public class BuilderViewModel : ViewModelBase, IGroupSelectable, IWordSelectable
     {
 
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
@@ -163,10 +163,19 @@ namespace Wordki.ViewModels
 
         public BuilderViewModel()
         {
-            PreviousWordCommand = new Util.BuilderCommand(PreviousWord);
-            NextWordCommand = new Util.BuilderCommand(NextWord);
-            PreviousGroupCommand = new Util.BuilderCommand(PreviuosGroup);
-            NextGroupCommand = new Util.BuilderCommand(NextGroup);
+            PreviousWordCommand = new Util.BuilderCommand(new SelectPreviousWordAction(this, this).Action);
+
+            NextWordCommand = new Util.BuilderCommand(new SelectNextWordAction(this, this).Action);
+
+            PreviousGroupCommand = new Util.CommandQueue(new Action[]{
+                new SelectPreviousGroupAction(this, DatabaseSingleton.Instance).Action,
+                new SelectLastWordAction(this, this).Action,
+            });
+
+            NextGroupCommand = new Util.CommandQueue(new Action[]{
+                new SelectNextGroupAction(this, DatabaseSingleton.Instance).Action,
+                new SelectLastWordAction(this, this).Action,
+            });
 
             AddWordCommand = new Util.BuilderCommand(AddWord);
             RemoveWordCommand = new Util.BuilderCommand(DeleteWord);
@@ -188,7 +197,7 @@ namespace Wordki.ViewModels
             ChangeLanguage1Command = new Util.BuilderCommand((obj) => ChangeLanguage(obj as IGroup, 1));
             ChangeLanguage2Command = new Util.BuilderCommand((obj) => ChangeLanguage(obj as IGroup, 2));
             AddClipboardGroupCommand = new Util.BuilderCommand(AddClipboardGroup);
-            GroupSelectionChangedCommand = new Util.BuilderCommand(GroupSelectionChanged);
+            GroupSelectionChangedCommand = new Util.BuilderCommand(new SelectLastWordAction(this, this).Action);
 
             Database = DatabaseSingleton.Instance;
             BindingOperations.EnableCollectionSynchronization(Database.Groups, _groupsLock);
@@ -217,11 +226,6 @@ namespace Wordki.ViewModels
         }
 
         #region Commands
-
-        private void GroupSelectionChanged()
-        {
-            SetOnLastWordCurretGroup();
-        }
 
         private void AddClipboardGroup()
         {
@@ -355,13 +359,7 @@ namespace Wordki.ViewModels
                     Message = "Czy na pewno usunąć grupy?",
                     PositiveLabel = "Tak",
                     NegativeLabel = "Nie",
-                    YesAction = async () =>
-                    {
-                        int groupIndex = Database.Groups.IndexOf(SelectedGroup);
-                        SelectedGroup = Database.Groups.Count > groupIndex ? Database.Groups[groupIndex] : null;
-                        SelectedWord = SelectedGroup?.Words.LastOrDefault();
-                        await Database.DeleteGroupAsync(SelectedGroup);
-                    },
+                    YesAction = new RemoveGroupAction<BuilderViewModel>(this, DatabaseSingleton.Instance).Action,
                 },
             };
             provider.Interact();
@@ -396,52 +394,6 @@ namespace Wordki.ViewModels
                 group.Language2 = SelectedGroup.Language2;
             }
             SelectedGroup = group;
-            SetOnLastWordCurretGroup();
-        }
-
-        private void NextWord()
-        {
-            if (SelectedGroup == null)
-            {
-                return;
-            }
-            IWord previousWord = SelectedGroup.Words.Next(SelectedWord);
-            if (previousWord != null)
-            {
-                SelectedWord = previousWord;
-            }
-        }
-
-        private void PreviousWord()
-        {
-            if (SelectedGroup == null)
-            {
-                return;
-            }
-            IWord previousWord = SelectedGroup.Words.Previous(SelectedWord);
-            if (previousWord != null)
-            {
-                SelectedWord = previousWord;
-            }
-        }
-
-        private void PreviuosGroup()
-        {
-            if (GroupPrevious == null)
-            {
-                return;
-            }
-            SelectedGroup = GroupPrevious;
-            SetOnLastWordCurretGroup();
-        }
-
-        private void NextGroup()
-        {
-            if (GroupNext == null)
-            {
-                return;
-            }
-            SelectedGroup = GroupNext;
             SetOnLastWordCurretGroup();
         }
 
@@ -544,6 +496,7 @@ namespace Wordki.ViewModels
             }
             catch (Exception e)
             {
+                logger.Error(e);
                 return new WorkResult();
             }
             if (response != null)

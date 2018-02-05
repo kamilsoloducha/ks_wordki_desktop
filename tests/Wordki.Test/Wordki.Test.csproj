@@ -85,6 +85,9 @@
     <Reference Include="NHibernate, Version=5.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NHibernate.5.0.3\lib\net461\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.8.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NUnit.3.8.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -119,6 +122,10 @@
     <Compile Include="Commands\BuilderTests\AddGroupTests.cs" />
     <Compile Include="Commands\CheckUncheckCommandTests\CheckUncheckCommandFixture.cs" />
     <Compile Include="Commands\SelectlangaugeActiopnTests\SelectLanguageFixture.cs" />
+    <Compile Include="Commands\SelectNextGroupActionTests\SelectNextGroupActionTest.cs" />
+    <Compile Include="Commands\SelectNextWordActionTests\SelectNextWordActionTest.cs" />
+    <Compile Include="Commands\SelectPreviousGroupActionTests\SelectPreviousGroupActionTest.cs" />
+    <Compile Include="Commands\SelectPreviousWordActionTests\SelectPreviousWordActionTest.cs" />
     <Compile Include="ConnectorTests\ApiResponseParerTests.cs" />
     <Compile Include="ConvertersTests\CollectionIndexToIndexerEnabledConverterTest.cs" />
     <Compile Include="ConvertersTests\ObjectToBoolConverterTest.cs" />

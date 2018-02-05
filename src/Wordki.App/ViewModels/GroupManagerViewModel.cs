@@ -1,4 +1,5 @@
-﻿using WordkiModel;
+﻿using NLog;
+using Oazachaosu.Core.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,8 +17,7 @@ using Wordki.Helpers.WordComparer;
 using Wordki.Models;
 using Wordki.Models.Lesson;
 using Wordki.ViewModels.Dialogs;
-using Oazachaosu.Core.Common;
-using NLog;
+using WordkiModel;
 
 namespace Wordki.ViewModels
 {
