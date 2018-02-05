@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Wordki.Models;
 using WordkiModel;
-
+using WordkiModel.Extensions;
 
 namespace Wordki.Test
 {
