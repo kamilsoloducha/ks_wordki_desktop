@@ -1,0 +1,191 @@
+﻿<views:PageBase
+    x:Class="Wordki.Views.WordsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:views="clr-namespace:Wordki.Views"
+    xmlns:viewModels="clr-namespace:Wordki.ViewModels"
+    xmlns:helper="clr-namespace:Wordki.Helpers"
+    xmlns:converters="clr-namespace:Wordki.Helpers.Converters"
+    xmlns:models="clr-namespace:Wordki.Models"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    d:DataContext="{d:DesignInstance {x:Type viewModels:WordManageViewModel}}">
+    <views:PageBase.Resources>
+        <converters:DrawerToColorConverter
+            x:Key="DrawerToColorConverter" />
+    </views:PageBase.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <DataGrid
+            x:Name="WordsDataGrid"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            IsReadOnly="True"
+            ScrollViewer.CanContentScroll="True"
+            ItemsSource="{Binding Path=Group.Words}"
+            Style="{StaticResource AppDataGridStyle}">
+
+            <DataGrid.Resources>
+                <helper:BindingProxy
+                    x:Key="Proxy"
+                    Data="{Binding}" />
+            </DataGrid.Resources>
+
+            <DataGrid.ContextMenu>
+                <ContextMenu
+                    Style="{StaticResource AppContextMenuStyle}">
+                    <MenuItem
+                        Header="Zmień widoczność"
+                        Style="{StaticResource AppMenuItemStyle}"
+                        Command="{Binding VisibilityChangeCommnad}"
+                        CommandParameter="{Binding Path=SelectedItems, ElementName=WordsDataGrid}" />
+                    <MenuItem
+                        Header="Usuń"
+                        Style="{StaticResource AppMenuItemStyle}"
+                        Command="{Binding DeleteItemsCommand}"
+                        CommandParameter="{Binding Path=SelectedItems, ElementName=WordsDataGrid}" />
+                    <MenuItem
+                        Header="Połącz"
+                        Style="{StaticResource AppMenuItemStyle}"
+                        Command="{Binding ConnectItemsCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItems}" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn
+                    SortMemberPath="Language1"
+                    CanUserResize="True"
+                    Width="1.2*"
+                    Header="{Binding Path=Data.Group.Language1.Description, Source={StaticResource Proxy}}"
+                    HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate
+                            DataType="models:Word">
+                            <DockPanel>
+                                <TextBlock
+                                    Text="{Binding Language1, UpdateSourceTrigger=PropertyChanged}"
+                                    Style="{StaticResource DataGridTextBlockStyle}"
+                                    HorizontalAlignment="Left" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn
+                    SortMemberPath="Language2"
+                    CanUserResize="True"
+                    Width="1.2*"
+                    Header="{Binding Path=Data.Group.Language2.Description, Source={StaticResource Proxy}}"
+                    HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate
+                            DataType="models:Word">
+                            <DockPanel>
+                                <TextBlock
+                                    Text="{Binding Language2, UpdateSourceTrigger=PropertyChanged}"
+                                    Style="{StaticResource DataGridTextBlockStyle}"
+                                    HorizontalAlignment="Center" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn
+                    SortMemberPath="Visibility"
+                    CanUserResize="True"
+                    Width="0.5*"
+                    Header="Widoczność"
+                    HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <CheckBox
+                                    Name="CheckBox"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Background="Transparent"
+                                    Foreground="White"
+                                    d:DataContext="{d:DesignInstance {x:Type models:Word}}"
+                                    IsChecked="{Binding Visible, UpdateSourceTrigger=PropertyChanged}">
+                                    <!--<i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                      <i:InvokeCommandAction 
+                        Command="{Binding DataContext.VisibilityChangeCommnad, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                        CommandParameter="{Binding ElementName=WordsDataGrid, Path=SelectedItems}"/>
+                    </i:EventTrigger>
+                  </i:Interaction.Triggers>-->
+                                </CheckBox>
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn
+                    SortMemberPath="Drawer"
+                    CanUserResize="True"
+                    Width="0.5*"
+                    Header="Szuflada"
+                    HeaderStyle="{StaticResource AppDataGridColumnTemplateHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate
+                            DataType="models:Word">
+                            <DockPanel>
+                                <DockPanel.Background>
+                                    <LinearGradientBrush
+                                        EndPoint="0,0.5"
+                                        StartPoint="1,0.5">
+                                        <GradientStop
+                                            Color="{Binding Drawer, Converter={StaticResource DrawerToColorConverter}}"
+                                            Offset="0" />
+                                        <GradientStop
+                                            Color="#00000000"
+                                            Offset="0.7" />
+                                    </LinearGradientBrush>
+                                </DockPanel.Background>
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TabControl
+            Grid.Row="0"
+            Grid.Column="0"
+            Panel.ZIndex="2"
+            Style="{StaticResource AppInnerTabControlStyle}">
+            <TabItem
+                Header="Plik"
+                Style="{StaticResource AppInnerTabItemStyle}">
+                <StackPanel
+                    Background="{DynamicResource UsedNormalBrush}">
+                    <Button
+                        Style="{StaticResource TabItemButtonStyle}"
+                        Content="Cofnij"
+                        Command="{Binding BackCommand}" />
+                    <Button
+                        Style="{StaticResource TabItemButtonStyle}"
+                        Content="Usuń zaznaczone"
+                        Command="{Binding DeleteItemsCommand}"
+                        CommandParameter="{Binding SelectedItems, ElementName=WordsDataGrid}" />
+                    <Button
+                        Style="{StaticResource TabItemButtonStyle}"
+                        Content="Zmień widoczność"
+                        Command="{Binding VisibilityChangeCommnad}"
+                        CommandParameter="{Binding SelectedItems, ElementName=WordsDataGrid}" />
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</views:PageBase>

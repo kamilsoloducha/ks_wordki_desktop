@@ -1,0 +1,201 @@
+﻿<dialogs:DialogBase
+    x:Class="Wordki.Views.Dialogs.LessonResultDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dialogs="clr-namespace:Wordki.Views.Dialogs"
+    xmlns:viewModels="clr-namespace:Wordki.ViewModels.Dialogs"
+    xmlns:converters="clr-namespace:Wordki.Helpers.Converters"
+    mc:Ignorable="d"
+    WindowStartupLocation="CenterOwner"
+    Style="{StaticResource AppDialogStyle}"
+    d:DataContext="{d:DesignInstance viewModels:LessonResultDialogViewModel}">
+
+
+    <dialogs:DialogBase.Resources>
+        <Style
+            x:Key="WinTextBlockStyle"
+            BasedOn="{StaticResource AppTextBlockStyle}"
+            TargetType="{x:Type TextBlock}">
+            <Setter
+                Property="FontSize"
+                Value="20" />
+            <Setter
+                Property="HorizontalAlignment"
+                Value="Center" />
+            <Setter
+                Property="VerticalAlignment"
+                Value="Center" />
+        </Style>
+
+        <converters:ItemIndexToBoolConverter
+            x:Key="CheckIsFirst"
+            Index="{x:Static converters:CheckingElement.First}" />
+
+        <converters:ItemIndexToBoolConverter
+            x:Key="CheckIsLast"
+            Index="{x:Static converters:CheckingElement.Last}" />
+    </dialogs:DialogBase.Resources>
+
+    <dialogs:DialogBase.InputBindings>
+        <KeyBinding
+            Key="Escape"
+            Command="{Binding Path=CloseCommand}" />
+        <KeyBinding
+            Key="Enter"
+            Command="{Binding Path=CloseCommand}" />
+    </dialogs:DialogBase.InputBindings>
+
+    <Border
+        Style="{StaticResource DialogBorderStyle}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="*" />
+                <ColumnDefinition
+                    Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="*" />
+                <RowDefinition
+                    Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel
+                Grid.Column="0"
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+
+                <Button
+                    Content="&lt;"
+                    Style="{StaticResource FlatButtonStyle}"
+                    Command="{Binding Path=PreviousCommand}">
+                    <Button.IsEnabled>
+                        <MultiBinding
+                            Converter="{StaticResource ResourceKey=CheckIsFirst}">
+                            <Binding
+                                Path="SelectedItem" />
+                            <Binding
+                                Path="Results" />
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="10"
+                    Style="{StaticResource AppTextBlockStyle}"
+                    Text="{Binding Path=SelectedItem.Group.Name}" />
+
+                <Button
+                    Content="&gt;"
+                    Style="{StaticResource FlatButtonStyle}"
+                    Command="{Binding Path=NextCommand}">
+                    <Button.IsEnabled>
+                        <MultiBinding
+                            Converter="{StaticResource ResourceKey=CheckIsLast}">
+                            <Binding
+                                Path="SelectedItem" />
+                            <Binding
+                                Path="Results" />
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+            </StackPanel>
+
+
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="0">
+                <TextBlock
+                    Style="{StaticResource WinTextBlockStyle}"
+                    Text="Wyniki (poprzednie)" />
+
+                <UniformGrid
+                    Columns="2">
+                    <UniformGrid.Resources>
+                        <Style
+                            x:Key="ElementTextBlockStyle"
+                            BasedOn="{StaticResource WinTextBlockStyle}"
+                            TargetType="{x:Type TextBlock}">
+                            <Setter
+                                Property="FontWeight"
+                                Value="Bold" />
+                            <Setter
+                                Property="HorizontalAlignment"
+                                Value="Left" />
+                            <Setter
+                                Property="Margin"
+                                Value="5,1" />
+                            <Setter
+                                Property="FontSize"
+                                Value="15" />
+                        </Style>
+                        <Style
+                            x:Key="ResultTextBlockStyle"
+                            BasedOn="{StaticResource WinTextBlockStyle}"
+                            TargetType="{x:Type TextBlock}">
+                            <Setter
+                                Property="HorizontalAlignment"
+                                Value="Left" />
+                            <Setter
+                                Property="Margin"
+                                Value="5,1" />
+                            <Setter
+                                Property="FontSize"
+                                Value="15" />
+                        </Style>
+                    </UniformGrid.Resources>
+
+                    <TextBlock
+                        Style="{StaticResource ElementTextBlockStyle}"
+                        Text="Poprawne" />
+                    <TextBlock
+                        Style="{StaticResource ResultTextBlockStyle}"
+                        Text="{Binding Path=SelectedItem.Correct, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <TextBlock
+                        Style="{StaticResource ElementTextBlockStyle}"
+                        Text="Zaakceptowane" />
+                    <TextBlock
+                        Style="{StaticResource ResultTextBlockStyle}"
+                        Text="{Binding Path=SelectedItem.Accepted, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <TextBlock
+                        Style="{StaticResource ElementTextBlockStyle}"
+                        Text="Błędne" />
+                    <TextBlock
+                        Style="{StaticResource ResultTextBlockStyle}"
+                        Text="{Binding Path=SelectedItem.Wrong, UpdateSourceTrigger=PropertyChanged}"
+                        FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular" />
+
+                    <TextBlock
+                        Style="{StaticResource ElementTextBlockStyle}"
+                        Text="Czas" />
+                    <TextBlock
+                        Style="{StaticResource ResultTextBlockStyle}"
+                        Text="{Binding Path=SelectedItem.Time, UpdateSourceTrigger=PropertyChanged}"
+                        FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular" />
+                </UniformGrid>
+            </StackPanel>
+
+            <Button
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Right"
+                Margin="10"
+                Style="{StaticResource DialogFlatButtonStyle}"
+                Content="Ok"
+                Command="{Binding Path=CloseCommand}" />
+        </Grid>
+    </Border>
+</dialogs:DialogBase>

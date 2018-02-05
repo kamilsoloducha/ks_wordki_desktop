@@ -1,0 +1,46 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:notification="clr-namespace:Controls.Notification;assembly=Controls"
+    x:Class="Wordki.Views.MainView"
+    mc:Ignorable="d"
+    Style="{DynamicResource AppWindowsStyle}"
+    Title="Wordki">
+
+    <!--<Window.CommandBindings>
+        <CommandBinding
+            Executed="CommandBinding_OnExecuted"
+            Command="Undo" />
+    </Window.CommandBindings>-->
+
+    <Window.InputBindings>
+        <KeyBinding
+            Key="Escape"
+            Command="{Binding Path=BackCommand}" />
+        <KeyBinding 
+            Key="F"
+            Modifiers="Ctrl"
+            Command="{Binding Path=SearchWordCommand}"/>
+        <KeyBinding
+            Key="S"
+            Modifiers="Ctrl"
+            Command="{Binding Path=StyleCommand}" />
+    </Window.InputBindings>
+
+    <Grid>
+        <ContentControl
+            x:Name="Page"
+            KeyboardNavigation.IsTabStop="False" 
+            Content="{Binding Path=Page}"/>
+        <notification:ToastList
+            x:Name="ToastList"
+            ToastBackground="{DynamicResource UsedPressedBrush}"
+            ToastFontSize="30"
+            ToastForeground="{DynamicResource UsedNormalFrontBrush}"
+            KeyboardNavigation.IsTabStop="False" />
+    </Grid>
+
+</Window>
+  

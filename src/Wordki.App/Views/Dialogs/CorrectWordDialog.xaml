@@ -1,0 +1,119 @@
+﻿<dialogs:DialogBase
+    x:Class="Wordki.Views.Dialogs.CorrectWordDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:hintTextBox="clr-namespace:Controls.HintTextBox;assembly=Controls"
+    xmlns:viewmodels="clr-namespace:Wordki.ViewModels.Dialogs"
+    xmlns:dialogs="clr-namespace:Wordki.Views.Dialogs"
+    mc:Ignorable="d"
+    WindowStartupLocation="CenterOwner"
+    Style="{StaticResource AppDialogStyle}"
+    d:DataContext="{d:DesignInstance {x:Type viewmodels:CorrectWordDialogViewModel}}">
+    <dialogs:DialogBase.Resources>
+
+        <Style
+            TargetType="{x:Type hintTextBox:HintTextBox}">
+            <Setter
+                Property="FontSize"
+                Value="20" />
+        </Style>
+
+    </dialogs:DialogBase.Resources>
+
+    <dialogs:DialogBase.InputBindings>
+        <KeyBinding
+            Key="Escape"
+            Command="{Binding Path=CloseCommand}" />
+        <KeyBinding
+            Key="Enter"
+            Command="{Binding Path=CorrectCommad}" />
+    </dialogs:DialogBase.InputBindings>
+
+    <Border
+        Style="{StaticResource DialogBorderStyle}">
+        <Grid
+            Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="*" />
+                <RowDefinition
+                    Height="*" />
+                <RowDefinition
+                    Height="*" />
+                <RowDefinition
+                    Height="*" />
+                <RowDefinition
+                    Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Column="0"
+                Grid.Row="0"
+                Style="{StaticResource AppTextBlockStyle}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="10,5,10,5"
+                Text="Popraw słowo" />
+
+            <hintTextBox:HintTextBox
+                Grid.Column="0"
+                Grid.Row="1"
+                Margin="5"
+                Hint="Język 1"
+                Text="{Binding Path=Word.Language1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+            <hintTextBox:HintTextBox
+                Grid.Column="0"
+                Grid.Row="2"
+                Margin="5"
+                Hint="Język 2"
+                Text="{Binding Path=Word.Language2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+            <hintTextBox:HintTextBox
+                Grid.Column="0"
+                Grid.Row="3"
+                Margin="5"
+                Hint="Komentarz 1"
+                Text="{Binding Path=Word.Language1Comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+            <hintTextBox:HintTextBox
+                Grid.Column="0"
+                Grid.Row="4"
+                Margin="5"
+                Hint="Komentarz 2"
+                Text="{Binding Path=Word.Language2Comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+            <StackPanel
+                Grid.Column="0"
+                Grid.Row="5"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Margin="5,5, 0,0">
+
+                <Button
+                    Style="{StaticResource DialogFlatButtonStyle}"
+                    Content="Popraw"
+                    Command="{Binding Path=CorrectCommand}" />
+                <Button
+                    Style="{StaticResource DialogFlatButtonStyle}"
+                    Content="Usuń"
+                    Command="{Binding Path=RemoveCommand}" />
+                <Button
+                    Style="{StaticResource DialogFlatButtonStyle}"
+                    Content="Anuluj"
+                    Command="{Binding Path=CancelCommand}" />
+
+            </StackPanel>
+        </Grid>
+    </Border>
+</dialogs:DialogBase>
