@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 using Oazachaosu.Core.Common;
 using WordkiModel;
 
@@ -72,7 +72,7 @@ namespace Wordki.Models
             get { return creationDate; }
             set
             {
-                if(creationDate == value)
+                if (creationDate == value)
                 {
                     return;
                 }
@@ -89,11 +89,33 @@ namespace Wordki.Models
 
         public virtual int State { get; set; }
 
-        [JsonIgnore]
-        public virtual IList<IWord> Words { get; set; }
+        private IList<IWord> words;
+        public virtual IList<IWord> Words
+        {
+            get { return words; }
+            set
+            {
+                if (!(value is ObservableCollection<IWord>))
+                {
+                    value = new ObservableCollection<IWord>(value);
+                }
+                words = value;
+            }
+        }
 
-        [JsonIgnore]
-        public virtual IList<IResult> Results { get; set; }
+        private IList<IResult> results;
+        public virtual IList<IResult> Results
+        {
+            get { return results; }
+            set
+            {
+                if (!(value is ObservableCollection<IResult>))
+                {
+                    value = new ObservableCollection<IResult>(value);
+                }
+                results = value;
+            }
+        }
 
         public Group()
         {
@@ -103,8 +125,8 @@ namespace Wordki.Models
             _language2 = LanguageType.Default;
             State = int.MaxValue;
             CreationDate = DateTime.Now;
-            Words = new List<IWord>();
-            Results = new List<IResult>();
+            Words = new ObservableCollection<IWord>();
+            Results = new ObservableCollection<IResult>();
         }
 
         public virtual int CompareTo(IGroup other)
@@ -125,18 +147,6 @@ namespace Wordki.Models
         public override int GetHashCode()
         {
             return base.GetHashCode();
-        }
-
-        public virtual void AddWord(IWord word)
-        {
-            word.Group = this;
-            Words.Add(word);
-        }
-
-        public virtual void AddResult(IResult result)
-        {
-            result.Group = this;
-            Results.Add(result);
         }
     }
 }
