@@ -4,25 +4,27 @@ using Wordki.Database;
 
 namespace Wordki.Commands
 {
-    public class SelectLastGroupAction<T> where T : IGroupSelectable, IWordSelectable
+    public class SelectLastGroupAction
     {
         private readonly IDatabase database;
-        private readonly T selectable;
+        private readonly IGroupSelectable groupSelectable;
+        private readonly IWordSelectable wordSelectable;
 
         private Action action;
         public Action Action { get { return action; } }
 
-        public SelectLastGroupAction(T selectable, IDatabase database)
+        public SelectLastGroupAction(IGroupSelectable groupSelectable, IWordSelectable wordSelectable, IDatabase database)
         {
             action = Execute;
             this.database = database;
-            this.selectable = selectable;
+            this.groupSelectable = groupSelectable;
+            this.wordSelectable = wordSelectable;
         }
 
         private void Execute()
         {
-            selectable.SelectedGroup = database.Groups.Last();
-            selectable.SelectedWord = selectable.SelectedGroup?.Words.LastOrDefault();
+            groupSelectable.SelectedGroup = database.Groups.Last();
+            wordSelectable.SelectedWord = groupSelectable.SelectedGroup?.Words.LastOrDefault();
         }
     }
 }

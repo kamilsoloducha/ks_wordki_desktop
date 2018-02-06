@@ -1,13 +1,16 @@
 ﻿using NLog;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Wordki.Database;
-using WordkiModel;
 
 namespace Wordki.Commands
 {
-    public class RemoveGroupAction
+    public class RemoveWordAction
     {
+
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private readonly IDatabase database;
         private readonly IGroupSelectable groupSelectable;
@@ -15,7 +18,7 @@ namespace Wordki.Commands
         private Action action;
         public Action Action { get { return action; } }
 
-        public RemoveGroupAction(IGroupSelectable groupSelectable, IWordSelectable wordSelectable, IDatabase database)
+        public RemoveWordAction(IGroupSelectable groupSelectable, IWordSelectable wordSelectable, IDatabase database)
         {
             action = Execute;
             this.database = database;
@@ -25,16 +28,15 @@ namespace Wordki.Commands
 
         private async void Execute()
         {
-            if (groupSelectable.SelectedGroup == null)
+            if (wordSelectable.SelectedWord == null && groupSelectable.SelectedGroup != null)
             {
-                logger.Info($"SelectedGroup is null. It is imposible to remove the group");
+                new RemoveGroupAction(groupSelectable, wordSelectable, database);
                 return;
             }
-            IGroup groupToRemove = groupSelectable.SelectedGroup;
-            int groupIndex = database.Groups.IndexOf(groupSelectable.SelectedGroup);
-            groupSelectable.SelectedGroup = database.Groups.Count > groupIndex ? database.Groups[groupIndex] : null;
-            wordSelectable.SelectedWord = groupSelectable.SelectedGroup?.Words.LastOrDefault();
-            await database.DeleteGroupAsync(groupToRemove);
+            if (await database.DeleteWordAsync(wordSelectable.SelectedWord))
+            {
+                wordSelectable.SelectedWord = groupSelectable.SelectedGroup.Words.LastOrDefault();
+            }
         }
 
     }
