@@ -20,7 +20,6 @@ using Wordki.Models;
 using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
 using Oazachaosu.Core.Common;
-using WordkiModel.Extensions;
 using NLog;
 
 namespace Wordki.ViewModels
@@ -177,10 +176,24 @@ namespace Wordki.ViewModels
                 new SelectLastWordAction(this, this).Action,
             });
 
-            AddWordCommand = new Util.BuilderCommand(AddWord);
-            RemoveWordCommand = new Util.BuilderCommand(DeleteWord);
-            AddGroupCommand = new Util.BuilderCommand(AddGroup);
+            AddWordCommand = new Util.CommandQueue(new[] {
+                new AddWordAction(this, this, DatabaseSingleton.Instance).Action,
+                new SelectLastWordAction(this, this).Action,
+            });
+
+            RemoveWordCommand = new Util.CommandQueue(new[]
+            {
+                new RemoveWordAction(this, this, DatabaseSingleton.Instance).Action,
+            });
+
+            AddGroupCommand = new Util.CommandQueue(new[]
+            {
+                new AddGroupAction(this, DatabaseSingleton.Instance).Action,
+                new SelectLastGroupAction(this, this, DatabaseSingleton.Instance).Action
+            });
+
             RemoveGroupCommand = new Util.BuilderCommand((obj) => RemoveGroup(obj as IGroup));
+
             CheckUncheckWordCommand = new Util.BuilderCommand((obj) => ActionsSingleton<CheckUncheckAction>.Instance.Action(obj as IWord));
             TranslateWordCommnad = new Util.BuilderCommand(TranslateWord);
 
@@ -359,7 +372,7 @@ namespace Wordki.ViewModels
                     Message = "Czy na pewno usunąć grupy?",
                     PositiveLabel = "Tak",
                     NegativeLabel = "Nie",
-                    YesAction = new RemoveGroupAction<BuilderViewModel>(this, DatabaseSingleton.Instance).Action,
+                    YesAction = new RemoveGroupAction(this, this, DatabaseSingleton.Instance).Action,
                 },
             };
             provider.Interact();
@@ -384,62 +397,11 @@ namespace Wordki.ViewModels
             worker.Execute();
         }
 
-        private async void AddGroup()
-        {
-            IGroup group = new Group();
-            await Database.AddGroupAsync(group);
-            if (SelectedGroup != null)
-            {
-                group.Language1 = SelectedGroup.Language1;
-                group.Language2 = SelectedGroup.Language2;
-            }
-            SelectedGroup = group;
-            SetOnLastWordCurretGroup();
-        }
-
         private void BackAction()
         {
             UpdateGroup(SelectedGroup);
             UpdateWord(SelectedWord);
             Switcher.Back();
-        }
-
-        private void AddWord()
-        {
-            if (SelectedGroup == null)
-            {
-                AddGroup();
-            }
-            if (SelectedGroup == null)
-            {
-                return;
-            }
-            Word word = new Word();
-            SelectedGroup.AddWord(word);
-            Words.Add(word);
-            AddWord_(word);
-            SelectedWord = word;
-            Language1IsFocused = false;
-            Language1IsFocused = true;
-        }
-
-
-        private async void DeleteWord()
-        {
-            if (SelectedWord == null && SelectedGroup != null)
-            {
-                RemoveGroup(null);
-                return;
-            }
-            if (await Database.DeleteWordAsync(SelectedWord))
-            {
-                Words.Remove(SelectedWord);
-                SelectedWord = SelectedGroup.Words.LastOrDefault();
-                if (SelectedWord == null)
-                {
-                    RemoveGroup(null);
-                }
-            }
         }
 
         #endregion

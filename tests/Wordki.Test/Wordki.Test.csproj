@@ -119,6 +119,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AddGroupActionTests\AddGroupActionTest.cs" />
+    <Compile Include="Commands\AddWordActionTests\AddWordActionTest.cs" />
     <Compile Include="Commands\BuilderTests\AddGroupTests.cs" />
     <Compile Include="Commands\CheckUncheckCommandTests\CheckUncheckCommandFixture.cs" />
     <Compile Include="Commands\SelectlangaugeActiopnTests\SelectLanguageFixture.cs" />
