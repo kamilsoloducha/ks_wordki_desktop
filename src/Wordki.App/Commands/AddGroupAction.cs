@@ -30,6 +30,7 @@ namespace Wordki.Commands
                 group.Language2 = groupSelectable.SelectedGroup.Language2;
             }
             await database.AddGroupAsync(group);
+            groupSelectable.SelectedGroup = group;
         }
     }
 }
