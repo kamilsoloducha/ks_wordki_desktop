@@ -41,12 +41,21 @@ namespace Wordki.ViewModels
             set
             {
                 if (_selectedGroup != null && _selectedGroup.Equals(value))
+                {
                     return;
+                }
                 UpdateGroup(_selectedGroup);
+                if (_selectedGroup != null)
+                {
+                    BindingOperations.DisableCollectionSynchronization(_selectedGroup.Words);
+                }
                 _selectedGroup = value;
+                if (_selectedGroup != null)
+                {
+                    BindingOperations.EnableCollectionSynchronization(_selectedGroup.Words, _wordLock);
+                }
                 GroupNext = Database.Groups.Next(_selectedGroup);
                 GroupPrevious = Database.Groups.Previous(_selectedGroup);
-                UpdateWords();
                 OnPropertyChanged();
             }
         }
@@ -154,8 +163,6 @@ namespace Wordki.ViewModels
 
         public IDatabase Database { get; set; }
 
-        public ObservableCollection<IWord> Words { get; set; }
-
         public Settings Settings { get; set; }
 
         #endregion
@@ -214,8 +221,7 @@ namespace Wordki.ViewModels
 
             Database = DatabaseSingleton.Instance;
             BindingOperations.EnableCollectionSynchronization(Database.Groups, _groupsLock);
-            Words = new ObservableCollection<IWord>();
-            BindingOperations.EnableCollectionSynchronization(Words, _wordLock);
+
             Settings = Settings.GetSettings();
         }
 
@@ -354,7 +360,6 @@ namespace Wordki.ViewModels
                 DeleteGroup(group);
             }
             SelectedGroup = connector.DestinationGroup;
-            UpdateWords();
         }
 
         private void RemoveGroup(IGroup group)
@@ -427,16 +432,6 @@ namespace Wordki.ViewModels
             {
                 SelectedWord = SelectedGroup.Words.LastOrDefault();
             }
-        }
-
-        private void UpdateWords()
-        {
-            if (SelectedGroup == null)
-            {
-                return;
-            }
-            Words.Clear();
-            Words.AddRange(SelectedGroup.Words);
         }
 
         private WorkResult SendRequestForWordTranslate()
