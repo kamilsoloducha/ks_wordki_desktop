@@ -7,7 +7,7 @@ using WordkiModel;
 namespace Wordki.Test.Commands.SelectlangaugeActiopnTests
 {
     [TestFixture]
-    public class SelectLanguageFixture
+    public class SelectLanguageTest
     {
 
         SelectLanguageAction action;

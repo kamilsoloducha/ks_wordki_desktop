@@ -6,17 +6,19 @@ namespace Wordki.Commands
     public class AllWordsChangeAction
     {
 
+        private readonly IUserManager userManager;
+
         private Action action;
         public Action Action { get { return action; } }
 
-        public AllWordsChangeAction()
+        public AllWordsChangeAction(IUserManager userManager)
         {
             action = Execute;
+            this.userManager = userManager;
         }
 
         private async void Execute()
         {
-            IUserManager userManager = UserManagerSingleton.Instence;
             userManager.User.AllWords = !userManager.User.AllWords;
             await userManager.UpdateAsync();
         }

@@ -121,9 +121,11 @@
   <ItemGroup>
     <Compile Include="Commands\AddGroupActionTests\AddGroupActionTest.cs" />
     <Compile Include="Commands\AddWordActionTests\AddWordActionTest.cs" />
+    <Compile Include="Commands\AllWordsChangeActionTests\AllWordsChangesActionTest.cs" />
     <Compile Include="Commands\BuilderTests\AddGroupTests.cs" />
-    <Compile Include="Commands\CheckUncheckCommandTests\CheckUncheckCommandFixture.cs" />
-    <Compile Include="Commands\SelectlangaugeActiopnTests\SelectLanguageFixture.cs" />
+    <Compile Include="Commands\CheckUncheckActionTests\CheckUncheckActionTest.cs" />
+    <Compile Include="Commands\RemoveGroupActionTests\RemoveGroupActionTest.cs" />
+    <Compile Include="Commands\SelectLanguageTests\SelectLanguageTest.cs" />
     <Compile Include="Commands\SelectNextGroupActionTests\SelectNextGroupActionTest.cs" />
     <Compile Include="Commands\SelectNextWordActionTests\SelectNextWordActionTest.cs" />
     <Compile Include="Commands\SelectPreviousGroupActionTests\SelectPreviousGroupActionTest.cs" />

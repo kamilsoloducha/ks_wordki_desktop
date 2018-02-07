@@ -123,7 +123,7 @@ namespace Wordki.ViewModels
             BackCommand = new Util.BuilderCommand(BackAction);
             ShowWordsCommand = new Util.BuilderCommand((obj) => ShowWords(obj as IGroup));
             TranslationDirectionChangedCommand = new Util.BuilderCommand(ActionsSingleton<TranslationDirectionChangeAction>.Instance.Action);
-            AllWordsCommand = new Util.BuilderCommand(ActionsSingleton<AllWordsChangeAction>.Instance.Action);
+            AllWordsCommand = new Util.BuilderCommand(new AllWordsChangeAction(UserManagerSingleton.Instence).Action);
             SelectionChangedCommand = new Util.BuilderCommand(SelectionChanged);
         }
 
