@@ -39,7 +39,7 @@ namespace Wordki.Commands
                 newSelected = database.Groups.Previous(groupToRemove);
             }
             groupSelectable.SelectedGroup = newSelected;
-            wordSelectable.SelectedWord = groupSelectable.SelectedGroup == null ? null : groupSelectable.SelectedGroup.Words.LastOrDefault();
+            wordSelectable.SelectedWord = groupSelectable.SelectedGroup?.Words.LastOrDefault();
             await database.DeleteGroupAsync(groupToRemove);
         }
 

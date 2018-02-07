@@ -1,10 +1,9 @@
 ﻿using NLog;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Util.Collections;
 using Wordki.Database;
+using WordkiModel;
 
 namespace Wordki.Commands
 {
@@ -30,13 +29,20 @@ namespace Wordki.Commands
         {
             if (wordSelectable.SelectedWord == null && groupSelectable.SelectedGroup != null)
             {
-                new RemoveGroupAction(groupSelectable, wordSelectable, database);
+                new RemoveGroupAction(groupSelectable, wordSelectable, database).Action();
                 return;
             }
-            if (await database.DeleteWordAsync(wordSelectable.SelectedWord))
+            if (wordSelectable.SelectedWord == null)
             {
-                wordSelectable.SelectedWord = groupSelectable.SelectedGroup.Words.LastOrDefault();
+                return;
             }
+            IWord newWord = groupSelectable.SelectedGroup.Words.Next(wordSelectable.SelectedWord);
+            if (newWord == null)
+            {
+                newWord = groupSelectable.SelectedGroup.Words.Previous(wordSelectable.SelectedWord);
+            }
+            wordSelectable.SelectedWord = newWord;
+            await database.DeleteWordAsync(wordSelectable.SelectedWord);
         }
 
     }

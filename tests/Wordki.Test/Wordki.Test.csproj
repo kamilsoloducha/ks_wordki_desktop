@@ -125,6 +125,7 @@
     <Compile Include="Commands\BuilderTests\AddGroupTests.cs" />
     <Compile Include="Commands\CheckUncheckActionTests\CheckUncheckActionTest.cs" />
     <Compile Include="Commands\RemoveGroupActionTests\RemoveGroupActionTest.cs" />
+    <Compile Include="Commands\RemoveWordActionTests\RemoveWordActionTest.cs" />
     <Compile Include="Commands\SelectLanguageTests\SelectLanguageTest.cs" />
     <Compile Include="Commands\SelectNextGroupActionTests\SelectNextGroupActionTest.cs" />
     <Compile Include="Commands\SelectNextWordActionTests\SelectNextWordActionTest.cs" />
