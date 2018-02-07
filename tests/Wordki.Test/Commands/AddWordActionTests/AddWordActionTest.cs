@@ -3,7 +3,6 @@ using NUnit.Framework;
 using Wordki.Commands;
 using Wordki.Database;
 using WordkiModel;
-using WordkiModel.Extensions;
 
 namespace Wordki.Test.Commands.AddWordActionTests
 {
