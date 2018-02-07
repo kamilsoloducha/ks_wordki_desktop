@@ -486,7 +486,7 @@
                     Style="{StaticResource WinTextBoxStyle}"
                     Text="{Binding Path=SelectedWord.Language1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     IsEnabled="{Binding Path=SelectedWord, Converter={StaticResource ObjectToBoolConverter}}"
-                    helpers:FocusExtension.IsFocused="{Binding Path=Language1IsFocused, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    helpers:FocusExtension.IsFocused="{Binding Path=Focusable[0], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     TabIndex="0">
                 </TextBox>
 
@@ -496,7 +496,7 @@
                     Style="{StaticResource WinTextBoxStyle}"
                     IsEnabled="{Binding Path=SelectedWord, Converter={StaticResource ObjectToBoolConverter}}"
                     Text="{Binding Path=SelectedWord.Language2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    helpers:FocusExtension.IsFocused="{Binding Path=Language2IsFocused, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    helpers:FocusExtension.IsFocused="{Binding Path=Focusable[1], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     TabIndex="10" />
 
                 <TextBox

@@ -20,10 +20,11 @@ using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
 using Oazachaosu.Core.Common;
 using NLog;
+using System.Collections.ObjectModel;
 
 namespace Wordki.ViewModels
 {
-    public class BuilderViewModel : ViewModelBase, IGroupSelectable, IWordSelectable
+    public class BuilderViewModel : ViewModelBase, IGroupSelectable, IWordSelectable, IFocusSelectable
     {
 
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
@@ -132,6 +133,8 @@ namespace Wordki.ViewModels
             }
         }
 
+        public ObservableCollection<bool> Focusable { get; set; }
+
         public ICommand PreviousWordCommand { get; set; }
         public ICommand NextWordCommand { get; set; }
         public ICommand PreviousGroupCommand { get; set; }
@@ -164,38 +167,50 @@ namespace Wordki.ViewModels
 
         public Settings Settings { get; set; }
 
+
         #endregion
 
         public BuilderViewModel()
         {
-            PreviousWordCommand = new Util.BuilderCommand(new SelectPreviousWordAction(this, this).Action);
+            PreviousWordCommand = new Util.CommandQueue(new[] {
+                new SelectPreviousWordAction(this, this).Action,
+                new SetFocusAction(this, 0).Action
+            });
 
-            NextWordCommand = new Util.BuilderCommand(new SelectNextWordAction(this, this).Action);
+            NextWordCommand = new Util.CommandQueue(new[]{
+                new SelectNextWordAction(this, this).Action,
+                new SetFocusAction(this, 0).Action
+            });
 
             PreviousGroupCommand = new Util.CommandQueue(new Action[]{
                 new SelectPreviousGroupAction(this, DatabaseSingleton.Instance).Action,
                 new SelectLastWordAction(this, this).Action,
+                new SetFocusAction(this, 0).Action
             });
 
             NextGroupCommand = new Util.CommandQueue(new Action[]{
                 new SelectNextGroupAction(this, DatabaseSingleton.Instance).Action,
                 new SelectLastWordAction(this, this).Action,
+                new SetFocusAction(this, 0).Action
             });
 
             AddWordCommand = new Util.CommandQueue(new[] {
                 new AddWordAction(this, this, DatabaseSingleton.Instance).Action,
                 new SelectLastWordAction(this, this).Action,
+                new SetFocusAction(this, 0).Action
             });
 
             RemoveWordCommand = new Util.CommandQueue(new[]
             {
                 new RemoveWordAction(this, this, DatabaseSingleton.Instance).Action,
+                new SetFocusAction(this, 0).Action
             });
 
             AddGroupCommand = new Util.CommandQueue(new[]
             {
                 new AddGroupAction(this, DatabaseSingleton.Instance).Action,
-                new SelectLastGroupAction(this, this, DatabaseSingleton.Instance).Action
+                new SelectLastGroupAction(this, this, DatabaseSingleton.Instance).Action,
+                new SetFocusAction(this, 0).Action
             });
 
             RemoveGroupCommand = new Util.BuilderCommand((obj) => RemoveGroup(obj as IGroup));
@@ -220,7 +235,7 @@ namespace Wordki.ViewModels
 
             Database = DatabaseSingleton.Instance;
             BindingOperations.EnableCollectionSynchronization(Database.Groups, _groupsLock);
-
+            Focusable = new ObservableCollection<bool>() { false, false };
             Settings = Settings.GetSettings();
         }
 
@@ -235,6 +250,7 @@ namespace Wordki.ViewModels
             {
                 SetOnLastWord();
             }
+            Focusable[0] = true;
         }
 
         public override void Back()

@@ -131,6 +131,7 @@
     <Compile Include="Commands\SelectNextWordActionTests\SelectNextWordActionTest.cs" />
     <Compile Include="Commands\SelectPreviousGroupActionTests\SelectPreviousGroupActionTest.cs" />
     <Compile Include="Commands\SelectPreviousWordActionTests\SelectPreviousWordActionTest.cs" />
+    <Compile Include="Commands\SetFocusActionTests\SetFocusActionTest.cs" />
     <Compile Include="ConnectorTests\ApiResponseParerTests.cs" />
     <Compile Include="ConvertersTests\CollectionIndexToIndexerEnabledConverterTest.cs" />
     <Compile Include="ConvertersTests\ObjectToBoolConverterTest.cs" />
