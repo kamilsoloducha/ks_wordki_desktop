@@ -1,4 +1,5 @@
-﻿using Wordki.Helpers;
+﻿using Wordki.Commands;
+using Wordki.Helpers;
 
 namespace Wordki.ViewModels
 {
