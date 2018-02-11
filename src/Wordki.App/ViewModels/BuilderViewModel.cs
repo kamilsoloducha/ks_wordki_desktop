@@ -98,7 +98,7 @@ namespace Wordki.ViewModels
             {
                 if (_selectedWord != null && _selectedWord.Equals(value))
                     return;
-                UpdateWord(_selectedWord);
+                //UpdateWord(_selectedWord);
                 _selectedWord = value;
                 OnPropertyChanged();
             }
@@ -422,44 +422,6 @@ namespace Wordki.ViewModels
             UpdateGroup(SelectedGroup);
             UpdateWord(SelectedWord);
             Switcher.Back();
-        }
-
-        private void AddWord()
-        {
-            if (SelectedGroup == null)
-            {
-                AddGroup();
-            }
-            if (SelectedGroup == null)
-            {
-                return;
-            }
-            Word word = new Word();
-            SelectedGroup.AddWord(word);
-            Words.Add(word);
-            AddWord_(word);
-            SelectedWord = word;
-            Language1IsFocused = false;
-            Language1IsFocused = true;
-        }
-
-
-        private async void DeleteWord()
-        {
-            if (SelectedWord == null && SelectedGroup != null)
-            {
-                RemoveGroup(null);
-                return;
-            }
-            if (await Database.DeleteWordAsync(SelectedWord))
-            {
-                Words.Remove(SelectedWord);
-                SelectedWord = SelectedGroup.Words.LastOrDefault();
-                if (SelectedWord == null)
-                {
-                    RemoveGroup(null);
-                }
-            }
         }
 
         #endregion
