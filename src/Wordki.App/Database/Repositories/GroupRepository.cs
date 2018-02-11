@@ -5,11 +5,15 @@ using System.Collections.Generic;
 using WordkiModel;
 using System.Threading.Tasks;
 using Wordki.Database.Repositories;
+using NLog;
 
 namespace Wordki.Database
 {
     public class GroupRepository : IGroupRepository
     {
+
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         public void Delete(IGroup group)
         {
             if (!CheckObject(group))
@@ -116,6 +120,7 @@ namespace Wordki.Database
 
         public void Update(IGroup group)
         {
+            logger.Debug($"group: '{group.Name}'");
             if (!CheckObject(group))
             {
                 return;
@@ -143,6 +148,7 @@ namespace Wordki.Database
 
         public Task UpdateAsync(IGroup group)
         {
+            logger.Debug($"UpdateAsync group: '{group.Name}'");
             return Task.Run(() => Update(group));
         }
 
