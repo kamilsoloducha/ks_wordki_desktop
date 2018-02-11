@@ -278,6 +278,7 @@
     <Compile Include="Helpers\Behaviour\ScrollIntoViewBehavior.cs" />
     <Compile Include="Helpers\ResultConnector\IResultConnector.cs" />
     <Compile Include="Helpers\ResultConnector\ResultConnector.cs" />
+    <Compile Include="Helpers\SelectedItemsExtension.cs" />
     <Compile Include="Helpers\TranslationPusher\ITranslationPusher.cs" />
     <Compile Include="Helpers\TranslationPusher\TranslationPusher.cs" />
     <Compile Include="Helpers\WordComparer\IWordComparer.cs" />
