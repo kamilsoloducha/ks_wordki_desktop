@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Wordki.Models;
 using WordkiModel;
+using WordkiModel.Extensions;
 
 namespace Wordki.Database
 {
@@ -28,12 +29,14 @@ namespace Wordki.Database
                 {
                     database.DeleteResult(result);
                 }
-                if (group.Words.Any(x => x.Id == result.Id))
+                if (group.Results.Any(x => x.Id == result.Id))
                 {
+                    group.AddResult(result);
                     database.UpdateResult(result);
                 }
                 else
                 {
+                    group.AddResult(result);
                     database.AddResult(result);
                 }
             }

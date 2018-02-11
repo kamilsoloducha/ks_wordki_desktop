@@ -235,7 +235,8 @@
                         <MenuItem
                             Header="Usuń grupę"
                             Style="{StaticResource AppMenuItemStyle}"
-                            Command="{Binding RemoveGroupCommand}" />
+                            Command="{Binding RemoveGroupCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItem}" />
                         <MenuItem
                             Header="Połącz grupy"
                             Style="{StaticResource AppMenuItemStyle}"

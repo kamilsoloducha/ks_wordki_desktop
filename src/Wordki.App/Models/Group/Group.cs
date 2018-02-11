@@ -12,8 +12,6 @@ namespace Wordki.Models
 
         public virtual long Id { get; set; }
 
-        public virtual long UserId { get; set; }
-
         private string _name;
         public virtual string Name
         {

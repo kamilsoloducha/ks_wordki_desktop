@@ -38,6 +38,8 @@ namespace Wordki.ViewModels.LessonStates
         public override void RefreshView()
         {
             base.RefreshView();
+            Lesson.FinishLesson();
+            Lesson.Timer.StopTimer();
             IInteractionProvider provider2 = new LessonResultProvider()
             {
                 Results = Lesson.ResultList,
@@ -64,8 +66,6 @@ namespace Wordki.ViewModels.LessonStates
         private WorkResult SaveDatabase()
         {
             IDatabase database = DatabaseSingleton.Instance;
-            Lesson.FinishLesson();
-            Lesson.Timer.StopTimer();
             DateTime now = DateTime.Now;
             foreach (IWord word in Lesson.BeginWordsList)
             {

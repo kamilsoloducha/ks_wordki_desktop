@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Wordki.Models;
 using WordkiModel;
+using WordkiModel.Extensions;
 
 namespace Wordki.Database
 {
@@ -30,10 +31,12 @@ namespace Wordki.Database
                 }
                 if (group.Words.Any(x => x.Id == word.Id))
                 {
+                    group.AddWord(word);
                     database.UpdateWord(word);
                 }
                 else
                 {
+                    group.AddWord(word);
                     database.AddWord(word);
                 }
             }

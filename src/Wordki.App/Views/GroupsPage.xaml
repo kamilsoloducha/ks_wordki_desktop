@@ -25,6 +25,8 @@
             x:Key="AllWordsToStringConverter" />
         <converters:TranslationDirectionToStringConverter
             x:Key="TranslationDirectionToStringConverter" />
+        <converters:ObjectToVisibilityConverter
+            x:Key="ObjectToVisibilityConverter" />
     </views:PageBase.Resources>
 
     <Grid>
@@ -91,10 +93,6 @@
             HorizontalScrollBarVisibility="Hidden"
             HorizontalGridLinesBrush="Transparent"
             KeyboardNavigation.IsTabStop="false">
-
-            <i:Interaction.Behaviors>
-                <helpers:ListBoxAtLeastOneSelectedItemBehavior />
-            </i:Interaction.Behaviors>
 
             <DataGrid.ContextMenu>
                 <ContextMenu
@@ -313,7 +311,8 @@
 
             <Border
                 Background="#11000000"
-                CornerRadius="20">
+                CornerRadius="20"
+                Visibility="{Binding ElementName=GroupsDataGrid, Path=SelectedItem, Converter={StaticResource ObjectToVisibilityConverter}}">
 
                 <StackPanel
                     Orientation="Vertical">

@@ -241,6 +241,7 @@
     <Compile Include="Helpers\Behaviour\CursorAtEndBehavior.cs" />
     <Compile Include="Helpers\Converters\LanguageTypeToStringConverter.cs" />
     <Compile Include="Helpers\Converters\ObjectToBoolConverter.cs" />
+    <Compile Include="Helpers\Converters\ObjectToVisibilityConverter.cs" />
     <Compile Include="Helpers\Converters\PassingParametersConverter.cs" />
     <Compile Include="Helpers\Converters\RatioConverter.cs" />
     <Compile Include="Helpers\Converters\TranslationDirectionToIntConverter.cs" />

@@ -30,7 +30,6 @@ namespace Resultki.Test.Database
                 Language1 = LanguageType.English,
                 Language2 = LanguageType.Germany,
                 State = 1,
-                UserId = 1,
             };
             result = new Result()
             {

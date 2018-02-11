@@ -26,7 +26,7 @@ namespace Wordki.ViewModels.Dialogs
 
         public Action CorrectWord { get; set; }
         public Action RemoveWord { get; set; }
-        public ICommand CorrectCommad { get; }
+        public ICommand CorrectCommand { get; }
         public ICommand RemoveCommand { get; }
 
         private IWord originalWord;
@@ -36,7 +36,7 @@ namespace Wordki.ViewModels.Dialogs
         {
             Word = word.Clone() as IWord;
             originalWord = word;
-            CorrectCommad = new Util.BuilderCommand(Correct);
+            CorrectCommand = new Util.BuilderCommand(Correct);
             RemoveCommand = new Util.BuilderCommand(Remove);
             database = DatabaseSingleton.Instance;
         }
@@ -48,24 +48,16 @@ namespace Wordki.ViewModels.Dialogs
             CloseAction = provdier.OnClose;
         }
 
-        public void Correct(object obj)
+        public void Correct()
         {
-            IWord word = obj as IWord;
-            if (word == null)
-            {
-                return;
-            }
-            originalWord.Language1 = word.Language1;
-            originalWord.Language2 = word.Language2;
-            originalWord.Language1Comment = word.Language1Comment;
-            originalWord.Language2Comment = word.Language2Comment;
-            originalWord.IsSelected = word.IsSelected;
-            originalWord.IsVisible = word.IsVisible;
+            originalWord.Language1 = Word.Language1;
+            originalWord.Language2 = Word.Language2;
+            originalWord.Language1Comment = Word.Language1Comment;
+            originalWord.Language2Comment = Word.Language2Comment;
+            originalWord.IsSelected = Word.IsSelected;
+            originalWord.IsVisible = Word.IsVisible;
             database.UpdateWordAsync(originalWord);
-            if (CorrectWord != null)
-            {
-                CorrectWord();
-            }
+            CorrectWord?.Invoke();
             Close();
         }
 
@@ -77,10 +69,7 @@ namespace Wordki.ViewModels.Dialogs
                 return;
             }
             database.DeleteWordAsync(word);
-            if (RemoveWord != null)
-            {
-                RemoveWord();
-            }
+            RemoveWord?.Invoke();
             Close();
         }
 

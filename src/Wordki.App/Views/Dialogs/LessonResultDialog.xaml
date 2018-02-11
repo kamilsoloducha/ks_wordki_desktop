@@ -182,7 +182,7 @@
                         Text="Czas" />
                     <TextBlock
                         Style="{StaticResource ResultTextBlockStyle}"
-                        Text="{Binding Path=SelectedItem.Time, UpdateSourceTrigger=PropertyChanged}"
+                        Text="{Binding Path=SelectedItem.TimeCount, UpdateSourceTrigger=PropertyChanged}"
                         FontFamily="pack://application:,,,/Resources/Fonts/Coiny/#Coiny Regular" />
                 </UniformGrid>
             </StackPanel>

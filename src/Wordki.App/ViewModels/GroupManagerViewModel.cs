@@ -117,7 +117,7 @@ namespace Wordki.ViewModels
             GroupInfo = new GroupInfo();
             Values = new ObservableCollection<double> { 0, 0, 0, 0, 0 };
             SelectedItems = new List<IGroup>();
-
+            
             StartLessonCommand = new Util.BuilderCommand((obj) => StartLesson((LessonType)obj));
             EditGroupCommand = new Util.BuilderCommand((obj) => EditGroup(obj as IGroup));
             BackCommand = new Util.BuilderCommand(BackAction);
@@ -224,7 +224,10 @@ namespace Wordki.ViewModels
             if (Database.Groups.Count > 0)
             {
                 SelectedItem = Database.Groups[0];
+                SelectedItems.Clear();
+                SelectedItems.Add(Database.Groups[0]);
             }
+            RefreshInfo();
         }
 
         public override void Back()
@@ -254,10 +257,13 @@ namespace Wordki.ViewModels
                 {
                     lDrawersCount[lWord.Drawer]++;
                 }
-                DateTime itemDateTime = item.Results.Max(x => x.DateTime);
-                if (itemDateTime > lLastRepeat)
+                if (item.Results.Count > 0)
                 {
-                    lLastRepeat = itemDateTime;
+                    DateTime itemDateTime = item.Results.Max(x => x.DateTime);
+                    if (itemDateTime > lLastRepeat)
+                    {
+                        lLastRepeat = itemDateTime;
+                    }
                 }
             }
             string groupName = SelectedItems.Count == 1 ? SelectedItems.First().Name : " ";

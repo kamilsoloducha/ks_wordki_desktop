@@ -27,7 +27,6 @@ namespace Wordki.ViewModels.Dialogs
 
         public ICommand PreviousCommand { get; }
         public ICommand NextCommand { get; }
-
         public IList<IResult> Results { get; set; }
 
         public LessonResultDialogViewModel(ILessonResultProvider model) : base()
