@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -20,12 +19,12 @@ using Wordki.Models;
 using Wordki.ViewModels.Dialogs;
 using Wordki.Views.Dialogs;
 using Oazachaosu.Core.Common;
-using WordkiModel.Extensions;
 using NLog;
+using System.Collections.ObjectModel;
 
 namespace Wordki.ViewModels
 {
-    public class BuilderViewModel : ViewModelBase
+    public class BuilderViewModel : ViewModelBase, IGroupSelectable, IWordSelectable, IFocusSelectable
     {
 
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
@@ -99,7 +98,7 @@ namespace Wordki.ViewModels
             {
                 if (_selectedWord != null && _selectedWord.Equals(value))
                     return;
-                UpdateWord(_selectedWord);
+                //UpdateWord(_selectedWord);
                 _selectedWord = value;
                 OnPropertyChanged();
             }
@@ -134,6 +133,8 @@ namespace Wordki.ViewModels
             }
         }
 
+        public ObservableCollection<bool> Focusable { get; set; }
+
         public ICommand PreviousWordCommand { get; set; }
         public ICommand NextWordCommand { get; set; }
         public ICommand PreviousGroupCommand { get; set; }
@@ -166,19 +167,54 @@ namespace Wordki.ViewModels
 
         public Settings Settings { get; set; }
 
+
         #endregion
 
         public BuilderViewModel()
         {
-            PreviousWordCommand = new Util.BuilderCommand(PreviousWord);
-            NextWordCommand = new Util.BuilderCommand(NextWord);
-            PreviousGroupCommand = new Util.BuilderCommand(PreviuosGroup);
-            NextGroupCommand = new Util.BuilderCommand(NextGroup);
+            PreviousWordCommand = new Util.CommandQueue(new[] {
+                new SelectPreviousWordAction(this, this).Action,
+                new SetFocusAction(this, 0).Action
+            });
 
-            AddWordCommand = new Util.BuilderCommand(AddWord);
-            RemoveWordCommand = new Util.BuilderCommand(DeleteWord);
-            AddGroupCommand = new Util.BuilderCommand(AddGroup);
+            NextWordCommand = new Util.CommandQueue(new[]{
+                new SelectNextWordAction(this, this).Action,
+                new SetFocusAction(this, 0).Action
+            });
+
+            PreviousGroupCommand = new Util.CommandQueue(new Action[]{
+                new SelectPreviousGroupAction(this, DatabaseSingleton.Instance).Action,
+                new SelectLastWordAction(this, this).Action,
+                new SetFocusAction(this, 0).Action
+            });
+
+            NextGroupCommand = new Util.CommandQueue(new Action[]{
+                new SelectNextGroupAction(this, DatabaseSingleton.Instance).Action,
+                new SelectLastWordAction(this, this).Action,
+                new SetFocusAction(this, 0).Action
+            });
+
+            AddWordCommand = new Util.CommandQueue(new[] {
+                new AddWordAction(this, this, DatabaseSingleton.Instance).Action,
+                new SelectLastWordAction(this, this).Action,
+                new SetFocusAction(this, 0).Action
+            });
+
+            RemoveWordCommand = new Util.CommandQueue(new[]
+            {
+                new RemoveWordAction(this, this, DatabaseSingleton.Instance).Action,
+                new SetFocusAction(this, 0).Action
+            });
+
+            AddGroupCommand = new Util.CommandQueue(new[]
+            {
+                new AddGroupAction(this, DatabaseSingleton.Instance).Action,
+                new SelectLastGroupAction(this, this, DatabaseSingleton.Instance).Action,
+                new SetFocusAction(this, 0).Action
+            });
+
             RemoveGroupCommand = new Util.BuilderCommand((obj) => RemoveGroup(obj as IGroup));
+
             CheckUncheckWordCommand = new Util.BuilderCommand((obj) => ActionsSingleton<CheckUncheckAction>.Instance.Action(obj as IWord));
             TranslateWordCommnad = new Util.BuilderCommand(TranslateWord);
 
@@ -195,11 +231,11 @@ namespace Wordki.ViewModels
             ChangeLanguage1Command = new Util.BuilderCommand((obj) => ChangeLanguage(obj as IGroup, 1));
             ChangeLanguage2Command = new Util.BuilderCommand((obj) => ChangeLanguage(obj as IGroup, 2));
             AddClipboardGroupCommand = new Util.BuilderCommand(AddClipboardGroup);
-            GroupSelectionChangedCommand = new Util.BuilderCommand(GroupSelectionChanged);
+            GroupSelectionChangedCommand = new Util.BuilderCommand(new SelectLastWordAction(this, this).Action);
 
             Database = DatabaseSingleton.Instance;
             BindingOperations.EnableCollectionSynchronization(Database.Groups, _groupsLock);
-
+            Focusable = new ObservableCollection<bool>() { false, false };
             Settings = Settings.GetSettings();
         }
 
@@ -214,6 +250,7 @@ namespace Wordki.ViewModels
             {
                 SetOnLastWord();
             }
+            Focusable[0] = true;
         }
 
         public override void Back()
@@ -223,11 +260,6 @@ namespace Wordki.ViewModels
         }
 
         #region Commands
-
-        private void GroupSelectionChanged()
-        {
-            SetOnLastWordCurretGroup();
-        }
 
         private void AddClipboardGroup()
         {
@@ -360,13 +392,7 @@ namespace Wordki.ViewModels
                     Message = "Czy na pewno usunąć grupy?",
                     PositiveLabel = "Tak",
                     NegativeLabel = "Nie",
-                    YesAction = async () =>
-                    {
-                        int groupIndex = Database.Groups.IndexOf(SelectedGroup);
-                        SelectedGroup = Database.Groups.Count > groupIndex ? Database.Groups[groupIndex] : null;
-                        SelectedWord = SelectedGroup?.Words.LastOrDefault();
-                        await Database.DeleteGroupAsync(SelectedGroup);
-                    },
+                    YesAction = new RemoveGroupAction(this, this, DatabaseSingleton.Instance).Action,
                 },
             };
             provider.Interact();
@@ -391,106 +417,11 @@ namespace Wordki.ViewModels
             worker.Execute();
         }
 
-        private async void AddGroup()
-        {
-            IGroup group = new Group();
-            await Database.AddGroupAsync(group);
-            if (SelectedGroup != null)
-            {
-                group.Language1 = SelectedGroup.Language1;
-                group.Language2 = SelectedGroup.Language2;
-            }
-            SelectedGroup = group;
-            SetOnLastWordCurretGroup();
-        }
-
-        private void NextWord()
-        {
-            if (SelectedGroup == null)
-            {
-                return;
-            }
-            IWord previousWord = SelectedGroup.Words.Next(SelectedWord);
-            if (previousWord != null)
-            {
-                SelectedWord = previousWord;
-            }
-        }
-
-        private void PreviousWord()
-        {
-            if (SelectedGroup == null)
-            {
-                return;
-            }
-            IWord previousWord = SelectedGroup.Words.Previous(SelectedWord);
-            if (previousWord != null)
-            {
-                SelectedWord = previousWord;
-            }
-        }
-
-        private void PreviuosGroup()
-        {
-            if (GroupPrevious == null)
-            {
-                return;
-            }
-            SelectedGroup = GroupPrevious;
-            SetOnLastWordCurretGroup();
-        }
-
-        private void NextGroup()
-        {
-            if (GroupNext == null)
-            {
-                return;
-            }
-            SelectedGroup = GroupNext;
-            SetOnLastWordCurretGroup();
-        }
-
         private void BackAction()
         {
             UpdateGroup(SelectedGroup);
             UpdateWord(SelectedWord);
             Switcher.Back();
-        }
-
-        private void AddWord()
-        {
-            if (SelectedGroup == null)
-            {
-                AddGroup();
-            }
-            if (SelectedGroup == null)
-            {
-                return;
-            }
-            Word word = new Word();
-            SelectedGroup.AddWord(word);
-            AddWord_(word);
-            SelectedWord = word;
-            Language1IsFocused = false;
-            Language1IsFocused = true;
-        }
-
-
-        private async void DeleteWord()
-        {
-            if (SelectedWord == null && SelectedGroup != null)
-            {
-                RemoveGroup(null);
-                return;
-            }
-            if (await Database.DeleteWordAsync(SelectedWord))
-            {
-                SelectedWord = SelectedGroup.Words.LastOrDefault();
-                if (SelectedWord == null)
-                {
-                    RemoveGroup(null);
-                }
-            }
         }
 
         #endregion
@@ -537,6 +468,7 @@ namespace Wordki.ViewModels
             }
             catch (Exception e)
             {
+                logger.Error(e);
                 return new WorkResult();
             }
             if (response != null)

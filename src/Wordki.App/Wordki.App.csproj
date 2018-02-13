@@ -152,10 +152,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\AddGroupAction.cs" />
+    <Compile Include="Commands\AddWordAction.cs" />
     <Compile Include="Commands\AllWordsChangeAction.cs" />
     <Compile Include="Commands\CheckUncheckAction.cs" />
     <Compile Include="Commands\ActionsSingleton.cs" />
+    <Compile Include="Commands\FocusChangeAction.cs" />
+    <Compile Include="Commands\Helpers\IFocusSelectable.cs" />
+    <Compile Include="Commands\RemoveWordAction.cs" />
+    <Compile Include="Commands\Helpers\IGroupSelectable.cs" />
+    <Compile Include="Commands\Helpers\IWordSelectable.cs" />
+    <Compile Include="Commands\RemoveGroupAction.cs" />
     <Compile Include="Commands\SelectLanguageAction.cs" />
+    <Compile Include="Commands\SelectLastGroupAction.cs" />
+    <Compile Include="Commands\SelectLastWordAction.cs" />
+    <Compile Include="Commands\SelectNextGroupAction.cs" />
+    <Compile Include="Commands\SelectNextWordAction.cs" />
+    <Compile Include="Commands\SelectPreviousGroupAction.cs" />
+    <Compile Include="Commands\SelectPreviousWordAction.cs" />
     <Compile Include="Commands\SwapWordAction.cs" />
     <Compile Include="Commands\SwapWordsInGroupAction.cs" />
     <Compile Include="Commands\TranslationDirectionChangeAction.cs" />
@@ -264,6 +278,7 @@
     <Compile Include="Helpers\Behaviour\ScrollIntoViewBehavior.cs" />
     <Compile Include="Helpers\ResultConnector\IResultConnector.cs" />
     <Compile Include="Helpers\ResultConnector\ResultConnector.cs" />
+    <Compile Include="Helpers\SelectedItemsExtension.cs" />
     <Compile Include="Helpers\TranslationPusher\ITranslationPusher.cs" />
     <Compile Include="Helpers\TranslationPusher\TranslationPusher.cs" />
     <Compile Include="Helpers\WordComparer\IWordComparer.cs" />
@@ -752,6 +767,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Languages\" />
+    <Folder Include="Wordki\Database\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\c_sharp_util\Util\Util\Util.csproj">

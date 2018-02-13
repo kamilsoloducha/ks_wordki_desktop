@@ -1,4 +1,5 @@
-﻿using WordkiModel;
+﻿using NLog;
+using Oazachaosu.Core.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,8 +17,7 @@ using Wordki.Helpers.WordComparer;
 using Wordki.Models;
 using Wordki.Models.Lesson;
 using Wordki.ViewModels.Dialogs;
-using Oazachaosu.Core.Common;
-using NLog;
+using WordkiModel;
 
 namespace Wordki.ViewModels
 {
@@ -119,41 +119,15 @@ namespace Wordki.ViewModels
             SelectedItems = new List<IGroup>();
             
             StartLessonCommand = new Util.BuilderCommand((obj) => StartLesson((LessonType)obj));
-            EditGroupCommand = new Util.BuilderCommand((obj) => EditGroup(obj as IGroup));
-            BackCommand = new Util.BuilderCommand(BackAction);
-            ShowWordsCommand = new Util.BuilderCommand((obj) => ShowWords(obj as IGroup));
-            TranslationDirectionChangedCommand = new Util.BuilderCommand(ActionsSingleton<TranslationDirectionChangeAction>.Instance.Action);
-            AllWordsCommand = new Util.BuilderCommand(ActionsSingleton<AllWordsChangeAction>.Instance.Action);
+            EditGroupCommand = new Util.BuilderCommand((obj) => Switcher.Switch(Switcher.State.Builder, obj));
+            BackCommand = new Util.BuilderCommand(() => Switcher.Back());
+            ShowWordsCommand = new Util.BuilderCommand((obj) => Switcher.Switch(Switcher.State.Words, obj));
+            TranslationDirectionChangedCommand = new Util.BuilderCommand(new TranslationDirectionChangeAction().Action);
+            AllWordsCommand = new Util.BuilderCommand(new AllWordsChangeAction(UserManagerSingleton.Instence).Action);
             SelectionChangedCommand = new Util.BuilderCommand(SelectionChanged);
         }
 
         #region Commands
-
-        private void EditGroup(IGroup group)
-        {
-            if (group == null)
-            {
-                Console.WriteLine("The parameter is equale null. Cannot switch to other state");
-                return;
-            }
-            Switcher.Switch(Switcher.State.Builder, group);
-        }
-
-        private void ShowWords(IGroup group)
-        {
-            if (group == null)
-            {
-                Console.WriteLine("The parameter is equale null. Cannot switch to other state");
-                return;
-            }
-            Switcher.Switch(Switcher.State.Words, group);
-        }
-
-        private void BackAction()
-        {
-            Back();
-            Switcher.Back();
-        }
 
         private void SelectionChanged(object obj)
         {

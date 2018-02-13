@@ -1,5 +1,4 @@
 ﻿using NHibernate;
-using NHibernate.Linq;
 using System.Linq;
 using System.Collections.Generic;
 using WordkiModel;
@@ -28,9 +27,18 @@ namespace Wordki.Database
             }
         }
 
-        public Task DeleteAsync(IGroup group)
+        public async Task DeleteAsync(IGroup group)
         {
-            return Task.Run(() => Delete(group));
+            if (!CheckObject(group))
+            {
+                return;
+            }
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                await session.DeleteAsync(group);
+                transaction.Commit();
+            }
         }
 
         public IGroup Get(long id)
@@ -44,9 +52,15 @@ namespace Wordki.Database
             }
         }
 
-        public Task<IGroup> GetAsync(long id)
+        public async Task<IGroup> GetAsync(long id)
         {
-            return Task.Run(() => Get(id));
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                IGroup group = await session.GetAsync<IGroup>(id);
+                group.Words.ToArray();
+                group.Results.ToArray();
+                return group;
+            }
         }
 
         public IEnumerable<IGroup> GetAll()
@@ -76,9 +90,12 @@ namespace Wordki.Database
             }
         }
 
-        public Task<long> RowCountAsync()
+        public async Task<long> RowCountAsync()
         {
-            return Task.Run(() => RowCount());
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                return await session.QueryOver<IGroup>().RowCountInt64Async();
+            }
         }
 
         public void Save(IGroup group)
@@ -110,6 +127,10 @@ namespace Wordki.Database
 
         public async Task SaveAsync(IGroup group)
         {
+            if (!CheckObject(group))
+            {
+                return;
+            }
             using (ISession session = NHibernateHelper.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
             {
@@ -140,7 +161,7 @@ namespace Wordki.Database
             using (ISession session = NHibernateHelper.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
             {
-                session.Update(group);
+                session.Update("Group", group, group.Id);
                 transaction.Commit();
             }
         }
@@ -164,14 +185,14 @@ namespace Wordki.Database
 
         public async Task UpdateAsync(IGroup group)
         {
-            if (group == null)
+            if (!CheckObject(group))
             {
                 return;
             }
             using (ISession session = NHibernateHelper.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
             {
-                await session.UpdateAsync(group);
+                await session.UpdateAsync("Group", group, group.Id);
                 transaction.Commit();
             }
         }

@@ -121,7 +121,7 @@ namespace Wordki.ViewModels
                 IWordFinder wordFinder = new WordFinder(words, wordComparer);
                 return wordFinder.FindWords();
             }
-            catch (Exception lException)
+            catch (Exception)
             {
                 return Enumerable.Empty<IWord>();
             }

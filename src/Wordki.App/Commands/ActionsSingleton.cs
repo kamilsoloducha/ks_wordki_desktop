@@ -2,9 +2,7 @@
 {
     public static class ActionsSingleton<T> where T : class, new()
     {
-
         private static T instance;
-
         private static object lockObj = new object();
         public static T Instance
         {
@@ -20,6 +18,5 @@
                 return instance;
             }
         }
-
     }
 }

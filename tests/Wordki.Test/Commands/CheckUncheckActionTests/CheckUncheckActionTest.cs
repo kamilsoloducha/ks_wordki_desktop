@@ -6,7 +6,7 @@ using WordkiModel;
 namespace Wordki.Test.Commands.CheckUncheckCommandTests
 {
     [TestFixture]
-    public class CheckUncheckCommandFixture
+    public class CheckUncheckActionTest
     {
 
         Action<IWord> action;
