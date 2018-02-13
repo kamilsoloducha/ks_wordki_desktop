@@ -83,9 +83,18 @@ namespace Wordki.Database
             }
         }
 
-        public Task SaveAsync(IResult result)
+        public async Task SaveAsync(IResult result)
         {
-            return Task.Run(() => Save(result));
+            if (!CheckObject(result))
+            {
+                return;
+            }
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                await session.SaveOrUpdateAsync(result as Result);
+                transaction.Commit();
+            }
         }
 
         public void Update(IResult result)
@@ -102,9 +111,18 @@ namespace Wordki.Database
             }
         }
 
-        public Task UpdateAsync(IResult result)
+        public async Task UpdateAsync(IResult result)
         {
-            return Task.Run(() => Update(result));
+            if (!CheckObject(result))
+            {
+                return;
+            }
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                await session.UpdateAsync(result as Result);
+                transaction.Commit();
+            }
         }
 
         public bool CheckObject(IResult result)
@@ -148,14 +166,38 @@ namespace Wordki.Database
             }
         }
 
-        public Task SaveAsync(IEnumerable<IResult> items)
+        public async Task SaveAsync(IEnumerable<IResult> items)
         {
-            return Task.Run(() => Save(items));
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                foreach (IResult item in items)
+                {
+                    if (!CheckObject(item))
+                    {
+                        continue;
+                    }
+                    await session.SaveOrUpdateAsync(item);
+                }
+                transaction.Commit();
+            }
         }
 
-        public Task UpdateAsync(IEnumerable<IResult> items)
+        public async Task UpdateAsync(IEnumerable<IResult> items)
         {
-            return Task.Run(() => Update(items));
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                foreach (IResult item in items)
+                {
+                    if (!CheckObject(item))
+                    {
+                        continue;
+                    }
+                    await session.UpdateAsync(item);
+                }
+                transaction.Commit();
+            }
         }
     }
 }

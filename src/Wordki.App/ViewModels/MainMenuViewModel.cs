@@ -263,6 +263,9 @@ namespace Wordki.ViewModels
             });
         }
 
+        private static DateTime Start;
+        private static DateTime Stop;
+
         public override void Loaded()
         {
             Login = UserManagerSingleton.Instence.User.Name;
@@ -296,7 +299,10 @@ namespace Wordki.ViewModels
             queue.AddWork(new ApiWork<IEnumerable<GroupDTO>>
             {
                 Request = new GetGroupsRequest(UserManagerSingleton.Instence.User),
-                OnCompletedFunc = new GroupHandler(mapper, database).Handle,
+                OnCompletedFunc = (groups) =>
+                {
+                    new GroupHandler(mapper, database).Handle(groups);
+                },
                 OnFailedFunc = OnFailed
             });
             queue.AddWork(new ApiWork<IEnumerable<WordDTO>>
@@ -318,10 +324,16 @@ namespace Wordki.ViewModels
                 {
                     UserManagerSingleton.Instence.User.DownloadTime = dt;
                     await UserManagerSingleton.Instence.UpdateAsync();
+                    isLoadFromCloud = true;
+                    Stop = DateTime.Now;
+                    Console.WriteLine($"Stop: {Stop}");
+                    Console.WriteLine($"Difference: {Stop - Start}");
                 },
                 OnFailedFunc = OnFailed
             });
+            Start = DateTime.Now;
             queue.Execute();
+            Console.WriteLine($"Start: {Start}");
         }
 
         private void OnFailed(ErrorDTO obj)
