@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\GroupsExtensions.cs" />
+    <Compile Include="Extensions\UserExtension.cs" />
     <Compile Include="Models\Group\GroupExtensions.cs" />
     <Compile Include="Models\Group\IGroup.cs" />
     <Compile Include="Models\Language\ILanguage.cs" />

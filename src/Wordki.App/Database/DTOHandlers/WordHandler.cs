@@ -31,7 +31,7 @@ namespace Wordki.Database
             {
                 IWord word = mapper.Map<WordDTO, Word>(wordDto);
                 IGroup group = database.Groups.FirstOrDefault(x => x.Id == wordDto.GroupId);
-                if (wordDto.State < 0)
+                if (wordDto.State < 0 && group.Words.Any(x => x.Id == word.Id))
                 {
                     toUpdate.Add(word);
                 }

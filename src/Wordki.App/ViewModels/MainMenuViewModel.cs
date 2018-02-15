@@ -263,9 +263,6 @@ namespace Wordki.ViewModels
             });
         }
 
-        private static DateTime Start;
-        private static DateTime Stop;
-
         public override void Loaded()
         {
             Login = UserManagerSingleton.Instence.User.Name;
@@ -325,15 +322,12 @@ namespace Wordki.ViewModels
                     UserManagerSingleton.Instence.User.DownloadTime = dt;
                     await UserManagerSingleton.Instence.UpdateAsync();
                     isLoadFromCloud = true;
-                    Stop = DateTime.Now;
-                    Console.WriteLine($"Stop: {Stop}");
-                    Console.WriteLine($"Difference: {Stop - Start}");
+                    database.LoadDatabase();
+                    RefreshInfo();
                 },
                 OnFailedFunc = OnFailed
             });
-            Start = DateTime.Now;
             queue.Execute();
-            Console.WriteLine($"Start: {Start}");
         }
 
         private void OnFailed(ErrorDTO obj)

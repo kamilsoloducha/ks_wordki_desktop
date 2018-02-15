@@ -100,19 +100,23 @@ namespace Wordki.Database
 
         public IUser GetUser(string name, string password)
         {
-            IUser user = new User();
-            user.Name = name;
-            user.Password = password;
-            user.Id = 1;
+            IUser user = new User
+            {
+                Name = name,
+                Password = password,
+                Id = 1
+            };
             return user;
         }
 
         public Task<IUser> GetUserAsync(string name, string password)
         {
-            IUser user = new User();
-            user.Name = name;
-            user.Password = password;
-            user.Id = 1;
+            IUser user = new User
+            {
+                Name = name,
+                Password = password,
+                Id = 1
+            };
             return Task.FromResult(user);
         }
 

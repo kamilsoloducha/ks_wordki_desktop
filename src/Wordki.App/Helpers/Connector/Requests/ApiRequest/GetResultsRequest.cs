@@ -1,4 +1,5 @@
 ﻿using WordkiModel;
+using WordkiModel.Extensions;
 
 namespace Wordki.Helpers.Connector.Requests
 {
@@ -10,7 +11,7 @@ namespace Wordki.Helpers.Connector.Requests
         public GetResultsRequest(IUser user) : base(user)
         {
             Method = "GET";
-            path = $"Results/{user.DownloadTime}/{user.ApiKey}";
+            path = $"Results/{user.GetFormatedDateTime()}/{user.ApiKey}";
         }
     }
 }
