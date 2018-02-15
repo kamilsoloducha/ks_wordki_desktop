@@ -42,8 +42,8 @@ namespace Wordki.Helpers.Connector.SimpleConnector
             try
             {
                 lRequest = (HttpWebRequest)WebRequest.Create(request.Url);
-                lRequest.Timeout = 10000;
-                lRequest.ReadWriteTimeout = 10000;
+                lRequest.Timeout = 60000;
+                lRequest.ReadWriteTimeout = 60000;
             }
             catch (Exception e)
             {
