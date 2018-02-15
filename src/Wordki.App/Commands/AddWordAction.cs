@@ -29,6 +29,7 @@ namespace Wordki.Commands
             if (groupSelectable.SelectedGroup == null)
             {
                 new AddGroupAction(groupSelectable, database).Action();
+                new SelectLastGroupAction(groupSelectable, wordSelectable, database).Action();
             }
             IWord word = new Word();
             groupSelectable.SelectedGroup.AddWord(word);

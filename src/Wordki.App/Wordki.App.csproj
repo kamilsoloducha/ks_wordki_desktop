@@ -206,6 +206,7 @@
     <Compile Include="Database\Maps\WordMap.cs" />
     <Compile Include="Database\Repositories\WordRepository.cs" />
     <Compile Include="Helpers\AutoMapper\AutoMapperConfig.cs" />
+    <Compile Include="Helpers\Behaviour\FocusControlBehavior.cs" />
     <Compile Include="Helpers\Behaviour\HideScrollBar.cs" />
     <Compile Include="Helpers\Behaviour\ListBoxAtLeastOneSelectedItemBehavior.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />

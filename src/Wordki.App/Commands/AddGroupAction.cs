@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using Wordki.Database;
 using Wordki.Models;
 using WordkiModel;
@@ -7,6 +8,7 @@ namespace Wordki.Commands
 {
     public class AddGroupAction
     {
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private readonly IDatabase database;
         private readonly IGroupSelectable groupSelectable;
 
@@ -22,7 +24,6 @@ namespace Wordki.Commands
 
         private async void Execute()
         {
-
             IGroup group = new Group();
             if (groupSelectable != null && groupSelectable.SelectedGroup != null)
             {
@@ -30,7 +31,6 @@ namespace Wordki.Commands
                 group.Language2 = groupSelectable.SelectedGroup.Language2;
             }
             await database.AddGroupAsync(group);
-            groupSelectable.SelectedGroup = group;
         }
     }
 }

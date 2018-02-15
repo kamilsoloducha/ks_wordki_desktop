@@ -32,6 +32,22 @@ namespace Wordki.ViewModels
             }
         }
 
+        private bool isFocusPassword;
+        public bool IsFocusPassword
+        {
+            get => isFocusPassword;
+            set
+            {
+                if(isFocusPassword == value)
+                {
+                    return;
+                }
+                Console.WriteLine($"Zmiana property: {value}");
+                isFocusPassword = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand ListViewSelectedChangedCommand { get; }
         public ICommand RemoveUserCommand { get; }
         public ICommand LoginCommand { get; }
@@ -51,6 +67,7 @@ namespace Wordki.ViewModels
         public override void InitViewModel(object parameter = null)
         {
             base.InitViewModel();
+            IsFocusPassword = false;
             InitUsers();
         }
 
@@ -73,6 +90,7 @@ namespace Wordki.ViewModels
                 return;
             }
             UserName = user;
+            IsFocusPassword = true;
         }
 
         private void LoginLocal()

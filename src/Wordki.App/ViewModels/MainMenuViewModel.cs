@@ -245,7 +245,7 @@ namespace Wordki.ViewModels
                 };
                 foreach (var item in calculator.GetDrawerCount())
                 {
-                    lList.Add((double)item);
+                    lList.Add(item);
                 }
                 string lTeachTimeToday = Helpers.Util.GetAproximatedTimeFromSeconds(ResultCalculator.GetLessonTimeToday());
                 string lTeachTime = Helpers.Util.GetAproximatedTimeFromSeconds(lDatabase.Groups.Sum(x => x.Results.Sum(y => y.TimeCount)));

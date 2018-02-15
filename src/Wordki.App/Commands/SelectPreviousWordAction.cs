@@ -24,9 +24,11 @@ namespace Wordki.Commands
         {
             if (groupSelectable.SelectedGroup == null)
             {
+                logger.Debug($"Selected group is null");
                 return;
             }
             IWord previousWord = groupSelectable.SelectedGroup.Words.Previous(wordSelectable.SelectedWord);
+            logger.Trace($"Selected word: '{wordSelectable.SelectedWord}', previous word: {previousWord}");
             if (previousWord != null)
             {
                 wordSelectable.SelectedWord = previousWord;

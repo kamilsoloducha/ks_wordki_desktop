@@ -11,7 +11,7 @@
     xmlns:command="http://www.galasoft.ch/mvvmlight"
     xmlns:views="clr-namespace:Wordki.Views"
     xmlns:converters="clr-namespace:Wordki.Helpers.Converters"
-    xmlns:models="clr-namespace:Wordki.Models"
+    xmlns:helpers="clr-namespace:Wordki.Helpers"
     mc:Ignorable="d"
     d:DesignHeight="720"
     d:DesignWidth="1366"
@@ -132,11 +132,17 @@
             Grid.Row="3"
             Margin="10, 20"
             FontSize="30"
+            Focusable="true"
             Hint="Hasło"
             HintForeground="DimGray"
             Background="Transparent"
             Foreground="{DynamicResource UsedNormalFrontBrush}"
-            Text="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <i:Interaction.Behaviors>
+                <helpers:FocusControlBehavior
+                    helpers:FocusControlBehavior.Focused="{Binding Path=IsFocusPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </i:Interaction.Behaviors>
+        </hintPasswordBox:HintPasswordBox>
 
         <ListView
             x:Name="UsersListView"
