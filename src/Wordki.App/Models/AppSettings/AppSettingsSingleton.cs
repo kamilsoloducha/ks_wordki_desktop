@@ -28,8 +28,7 @@ namespace Wordki.Models.AppSettings
                         AppSettingsSection section = (AppSettingsSection)config.GetSection("appSettings");
                         instance = new AppSettings();
 
-                        bool temp;
-                        if (section.Settings["debug"] == null || !Boolean.TryParse(section.Settings["debug"].Value, out temp))
+                        if (section.Settings["debug"] == null || !Boolean.TryParse(section.Settings["debug"].Value, out bool temp))
                         {
                             temp = false;
                         }

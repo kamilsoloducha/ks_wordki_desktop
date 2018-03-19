@@ -16,6 +16,7 @@ using Wordki.Helpers;
 using Wordki.Helpers.WordComparer;
 using Wordki.Models;
 using Wordki.Models.Lesson;
+using Wordki.Models.LessonScheduler;
 using Wordki.ViewModels.Dialogs;
 using WordkiModel;
 
@@ -108,6 +109,7 @@ namespace Wordki.ViewModels
 
 
         public GroupInfo GroupInfo { get; set; }
+        public ObservableCollection<GroupItem> Items = new ObservableCollection<GroupItem>();
         public IDatabase Database { get; set; }
         #endregion
 
@@ -202,12 +204,32 @@ namespace Wordki.ViewModels
                 SelectedItems.Add(Database.Groups[0]);
             }
             RefreshInfo();
+            CreateItems();
         }
 
         public override void Back()
         {
 
         }
+
+        private void CreateItems()
+        {
+            Items.Clear();
+            LessonSchedulerInitializer2 schedulerInitializer = new LessonSchedulerInitializer2(new List<int>() { 1, 1, 2, 4, 7 });
+            NewLessonScheduler scheduler = new NewLessonScheduler()
+            {
+                Initializer = schedulerInitializer,
+            };
+            schedulerInitializer.TranslationDirection = UserManagerSingleton.Instence.User.TranslationDirection;
+            foreach (IGroup group in Database.Groups)
+            {
+                Items.Add(
+                    new GroupItem(group)
+                    {
+                        DaysToRepeat = Math.Max(scheduler.GetTimeToLearn(group), 0),
+                    });
+            }
+        }        
 
         private void RefreshInfo()
         {
@@ -223,17 +245,17 @@ namespace Wordki.ViewModels
                 lDrawersCount.Add(0);
             if (SelectedItems == null)
                 return;
-            foreach (Group item in SelectedItems)
+            foreach (GroupItem item in SelectedItems)
             {
-                lang1 = lang1 != item.Language1 && lang1 != LanguageType.Default ? LanguageType.Default : lang1;
-                lang2 = lang2 != item.Language2 && lang2 != LanguageType.Default ? LanguageType.Default : lang2;
-                foreach (Word lWord in item.Words)
+                lang1 = lang1 != item.Group.Language1 && lang1 != LanguageType.Default ? LanguageType.Default : lang1;
+                lang2 = lang2 != item.Group.Language2 && lang2 != LanguageType.Default ? LanguageType.Default : lang2;
+                foreach (Word lWord in item.Group.Words)
                 {
                     lDrawersCount[lWord.Drawer]++;
                 }
-                if (item.Results.Count > 0)
+                if (item.Group.Results.Count > 0)
                 {
-                    DateTime itemDateTime = item.Results.Max(x => x.DateTime);
+                    DateTime itemDateTime = item.Group.Results.Max(x => x.DateTime);
                     if (itemDateTime > lLastRepeat)
                     {
                         lLastRepeat = itemDateTime;

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
+using Unity;
 using Wordki.Models.AppSettings;
+using Wordki.Views;
 
 namespace Wordki
 {
@@ -13,6 +15,14 @@ namespace Wordki
 
             NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration("nlog.config", true);
             string tep = AppSettingsSingleton.Instance.ApiHost;
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            IUnityContainer container = new UnityContainer();
+
+            MainView mainWindow = container.Resolve<MainView>();
+            mainWindow.Show();
         }
 
         private void OnUnhaldedException(object sender, UnhandledExceptionEventArgs e)

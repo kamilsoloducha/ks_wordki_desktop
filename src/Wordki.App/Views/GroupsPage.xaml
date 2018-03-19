@@ -86,7 +86,7 @@
             Style="{StaticResource AppDataGridStyle}"
             ScrollViewer.CanContentScroll="true"
             SelectedItem="{Binding Path=SelectedItem}"
-            ItemsSource="{Binding Path=Database.Groups}"
+            ItemsSource="{Binding Path=Items}"
             SelectionUnit="FullRow"
             BorderThickness="0"
             HeadersVisibility="None"

@@ -143,6 +143,21 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Unity.Abstractions, Version=3.3.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.5.7.0\lib\net46\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Configuration, Version=5.2.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.5.7.0\lib\net46\Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.7.0.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.5.7.0\lib\net46\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Interception, Version=5.5.0.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.5.7.0\lib\net46\Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RegistrationByConvention, Version=2.1.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.5.7.0\lib\net46\Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -174,6 +189,7 @@
     <Compile Include="Commands\SwapWordsInGroupAction.cs" />
     <Compile Include="Commands\TranslationDirectionChangeAction.cs" />
     <Compile Include="Database\Database\DatabaseSingleton.cs" />
+    <Compile Include="Database\Database\TestDatabase.cs" />
     <Compile Include="Database\DTOHandlers\GroupHandler.cs" />
     <Compile Include="Database\DTOHandlers\IGroupHandler.cs" />
     <Compile Include="Database\DTOHandlers\IRegisterHandler.cs" />
@@ -318,6 +334,7 @@
     <Compile Include="Helpers\Connector\Responses\ApiResponse.cs" />
     <Compile Include="Models\Group\FakeGroup.cs" />
     <Compile Include="Database\Repositories\IGroupRepository.cs" />
+    <Compile Include="Models\Group\GroupItem.cs" />
     <Compile Include="Models\LessonScheduler\LessonScheduleInitializer\LessonSchedulerInitializer.cs" />
     <Compile Include="Models\LessonScheduler\NewLessonScheduler.cs" />
     <Compile Include="Models\Lesson\FiszkiLesson.cs" />
@@ -767,6 +784,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Debug\" />
     <Folder Include="Resources\Languages\" />
     <Folder Include="Wordki\Database\" />
   </ItemGroup>
