@@ -25,6 +25,7 @@ namespace Wordki.Test.Lessons
             lesson = new TypingLesson();
             lesson.WordComparer = LessonUtil.GetWordComparer();
             lesson.LessonSettings = LessonUtil.GetLessonSettings();
+            Utility.WordCount = 10;
             lesson.InitLesson(Utility.GetGroups(groupCount).SelectMany(x => x.Words));
             lesson.NextWord();
         }

@@ -23,7 +23,7 @@ namespace Wordki.Commands
 
         private void Execute()
         {
-            groupSelectable.SelectedGroup = database.Groups.Last();
+            groupSelectable.SelectedGroup = database.Groups.LastOrDefault();
             wordSelectable.SelectedWord = groupSelectable.SelectedGroup?.Words.LastOrDefault();
         }
     }

@@ -1,7 +1,9 @@
 ﻿using Moq;
 using NUnit.Framework;
+using System.Collections.Generic;
 using Wordki.Commands;
 using Wordki.Database;
+using Wordki.Models;
 using WordkiModel;
 
 namespace Wordki.Test.Commands.AddWordActionTests
@@ -14,6 +16,7 @@ namespace Wordki.Test.Commands.AddWordActionTests
         Mock<IGroupSelectable> groupSelectableMock;
         Mock<IWordSelectable> wordSelectableMock;
         Mock<IDatabase> databaseMock;
+        IList<IGroup> groups;
 
         [SetUp]
         public void SetUp()
@@ -21,6 +24,9 @@ namespace Wordki.Test.Commands.AddWordActionTests
             groupSelectableMock = new Mock<IGroupSelectable>();
             wordSelectableMock = new Mock<IWordSelectable>();
             databaseMock = new Mock<IDatabase>();
+            groups = new List<IGroup>();
+            databaseMock.Setup(x => x.Groups).Returns(groups);
+            databaseMock.Setup(x => x.AddGroupAsync(It.IsAny<IGroup>())).ReturnsAsync(true).Callback(() => groups.Add(new Group()));
         }
 
         [Test]
